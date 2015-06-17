@@ -1,0 +1,33 @@
+{
+  "name": "@smc/happngin",
+  "version": "0.0.1",
+  "description": "SMC Application Engine that runs other components and have an API and data mesh service.",
+  "main": "lib/system/mesh.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FieldServer/happngin"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FieldServer/happngin/issues"
+  },
+  "homepage": "https://github.com/FieldServer/happngin",
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.4",
+    "request": "^2.53.0",
+    "zombie": "^2.5.1"
+  },
+  "dependencies": {
+    "@smc/happn": "^0.1.10",
+    "@smc/happn-ui-module": "^0.1.13",
+    "async": "^0.9.0",
+    "byline": "^4.2.1",
+    "log4js": "^0.6.24",
+    "moment": "^2.9.0",
+    "serve-static": "^1.9.3",
+    "shortid": "^2.2.2"
+  }
+}
