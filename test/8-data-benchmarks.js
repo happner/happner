@@ -6,6 +6,7 @@ describe('Bounces a message between two components, demonstrates how the events 
   var Mesh = require('../lib/system/mesh');
 
   var maximumPings = 1000;
+  var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000 ;
 
   var config = {
     name: "testComponent2Component",
@@ -63,6 +64,7 @@ describe('Bounces a message between two components, demonstrates how the events 
   var mesh = Mesh();
 
   before(function (done) {
+    this.timeout(defaultTimeout);
     console.time('startup');
     mesh.initialize(config, function (err) {
       console.timeEnd('startup');
@@ -72,7 +74,7 @@ describe('Bounces a message between two components, demonstrates how the events 
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function (done) {
 
-    this.timeout(10000);
+    this.timeout(defaultTimeout);
 
     var onEventRef;
 
