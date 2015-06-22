@@ -1,4 +1,6 @@
 // Uses unit test 2 modules
+var should = require('chai').should();
+
 
 describe('does some benchmarks on api calls, data events and events', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
@@ -13,7 +15,7 @@ describe('does some benchmarks on api calls, data events and events', function (
     dataLayer: {
       authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
       systemSecret: 'mesh',
-      log_level: 'info|error|warning'
+      log_level: 'error'
       //setOptions:{}
     },
     endpoints: {},
@@ -57,26 +59,20 @@ describe('does some benchmarks on api calls, data events and events', function (
       "component2": {
         moduleName: "module2",
         scope: "component",
-        startMethod: "start",
         schema: {
           "exclusive": false,
-          "methods": {
-            "start": {
-              type: "sync",
-              parameters: []
-            }
-          }
+          "methods": {}
         }
       }
     }
   };
 
-  var mesh = Mesh();
+  var mesh;
 
   before(function (done) {
     this.timeout(defaultTimeout);
     console.time('startup');
-    console.log('starting');
+    mesh = Mesh();
     mesh.initialize(config, function (err) {
       console.timeEnd('startup');
       done();
@@ -126,13 +122,17 @@ describe('does some benchmarks on api calls, data events and events', function (
   it('listens for an event in module 2 that module 1 set 1000 data points', function (done) {
     this.timeout(defaultTimeout);
 
-    mesh.api.event.component2.on('data-test-complete', function (message) {
-      console.log(message.payload.data);
-      //console.log(done);
-      done();
-    }, function() {});
+    mesh.api.exchange.component2.startData(function () {
 
-    mesh.api.exchange.component1.startData();
+      mesh.api.event.component2.on('data-test-complete', function (message) {
+        console.log(message.payload.data);
+        message.payload.data.should.contain('Hooray');
+        done();
+      }, function () {
+      });
+
+      mesh.api.exchange.component1.startData();
+    });
 
   });
 });

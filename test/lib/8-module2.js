@@ -39,32 +39,40 @@ function Component2(options) {
     }
   }
 
-  this.start = function () {
+  this.startData = function (callback) {
     var count = 0;
     var _this = this;
     this.mesh.data.on('/component1/testDataCount', {
-        event_type: 'set',
-        count: options.maximumPings
-      }, function (message) {
-        if (message.payload.data != count++) {
-          this.emit('date_test_complete', 'Test failed', function (e, response) {
-          });
-        }
+      event_type: 'set',
+      count: options.maximumPings   // Subscribe to 1 more to make sure we don't get too many events
+    }, function (message) {
+      if (message.payload.data != count++) {
+        this.emit('date_test_complete', 'Test failed', function (e, response) {
+        });
+      }
 
-        if (count == options.maximumPings) {
+      var timeOut;
+      if (count > options.maximumPings) {
+        console.log("Too many received");
+        clearTimeout(timeOut);
+        _this.emit('data-test-complete', "Too many messages", function (e, response) {
+        });
+      }
+
+      if (count == options.maximumPings) {
+        var endTime = moment.utc();
+        timeOut = setTimeout(function () {
           _this.mesh.data.get('/component1/testStartTime', null, function (e, result) {
-            var timeDiff = moment.utc() - moment(result.payload[0].data);
+            var timeDiff = endTime - moment(result.payload[0].data);
             var message = 'Hooray, data event test is over!! ' + count + ' sets, elapsed time:' + timeDiff + 'ms';
             _this.emit('data-test-complete', message, function (e, response) {
             });
           });
-        }
+        }, 500);
       }
-      ,
-      function () {
-
-      }
-    );
+    }, function () {
+      callback();
+    });
   };
 
   this.stop = function () {
