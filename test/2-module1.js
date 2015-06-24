@@ -52,7 +52,7 @@ function Component1(options) {
     }
   }
 
-  this.start = function(){
+  this.start = function(arg){
 
     //console.log('starting module1 component');
 
@@ -63,7 +63,7 @@ function Component1(options) {
         if (e) return //console.log('call to component2 broke...' + e);
 
     });
-  }
+  };
 
   this.stop = function(){
 
