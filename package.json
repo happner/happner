@@ -1,6 +1,6 @@
 {
   "name": "@smc/happngin",
-  "version": "0.0.2-tr2123-app-engine-0.0.3",
+  "version": "0.0.3",
   "description": "SMC Application Engine that runs other components and have an API and data mesh service.",
   "main": "lib/system/mesh.js",
   "scripts": {},
@@ -21,7 +21,7 @@
     "zombie": "^2.5.1"
   },
   "dependencies": {
-    "@smc/happn": "^0.1.15",
+    "@smc/happn": "0.1.17",
     "@smc/happn-ui-module": "^0.1.13",
     "async": "^0.9.0",
     "byline": "^4.2.1",
