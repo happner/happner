@@ -142,7 +142,6 @@ describe('Consumes an external module', function() {
       }
 
       client.set('/mytest/678687', {"test":"test1"}, {}, function(e, directClientResponse){
-
         //calling a local component
         mesh.api.exchange.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
          
