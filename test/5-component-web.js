@@ -29,13 +29,29 @@ describe('Demonstrates the middleware functionality', function (done) {
     components: {
       "component5": {
         moduleName: "module5",
+        "scope":"component",
         schema: {
           exclusive: false
         },
         web: {
           routes: {
             // http://localhost:3001/neptronicUI/...
-            "static5":["preProcessor","static"]
+            "static5":["preProcessor","static"],
+            "testScope":"testScope"
+          }
+        }
+      },
+
+      "component5Module": {
+        moduleName: "module5",
+        "scope":"module",
+        schema: {
+          exclusive: false
+        },
+        web: {
+          routes: {
+            // http://localhost:3001/neptronicUI/...
+            "testScope":"testScope"
           }
         }
       }
@@ -85,11 +101,25 @@ describe('Demonstrates the middleware functionality', function (done) {
     });
 
   });
+  
+  it('tests that the scope is set to component', function(done) {
+    request({uri:'http://127.0.0.1:' + testport + '/component5/testScope?scope=ComponentInstance', method:'GET'}, function (e, resp, body) {
+      resp.statusCode.should.eql(200);
+      done(e);
+    });
+  });
+
+  it('tests that the scope is set to module', function(done) {
+    request({uri:'http://127.0.0.1:' + testport + '/component5Module/testScope?scope=ModuleFive', method:'GET'}, function (e, resp, body) {
+      resp.statusCode.should.eql(200);
+      done(e);
+    });
+  });
 });
 
 function getBody(url, done) {
   console.log('connecting to ' + url);
-  require('request')({
+  request({
       uri: url,
       method: 'GET'
     },
