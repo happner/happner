@@ -7,9 +7,12 @@ describe('Client example', function() {
   var assert = require('assert');
   var origConsoleLog = console.log;
 
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+
   // Spawn mesh in another process.
   before(function(done) {
-    remote = spawn('node',[__dirname + sep + '7-client-example-process.js']);
+    remote = spawn('node',[libFolder + '7-client-example-process.js']);
     remote.stdout.on('data', function(data) {
       console._stdout.write(data.toString());
       if (!data.toString().match(/READY/)) return;

@@ -10,6 +10,9 @@ var Mesh = require('../lib/system/mesh')
 
 mesh = Mesh();
 
+var sep = require('path').sep;
+var libFolder = __dirname + sep + 'lib' + sep;
+
 config = {
   name: 'mesh2',
   dataLayer: {
@@ -36,11 +39,12 @@ describe('Mesh to Mesh', function() {
   before(function(done) {
 
     // spawn remote mesh in another process
+    console.log(libFolder);
 
-    remote = spawn('node',[__dirname + sep + '4-first-mesh']);
+    remote = spawn('node',[libFolder + '4-first-mesh']);
     remote.stdout.on('data', function(data) {
 
-      ////////////console.log('Remote:',data.toString());
+      console.log('Remote:',data.toString());
       if (!data.toString().match(/READY/)) return;
 
       // once it says READY start local mesh

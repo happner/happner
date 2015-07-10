@@ -5,9 +5,12 @@ describe('Using the clientside only', function() {
   var remote;
   var assert = require('assert');
 
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+
   // Spawn mesh in another process.
   before(function(done) {
-    remote = spawn('node',[__dirname + sep + '4-first-mesh']);
+    remote = spawn('node',[libFolder + '4-first-mesh']);
     remote.stdout.on('data', function(data) {
       // console.log(data.toString());
       if (!data.toString().match(/READY/)) return;

@@ -3,7 +3,13 @@ describe('Bounces a message between two components, demonstrates how the events 
 ///events/testComponent2Component/component1/maximum-pings-reached
   var Mesh = require('../lib/system/mesh');
 
+
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+
   var maximumPings = 1000;
+
+  var libFolder 
 
   var config = {
     name:"testComponent2Component",
@@ -16,7 +22,7 @@ describe('Bounces a message between two components, demonstrates how the events 
     endpoints: {},
     modules: {
       "module1":{
-        path:__dirname + "/2-module1",
+        path:libFolder + "2-module1",
         constructor:{
           type:"sync",
           parameters:[
@@ -25,7 +31,7 @@ describe('Bounces a message between two components, demonstrates how the events 
         }
       },
       "module2":{
-        path:__dirname + "/2-module2",
+        path:libFolder + "2-module2",
         constructor:{
           type:"sync"
         }

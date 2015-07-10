@@ -3,7 +3,7 @@
 // http://localhost:3001/ExampleMesh/ExampleComponent/ExampleFunction
 
 
-var Mesh = require('../lib/system/mesh');
+var Mesh = require('../../lib/system/mesh');
 var sep = require('path').sep;
 
 var config = {
@@ -16,22 +16,13 @@ var config = {
   },
   endpoints: {},
   modules: {
-
-    "api":{
-      path:"system:api",
-      constructor:{
-        type:"sync"
-      }
-    },
-
     "example":{
       path:__dirname + "/7-client-example",
       constructor:{
         type:"sync",
         parameters:[]
       }
-    },
-
+    }
   },
 
   components: {

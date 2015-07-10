@@ -1,4 +1,4 @@
-var Mesh = require('../lib/system/mesh');
+var Mesh = require('../../lib/system/mesh');
 
 var config = {
   name: 'theFarawayTree',
