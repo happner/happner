@@ -44,7 +44,7 @@ describe('Mesh to Mesh', function() {
     remote = spawn('node',[libFolder + '4-first-mesh']);
     remote.stdout.on('data', function(data) {
 
-      console.log('Remote:',data.toString());
+      // console.log('Remote:',data.toString());
       if (!data.toString().match(/READY/)) return;
 
       // once it says READY start local mesh
@@ -65,7 +65,6 @@ describe('Mesh to Mesh', function() {
   context('the faraway tree', function() {
 
     it("we can ride moonface's slippery slip",function(done) {
-
       mesh.api.exchange
       .theFarawayTree.moonface.rideTheSlipperySlip(
         'one!', 'two!', 'three!', function(err, res) {
@@ -80,8 +79,6 @@ describe('Mesh to Mesh', function() {
 
       mesh.api.exchange
       .theFarawayTree.moonface.haveAnAccident(function(err, res) {
-
-        // haveAnAccident() throws on the other side
 
         assert(err.toString().match(/SlipFailure: Stray patch of glue./))
         done();
