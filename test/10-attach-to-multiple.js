@@ -15,7 +15,7 @@ describe('attach to multiple meshes (meshs?)', function() {
 
     var kids = this.kids = [];
     var mesh = this.mesh = this.Mesh();
-    var config = this.config = {
+    var config = {
       endpoints: {}
     };
 
@@ -38,6 +38,9 @@ describe('attach to multiple meshes (meshs?)', function() {
 
                 kid.on('exit', function() {
                   reject(new Error('kid ' +i+ ' exited'))
+                  // this also runs in the after hook, but the rejection will
+                  // be ignored because the promise will have already resolved()
+                  // (cannot resolve and then reject)
                 });
 
                 // assemble endpoints in local mesh config per i
