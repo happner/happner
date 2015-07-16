@@ -1,14 +1,12 @@
 // cannot do mocha test/4-mesh-to-mesh.js --watch
 // address already in use for 2nd... runs
 
-var Mesh = require('../lib/system/mesh')
-  , spawn = require('child_process').spawn
+var spawn = require('child_process').spawn
   , sep = require('path').sep
   , remote
   , assert = require('assert')
+  , mesh
   ;
-
-mesh = Mesh();
 
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
@@ -35,12 +33,32 @@ config = {
 };
 
 describe('Mesh to Mesh', function() {
+
+  require('./lib/0-hooks')();
   
   before(function(done) {
 
-    // spawn remote mesh in another process
-    console.log(libFolder);
+    var _this = this;
 
+    // start remote mesh then local mesh
+    // require('./lib/4-first-mesh')(
+    //   function(err) {
+    //     if (err) return done(err);
+    //     setTimeout(function() {
+    //       mesh = _this.Mesh();
+    //       mesh.initialize(config, function(err) {
+    //         if (err) return done(err);
+    //         done();
+    //       });
+
+    //     }, 1000);
+    //   }
+    // );
+
+
+    var _this = this;
+
+    // spawn remote mesh in another process
     remote = spawn('node',[libFolder + '4-first-mesh']);
     remote.stdout.on('data', function(data) {
 
@@ -49,6 +67,7 @@ describe('Mesh to Mesh', function() {
 
       // once it says READY start local mesh
 
+      mesh = _this.Mesh();
       mesh.initialize(config, function(err) {
         if (err) return done(err);
         done();

@@ -1,30 +1,12 @@
-var Mesh = require('../lib/system/mesh');
-var should = require('chai').should();
 
+
+var should = require('chai').should();
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
 
 describe('Consumes an external module', function() {
 
-  before(function(){
-    this.origCreateServer = require('http').createServer;
-  });
-
-  after(function(){
-    // stop the server after the test
-    if (this.server) this.server.close();
-    require('http').createServer = this.origCreateServer;
-  });
-
-  beforeEach(function(){
-    _this = this
-    require('http').createServer = function() {
-      // intercept server creation to get ref to it
-      _this.server = _this.origCreateServer.apply(null, arguments);
-      return _this.server;
-    }
-  });
-
+  require('./lib/0-hooks')();
 
   var mesh;
 
@@ -117,7 +99,8 @@ describe('Consumes an external module', function() {
 
     this.timeout(10000);
 
-    mesh = Mesh();
+            // created in lib/0-hooks.js
+    mesh = this.Mesh();
    
     mesh.initialize(config, function(err) {
 

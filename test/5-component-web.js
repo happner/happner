@@ -7,7 +7,8 @@ var should = require('chai').should();
 describe('Demonstrates the middleware functionality', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
-  var Mesh = require('../lib/system/mesh');
+
+  require('./lib/0-hooks')();
 
   var config = {
     name: "testMiddleware",
@@ -60,7 +61,7 @@ describe('Demonstrates the middleware functionality', function (done) {
 
   before(function (done) {
 
-    var mesh = Mesh();
+    var mesh = this.Mesh();
 
     mesh.initialize(config, function (err) {
       if (err) {
@@ -96,7 +97,7 @@ describe('Demonstrates the middleware functionality', function (done) {
   it('tests that we can do chain middleware in a module', function (done) {
     getBody('http://127.0.0.1:' + testport + '/component5/static5/test.html', function (e, body) {
 
-      body.should.eql(fs.readFileSync('./lib/static5/preprocessed-test.html').toString());
+      body.should.eql(fs.readFileSync(__dirname + '/lib/static5/preprocessed-test.html').toString());
       done(e);
     });
 

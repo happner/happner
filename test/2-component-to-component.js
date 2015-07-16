@@ -1,15 +1,17 @@
+// Object.keys(require.cache).forEach(function(key) {
+//   delete require.cache[key]
+// });
+
+var sep = require('path').sep;
+var libFolder = __dirname + sep + 'lib' + sep;
+var maximumPings = 1000;
+var libFolder ;
+
 describe('Bounces a message between two components, demonstrates how the events layer works', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
-  var Mesh = require('../lib/system/mesh');
 
-
-  var sep = require('path').sep;
-  var libFolder = __dirname + sep + 'lib' + sep;
-
-  var maximumPings = 1000;
-
-  var libFolder 
+  require('./lib/0-hooks')();
 
   var config = {
     name:"testComponent2Component",
@@ -64,9 +66,11 @@ describe('Bounces a message between two components, demonstrates how the events 
     }
   };
 
-  var mesh = Mesh();
+  var mesh;
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
+    
+    mesh = this.Mesh();
 
     this.timeout(10000);
 

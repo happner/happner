@@ -3,7 +3,9 @@
   "version": "0.0.6",
   "description": "SMC Application Engine that runs other components and have an API and data mesh service.",
   "main": "lib/system/mesh.js",
-  "scripts": {},
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/FieldServer/happngin"
