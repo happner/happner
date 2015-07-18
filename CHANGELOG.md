@@ -35,7 +35,7 @@ function MyModule() {
   this.property = 'TO LET';
 }
 
-MyModule.startMe = function() {
+MyModule.prototype.startMe = function() {
   this.property == 'TO LET'; // Module instance variables remain available on 'this'.
   this.$happn.config;        // Component instance available in 'this.$happn'
   this.$happn.describe;
@@ -43,7 +43,7 @@ MyModule.startMe = function() {
   this.$happn.mesh;
 }
 
-MyModule.method = function(callback) {
+MyModule.prototype.method = function(callback) {
   this.$happn.config; // Is assured to refer the component instance
   var _this = this;
   var happn = _this.$happn;
