@@ -50,7 +50,7 @@ MyModule.method = function(callback) {
 
   setTimeout(function() {
     _this.$happn.config; // This may now possibly refer to another component instance 
-                        // of the same module - If there are any.
+                        // of the shared module - If there are any other instances.
 
     happn.config; // Is still assured.
 
