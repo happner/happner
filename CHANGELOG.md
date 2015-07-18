@@ -15,11 +15,11 @@ modules: {
 },
 components: {
   'component1': {
-     moduleName: 'module-name',
+     moduleName: 'shared-module-name',
      startMethod: 'startMe'
   },
   'component2': {
-     moduleName: 'module-name',
+     moduleName: 'shared-module-name',
      startMethod: 'startMe'
   }
 }
