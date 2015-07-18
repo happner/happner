@@ -3,7 +3,7 @@ module.exports = Module;
 function Module() {}
 
 Module.prototype.start = function() {
-  console.log('start', this.$happn);
+  // console.log('start', this.$happn);
 }
 
 Module.prototype.stop = function() {
