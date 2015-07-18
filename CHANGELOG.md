@@ -5,8 +5,7 @@ __NON BACKWARD COMPATIBLE CHANGE__
 
 * `this` has been restored to refer to module instance.
 * `this.$happn` contans the mesh aware component instance.
-* `this.$happn.config` contains the component's config fragment.
-* IMPORTANT `this.$happn` is only ensured to refer to the correct instance for the duration of the call tick. 
+* IMPORTANT - If you have multiple component instances of a shared module then `this.$happn` is only ensured to refer to the correct component instance for the duration of the call tick.
 
 In mesh config:
 
@@ -38,7 +37,7 @@ MyModule.startMe = function() {
   this.$happn.mesh;
 }
 
-MyModule.remoteReadme = function(callback) {
+MyModule.method = function(callback) {
   this.$happn.config; // Is assured to refer the component instance
   var _this = this;
   var happn = _this.$happn;
@@ -47,7 +46,7 @@ MyModule.remoteReadme = function(callback) {
     _this.$happn.config; // This may now possibly refer to another component instance 
                         // of the same module - If there are any.
 
-    happn; // Is still assured.
+    happn.config; // Is still assured.
 
   }, 1);
 }
