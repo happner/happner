@@ -25,7 +25,7 @@ components: {
 }
 ```
 
-In node-modules/shared-module-name/index.js:
+In `node-modules/shared-module-name/index.js`:
 
 ```javascript
 
