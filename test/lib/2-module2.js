@@ -21,14 +21,14 @@ function Component2(options) {
 
     try{
 
-       if (!this.mesh)
+       if (!this.$happn)
         throw new Error('This module needs component level scope');
 
       //console.log("Message from " + message.message);
 
       message.message = "Component2";
      
-      this.mesh.exchange.component1.exposedMethod(message, function(e, response){
+      this.$happn.mesh.exchange.component1.exposedMethod(message, function(e, response){
         
       });
 

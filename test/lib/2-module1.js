@@ -25,7 +25,9 @@ function Component1(options) {
 
     try{
 
-      this.module.instance.moduleMethod();
+      var happn = this.$happn;
+
+      this.moduleMethod();
 
       ////console.log(options);
       message.pingCount++;
@@ -34,13 +36,13 @@ function Component1(options) {
 
      //_this.scope.api.events.component2.exposedMethod(function(e, response)
       if (message.pingCount < options.maximumPings)
-      this.mesh.exchange.component2.exposedMethod(message, function(e, response){
+      happn.mesh.exchange.component2.exposedMethod(message, function(e, response){
        
       });
       else{
         var timeDiff = moment.utc() - message.timestamp;
         var message = 'Hooray, component ping pong test is over!! ' + message.pingCount + ' pings, elapsed time:' + timeDiff + 'ms';
-        this.emit('maximum-pings-reached', message, function(e, response){
+        happn.emit('maximum-pings-reached', message, function(e, response){
 
         });
       }
@@ -56,11 +58,13 @@ function Component1(options) {
 
     //console.log('starting module1 component');
 
-    if (!this.mesh)
+    var happn = this.$happn;
+
+    if (!happn)
       throw new Error('This module needs component level scope');
 
-    this.mesh.exchange.component2.exposedMethod({message:"Component1", "timestamp":moment.utc(), "pingCount":0}, function(e, response){
-        if (e) return //console.log('call to component2 broke...' + e);
+    happn.mesh.exchange.component2.exposedMethod({message:"Component1", "timestamp":moment.utc(), "pingCount":0}, function(e, response){
+      if (e) return //console.log('call to component2 broke...' + e);
 
     });
   };

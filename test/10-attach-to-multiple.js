@@ -13,6 +13,8 @@ describe('attach to multiple meshes (meshs?)', function() {
 
   before(function(done) {
 
+    this.timeout(3000);
+
     var kids = this.kids = [];
     var mesh = this.mesh = this.Mesh();
     var config = {
