@@ -11,15 +11,21 @@ In mesh config:
 
 ```javascript
 modules: {
-  'module-name': {}
+  'shared-module-name': {}
 },
 components: {
-  moduleName: 'module-name',
-  startMethod: 'startMe'
+  'component1': {
+     moduleName: 'module-name',
+     startMethod: 'startMe'
+  },
+  'component2': {
+     moduleName: 'module-name',
+     startMethod: 'startMe'
+  }
 }
 ```
 
-In node-modules/module-name/index.js:
+In node-modules/shared-module-name/index.js:
 
 ```javascript
 
@@ -30,8 +36,8 @@ function MyModule() {
 }
 
 MyModule.startMe = function() {
-  this.property == 'TO LET'; // Module instance variables remain available.
-  this.$happn.config;        // Component instance available in this.$happn
+  this.property == 'TO LET'; // Module instance variables remain available on 'this'.
+  this.$happn.config;        // Component instance available in 'this.$happn'
   this.$happn.describe;
   this.$happn.emit;
   this.$happn.mesh;
