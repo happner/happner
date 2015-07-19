@@ -40,7 +40,7 @@ describe('Consumes an external module', function() {
     components: {
       "happnClient":{
         moduleName:"happnClient",
-        scope:"module", //"either component or module, module by default"
+        // scope:"module", //"either component or module, module by default"
         schema:{
           "exclusive":true,//means we dont dynamically share anything else
           "methods":{
