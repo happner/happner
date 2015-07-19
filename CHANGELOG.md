@@ -49,14 +49,14 @@ MyModule.prototype.startMe = function($happn) {
                                                        // can be injected into any position
                                                       // 
 MyModule.prototype.meshAwareMethod = function(arg1, $happn, arg2, callback) {
-  $happn.config; // Is assured to refer the component instance
-}
+  
+  //
+  // Still called via exchange with only (arg1, arg2, callback)
+  // eg.
+  // 
+  //     mesh.api.exchange.component1.meshAwareMethod('arg1', 'arg2', callback)
+  //
 
-MyModule.prototype.meshUnawareMethod = function(arg1, arg2, callback) {
-  // Has no mesh awareness.
-
-  // Can call mesh aware method, (BUT! $happn will be injected as undefined)
-  this.meshAwareMethod(arg1, arg2, callback);
 }
 
 MyModule.prototype.meshAwareWebMethod = function($happn, req, res, next) {

@@ -455,7 +455,7 @@ describe('mesh awareness via $happn injection', function() {
   });
 
 
-  it('allows internal module call (without $happn) to method with $happn injected', function(done) {
+  xit('allows internal module call (without $happn) to method with $happn injected', function(done) {
     var mesh = this.meshes[0];
 
     mesh.api.exchange['special-component6'].callOnwardWithoutHappn('ARG1', function(err, res) {
@@ -466,7 +466,7 @@ describe('mesh awareness via $happn injection', function() {
   });
 
 
-  it('allows internal module call (with $happn) to method with $happn injected', function(done) {
+  xit('allows internal module call (with $happn) to method with $happn injected', function(done) {
     var mesh = this.meshes[0];
 
     mesh.api.exchange['special-component7'].callOnwardWithHappn('ARG1', function(err, res) {
