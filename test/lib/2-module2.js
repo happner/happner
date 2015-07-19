@@ -17,18 +17,18 @@ function Component2(options) {
    if (!options.maximumPings)
     options.maximumPings = 100;
 
-  this.exposedMethod = function(message, callback){
+  this.exposedMethod = function($happn, message, callback){
 
     try{
 
-       if (!this.$happn)
+       if (!$happn)
         throw new Error('This module needs component level scope');
 
       //console.log("Message from " + message.message);
 
       message.message = "Component2";
      
-      this.$happn.mesh.exchange.component1.exposedMethod(message, function(e, response){
+      $happn.mesh.exchange.component1.exposedMethod(message, function(e, response){
         
       });
 

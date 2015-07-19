@@ -1,11 +1,10 @@
 
-#### Added this.$happn for mesh awareness in component instances.
+#### Added $happn argument injection for mesh awareness in component instances.
 
 __NON BACKWARD COMPATIBLE CHANGE__
 
-* `this` has been restored to refer to module instance.
-* `this.$happn` contans the mesh aware component instance.
-* IMPORTANT - If you have multiple component instances of a shared module then `this.$happn` is only ensured to refer to the correct component instance for the duration of the call tick.
+* `this` has been restored to refer to single module instance.
+* Mesh awareness per component instance is enabled via `$happn` injected where specified into methods
 
 In mesh config:
 
@@ -15,12 +14,17 @@ modules: {
 },
 components: {
   'component1': {
-     moduleName: 'shared-module-name',
-     startMethod: 'startMe'
+    moduleName: 'shared-module-name',
+    startMethod: 'startMe',
+    web: {
+      routes: {
+        'webMethod': 'meshAwareWebMethod'
+      }
+    }
   },
   'component2': {
-     moduleName: 'shared-module-name',
-     startMethod: 'startMe'
+    moduleName: 'shared-module-name',
+    startMethod: 'startMe'
   }
 }
 ```
@@ -35,26 +39,28 @@ function MyModule() {
   this.property = 'TO LET';
 }
 
-MyModule.prototype.startMe = function() {
+MyModule.prototype.startMe = function($happn) {
   this.property == 'TO LET'; // Module instance variables remain available on 'this'.
-  this.$happn.config;        // Component instance available in 'this.$happn'
-  this.$happn.describe;
-  this.$happn.emit;
-  this.$happn.mesh;
+                            // NB. Remember the module instance is shared among all component instances 
+  $happn.config;
+  $happn.emit;
+  $happn... /etc
+}
+                                                       // can be injected into any position
+                                                      // 
+MyModule.prototype.meshAwareMethod = function(arg1, $happn, arg2, callback) {
+  $happn.config; // Is assured to refer the component instance
 }
 
-MyModule.prototype.method = function(callback) {
-  this.$happn.config; // Is assured to refer the component instance
-  var _this = this;
-  var happn = _this.$happn;
+MyModule.prototype.meshUnawareMethod = function(arg1, arg2, callback) {
+  // Has no mesh awareness.
 
-  setTimeout(function() {
-    _this.$happn.config; // This may now possibly refer to another component instance 
-                        // of the shared module - If there are any other instances.
+  // Can call mesh aware method, (BUT! $happn will be injected as undefined)
+  this.meshAwareMethod(arg1, arg2, callback);
+}
 
-    happn.config; // Is still assured.
-
-  }, 1);
+MyModule.prototype.meshAwareWebMethod = function($happn, req, res, next) {
+  // web methods can also be mesh aware
 }
 
 ```

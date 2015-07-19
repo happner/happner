@@ -30,7 +30,7 @@ describe('Demonstrates the middleware functionality', function (done) {
     components: {
       "component5": {
         moduleName: "module5",
-        "scope":"component",
+        // "scope":"component",
         schema: {
           exclusive: false
         },
@@ -45,7 +45,7 @@ describe('Demonstrates the middleware functionality', function (done) {
 
       "component5Module": {
         moduleName: "module5",
-        "scope":"module",
+        // "scope":"module",
         schema: {
           exclusive: false
         },
@@ -103,12 +103,12 @@ describe('Demonstrates the middleware functionality', function (done) {
 
   });
   
-  it('tests that the scope is set to component', function(done) {
-    request({uri:'http://127.0.0.1:' + testport + '/component5/testScope?scope=ComponentInstance', method:'GET'}, function (e, resp, body) {
-      resp.statusCode.should.eql(200);
-      done(e);
-    });
-  });
+  // it('tests that the scope is set to component', function(done) {
+  //   request({uri:'http://127.0.0.1:' + testport + '/component5/testScope?scope=ComponentInstance', method:'GET'}, function (e, resp, body) {
+  //     resp.statusCode.should.eql(200);
+  //     done(e);
+  //   });
+  // });
 
   it('tests that the scope is set to module', function(done) {
     request({uri:'http://127.0.0.1:' + testport + '/component5Module/testScope?scope=ModuleFive', method:'GET'}, function (e, resp, body) {

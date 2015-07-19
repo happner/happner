@@ -42,7 +42,7 @@ describe('Bounces a message between two components, demonstrates how the events 
     components: {
       "component1":{
         moduleName:"module1",
-        scope:"component",//either component(mesh aware) or module - default is module
+        // scope:"component",//either component(mesh aware) or module - default is module
         startMethod:"start",
         schema:{
           "exclusive":false,//means we dont dynamically share anything else
@@ -58,7 +58,7 @@ describe('Bounces a message between two components, demonstrates how the events 
       },
       "component2":{
         moduleName:"module2",
-        scope:"component",
+        // scope:"component",
         schema:{
           "exclusive":false
         }

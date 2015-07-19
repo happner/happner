@@ -17,11 +17,9 @@ function Component1(options) {
   if (!options.maximumPings)
     options.maximumPings = 100;
 
-  this.exposedMethod = function (message, callback) {
+  this.exposedMethod = function ($happn, message, callback) {
 
     try {
-
-      var happn = this.$happn;
 
       ////console.log(options);
       message.pingCount++;
@@ -30,13 +28,13 @@ function Component1(options) {
 
       //_this.scope.api.events.component2.exposedMethod(function(e, response)
       if (message.pingCount < options.maximumPings)
-        happn.mesh.exchange.component2.exposedMethod(message, function (e, response) {
+        $happn.mesh.exchange.component2.exposedMethod(message, function (e, response) {
 
         });
       else {
         var timeDiff = moment.utc() - message.timestamp;
         var message = 'Hooray, component ping pong test is over!! ' + message.pingCount + ' pings, elapsed time:' + timeDiff + 'ms';
-        happn.emit('maximum-pings-reached', message, function (e, response) {
+        $happn.emit('maximum-pings-reached', message, function (e, response) {
 
         });
       }
@@ -48,16 +46,14 @@ function Component1(options) {
     }
   }
 
-  this.start = function () {
+  this.start = function ($happn) {
 
     //console.log('starting module1 component');
 
-    var happn = this.$happn;
-
-    if (!happn)
+    if (!$happn)
       throw new Error('This module needs component level scope');
 
-    happn.mesh.exchange.component2.exposedMethod({
+    $happn.mesh.exchange.component2.exposedMethod({
       message: "Component1",
       "timestamp": moment.utc(),
       "pingCount": 0
@@ -71,11 +67,11 @@ function Component1(options) {
 
   }
 
-  this.startData = function () {
-    var happn = this.$happn;
-    happn.mesh.data.set('/component1/testStartTime', moment.utc());
+  this.startData = function ($happn) {
+    
+    $happn.mesh.data.set('/component1/testStartTime', moment.utc());
     for (var i = 0; i < options.maximumPings; i++) {
-      happn.mesh.data.set('/component1/testDataCount', i);
+      $happn.mesh.data.set('/component1/testDataCount', i);
     }
   }
 }

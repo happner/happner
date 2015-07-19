@@ -33,7 +33,7 @@ describe('does some benchmarks on api calls, data events and events', function (
     components: {
       "component1": {
         moduleName: "module1",
-        scope: "component",//either component(mesh aware) or module - default is module
+        // scope: "component",//either component(mesh aware) or module - default is module
         startMethod: "start",
         schema: {
           "exclusive": false,//means we dont dynamically share anything else
@@ -49,7 +49,7 @@ describe('does some benchmarks on api calls, data events and events', function (
       },
       "component2": {
         moduleName: "module2",
-        scope: "component",
+        // scope: "component",
         schema: {
           "exclusive": false,
           "methods": {}
