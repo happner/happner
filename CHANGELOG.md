@@ -60,7 +60,7 @@ MyModule.prototype.meshAwareMethod = function(arg1, $happn, arg2, callback) {
 }
 
 MyModule.prototype.meshAwareWebMethod = function($happn, req, res, next) {
-  // web methods can also be mesh aware
+
 }
 
 ```
