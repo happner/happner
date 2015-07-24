@@ -24,7 +24,8 @@
     "angular-ui-sortable": "~0.13.3",
     "jquery-ui": "~1.11.4",
     "angular-ui": "~0.4.0",
-    "async": "~1.2.1"
+    "async": "~1.2.1",
+    "angular-route": "~1.4.3"
   },
   "resolutions": {
     "angular-ui-sortable": "~0.13.3",
