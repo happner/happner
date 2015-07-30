@@ -455,30 +455,10 @@ describe('mesh awareness via $happn injection', function() {
   });
 
 
-  xit('allows internal module call (without $happn) to method with $happn injected', function(done) {
-    var mesh = this.meshes[0];
-
-    mesh.api.exchange['special-component6'].callOnwardWithoutHappn('ARG1', function(err, res) {
-      if (err) return done(err);
-      res.should.eql('ARG1ARG1');
-      done()
-    });
-  });
-
-
-  xit('allows internal module call (with $happn) to method with $happn injected', function(done) {
-    var mesh = this.meshes[0];
-
-    mesh.api.exchange['special-component7'].callOnwardWithHappn('ARG1', function(err, res) {
-      if (err) return done(err);
-      res.should.eql('ARG1ARG1');
-      done()
-    });
-  });
-
   it('injects happn into webmethods', function(done) {
 
     request('http://localhost:3001/mesh1/webComponent1/methodWithHappn', function(err, res) {
+
       JSON.parse(res.body).should.eql({
         "meshName": "mesh1",
         "moduleName": "module3",
