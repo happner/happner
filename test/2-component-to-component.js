@@ -6,6 +6,7 @@ var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
 var maximumPings = 1000;
 var libFolder ;
+var should = require('chai').should();
 
 describe('Bounces a message between two components, demonstrates how the events layer works', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
@@ -114,6 +115,39 @@ describe('Bounces a message between two components, demonstrates how the events 
         });
       }
     });
+  });
+  
+  it('subscribes to an event and unsubscribes after the first one', function(done) {
+    var testHandle;
+    var eventCount = 0;
+    var eventCount2 = 0;
+
+    mesh.api.event.component1.on('eventMultiple', function firstSub(){
+      eventCount2++;
+    },function(err,handle) {
+    });
+    
+    mesh.api.event.component1.on('eventMultiple', function secondSub (){
+      eventCount++;
+      // this unsubscribes both which is why I think the original scheme was based on the subscription handle
+      // maybe using the function name (or pointer) we can unsubscribe the desired subscription.
+      mesh.api.event.component1.off('eventMultiple', function(err) {
+        should.not.exist(err);
+      });
+    },function(err,handle) {
+      should.not.exist(err);
+      testHandle = handle;
+      mesh.api.exchange.component1.testEventMultiple();      
+    });
+    
+    mesh.api.event.component1.on('eventMultipleComplete', function() {
+      eventCount.should.eql(1);
+      eventCount2.should.eql(4);
+      done();
+    }, function(err){
+      should.not.exist(err);
+    });   
+    
   });
 });
 

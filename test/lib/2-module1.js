@@ -68,4 +68,12 @@ function Component1(options) {
   this.stop = function(){
 
   }
+  
+  this.testEventMultiple = function($happn, callback) {
+    $happn.emit('eventMultiple', {}, function() {});
+    $happn.emit('eventMultiple', {}, function() {});
+    $happn.emit('eventMultiple', {}, function() {});
+    $happn.emit('eventMultiple', {}, function() {});
+    $happn.emit('eventMultipleComplete', {}, function() {});
+  }
 }
