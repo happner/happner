@@ -1,4 +1,4 @@
-process.env.DEBUG='*'
+// process.env.DEBUG='*'
 
 var config = {
   name: 'mesh1',
@@ -8,7 +8,7 @@ var config = {
     systemSecret: 'SEcREt',
     log_level: 'info|error|warning',
     setOptions: {
-      timeout: 50000
+      timeout: 2000
     },
   },
   modules: {
