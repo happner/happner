@@ -1,6 +1,6 @@
 {
   "name": "@smc/happngin",
-  "version": "0.0.7",
+  "version": "0.0.7-tr2132-neptronic-0.0.8",
   "description": "SMC Application Engine that runs other components and have an API and data mesh service.",
   "main": "lib/system/mesh.js",
   "scripts": {
