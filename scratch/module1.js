@@ -35,3 +35,14 @@ Module.prototype.strayTimeout = function($happn, callback) {
     callback(null, 'REPLY');
   }, 1000);
 }
+
+Module.prototype.circular = function(data, callback) {
+  callback(null, 'REPLY');
+}
+
+
+Module.prototype.serverCircular = function(callback) {
+  var data = {a: 1};
+  data.b = data;
+  callback(null, data);
+}
