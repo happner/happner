@@ -1,0 +1,44 @@
+<head>
+    <script src='/mesh1/api/client'></script>
+</head>
+<body>
+    <script>
+        // MeshClient('localhost', 3001, 'SEcREt', function(e, client) {
+        MeshClient('SEcREt', function(e, client) {
+
+            if (e) return console.log('MESH ERRROR:', e);
+
+            console.log('CLIENT READY:', client);
+
+            // client.api.event.component1.on('mooi', function(d) {
+            //     console.log(d.payload.data)
+            // }, function() {})
+
+            // client.api.event.component1.on('mooj', function(d) {
+            //     console.log(d.payload.data)
+            // }, function() {})
+
+            // client.api.exchange.component1.slow(function(err, res) {
+            //     console.log('ERR', err);
+            //     console.log('RES', res);
+            // });
+
+            client.api.exchange.component1.strayTimeout(function(err, res) {
+                try {
+                    console.log('ERR1', err.toString());
+                    console.log('ERR1', err.data);
+                } catch(e) {}
+                console.log('RES1', res);
+
+                // client.api.exchange.component1.strayTimeout(function(err, res) {
+                //     console.log('ERR2', err);
+                //     console.log('RES2', res);
+                // });
+
+
+            });
+
+
+        });
+    </script>
+</body>
