@@ -463,7 +463,8 @@ describe('mesh awareness via $happn injection', function() {
         "meshName": "mesh1",
         "moduleName": "module3",
         "setOptions": {
-          "noStore": true
+          "noStore": true,
+          "timeout": 10000
         },
         "web": {
           "routes": {
