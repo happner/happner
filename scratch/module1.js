@@ -26,11 +26,12 @@ function MyError(message, data) {
 MyError.prototype = Object.create(Error.prototype);
 MyError.prototype.constructor = MyError;
 
+Module.prototype.broken = function(callback) {
+  throw new MyError('Oh no.', {da: 'ta'});
+}
+
 
 Module.prototype.strayTimeout = function($happn, callback) {
-
-  // throw new MyError('Oh no.', {da: 'ta'});
-
   setTimeout(function() {
     callback(null, 'REPLY');
   }, 1000);
