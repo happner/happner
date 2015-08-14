@@ -26,7 +26,7 @@ config = {
 
 pending
 
-### Datalayer
+### DataLayer
 
 pending
 
@@ -39,6 +39,31 @@ pending
 pending
 
 ### Modules
+
+This section of config should list modules to be loaded into the mesh as follows:
+
+```javascript
+  ...
+  modules: {
+    'class-module': {
+      path: '/path/to/module1',
+      construct: {
+        parameters: [
+          {value: ''}
+        ]
+      }
+    },
+    'factory-module': {
+      path: '/path/to/module1',
+      create: {
+        parameters: [
+          {value: ''}
+        ]
+      }
+    }
+  }
+  ...
+```
 
 #### Modules from Classes
 
