@@ -47,3 +47,7 @@ Module.prototype.serverCircular = function(callback) {
   data.b = data;
   callback(null, data);
 }
+
+Module.prototype.method = function(callback) {
+  callback(null, {data:1});
+}
