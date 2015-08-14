@@ -54,7 +54,7 @@ This section of config should list modules to be loaded into the mesh as follows
       }
     },
     'factory-module': {
-      path: '/path/to/module1',
+      path: '/path/to/module2',
       create: {
         parameters: [
           {value: ''}
