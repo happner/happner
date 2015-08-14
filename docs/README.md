@@ -3,11 +3,11 @@
 Mesh configuration contains several sections.
 
 * [Name](#name)
-* [DataLayer](#DataLayer)
-* [Endpoints](#Endpoints)
-* [Proxy](#Proxy)
-* [Modules](#Modules)
-* [Components](#Components)
+* [DataLayer](#dataLayer)
+* [Endpoints](#endpoints)
+* [Proxy](#proxy)
+* [Modules](#modules)
+* [Components](#components)
 
 These are arranged as a set of key/value pairs on the config object:
 
@@ -18,7 +18,7 @@ config = {
     endpoints: {},
     proxy: {},
     modules: {},
-    comonents: {}
+    components: {}
 }
 ```
 
