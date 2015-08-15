@@ -84,7 +84,7 @@ The above will result in the initialization of the two modules named `class-modu
 The `path`, `construct` and `create` config elements are optional. 
 
 * `path` - If unspecified the mesh initializer will assume that the module name is the same as the `node_module` name and will be called by `require()` as is.
-* `construct` - Need only be specified if the module definition is a `class` and the defaults don't apply. See [Modules from Classes](modules-from-classes) below.
+* `construct` - Need only be specified if the module definition is a `class` and the defaults don't apply. <br/> See [Modules from Classes](modules-from-classes) below.
 * `create` - Will need to be specified if the module should be created using a factory function. See [Modules from Factories](#modules-from-factories)
 
 #### Modules from Classes
