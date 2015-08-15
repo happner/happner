@@ -30,13 +30,15 @@ pending
 
 [&#9650;](#configuration)
 
+See also: [What is the DataLayer](datalayer.md#what-is-the-datalayer)
+
 pending
 
 ### Endpoint Config
 
 [&#9650;](#configuration)
 
-See also: [What are Endpoints?](#pending)
+See also: [What are Endpoints?](#endpoints.md/what-are-endpoints)
 
 pending
 
@@ -44,7 +46,7 @@ pending
 
 [&#9650;](#configuration)
 
-See also: [What are Proxy?](#pending)
+See also: [What are Proxy?](#proxy.md/what-is-the-proxy-pipeline)
 
 pending
 
@@ -52,7 +54,7 @@ pending
 
 [&#9650;](#configuration)
 
-See also: [What are Modules?](#pending)
+See also: [What are Modules?](#modules/what-are-modules)
 
 This section of config should list modules to be loaded into the mesh as follows:
 
@@ -281,6 +283,6 @@ module.exports.method2 = function() {}
 
 [&#9650;](#configuration)
 
-See also: [What are Components?](#pending)
+See also: [What are Components?](#components/what-are-components)
 
 pending
