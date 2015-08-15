@@ -1,0 +1,3 @@
+## Endpoints
+
+### What are Endpoints
