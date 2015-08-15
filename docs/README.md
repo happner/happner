@@ -243,7 +243,7 @@ module.exports.createThing = function(param1, callback) {
 
 #### Modules from Modules
 
-The most simple case. Modules are used directly as exported by the mesh. All exported methods become accessable to components (depending on the [Component Config](#component-config))
+The most simple case. Modules are used directly as exported.
 
 eg.
 
