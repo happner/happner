@@ -110,7 +110,7 @@ The full config set looks something like this:
 The `name` and `parameters` config elements are only necessary as follows:
 
 * `name` - Need only be specified if the class to be instantiated is nested within the module.<br/>eg. `new moduleName.SomeThing()` as opposed to `new moduleName()`
-* `parameters` - Need only be specified if arguments should be passed to the constructor.<br/>eg. `new moduleName.SomeThing('A', 'B')`
+* `parameters` - Need only be specified if arguments should be passed to the constructor.<br/>eg. `new moduleName.SomeThing('A', 'B')`<br/>Note that the `parameters.name` serves only informationally and is not reqired, the args are positioned into the constructor per their position in the parameters array.
 
 ##### Example cases.
 
@@ -118,13 +118,40 @@ __in__ `node_modules/module-name/index.js`
 ```javascript
 module.exports = ModuleName;
 function ModuleName() {}
-ModuuleName.prototype.method = function() {}
+ModuleName.prototype.method = function() {}
 ```
 __Required config__
 ```javascript
   ...
   modules: {
     'module-name': {}
+  }
+  ...
+```
+
+__in__ `lib/module-name.js`
+```javascript
+module.exports.SomeThing = SomeThing;
+function SomeThing(param1) {
+  this.param1 = param1;
+}
+SomeThing.prototype.method = function() {
+  this.param1;
+}
+```
+__Required config__
+```javascript
+  ...
+  modules: {
+    'some-thing': {
+      path: __dirname + '/lib/module-name.js',
+      construct: {
+        name: 'SomeThing',
+        parameters: [
+          {name: 'param1', value: 'A'}
+        ]
+      }
+    }
   }
   ...
 ```
