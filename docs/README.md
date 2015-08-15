@@ -247,7 +247,7 @@ The most simple case. Modules are used directly as exported.
 
 eg.
 
-__in__ `node_modules/
+__in__ `node_modules/module-name/index.js`
 ```javascript
 module.exports.method1 = function() {}
 module.exports.method2 = function() {}
