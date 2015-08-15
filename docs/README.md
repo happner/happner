@@ -183,7 +183,7 @@ SomeThing.prototype.method = function() {
 
 #### Modules from Factories
 
-Use the `create: {}` config element to initialize modules from synchronous ar asynchronous functions that return or callback with the module definition.
+Use the `create: {}` config element to initialize modules from synchronous or asynchronous functions that return or callback with the module definition.
 
 The full config set looks something like this:
 
@@ -243,8 +243,38 @@ module.exports.createThing = function(param1, callback) {
 
 #### Modules from Modules
 
+The most simple case. Modules are used directly as exported by the mesh. All exported methods become accessable to components (depending on the [Component Config](#component-config))
+
+eg.
+
+__in__ `node_modules/
+```javascript
+module.exports.method1 = function() {}
+module.exports.method2 = function() {}
+```
+```javascript
+  ...
+  modules: {
+    'module-name': {}
+  }
+  ...
+```
 
 #### TODO Modules from Instance
+
+(something like) eg.
+
+```javascript
+  ...
+  modules: {
+    'module-name': {
+      instance: {
+        method1: function($happn) {}
+      }
+    }
+  }
+  ...
+```
 
 
 ### Component Config
