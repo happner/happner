@@ -38,7 +38,7 @@ pending
 
 [&#9650;](#configuration)
 
-See also: [What are Endpoints?](#endpoints.md/what-are-endpoints)
+See also: [What are Endpoints?](endpoints.md#mdwhat-are-endpoints)
 
 pending
 
@@ -46,7 +46,7 @@ pending
 
 [&#9650;](#configuration)
 
-See also: [What are Proxy?](#proxy.md/what-is-the-proxy-pipeline)
+See also: [What are Proxy?](proxy.md#what-is-the-proxy-pipeline)
 
 pending
 
@@ -54,7 +54,7 @@ pending
 
 [&#9650;](#configuration)
 
-See also: [What are Modules?](#modules/what-are-modules)
+See also: [What are Modules?](modules.md#what-are-modules)
 
 This section of config should list modules to be loaded into the mesh as follows:
 
@@ -283,6 +283,6 @@ module.exports.method2 = function() {}
 
 [&#9650;](#configuration)
 
-See also: [What are Components?](#components/what-are-components)
+See also: [What are Components?](components.md#what-are-components)
 
 pending
