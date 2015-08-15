@@ -1,3 +1,3 @@
 ## Proxy
 
-### What is the Proxy Pipeline
+### What is the Proxy Pipeline?

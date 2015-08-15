@@ -30,7 +30,7 @@ pending
 
 [&#9650;](#configuration)
 
-See also: [What is the DataLayer](datalayer.md#what-is-the-datalayer)
+See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
 pending
 
@@ -46,7 +46,7 @@ pending
 
 [&#9650;](#configuration)
 
-See also: [What are Proxy?](proxy.md#what-is-the-proxy-pipeline)
+See also: [What is the Proxy Pipeline?](proxy.md#what-is-the-proxy-pipeline)
 
 pending
 
