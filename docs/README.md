@@ -210,7 +210,7 @@ The full config set looks something like this:
   ...
 ```
 
-Most of the above config is only necessary in cases where modules being initialized deviate from the popular norms.
+Most of the above config is only necessary in cases where modules being initialized deviate from popular norms.
 
 * `type` - is necessary only to specify asynchronous. It defaults to `sync`.
 * `parameters` - is only necessary if args need to be passed.
