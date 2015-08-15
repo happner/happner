@@ -61,7 +61,7 @@ This section of config should list modules to be loaded into the mesh as follows
   modules: {
     'class-module': {
       path: '/path/to/module1',
-      construct: {
+      construct: {  // <------------- versus
         parameters: [
           {value: ''}
         ]
@@ -69,7 +69,7 @@ This section of config should list modules to be loaded into the mesh as follows
     },
     'factory-module': {
       path: '/path/to/module2',
-      create: {
+      create: {     // <------------- versus
         parameters: [
           {value: ''}
         ]
