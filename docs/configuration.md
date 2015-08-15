@@ -156,7 +156,7 @@ SomeThing.prototype.method = function() {
   ...
 ```
 
-__in__ `./lib/module.js
+__in__ `./lib/module.js`
 ```javascript
 module.exports = function(param1) {
   return new SomeThing(param1)
