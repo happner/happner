@@ -109,13 +109,32 @@ The full config set looks something like this:
 
 The `name` and `parameters` config elements are only necessary as follows:
 
-* `name` - Need only be specified if the class to be instanciated is nested within the module.<br/>eg. `new moduleName.SomeThing()`
+* `name` - Need only be specified if the class to be instantiated is nested within the module.<br/>eg. `new moduleName.SomeThing()` as opposed to `new moduleName()`
 * `parameters` - Need only be specified if arguments should be passed to the constructor.<br/>eg. `new moduleName.SomeThing('A', 'B')`
+
+##### Example cases.
+
+__in__ `node_modules/module-name/index.js`
+```javascript
+module.exports = ModuleName;
+function ModuleName() {}
+ModuuleName.prototype.method = function() {}
+```
+__Required config__
+```javascript
+  ...
+  modules: {
+    'module-name': {}
+  }
+  ...
+```
 
 
 #### Modules from Factories
 
-#### Defaults
+
+#### Modules from Modules
+
 
 ### Component Config
 
