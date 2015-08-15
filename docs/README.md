@@ -120,7 +120,6 @@ module.exports = ModuleName;
 function ModuleName() {}
 ModuleName.prototype.method = function() {}
 ```
-__Required config__
 ```javascript
   ...
   modules: {
@@ -139,7 +138,6 @@ SomeThing.prototype.method = function() {
   this.param1;
 }
 ```
-__Required config__
 ```javascript
   ...
   modules: {
@@ -168,7 +166,6 @@ SomeThing.prototype.method = function() {
   this.param1;
 }
 ```
-__Required config__
 ```javascript
   ...
   modules: {
