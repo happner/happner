@@ -183,6 +183,63 @@ SomeThing.prototype.method = function() {
 
 #### Modules from Factories
 
+Use the `create: {}` config element to initialize modules from synchronous ar asynchronous functions that return or callback with the module definition.
+
+The full config set looks something like this:
+
+```javascript
+  ...
+  'module-name': {
+    path: '...',
+    create: {
+      name: 'createObject',
+      type: 'async',
+      parameters: [
+        {name: 'param1', value: 'A'},
+        {name: 'param2', value: 'B'},
+        {name: 'callback', parameterType: 'callback'}
+      ],
+      callback: {
+        parameters: [
+          {name: 'err', parameterType: 'error'},
+          {name: 'res', parameterType: 'instance'}
+        ]
+      }
+    }
+  }
+  ...
+```
+
+Most of the above config is only necessary in cases where modules being initialized deviate from the popular norms.
+
+* `type` - is necessary only to specify asynchronous. It defaults to `sync`.
+* `parameters` - is only necessary if args need to be passed.
+* `parameters.callback` - of `parameterType: 'callback'` is only necessary if the callback is in a peculiar argument position. It will default into the last position and need not be specified even when specifying the preceding args.
+* `callback` - with `parameters` need only be specified if the callback employs something other than the standard `(error, result)` signature. The `result` is assumed to be the module `instance` to be used by the mesh.
+
+##### Example cases.
+
+__in__ `node_modules/module-name/index.js`
+```javascript
+module.exports.createThing = function(param1, callback) {
+  SomeKindOfRemoteThing.get(param1, function(err, instance) {
+    callback(err, instance);
+  });
+}
+```
+```javascript
+  ...
+  'module-name': {
+    create: {
+      name: 'createThing',
+      type: 'async',
+      parameters: [
+        {name: 'param1', value: 'https://www.'},
+      ]
+    }
+  }
+  ...
+```
 
 #### Modules from Modules
 
