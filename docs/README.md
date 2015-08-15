@@ -129,7 +129,7 @@ __Required config__
   ...
 ```
 
-__in__ `lib/module-name.js`
+__in__ `./lib/module-name.js`
 ```javascript
 module.exports.SomeThing = SomeThing;
 function SomeThing(param1) {
@@ -156,11 +156,41 @@ __Required config__
   ...
 ```
 
+__in__ `./lib/module.js
+```javascript
+module.exports = function(param1) {
+  return new SomeThing(param1)
+}
+function SomeThing(param1) {
+  this.param1 = param1;
+}
+SomeThing.prototype.method = function() {
+  this.param1;
+}
+```
+__Required config__
+```javascript
+  ...
+  modules: {
+    'some-thing': {
+      path: __dirname + '/lib/module.js',
+      construct: {
+        parameters: [
+          {name: 'param1', value: 'A'}
+        ]
+      }
+    }
+  }
+  ...
+```
 
 #### Modules from Factories
 
 
 #### Modules from Modules
+
+
+#### TODO Modules from Instance
 
 
 ### Component Config
