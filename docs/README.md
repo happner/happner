@@ -81,7 +81,7 @@ This section of config should list modules to be loaded into the mesh as follows
 
 The above will result in the initialization of the two modules named `class-module` and `factory-module`. These names can then be used in the [Component Config](#component-config) to create mesh components that use these modules.
 
-The `path`, `construct` and `create` config elements are optional. 
+The `path`, `construct` and `create` config elements are only necessary as follows:
 
 * `path` - If unspecified the mesh initializer will assume that the module name is the same as the `node_module` name and will be called by `require()` as is.
 * `construct` - Need only be specified if the module definition is a `class` and the defaults don't apply. <br/>See [Modules from Classes](modules-from-classes) below.
@@ -97,15 +97,20 @@ The full config set looks something like this:
   ...
   'module-name': {
     construct: {
-      name: 'Client',
+      name: 'SomeThing',
       parameters: [
-        {name: 'arg1', value: 'A'},
-        {name: 'arg2', value: 'B'}
+        {name: 'param1', value: 'A'},
+        {name: 'param2', value: 'B'}
       ]
     }
   }
   ...
 ```
+
+The `name` and `parameters` config elements are only necessary as follows:
+
+* `name` - Need only be specified if the class to be instanciated is nested within the module.<br/>eg. `new moduleName.SomeThing()`
+* `parameters` - Need only be specified if arguments should be passed to the constructor.<br/>eg. `new moduleName.SomeThing('A', 'B')`
 
 
 #### Modules from Factories
