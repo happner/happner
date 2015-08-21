@@ -503,7 +503,7 @@ describe('mesh awareness via $happn injection', function() {
     })
   });
 
-  it.only('injects happn into middle of webmethod args', function(done) {
+  it('injects happn into middle of webmethod args', function(done) {
 
     request('http://localhost:3001/mesh1/webComponent1/methodWithHappnInEnd', function(err, res) {
       var response = JSON.parse(res.body);
