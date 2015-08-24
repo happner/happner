@@ -1,6 +1,6 @@
 ## Introduction
 
-...
+Happngin is a cloud application platform ideal for integrating multiple micro services into a unified offering. It enables the creation of an interconnected mesh of components capable of interacting both locally and remotely. The mesh components can easily call upon each other's methods or listen to each other's events in a manner uncomplicated by remoteness.
 
 ## Contents
 
