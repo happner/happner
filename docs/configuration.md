@@ -24,7 +24,7 @@ config = {
 
 ### Mesh Name
 
-pending
+This is the name of the mesh and serves to uniquely identify it in it's network.
 
 ### DataLayer Config
 
@@ -32,7 +32,31 @@ pending
 
 See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
-pending
+The dataLayer config section can contain the following items:
+
+```javascript
+  ...
+  datalayer: {
+    host: 'localhost',
+    port: 8000,
+    authTokenSecret: 'secret',
+    systemSecret: 'secret',
+    log_level: 'info|error|warning',
+    setOptions: {
+      noStore: true,
+      timeout: 10000
+    },
+  }
+  ...
+```
+
+`host` - The host (ip/interface) for this mesh to listen on. __Defaults to localhost.__ <br/>
+`port` - The port to listen on. __Defaults to 8000.__ <br/>
+`authTokenSecret` - Used to ???
+`systemSecret` - Simple authentication for remote MeshNodes and browser clients to attach to this MeshNode. </br>
+`log_level` - Just that.<br/>
+`setOptions.noStore` - Flag to enable/disable storage of messages between MeshNodes. __Default to true__ <br/>
+`setOptions.timeout` - Timeout for remote messaging and method calls. __Defaults to 10000__<br/>
 
 ### Endpoint Config
 
@@ -115,7 +139,7 @@ The `name` and `parameters` config elements are only necessary as follows:
 * `parameters` - Need only be specified if arguments should be passed to the constructor.<br/>eg. `new moduleName.SomeThing('A', 'B')`<br/>Note that the `parameters.name` serves only informationally and is not reqired, the args are positioned into the constructor per their position in the parameters array.
 
 ##### Example cases.
-
+###### Example 1 (default as class)
 __in__ `node_modules/module-name/index.js`
 ```javascript
 module.exports = ModuleName;
@@ -130,6 +154,7 @@ ModuleName.prototype.method = function() {}
   ...
 ```
 
+###### Example 2 (nested class)
 __in__ `./lib/module-name.js`
 ```javascript
 module.exports.SomeThing = SomeThing;
@@ -156,6 +181,7 @@ SomeThing.prototype.method = function() {
   ...
 ```
 
+###### Example 3 (class factory)
 __in__ `./lib/module.js`
 ```javascript
 module.exports = function(param1) {
@@ -220,7 +246,7 @@ Most of the above config is only necessary in cases where modules being initiali
 * `callback` - with `parameters` need only be specified if the callback employs something other than the standard `(error, result)` signature. The `result` is assumed to be the module `instance` to be used by the mesh.
 
 ##### Example cases.
-
+###### Example 1 (async factory)
 __in__ `node_modules/module-name/index.js`
 ```javascript
 module.exports.createThing = function(param1, callback) {
