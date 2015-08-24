@@ -1,4 +1,4 @@
 ## Community Modules
 
-[happngin-assets](https://www.npmjs.com/package/happngin-assets)
+[__happngin-assets__](https://www.npmjs.com/package/happngin-assets)<br/>
 Happngin javascript, stylesheet and angular template production packager.
