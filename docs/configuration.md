@@ -1,5 +1,7 @@
 ## Configuration
 
+[&#9664;](readme.md)
+
 Mesh configuration contains several sections.
 
 * [Mesh Name](#mesh-name)
