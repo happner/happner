@@ -58,7 +58,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
-__NOTE:__ The `config.dataLayer` section need not be specified if all defaults are acceptable.
+__NOTE:__ The `config.dataLayer` section can be omitted if all defaults are acceptable.
 
 ### Endpoint Config
 
@@ -316,8 +316,6 @@ module.exports.method2 = function() {}
   ...
 ```
 
-__NOTE:__ The `config.modules` section can be omitted if the [Components (see below)](#component-config) are calling modules that require no config and are named after their `require()` name.
-
 #### TODO Modules from Instance
 
 (something like) eg.
@@ -333,6 +331,8 @@ __NOTE:__ The `config.modules` section can be omitted if the [Components (see be
   }
   ...
 ```
+
+__NOTE:__ The `config.modules` section can be omitted if the [Components (see below)](#component-config) are calling modules that require no config and are named after their `require()` name.
 
 
 ### Component Config
