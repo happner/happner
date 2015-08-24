@@ -52,7 +52,7 @@ The dataLayer config section can contain the following items:
 
 `host` - The host (ip/interface) for this mesh to listen on. __Defaults to localhost.__ <br/>
 `port` - The port to listen on. __Defaults to 8000.__ <br/>
-`authTokenSecret` - Used to ???
+`authTokenSecret` - Used to ???<br/>
 `systemSecret` - Simple authentication for remote MeshNodes and browser clients to attach to this MeshNode. </br>
 `log_level` - Just that.<br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages between MeshNodes. __Default to true__ <br/>
