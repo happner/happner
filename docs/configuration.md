@@ -7,7 +7,6 @@ Mesh configuration contains several sections.
 * [Mesh Name](#mesh-name)
 * [DataLayer Config](#datalayer-config)
 * [Endpoint Config](#endpoint-config)
-* [Proxy Config](#proxy-config)
 * [Module Config](#module-config)
 * [Component Config](#component-config)
 
@@ -18,7 +17,6 @@ config = {
     name: 'mesh-name',
     dataLayer: {},
     endpoints: {},
-    proxy: {},
     modules: {},
     components: {}
 }
@@ -95,14 +93,6 @@ The above attaches __this__ MeshNode to two remote MeshNodes.
 `.secret` - The remote MeshNode secret (as configured in the remote's `config.dataLayer.systemSecret`)<br/>
 
 __NOTE:__ The `config.endpoints` section can be omitted if __this__ MeshNode attaches to no other.
-
-### Proxy Config
-
-[&#9650;](#configuration)
-
-See also: [What is the Proxy Pipeline?](proxy.md#what-is-the-proxy-pipeline)
-
-pending
 
 ### Module Config
 
