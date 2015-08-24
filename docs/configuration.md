@@ -66,6 +66,35 @@ The dataLayer config section need not be specified at all if all defaults are ac
 
 See also: [What are Endpoints?](endpoints.md#mdwhat-are-endpoints)
 
+The endpoints config section should list all remote MeshNodes to which this MeshNode should attach upon initialization - as follows:
+
+```javascript
+  ...
+  endpoints: {
+    'quay1-berth1-crane1': {
+      host: 'crane1.berth1.quay1.harbour.com',
+      port: 919,
+      secret: 'ƒ¡ƒ†¥'
+    },
+    'quay1-berth2-crane1': {
+      host: 'crane1.berth2.quay1.harbour.com',
+      port: 919,
+      secret: 'ƒ¡ƒ†¥'
+    },
+  }
+  ...
+```
+
+The above attaches this MeshNode to two remote MeshNodes.
+
+`quay1-berth1-crane1` - The remote MeshNode's name (as configured in the remote's `config.name`)<br/>
+`.host` - The remote MeshNode ip/hostname (as configured in the remote's dataLayer.host)<br/>
+`.port` - The remote MeshNode post (as configured in the remote's dataLayer.port)<br/>
+`.secret` - The remote MeshNode secret (as configured in the remote's dataLayer.systemSecret)<br/>
+
+
+
+
 pending
 
 ### Proxy Config
