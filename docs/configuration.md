@@ -1,6 +1,6 @@
 ## Configuration
 
-[&#9664;](readme.md)contents|datalayer[&#9654;](datalayer.md)
+[&#9664;](readme.md)contents | datalayer[&#9654;](datalayer.md)
 
 Mesh configuration contains several sections.
 
