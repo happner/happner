@@ -24,7 +24,7 @@ config = {
 
 ### Mesh Name
 
-`config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
+The `config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
 
 ### DataLayer Config
 
@@ -58,7 +58,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
-The `config.dataLayer` section need not be specified if all defaults are acceptable.
+__NOTE:__ The `config.dataLayer` section need not be specified if all defaults are acceptable.
 
 ### Endpoint Config
 
@@ -92,7 +92,7 @@ The above attaches __this__ MeshNode to two remote MeshNodes.
 `.port` - The remote MeshNode post (as configured in the remote's `config.dataLayer.port`)<br/>
 `.secret` - The remote MeshNode secret (as configured in the remote's `config.dataLayer.systemSecret`)<br/>
 
-This `config.endpoints` section can be omitted if __this__ MeshNode attaches to no other.
+__NOTE:__ The `config.endpoints` section can be omitted if __this__ MeshNode attaches to no other.
 
 ### Proxy Config
 
@@ -315,6 +315,8 @@ module.exports.method2 = function() {}
   }
   ...
 ```
+
+__NOTE:__ The `config.modules` section can be omitted if the [Components (see below)](#component-config) are calling modules that require no config and are named after their `require()` name.
 
 #### TODO Modules from Instance
 
