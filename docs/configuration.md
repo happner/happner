@@ -92,7 +92,7 @@ The above attaches this MeshNode to two remote MeshNodes.
 `.port` - The remote MeshNode post (as configured in the remote's `config.dataLayer.port`)<br/>
 `.secret` - The remote MeshNode secret (as configured in the remote's `config.dataLayer.systemSecret`)<br/>
 
-
+This `config.endpoints` section can be omitted if the MeshNode attaches to no other.
 
 ### Proxy Config
 
