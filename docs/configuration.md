@@ -88,9 +88,9 @@ The endpoints config section should list all remote MeshNodes to which this Mesh
 The above attaches this MeshNode to two remote MeshNodes.
 
 `quay1-berth1-crane1` - The remote MeshNode's name (as configured in the remote's `config.name`)<br/>
-`.host` - The remote MeshNode ip/hostname (as configured in the remote's dataLayer.host)<br/>
-`.port` - The remote MeshNode post (as configured in the remote's dataLayer.port)<br/>
-`.secret` - The remote MeshNode secret (as configured in the remote's dataLayer.systemSecret)<br/>
+`.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.dataLayer.host`)<br/>
+`.port` - The remote MeshNode post (as configured in the remote's `config.dataLayer.port`)<br/>
+`.secret` - The remote MeshNode secret (as configured in the remote's `config.dataLayer.systemSecret`)<br/>
 
 
 
