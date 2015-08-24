@@ -39,7 +39,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
   datalayer: {
     host: 'localhost',
     port: 8000,
-    authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
+    authTokenSecret: 'mesh',
     systemSecret: 'mesh',
     log_level: 'info|error|warning',
     setOptions: {
@@ -52,7 +52,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 
 `host` - The host (ip/interface) for __this__ MeshNode to listen on.<br/>
 `port` - The port to listen on.<br/>
-`authTokenSecret` - Used to encrypt the session webtoken. __(???more???)__<br/>
+`authTokenSecret` - Used to encrypt the session webtoken. <br/>
 `systemSecret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
 `log_level` - Just that.<br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
