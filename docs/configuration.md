@@ -58,7 +58,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 `setOptions.noStore` - Flag to enable/disable storage of messages between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
-The `config.dataLayer` section need not be specified at all if all defaults are acceptable.
+The `config.dataLayer` section need not be specified if all defaults are acceptable.
 
 ### Endpoint Config
 
