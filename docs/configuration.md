@@ -52,7 +52,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 
 `host` - The host (ip/interface) for __this__ MeshNode to listen on.<br/>
 `port` - The port to listen on.<br/>
-`authTokenSecret` - Used to ???<br/>
+`authTokenSecret` - Used to encrypt the session webtoken. __(???more???)__<br/>
 `systemSecret` - Simple authentication. Other MeshNodes and browser clients can use this secret.</br>
 `log_level` - Just that.<br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
