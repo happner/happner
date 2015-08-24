@@ -24,7 +24,7 @@ config = {
 
 ### Mesh Name
 
-This is the name of the mesh and serves to uniquely identify it in it's network.
+`config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
 
 ### DataLayer Config
 
@@ -50,12 +50,12 @@ The `config.dataLayer` section can contain the following items (shown with defau
   ...
 ```
 
-`host` - The host (ip/interface) for this mesh to listen on.<br/>
+`host` - The host (ip/interface) for __this__ MeshNode to listen on.<br/>
 `port` - The port to listen on.<br/>
 `authTokenSecret` - Used to ???<br/>
 `systemSecret` - Simple authentication. Other MeshNodes and browser clients can use this secret.</br>
 `log_level` - Just that.<br/>
-`setOptions.noStore` - Flag to enable/disable storage of messages between MeshNodes.<br/>
+`setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
 The `config.dataLayer` section need not be specified if all defaults are acceptable.
@@ -66,7 +66,7 @@ The `config.dataLayer` section need not be specified if all defaults are accepta
 
 See also: [What are Endpoints?](endpoints.md#mdwhat-are-endpoints)
 
-The `config.endpoints` section should list all remote MeshNodes to which this MeshNode should attach upon initialization - as follows:
+The `config.endpoints` section should list all remote MeshNodes to which __this__ MeshNode should attach upon initialization - as follows:
 
 ```javascript
   ...
@@ -85,14 +85,14 @@ The `config.endpoints` section should list all remote MeshNodes to which this Me
   ...
 ```
 
-The above attaches this MeshNode to two remote MeshNodes.
+The above attaches __this__ MeshNode to two remote MeshNodes.
 
 `quay1-berth1-crane1` - The remote MeshNode's name (as configured in the remote's `config.name`)<br/>
 `.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.dataLayer.host`)<br/>
 `.port` - The remote MeshNode post (as configured in the remote's `config.dataLayer.port`)<br/>
 `.secret` - The remote MeshNode secret (as configured in the remote's `config.dataLayer.systemSecret`)<br/>
 
-This `config.endpoints` section can be omitted if the MeshNode attaches to no other.
+This `config.endpoints` section can be omitted if __this__ MeshNode attaches to no other.
 
 ### Proxy Config
 
