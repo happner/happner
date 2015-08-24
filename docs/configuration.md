@@ -32,7 +32,7 @@ This is the name of the mesh and serves to uniquely identify it in it's network.
 
 See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
-The dataLayer config section can contain the following items:
+The dataLayer config section can contain the following items (shown with defaults):
 
 ```javascript
   ...
@@ -50,13 +50,13 @@ The dataLayer config section can contain the following items:
   ...
 ```
 
-`host` - The host (ip/interface) for this mesh to listen on. __Defaults to 'localhost'.__ <br/>
-`port` - The port to listen on. __Defaults to 8000.__ <br/>
-`authTokenSecret` - Used to ??? __Defaults to 'a256a2fd43bf441483c5177fc85fd9d3__' <br/>
-`systemSecret` - Simple authentication for remote MeshNodes and browser clients to attach to this MeshNode. __Defaults to 'mesh'__</br>
-`log_level` - Just that. __Defaults to 'info|error|warning'__<br/>
-`setOptions.noStore` - Flag to enable/disable storage of messages between MeshNodes. __Default to true__ <br/>
-`setOptions.timeout` - Timeout for remote messaging and method calls. __Defaults to 10000__<br/>
+`host` - The host (ip/interface) for this mesh to listen on.<br/>
+`port` - The port to listen on.<br/>
+`authTokenSecret` - Used to ???<br/>
+`systemSecret` - Simple authentication. Other MeshNodes and browser clients can use this secret.</br>
+`log_level` - Just that.<br/>
+`setOptions.noStore` - Flag to enable/disable storage of messages between MeshNodes.<br/>
+`setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
 The dataLayer config section need not be specified at all if all defaults are acceptable.
 
