@@ -32,7 +32,7 @@ This is the name of the mesh and serves to uniquely identify it in it's network.
 
 See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
-The dataLayer config section can contain the following items (shown with defaults):
+The `config.dataLayer` section can contain the following items (shown with defaults):
 
 ```javascript
   ...
@@ -58,7 +58,7 @@ The dataLayer config section can contain the following items (shown with default
 `setOptions.noStore` - Flag to enable/disable storage of messages between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
-The dataLayer config section need not be specified at all if all defaults are acceptable.
+The `config.dataLayer` section need not be specified at all if all defaults are acceptable.
 
 ### Endpoint Config
 
@@ -66,7 +66,7 @@ The dataLayer config section need not be specified at all if all defaults are ac
 
 See also: [What are Endpoints?](endpoints.md#mdwhat-are-endpoints)
 
-The endpoints config section should list all remote MeshNodes to which this MeshNode should attach upon initialization - as follows:
+The `config.endpoints` section should list all remote MeshNodes to which this MeshNode should attach upon initialization - as follows:
 
 ```javascript
   ...
@@ -94,9 +94,6 @@ The above attaches this MeshNode to two remote MeshNodes.
 
 
 
-
-pending
-
 ### Proxy Config
 
 [&#9650;](#configuration)
@@ -111,7 +108,7 @@ pending
 
 See also: [What are Modules?](modules.md#what-are-modules)
 
-This section of config should list modules to be loaded into the mesh as follows:
+The `config.module` section should list modules to be loaded into the mesh as follows:
 
 ```javascript
   ...
