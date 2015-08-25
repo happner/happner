@@ -1,4 +1,4 @@
-[&#9664;](readme.md) contents | datalayer [&#9654;](datalater.md)
+[&#9664;](readme.md) contents | datalayer [&#9654;](datalayer.md)
 
 ## Configuration
 
