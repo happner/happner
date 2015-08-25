@@ -6,7 +6,7 @@ Happngin also provides a set of built in components to facilitate providing the 
 
 [&#9654;](quickstart.md) Quick Start<br/>
 
-## Contents
+## Documentation
 
 [&#9654;](configuration.md) Configuation<br/>
 [&#9654;](datalayer.md) DataLayer<br/>
