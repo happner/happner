@@ -1,6 +1,6 @@
-## Configuration
-
 [&#9664;](readme.md) contents | starting a mesh node [&#9654;](starting.md)
+
+## Configuration
 
 Mesh configuration contains several sections.
 
