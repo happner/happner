@@ -16,6 +16,7 @@ These are arranged as a set of key/value pairs on the config object:
 ```javascript
 config = {
     name: 'mesh',
+    util: {},
     dataLayer: {},
     endpoints: {},
     modules: {},
