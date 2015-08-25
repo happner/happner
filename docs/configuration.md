@@ -343,7 +343,7 @@ __NOTE:__ The `config.modules` section can be omitted if the [Components (see be
 
 See also: [What are Components?](components.md#what-are-components)
 
-The `config.components` section should list components to be loaded into the mesh as follows:
+The `config.components` section should list components to be loaded into the mesh. The full complement of possibly config looks as follows:
 
 ```javascript
   ...
@@ -358,6 +358,7 @@ The `config.components` section should list components to be loaded into the mes
             type: 'async',
             parameters: [
               {name: 'opts', required: true, value: {op:'tions'}},
+              {name: 'optionalOpts'},
               {name: 'callback', required: true, type: 'callback'}
             ],
             callback: {
@@ -383,6 +384,7 @@ The `config.components` section should list components to be loaded into the mes
   }
   ...
 ```
+
 
 
 
