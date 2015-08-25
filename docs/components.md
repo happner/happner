@@ -1,5 +1,5 @@
 ## Components
 
-[&#9664;](modules.md) modules | contents [&#9654;](readme.md)
+[&#9664;](modules.md) modules | client [&#9654;](client.md)
 
 ### What are Components?
