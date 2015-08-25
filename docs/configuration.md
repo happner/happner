@@ -1,4 +1,4 @@
-[&#9664;](readme.md) contents | starting a mesh node [&#9654;](starting.md)
+[&#9664;](readme.md) contents | datalayer [&#9654;](datalater.md)
 
 ## Configuration
 

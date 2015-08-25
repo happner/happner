@@ -1,4 +1,4 @@
-[&#9664;](modules.md) modules | client [&#9654;](client.md)
+[&#9664;](modules.md) modules | starting a mesh node [&#9654;](starting.md)
 
 ## Components
 
