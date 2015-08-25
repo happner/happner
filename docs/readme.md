@@ -11,5 +11,6 @@ Happngin also provides a set of built in components to facilitate providing the 
 [&#9654;](endpoints.md) Endpoints<br/>
 [&#9654;](modules.md) Modules<br/>
 [&#9654;](components.md) Components<br/>
+[&#9654;](client.md) Client<br/>
 
 [&#9654;](community.md) Community Modules<br/>
