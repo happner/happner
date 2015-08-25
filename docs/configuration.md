@@ -5,6 +5,7 @@
 Mesh configuration contains several sections.
 
 * [Mesh Name](#mesh-name)
+* [Utilities](#utilities)
 * [DataLayer Config](#datalayer-config)
 * [Endpoint Config](#endpoint-config)
 * [Module Config](#module-config)
@@ -27,6 +28,12 @@ config = {
 The `config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
 
 If the name is unspecified and the mesh has no endpoints it will default the name to 'mesh'. If their are endpoints a random default name will be used.
+
+### Utilities
+
+#### logger
+
+__pending__
 
 ### DataLayer Config
 
