@@ -1,4 +1,4 @@
-[&#9664;](modules.md) modules | starting a mesh node [&#9654;](starting.md)
+[&#9664;](modules.md) modules | events api [&#9654;](events.md)
 
 ## Components
 
