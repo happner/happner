@@ -20,7 +20,9 @@ SeeAbove.prototype.$happngin = {
       schema: {
         exclusive: true,
         methods: {
-          'methodName1': {}
+          'methodName1': {
+            alias: 'moo'
+          }
         }
       },
       web: {
@@ -51,7 +53,6 @@ describe('default component configs', function() {
     var mesh = this.mesh = this.Mesh();
     mesh.initialize({
 
-      name: 'mesh-name',
       modules: {
         'see-above': {
           path: __filename

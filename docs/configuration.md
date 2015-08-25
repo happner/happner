@@ -14,7 +14,7 @@ These are arranged as a set of key/value pairs on the config object:
 
 ```javascript
 config = {
-    name: 'mesh-name',
+    name: 'mesh',
     dataLayer: {},
     endpoints: {},
     modules: {},
@@ -25,6 +25,8 @@ config = {
 ### Mesh Name
 
 The `config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
+
+If the name is unspecified and the mesh has no endpoints it will default the name to 'mesh'. If their are endpoints a random default name will be used.
 
 ### DataLayer Config
 
@@ -54,7 +56,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 `port` - The port to listen on.<br/>
 `authTokenSecret` - Used to encrypt the session webtoken. <br/>
 `systemSecret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
-`log_level` - Just that.<br/>
+`log_level` - __?????????????????????????????????????????__<br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
@@ -333,4 +335,51 @@ __NOTE:__ The `config.modules` section can be omitted if the [Components (see be
 
 See also: [What are Components?](components.md#what-are-components)
 
-pending
+The `config.components` section should list components to be loaded into the mesh as follows:
+
+```javascript
+  ...
+  components: {
+    'name-of-component': {
+      moduleName: 'name-of-implementing-module',
+      schema: {
+        exclusive: true,
+        startMethod: 'start',
+        methods: [
+          'start': {
+            type: 'async',
+            parameters: [
+              {name: 'opts', required: true, value: {op:'tions'}},
+              {name: 'callback', required: true, type: 'callback'}
+            ],
+            callback: {
+              parameters: [
+                {name: 'error', type: "error"},
+              ]
+            }
+          },
+          'methodName1': {
+            alias: 'mn1',
+            parameters: [
+              {name: 'opts', required: true, value: {op:'tions2'}},
+              {name: 'callback', required: true, type: 'callback'}
+            ]
+          },
+          'methodName2': {}
+        ]
+      },
+      web: {
+
+      }
+    }
+  }
+  ...
+```
+
+
+
+
+
+
+
+
