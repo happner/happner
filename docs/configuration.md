@@ -43,8 +43,9 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger co
     logFile: '/absolute/path/to/file.log',
     logDateFormat: 'yyyy-MM-dd hh:mm:ss',
     logLayout: '%d{yyyy-MM-dd hh:mm:ss} - %m',
-    // logger: {},
-    logStackTraces: false
+    // logger: {}, // will silence all logging
+    logStackTraces: false,
+    logComponents: ['component', 'names'],
   }
   ...
 ```
@@ -53,9 +54,9 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger co
 `logDateFormat` - (optional) To override the date format in log messages.<br/>
 `logLayout` - (optional) Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).<br/>
 `logger` - (optional) Provide your own log4js config. All preceding config keys will have no affect.<br/>
-`logStackTraces` - (optional) Prints the error stack. Default false.
+`logStackTraces` - (optional) Prints the error stack. Default false.<br />
+`logComponents` - (optional) Prints only __debug__ and __trace__ messages for the listed names.<br/>
 
-__NOTE:__ Definining `util.logger` as empty `{}` will silence all logging.
 
 #### Using the Logger
 
@@ -406,7 +407,7 @@ __NOTE:__ The `config.modules` section can be omitted if the [Components (see be
 
 See also: [What are Components?](components.md#what-are-components)
 
-The `config.components` section should list components to be loaded into the mesh. The full complement of possibly config looks as follows:
+The `config.components` section should list components to be loaded into the mesh. The full complement of possible config looks as follows:
 
 ```javascript
   ...
@@ -447,12 +448,4 @@ The `config.components` section should list components to be loaded into the mes
   }
   ...
 ```
-
-
-
-
-
-
-
-
 

@@ -21,7 +21,7 @@ describe('Consumes an external module', function() {
     modules: {
       "happnClient":{
         path:"@smc/happn",
-        constructor:{
+        construct:{
           type:"async",
           name:"client",//if blank or null we just do new require
           parameters:[
@@ -94,7 +94,7 @@ describe('Consumes an external module', function() {
     },
   };
 
- 
+
   it('starts a local mesh', function(done) {
 
     this.timeout(10000);
@@ -149,12 +149,12 @@ describe('Consumes an external module', function() {
               response.payload.data.test.should.eql(directClientResponse.payload.data.test);
               //console.log({response: response});
               //test aliases
-               mesh.api.exchange.testMesh.happnClient.PUT('/mytest/678687', {"test":"test1"}, {}, function(e, response){
+              mesh.api.exchange.testMesh.happnClient.PUT('/mytest/678687', {"test":"test1"}, {}, function(e, response){
 
-                 response.payload.data.test.should.eql(directClientResponse.payload.data.test);
+                response.payload.data.test.should.eql(directClientResponse.payload.data.test);
 
-                 return done(e);
-               });
+                return done(e);
+              });
             });
           });
         });

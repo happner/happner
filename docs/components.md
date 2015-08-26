@@ -6,3 +6,5 @@
 
 Components are 'mesh aware' encapsulations of the Module they employ. It is the Components which become accessable as units of functionality on the mesh network.
 
+`$happngin.ignore`
+

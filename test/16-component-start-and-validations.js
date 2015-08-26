@@ -14,6 +14,7 @@ Explicit.prototype.asyncStartFails = function(callback) {
 }
 
 Explicit.prototype.methodName1 = function(opts, optionalOpts, callback) {
+  console.log('args', arguments);
   callback(null, {yip: 'eee'});
 }
 
@@ -37,6 +38,9 @@ describe('component start and validation -', function() {
 
     var mesh = this.mesh = this.Mesh();
     mesh.initialize({
+      util: {
+        // logLevel: ['error']
+      },
       dataLayer: {
         port: 8001,
         log_level: 'error'
@@ -51,7 +55,9 @@ describe('component start and validation -', function() {
           moduleName: 'expliCit',
           startMethod: 'asyncStart',
           schema: {
+            exclusive: true,
             methods: {
+              
               'asyncStart': {
                 type: 'async',
                 parameters: [
@@ -64,7 +70,17 @@ describe('component start and validation -', function() {
                     {type: 'error'}
                   ]
                 }
+              },
+
+              'methodName1': {
+                alias: 'm1',
+                parameters: [
+                  {name: 'opts', required: true, value: {op:'tions'}},
+                  {name: 'optionalOpts', required: false},
+                  {type: 'callback', required: true}
+                ]
               }
+
             }
           }
         }
@@ -102,12 +118,13 @@ describe('component start and validation -', function() {
   });
 
 
-  xit('has called back with error into the mesh start callback because the component start failed', function(done) {
-
-    // Blank this test out until the logger can be shut upped
+  it('has called back with error into the mesh start callback because the component start failed', function(done) {
 
     var anotherMesh = this.Mesh();
     anotherMesh.initialize({
+      util: {
+        logger: {}
+      },
       dataLayer: {
         port: 8002,
         log_level: 'error'
@@ -151,6 +168,13 @@ describe('component start and validation -', function() {
     });
   });
 
-
+  context('method validation', function() {
+    it.only('', function(done) {
+      this.mesh.api.exchange.explicit.methodName1(function() {
+        console.log('XXX', arguments);
+      });
+      done();
+    });
+  });
 
 });
