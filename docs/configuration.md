@@ -32,9 +32,60 @@ If the name is unspecified and the mesh has no endpoints it will default the nam
 
 ### Utilities
 
-#### logger
+#### Configuring the Logger
 
-__pending__
+The MeshNode provides a [https://www.npmjs.com/package/log4js] logger configured as follows:
+
+```javascript
+  ...
+  util: {
+    logLevel: 'info',
+    logFile: '/absolute/path/to/file.log',
+    logDateFormat: 'yyyy-MM-dd hh:mm:ss',
+    logLayout: '%d{yyyy-MM-dd hh:mm:ss} - %m',
+    // logger: {}
+  }
+  ...
+```
+
+`logFile` - (optional) Must be absolute path. __If not present only the console will receive the log stream.__
+`logDateFormat` - (optional) To override the date format in log messages.
+`logLayout` - (optional) Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).
+`logger` - (optional) Provide your own log4js config. All preceding config keys will have no affect.
+
+__NOTE:__ Definining `util.logger` as empty `{}` will silence all logging.
+
+
+#### Using the Logger
+
+Mesh modules and components should use the global `UTILITIES.createLogger(name)`
+
+* It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
+* It tests for `level enabled` before calling into the logger - this minimises the impact of excessive trace and debug usage. 
+
+eg.
+
+```javascript
+module.exports = MyMeshModule;
+
+function MyMeshModule() {
+  this.log = UTILITIES.createLogger('MyMeshModule');
+  // this.log.trace('', {});
+  // this.log.debug('', {});
+  // this.log.info('', {});
+  // this.log.warn('', {});
+  // this.log.errror('..', err);
+  // this.log.fatal('..', err);
+
+  //// UTILITIES.createLogger('MyMeshModule', this);
+  //// this.info('') // it will stomp existing
+}
+MyMeshModule.prototype.m = function() {
+  this.log.trace('m()');
+}
+
+```
+
 
 ### DataLayer Config
 
