@@ -69,11 +69,11 @@ UTILITIES.log(message, level, componentName, obj)
 `componentName` - (optional) Defaults to ''<br/>
 `obj` - (optional) Object or Error<br/>
 
-
-Alternatively mesh modules and components can use `UTILITIES.createLogger(name)`
+Alternatively mesh modules and components can use `UTILITIES.createLogger(name, obj)`
 
 * It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
-* It tests for `level enabled` before calling into the logger - this minimises the impact of excessive trace and debug usage. 
+* It tests for `level enabled` before calling into the logger - this minimises the impact of excessive trace and debug usage.
+* If `obj` is provided, log methods will be created on `obj`
 
 eg.
 
