@@ -43,7 +43,8 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger co
     logFile: '/absolute/path/to/file.log',
     logDateFormat: 'yyyy-MM-dd hh:mm:ss',
     logLayout: '%d{yyyy-MM-dd hh:mm:ss} - %m',
-    // logger: {}
+    // logger: {},
+    logStackTraces: false
   }
   ...
 ```
@@ -52,13 +53,24 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger co
 `logDateFormat` - (optional) To override the date format in log messages.<br/>
 `logLayout` - (optional) Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).<br/>
 `logger` - (optional) Provide your own log4js config. All preceding config keys will have no affect.<br/>
+`logStackTraces` - (optional) Prints the error stack. Default false.
 
 __NOTE:__ Definining `util.logger` as empty `{}` will silence all logging.
 
-
 #### Using the Logger
 
-Mesh modules and components should use the global `UTILITIES.createLogger(name)`
+The logger is accessable on the global `UTILITIES`
+
+```javascript
+UTILITIES.log(message, level, componentName, obj)
+```
+
+`level` - (optional) Defaults to 'info'
+`componentName` - (optional) Defaults to ''
+`obj` - (optional) Object or Error
+
+
+Alternatively mesh modules and components can use `UTILITIES.createLogger(name)`
 
 * It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
 * It tests for `level enabled` before calling into the logger - this minimises the impact of excessive trace and debug usage. 
