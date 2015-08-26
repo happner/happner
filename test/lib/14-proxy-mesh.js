@@ -59,7 +59,6 @@ var config = {
       },
       web: {
         routes: {
-          // http://localhost:3001/neptronicUI/...
           "controls":"static"
         }
       }

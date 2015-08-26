@@ -42,7 +42,7 @@ describe('Proxy component', function() {
       remote = spawn('node',[libFolder + '14-proxy-mesh']);
       remote.stdout.on('data', function(data) {
 
-        console.log('Remote:',data.toString());
+        //console.log('Remote:',data.toString());
         if (!data.toString().match(/mesh up.../)) return;
 
         console.log('waiting for remote up');
@@ -59,9 +59,23 @@ describe('Proxy component', function() {
 
   context('testing the proxy', function() {
 
+      it ("can proxy the dashboard page",function(done) {
+
+        request('http://127.0.0.1:3002/Device1/dashboard/page', function (error, response, body) {
+
+          console.log(arguments);
+
+          if (error) return done(error);
+
+          return done();
+
+        });
+
+      });
+
       it ("can proxy a static resource",function(done) {
 
-        request('http://127.0.0.1/Device1Proxied/module-static/14-module-static-controls.html', function (error, response, body) {
+        request('http://127.0.0.1:3002/Device1/module-static/controls', function (error, response, body) {
 
           console.log(arguments);
 
@@ -75,7 +89,7 @@ describe('Proxy component', function() {
 
       it ('can proxy mesh api requests', function(done) {
 
-        mesh.api.exchange.Device1Proxied.getReading('test', function(err, res) {
+        mesh.api.exchange.Device1.getReading('test', function(err, res) {
 
            console.log(arguments);
 
