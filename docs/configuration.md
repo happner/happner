@@ -34,7 +34,7 @@ If the name is unspecified and the mesh has no endpoints it will default the nam
 
 #### Configuring the Logger
 
-The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger configured as follows:
+The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger. There are configuration opportunities as follows:
 
 ```javascript
   ...
