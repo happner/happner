@@ -65,9 +65,9 @@ The logger is accessable on the global `UTILITIES`
 UTILITIES.log(message, level, componentName, obj)
 ```
 
-`level` - (optional) Defaults to 'info'
-`componentName` - (optional) Defaults to ''
-`obj` - (optional) Object or Error
+`level` - (optional) Defaults to 'info'<br/>
+`componentName` - (optional) Defaults to ''<br/>
+`obj` - (optional) Object or Error<br/>
 
 
 Alternatively mesh modules and components can use `UTILITIES.createLogger(name)`
