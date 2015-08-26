@@ -48,10 +48,10 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger co
   ...
 ```
 
-`logFile` - (optional) Must be absolute path. __If not present only the console will receive the log stream.__
-`logDateFormat` - (optional) To override the date format in log messages.
-`logLayout` - (optional) Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).
-`logger` - (optional) Provide your own log4js config. All preceding config keys will have no affect.
+`logFile` - (optional) Must be absolute path. __If not present only the console will receive the log stream.__<br/>
+`logDateFormat` - (optional) To override the date format in log messages.<br/>
+`logLayout` - (optional) Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).<br/>
+`logger` - (optional) Provide your own log4js config. All preceding config keys will have no affect.<br/>
 
 __NOTE:__ Definining `util.logger` as empty `{}` will silence all logging.
 
