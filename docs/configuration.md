@@ -131,7 +131,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 `port` - The port to listen on.<br/>
 `authTokenSecret` - Used to encrypt the session webtoken. <br/>
 `systemSecret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
-`log_level` -   TODO  <br/>
+`log_level` -   TODO ??datalayer logger different to mesh logger?? <br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
