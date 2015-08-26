@@ -51,14 +51,14 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger co
   ...
 ```
 
-`logLevel` - (optional) Default 'info'. Options include trace, debug, info, warn, error, fatal.<br/>
-`logFile` - (optional) Must be absolute path. __If not present only the console will receive the log stream.__<br/>
-`logDateFormat` - (optional) To override the date format in log messages.<br/>
-`logLayout` - (optional) Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).<br/>
-`logger` - (optional) Provide your own log4js config. All preceding config keys will have no affect.<br/>
-`logStackTraces` - (optional) Prints the error stack. Default false.<br />
-`logComponents` - (optional) Prints only __debug__ and __trace__ messages for the listed names.<br/>
-`logTimeDelta` - (optional) Includes 'milliseconds since last log message' in log message.<br/>
+`logLevel` - __(optional)__ Default 'info'. Options include trace, debug, info, warn, error, fatal.<br/>
+`logFile` - __(optional)__ Must be absolute path. __If not present only the console will receive the log stream.__<br/>
+`logDateFormat` - __(optional)__ To override the date format in log messages.<br/>
+`logLayout` - __(optional)__ Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).<br/>
+`logger` - __(optional)__ Provide your own log4js config. All preceding config keys will have no affect.<br/>
+`logStackTraces` - __(optional)__ Prints the error stack. Default false.<br />
+`logComponents` - __(optional)__ Prints only __debug__ and __trace__ messages for the listed names.<br/>
+`logTimeDelta` - __(optional)__ Includes 'milliseconds since last log message' in log message.<br/>
 
 
 #### Using the Logger
