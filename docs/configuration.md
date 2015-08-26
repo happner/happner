@@ -46,16 +46,19 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger co
     // logger: {}, // will silence all logging
     logStackTraces: false,
     logComponents: ['component', 'names'],
+    logTimeDelta: false,
   }
   ...
 ```
 
+`logLevel` - (optional) Default 'info'. Options include trace, debug, info, warn, error, fatal.<br/>
 `logFile` - (optional) Must be absolute path. __If not present only the console will receive the log stream.__<br/>
 `logDateFormat` - (optional) To override the date format in log messages.<br/>
 `logLayout` - (optional) Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).<br/>
 `logger` - (optional) Provide your own log4js config. All preceding config keys will have no affect.<br/>
 `logStackTraces` - (optional) Prints the error stack. Default false.<br />
 `logComponents` - (optional) Prints only __debug__ and __trace__ messages for the listed names.<br/>
+`logTimeDelta` - (optional) Includes 'milliseconds since last log message' in log message.<br/>
 
 
 #### Using the Logger
@@ -73,7 +76,7 @@ UTILITIES.log(message, level, componentName, obj)
 Alternatively mesh modules and components can use `UTILITIES.createLogger(name, obj)`
 
 * It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
-* It tests for `level enabled` before calling into the logger - this minimises the impact of excessive trace and debug usage.
+* It uses logLevel guards to minimise the impact of liberal trace and debug usage.
 * If `obj` is provided, log methods will be created on `obj`
 
 eg.
@@ -91,7 +94,7 @@ function MyMeshModule() {
   // this.log.fatal('..', err);
 
   //// UTILITIES.createLogger('MyMeshModule', this);
-  //// this.info('') // it will stomp existing
+  //// this.info('') // it will stomp existing functions on 'this'
 }
 MyMeshModule.prototype.m = function() {
   this.log.trace('m()');
@@ -128,7 +131,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 `port` - The port to listen on.<br/>
 `authTokenSecret` - Used to encrypt the session webtoken. <br/>
 `systemSecret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
-`log_level` - __?????????????????????????????????????????__<br/>
+`log_level` -   TODO  <br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
