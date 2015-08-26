@@ -52,15 +52,38 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger. T
   ...
 ```
 
-`logLevel` - __(optional)__ Default 'info'. Options include: __all__ __trace__ __debug__ __info__ __warn__ __error__ __fatal__ __off__.<br/>
-`logFile` - __(optional)__ Must be absolute path. __If not present only the console will receive the log stream.__<br/>
-`logDateFormat` - __(optional)__ To override the date format in log messages.<br/>
-`logLayout` - __(optional)__ Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).<br/>
-`logger` - __(optional)__ Provide your own log4js config.<br/>
-`logStackTraces` - __(optional)__ Prints the error stack. Default false.<br />
-`logComponents` - __(optional)__ Prints only __debug__ and __trace__ messages for the listed names.<br/>
-`logTimeDelta` - __(optional)__ Includes 'milliseconds since last log message' in log message.<br/>
-`logMessageDelimiter` - __(optional)__ Delimits between timeDelta, componentName and message in log lines.</br>
+`logLevel` __(optional)__<br/>
+Default 'info' or LOG_LEVEL environment variable value<br/>
+Options include: __all__ __trace__ __debug__ __info__ __warn__ __error__ __fatal__ __off__.
+
+```javascript
+LOG_LEVEL=debug bin/my.mesh
+```
+
+`logFile` __(optional)__<br/>
+Must be absolute path.<br/>
+__If not present only the console will receive the log stream.__
+
+`logDateFormat` __(optional)__<br/>
+To override the date format in log messages.
+
+`logLayout` __(optional)__<br/>
+Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).
+
+`logger` __(optional)__<br/>
+Provide your own log4js config.<br/>
+
+`logStackTraces` __(optional)__</br>
+Prints the error stack. Default false.
+
+`logComponents` __(optional)__<br/>
+Prints only __debug__ and __trace__ messages for the listed names.
+
+`logTimeDelta` __(optional)__<br/>
+Includes 'milliseconds since last log message' in log message.
+
+`logMessageDelimiter` __(optional)__<br/>
+Delimits between timeDelta, componentName and message in log lines.
 
 
 #### Using the Logger
