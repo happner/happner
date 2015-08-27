@@ -86,7 +86,7 @@ meshConfig = {
 
 `$happn.mesh.exchange.nodename.functionality.doThing()` can now be called (as if a local function) from other MeshNodes in the network that are configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
-
+All [System Components](system.md) are available by default. 
 
 
 
