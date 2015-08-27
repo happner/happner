@@ -28,7 +28,9 @@ config = {
 
 The `config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
 
-If the name is unspecified and the mesh has no endpoints it will default the name to 'mesh'. If their are endpoints a random default name will be used.
+If the name is unspecified a random name will be used.
+
+__BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name.
 
 ### Utilities
 
@@ -491,10 +493,6 @@ The `config.components` section should list components to be loaded into the mes
           },
           'methodName1': {
             alias: 'mn1',
-            parameters: [
-              {name: 'opts', required: true, value: {op:'tions2'}},
-              {name: 'callback', required: true, type: 'callback'}
-            ]
           },
           'methodName2': {}
         ]

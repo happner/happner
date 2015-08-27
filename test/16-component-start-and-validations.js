@@ -13,8 +13,8 @@ Explicit.prototype.asyncStartFails = function(callback) {
   callback(new Error('erm'));
 }
 
-Explicit.prototype.methodName1 = function(opts, optionalOpts, callback) {
-  console.log('args', arguments);
+Explicit.prototype.methodName1 = function(opts, blob, callback) {
+  if (typeof blob == 'function') callback = blob;
   callback(null, {yip: 'eee'});
 }
 
@@ -73,14 +73,13 @@ describe('component start and validation -', function() {
               },
 
               'methodName1': {
-                alias: 'm1',
+                // alias: 'm1',
                 parameters: [
                   {name: 'opts', required: true, value: {op:'tions'}},
-                  {name: 'optionalOpts', required: false},
+                  {name: 'blob', required: false},
                   {type: 'callback', required: true}
                 ]
               }
-
             }
           }
         }
@@ -155,7 +154,6 @@ describe('component start and validation -', function() {
           }
         }
       }
-
     }, function(err) {
       if (err) return done(err);
 
@@ -164,15 +162,13 @@ describe('component start and validation -', function() {
         should.exist(err);
         done();
       });
-
     });
   });
 
-  context('method validation', function() {
-    it.only('', function(done) {
-      this.mesh.api.exchange.explicit.methodName1(function() {
-        console.log('XXX', arguments);
-      });
+  xit('validates methods', function(done) {
+
+    this.mesh.api.exchange.explicit.methodName1({op: 'tions3'}, function(err, res) {
+      res.should.be.an.instanceof(Error);
       done();
     });
   });
