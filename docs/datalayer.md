@@ -8,7 +8,7 @@ The DataLayer is the underlying messaging and storage infrastructure in the mesh
 
 Configured in the datalayer is the host and port upon which __this__ MeshNode listens for connections from other MeshNodes or clients.
 
-The data layer allows for:
+##### The data layer allows for:
 
 * key/value storage, see [Data Api](data.md)
 * subscription to storage events by key (and wildcards)
