@@ -1,4 +1,4 @@
-[&#9664;](configuration.md) configuration | components [&#9654;](components.md)
+[&#9664;](configuration.md) configuration | modules [&#9654;](modules.md)
 
 ## DataLayer
 
