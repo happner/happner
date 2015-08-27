@@ -1,4 +1,4 @@
-[&#9664;](endpoints.md) datalayer | events [&#9654;](events.md)
+[&#9664;](datalayer.md) datalayer | events [&#9654;](events.md)
 
 ## Modules and Components
 
