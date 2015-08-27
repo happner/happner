@@ -540,12 +540,12 @@ Used to specify one of the `schema.methods` to run on the mesh.start to further 
 
 When specifying `schema.startMethod` it is necessary to provide the initializer with the full complement of configuration for the start method. As expressed in the example config above, the start method will be called with the `opts` as specified in `value`
 
-##### schema.methods
+###### schema.methods
 __(optional)__
 
 List the methods. Each has a subconfig defining the method details. In most cases no subconfig is required.
 
-##### web.routes
+###### web.routes
 __(optional)__
 
 This allows the binding of web routes to methods on the Module or 'static' directories on the Module's path.
