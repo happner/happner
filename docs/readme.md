@@ -16,8 +16,7 @@ Happngin also provides a set of built in components to facilitate providing the 
 
 [&#9654;](configuration.md) Configuation<br/>
 [&#9654;](datalayer.md) DataLayer<br/>
-[&#9654;](modules.md) Modules<br/>
-[&#9654;](components.md) Components<br/>
+[&#9654;](modules.md) Modules and Components<br/>
 
 [&#9654;](events.md) Events Api<br/>
 [&#9654;](exchange.md) Exchange Api<br/>

@@ -1,4 +1,4 @@
-[&#9664;](components.md) components | exchange api [&#9654;](exchange.md)
+[&#9664;](modules.md) modules and components | exchange api [&#9654;](exchange.md)
 
 ## Events Api
 

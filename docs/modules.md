@@ -1,12 +1,16 @@
-[&#9664;](endpoints.md) datalayer | components [&#9654;](components.md)
+[&#9664;](endpoints.md) datalayer | events [&#9654;](events.md)
 
-## Modules
+## Modules and Components
 
 ### What are Modules?
 
 In essence happngin modules are simply node modules that have the additional capacity to be created asyncronously and instantiated by configuration.
 
 This paves the way for `code re-use by configuration` and `remote runtime initialization`
+
+### What are Components?
+
+Components are 'mesh aware' encapsulations of the Module they employ. It is the Components which become accessable as units of functionality on the mesh network.
 
 ### Mesh Awareness (with $happn)
 

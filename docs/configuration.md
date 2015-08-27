@@ -466,7 +466,7 @@ __NOTE:__ The `config.modules` section can be omitted if the [Components (see be
 
 [&#9650;](#configuration)
 
-See also: [What are Components?](components.md#what-are-components)
+See also: [What are Components?](modules.md#what-are-components)
 
 The `config.components` section should list components to be loaded into the mesh. The full complement of possible config looks as follows:
 
