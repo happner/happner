@@ -130,7 +130,7 @@ MyMeshModule.prototype.m = function() {
 
 ##### Method 2
 
-Components can access their own logger in `$happn` (as injected by the mesh, see [Mesh Awareness](modules.md#mesh-awareness))
+Components can access their own logger in `$happn` (as injected by the mesh, see [Mesh Awareness](modules.md#mesh-awareness-with-happn))
 
 eg.
 
