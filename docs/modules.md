@@ -14,7 +14,7 @@ Components are 'mesh aware' encapsulations of the Module they employ. It is the 
 
 ### Mesh Awareness (with $happn)
 
-Service injection is used to provide mesh awareness into modules. By declaring `$happn` in the arguments to a mesh visible function the mesh can be used by that function. This injection methodology was selected to minimize the effort footprint necessary to extend an existing codebase for use in the mesh.
+Service injection is used to provide mesh awareness into modules. By declaring `$happn` in the arguments to a mesh visible function the mesh can be used by that function. This injection methodology was selected to minimize the code footprint necessary to extend an existing codebase for use in the mesh.
 
 ##### The `$happn` service contains:
 
@@ -62,14 +62,37 @@ The above example implies that there is polymorphism at play. It is not strictly
 
 __NOTE:__ The module is __shared by all components that use it__. This includes the case of the module as an instance of a class. "You are not alone with your 'this'".
 
-### A Typical Module (as example)
+### A Imaginary Module (as example)
+
+Having just done `npm install functionality --save` you will find:
+
+In file `node_modules/functionality/index.js`
+```javascript
+module.exports.doThing = function(opts, callback) {
+  callback(null, {/* result */});
+}
+```
+
+Because the 'functionality' module requires no configuration it can be up and running in the mesh with a minimum of config.
+
+eg.
+```javascript
+meshConfig = {
+  name: 'nodename', // name for this MeshNode
+  components: {
+    'functionality': {}
+  }
+}
+```
+
+* `nodename.functionality.doThing()` can now be called directly from other MeshNodes in the network that are configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
 
 
 
 
 
-### Defaulting Configuration
+
 
 `$happngin.ignore`
 
