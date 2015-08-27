@@ -75,7 +75,6 @@ module.exports.doThing = function(opts, callback) {
 
 Because the 'functionality' module requires no configuration it can be up and running in the mesh with a minimum of config.
 
-eg.
 ```javascript
 meshConfig = {
   name: 'nodename', // name for this MeshNode
@@ -85,7 +84,7 @@ meshConfig = {
 }
 ```
 
-* `nodename.functionality.doThing()` can now be called directly from other MeshNodes in the network that are configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
+`$happn.mesh.exchange.nodename.functionality.doThing()` can now be called (as if a local function) from other MeshNodes in the network that are configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
 
 

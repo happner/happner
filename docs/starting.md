@@ -1,4 +1,4 @@
-[&#9664;](data.md) data api | using the client [&#9654;](client.md)
+[&#9664;](data.md) data api | system components [&#9654;](system.md)
 
 ## Starting a Mesh Node.
 

@@ -1,3 +1,3 @@
-[&#9664;](starting.md) starting a mesh node | contents [&#9654;](readme.md)
+[&#9664;](system.md) system components | contents [&#9654;](readme.md)
 
 ## Using the Client
