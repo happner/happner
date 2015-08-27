@@ -54,11 +54,15 @@ eg. (web routes)
 `http://localhost:port/company1/employees/...`<br/>
 `http://localhost:port/company1/clients/...`
 
-The above example implies that there is polymorphism at play. It is not so. All functionality must be defined in the module. The components are simply views into the module, each exposing a selected subset of functionality by configuration. And each having __it's own unique mesh ""channel"" by way of the `$happn`__ service injection (which is itself the actual ComponentInstance).
+The above example implies that there is polymorphism at play. It is not strictly so. All functionality must be defined in the module. The components are simply views into the module, each exposing a selected subset of functionality by configuration. And each having __it's own unique mesh ""channel"" by way of the `$happn`__ service injection (which is itself the actual ComponentInstance).
 
-__NOTE:__ The module instance is __shared by all components that use it__.
+__NOTE:__ The module is __shared by all components that use it__. This includes the case of the module as an instance of a class. "You are not alone with your 'this'".
 
-"You are not alone with your 'this'"...
+### A Typical Module (as example)
+
+
+
+
 
 
 ### Defaulting Configuration
