@@ -549,7 +549,7 @@ __(optional)__
 This allows the binding of web routes to methods on the Module or 'static' directories on the Module's path.
 
 `http://meshhost:port/name-of-component/method1` runs `moduleInstance.webMethod(req, res)`
-`http://meshhost:port/name-of-component/static/..` serves files from `require.resolve('name-of-implementing-module')`/app
+`http://meshhost:port/name-of-component/static/..` serves files from `(module) __dirname`/app
 
 
 
