@@ -47,7 +47,7 @@ eg. (config)
   ...
 ```
 
-The result is that there are two seprate instances of mesh and web functionality each __sharing the same module instance__.
+The result is that there are two seprate instances of mesh and web functionality each sharing the same module instance.
 
 eg. (web routes)
 
@@ -56,7 +56,7 @@ eg. (web routes)
 
 The above example implies that there is polymorphism at play. It is not so. All functionality must be defined in the module. The components are simply views into the module, each exposing a selected subset of functionality by configuration. And each having __it's own unique mesh ""channel"" by way of the `$happn`__ service injection (which is itself the actual ComponentInstance).
 
-__NOTE:__ The module instance is shared by all components that use it. This can lead to unexpected behaviour.
+__NOTE:__ The module instance is __shared by all components that use it__.
 
 "You are not alone with your 'this'"...
 
