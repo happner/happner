@@ -119,8 +119,8 @@ module.exports = MyMeshModule;
 
 function MyMeshModule() {
   this.log = UTILITIES.createLogger('MyMeshModule');
-  // this.log.trace('', {});
-  // this.log.debug('', {});
+  // this.log.$$TRACE('', {});
+  // this.log.$$DEBUG('', {});
   // this.log.info('', {});
   // this.log.warn('', {});
   // this.log.errror('..', err);
@@ -134,6 +134,28 @@ MyMeshModule.prototype.m = function() {
 }
 
 ```
+
+The `$$TRACE()` and `$$DEBUG()` are so named to enable optionally __FULLY__ productionizing with the following deployment step:
+
+##### Remove all calls to DEBUG and TRACE
+
+This is not paticularly recommended. Debugging can be usefull in production too. See `config.util.logComponents` option.
+
+```bash
+find node_modules/*/lib -type f -regex '.*\.js' \
+  | grep -v components/resources/lib \
+  | xargs sed -e s/[a-zA-Z\._-]*\$\$DEBUG\(.*\)\;//g -i .ORIGINAL
+
+# do the same with \$\$TRACE
+```
+
+##### Validate the Substitutions
+
+```bash
+find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
+  | while read FILE; do echo; echo ${FILE%.ORIGINAL}; diff ${FILE%.ORIGINAL} $FILE; done
+```
+
 
 
 ### DataLayer Config
