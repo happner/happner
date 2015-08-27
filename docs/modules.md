@@ -86,7 +86,7 @@ meshConfig = {
 
 `$happn.mesh.exchange.nodename.functionality.doThing()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
-All [System Components](system.md) are available by default. This includes that browser MeshClient that can be fetched from the defaut host and port: `http://localhost:8001/api/client`
+All [System Components](system.md) are available by default. This includes that browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8001/api/client](http://localhost:8001/api/client)
 
 
 
