@@ -1,4 +1,4 @@
-[&#9664;](endpoints.md) endpoints | components [&#9654;](components.md)
+[&#9664;](endpoints.md) datalayer | components [&#9654;](components.md)
 
 ## Modules
 

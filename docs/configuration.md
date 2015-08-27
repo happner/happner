@@ -201,8 +201,6 @@ __NOTE:__ The `config.dataLayer` section can be omitted if all defaults are acce
 
 [&#9650;](#configuration)
 
-See also: [What are Endpoints?](endpoints.md#mdwhat-are-endpoints)
-
 The `config.endpoints` section should list all remote MeshNodes to which __this__ MeshNode should attach upon initialization - as follows:
 
 ```javascript
