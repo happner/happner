@@ -36,7 +36,7 @@ SeeAbove.prototype.$happngin = {
 
 if (global.TESTING_15) return; // When 'requiring' the module above,
                               // don't run the tests below
-                             //............. 
+                             //.............
 
 
 

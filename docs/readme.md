@@ -23,6 +23,7 @@ Happngin also provides a set of built in components to facilitate providing the 
 [&#9654;](events.md) Events Api<br/>
 [&#9654;](exchange.md) Exchange Api<br/>
 [&#9654;](data.md) Data Api<br/>
+[&#9654;](webroutes.md) Web Routes<br/>
 
 [&#9654;](starting.md) Starting a Mesh Node<br/>
 [&#9654;](client.md) Using the Client<br/>

@@ -98,17 +98,9 @@ Delimits between timeDelta, componentName and message in log lines.
 
 #### Using the Logger
 
-The logger is accessable on the global `UTILITIES`
+##### Method 1
 
-```javascript
-UTILITIES.log(message, level, componentName, obj)
-```
-
-`level` - (optional) Defaults to 'info'<br/>
-`componentName` - (optional) Defaults to ''<br/>
-`obj` - (optional) Object or Error<br/>
-
-Alternatively mesh modules and components can use `UTILITIES.createLogger(name, obj)`
+Modules and components can use the global `UTILITIES.createLogger(name, obj)`
 
 * It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
 * It uses logLevel guards to minimise the impact of liberal trace and debug usage.
@@ -132,9 +124,22 @@ function MyMeshModule() {
   //// this.info('') // it will stomp existing functions on 'this'
 }
 MyMeshModule.prototype.m = function() {
-  this.log.trace('m()');
+  this.log.$$TRACE('m()');
 }
+```
 
+##### Method 2
+
+Components can access their own logger in `$happn` (as injected by the mesh, see [Mesh Awareness](modules.md#mesh-awareness))
+
+eg.
+
+```javascript
+module.exports = MyMeshModule;
+function MyMeshModule() {}
+MyMeshModule.prototype.m = function($happn) {
+  $happn.log.$$TRACE('m()');
+}
 ```
 
 The `$$TRACE()` and `$$DEBUG()` are so named to enable optionally __FULLY__ productionizing with the following deployment step:
@@ -157,8 +162,6 @@ find node_modules/*/lib -type f -regex '.*\.js' \
 find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
   | while read FILE; do echo; echo ${FILE%.ORIGINAL}; diff ${FILE%.ORIGINAL} $FILE; done
 ```
-
-
 
 ### DataLayer Config
 
@@ -498,10 +501,58 @@ The `config.components` section should list components to be loaded into the mes
         ]
       },
       web: {
-
+        routes: {
+          method1: 'webMethod1',
+          app: 'static',
+          // app: ['middleware1', 'middleware2', 'static']
+        }
       }
     }
   }
   ...
 ```
+
+###### name-of-component
+__(required)__
+
+Components become accessable by name in the [Events](events.md) and [Exchange](exchange.md) APIs and also on [Web Routes](webroutes.md)
+
+###### moduleName
+__(optional)__
+
+Each Component in the MeshNode should specify which [Module](#module-config) it exposes. If the `moduleName` is unspecified the mesh will attempt to use a Module by the same name as the Component's name.
+
+###### schema
+__(optional)__
+
+The schema defines which methods on the Module should be exposed to the mesh. If no schema is specified the initializer will expose all methods and assume the last argument to each function is a 'node style' callback. This allows for the generic case to require no config.
+
+###### schema.exclusive
+__(optional)__
+
+If true - it informs the initializer to only expose the Methods specified in `schema.methods` to the mesh.
+The default is false.
+
+###### schema.startMethod
+__(optional)__
+
+Used to specify one of the `schema.methods` to run on the mesh.start to further initialize the module once the mesh is up, running and connected to other MeshNodes.
+
+When specifying `schema.startMethod` it is necessary to provide the initializer with the full complement of configuration for the start method. As expressed in the example config above, the start method will be called with the `opts` as specified in `value`
+
+##### schema.methods
+__(optional)__
+
+List the methods. Each has a subconfig defining the method details. In most cases no subconfig is required.
+
+##### web.routes
+__(optional)__
+
+This allows the binding of web routes to methods on the Module or 'static' directories on the Module's path.
+
+`http://meshhost:port/name-of-component/method1` runs `moduleInstance.webMethod(req, res)`
+`http://meshhost:port/name-of-component/static/..` serves files from `require.resolve('name-of-implementing-module')`/app
+
+
+
 
