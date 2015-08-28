@@ -10,23 +10,23 @@ Happngin also provides a set of built in components to facilitate providing the 
 
 ## demonstration
 
-[&#9654;](docs/quickstart.md) Quick Start<br/>
+* [Quick Start](docs/quickstart.md)
 
 ## documentation
 
-[&#9654;](docs/configuration.md) Configuation<br/>
-[&#9654;](docs/datalayer.md) DataLayer<br/>
-[&#9654;](docs/modules.md) Modules and Components<br/>
+* [Configuation](docs/configuration.md)
+* [DataLayer](docs/datalayer.md)
+* [Modules and Components](docs/modules.md)
 
-[&#9654;](docs/events.md) Events Api<br/>
-[&#9654;](docs/exchange.md) Exchange Api<br/>
-[&#9654;](docs/data.md) Data Api<br/>
-[&#9654;](docs/webroutes.md) Web Routes<br/>
+* [Events Api](docs/events.md)
+* [Exchange Api](docs/exchange.md)
+* [Data Api](docs/data.md)
+* [Web Routes](docs/webroutes.md)
 
-[&#9654;](docs/starting.md) Starting a Mesh Node<br/>
-[&#9654;](docs/system.md) System Components<br/>
-[&#9654;](docs/client.md) Using the Client<br/>
+* [Starting a Mesh Node](docs/starting.md)
+* [System Components](docs/system.md)
+* [Using the Client](docs/client.md)
 
 ## community
 
-[&#9654;](docs/community.md) Community Modules<br/>
+* [Community Modules](docs/community.md)
