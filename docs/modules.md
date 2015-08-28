@@ -116,14 +116,6 @@ meshConfig = {
 
 The mesh provides some [System Components](system.md) by default. These include the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8000/api/client](http://localhost:8000/api/client)
 
-__INTERRUPT:__ An additional step is required to fully enable the browser client as follows:
-
-```bash
-sudo install bower -g
-cd node_modules/happngin/lib/system/components/resources
-bower install
-```
-
 Looking further you see that the imaginary 'hello' module also has an `app/` directory with the following:
 
 __In file__ `node_modules/hello/app/index.html`
