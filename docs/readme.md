@@ -1,1 +1,1 @@
-[moved to front page]()
+Docs readme moved to [moved to front page](https://github.com/FieldServer/happngin)
