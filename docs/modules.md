@@ -82,7 +82,7 @@ __NOTE:__ The module is __shared by all components that use it__. This includes 
 
 ### An Imaginary Module (as example)
 
-[&#9650;]()
+[&#9650;](#)
 
 Having just done `npm install hello --save` you will find:
 
