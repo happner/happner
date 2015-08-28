@@ -25,6 +25,15 @@ cd node_modules/happngin/resources
 bower install
 ```
 
+http://localhost:8000/resources/...
+
+```html
+<script type='text/javascript' src='/resources/bower/async/lib/async.js'></script>
+```
+
+
 ### Dashboard
+
+
 
 pending
