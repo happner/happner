@@ -72,6 +72,9 @@ describe('mesh awareness via $happn injection', function() {
                         routes: {
                           methodWithHappn: 'methodWithHappn',
                           methodWithoutHappn: 'methodWithoutHappn',
+                          methodWithHappnInFront: 'methodWithHappnInFront',
+                          methodWithHappnInMiddle: 'methodWithHappnInMiddle',
+                          methodWithHappnInEnd: 'methodWithHappnInEnd',
                         }
                       }
                     }
@@ -260,7 +263,7 @@ describe('mesh awareness via $happn injection', function() {
               "name": "callback"
             }
           ]
-        }
+        },
       }
     });
     done()
@@ -469,13 +472,47 @@ describe('mesh awareness via $happn injection', function() {
         "web": {
           "routes": {
             "methodWithHappn": "methodWithHappn",
-            "methodWithoutHappn": "methodWithoutHappn"
+            "methodWithoutHappn": "methodWithoutHappn",
+            "methodWithHappnInEnd": "methodWithHappnInEnd",
+            "methodWithHappnInFront": "methodWithHappnInFront",
+            "methodWithHappnInMiddle": "methodWithHappnInMiddle"
           }
         }
       })
       done()
     })
   });
+
+  it('injects happn into front of webmethod args', function(done) {
+
+    request('http://localhost:3001/mesh1/webComponent1/methodWithHappnInFront', function(err, res) {
+      var response = JSON.parse(res.body);
+      response.config.moduleName.should.equal('module3');
+      response.next.slice(0,8).should.equal('function');
+      done()
+    })
+  });
+
+  it('injects happn into middle of webmethod args', function(done) {
+
+    request('http://localhost:3001/mesh1/webComponent1/methodWithHappnInMiddle', function(err, res) {
+      var response = JSON.parse(res.body);
+      response.config.moduleName.should.equal('module3');
+      response.next.slice(0,8).should.equal('function');
+      done()
+    })
+  });
+
+  it('injects happn into middle of webmethod args', function(done) {
+
+    request('http://localhost:3001/mesh1/webComponent1/methodWithHappnInEnd', function(err, res) {
+      var response = JSON.parse(res.body);
+      response.config.moduleName.should.equal('module3');
+      response.next.slice(0,8).should.equal('function');
+      done()
+    })
+  });
+
 
   it('runs webmethod ok without $happn', function(done) {
 
