@@ -67,7 +67,7 @@ Or.
 ```
 
 ###### logLevel
-Default 'info' or LOG_LEVEL environment variable value<br/>
+Default 'info', LOG_LEVEL environment variable overrides<br/>
 Options include: __all__ __trace__ __debug__ __info__ __warn__ __error__ __fatal__ __off__.
 
 ```javascript
@@ -91,20 +91,25 @@ Provide your own log4js config.<br/>
 Prints the error stack. Default false.
 
 ###### logComponents
-Prints __debug__ and __trace__ messages for only the listed names.
+Prints __debug__ and __trace__ messages for only the listed Names.
+Setting LOG_COMPONENTS environment variable will override config.
+
+```javascript
+LOG_LEVEL=trace LOG_COMPONENTS=Api,PubSub,MyComponent bin/my.mesh
+```
 
 ###### logTimeDelta
 Includes 'milliseconds since last log message' in log message.
 
 ###### logMessageDelimiter
-Delimits between timeDelta, componentName and message in log lines.
+Delimits between timeDelta and 'componentName message' in log lines.
 
 
 #### Using the Logger
 
 ##### Method 1
 
-Modules and components can use the global `UTILITIES.createLogger(name, obj)`
+Modules and components can use the global `UTILITIES.createLogger(Name, obj)`
 
 * It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
 * It uses logLevel guards to minimise the impact of liberal trace and debug usage.

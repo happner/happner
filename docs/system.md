@@ -9,6 +9,9 @@ The mesh starts with a default set of system components running.
 This component serves the MeshClient script for use in the browser.
 
 [http://localhost:8000/api/client](http://localhost:8000/api/client)
+
+eg.
+
 ```html
 <script type='text/javascript' src='/api/client'></script>
 ```
@@ -26,6 +29,8 @@ bower install
 ```
 
 http://localhost:8000/resources/...
+
+eg.
 
 ```html
 <script type='text/javascript' src='/resources/bower/async/lib/async.js'></script>
