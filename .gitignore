@@ -4,4 +4,3 @@ npm-debug.log
 coverage
 lib/system/activity.log*
 .DS_Store
-resources/*
