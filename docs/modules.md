@@ -2,6 +2,12 @@
 
 ## Modules and Components
 
+* [What are Modules?](#what-are-modules)
+* [What are Components?](#what-are-components)
+* [Mesh Awareness (with $happn)](#mesh-awareness-with-happn)
+* [An Imaginary Module (as example)](#an-imaginary-module-as-example)
+* [Default Configs](#default-configs)
+
 ### What are Modules?
 
 In essence happngin modules are simply node modules that have the additional capacity to be created asyncronously and instantiated by configuration.
@@ -206,3 +212,4 @@ require('happngin')().initialise({
   }
 });
 ```
+
