@@ -26,6 +26,8 @@ config = {
 
 ### Mesh Name
 
+[&#9650;](#)
+
 The `config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
 
 If the name is unspecified a random name will be used.
@@ -33,6 +35,8 @@ If the name is unspecified a random name will be used.
 __BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name. It is strongly recommended that you provide the name.
 
 ### Utilities
+
+[&#9650;](#)
 
 #### Configuring the Logger
 
@@ -165,7 +169,7 @@ find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
 
 ### DataLayer Config
 
-[&#9650;](#configuration)
+[&#9650;](#)
 
 See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
@@ -199,7 +203,7 @@ __NOTE:__ The `config.dataLayer` section can be omitted if all defaults are acce
 
 ### Endpoint Config
 
-[&#9650;](#configuration)
+[&#9650;](#)
 
 The `config.endpoints` section should list all remote MeshNodes to which __this__ MeshNode should attach upon initialization - as follows:
 
@@ -231,7 +235,7 @@ __NOTE:__ The `config.endpoints` section can be omitted if __this__ MeshNode att
 
 ### Module Config
 
-[&#9650;](#configuration)
+[&#9650;](#)
 
 See also: [What are Modules?](modules.md#what-are-modules)
 
@@ -446,7 +450,7 @@ __NOTE:__ The `config.modules` section can be omitted if the [Components (see be
 
 ### Component Config
 
-[&#9650;](#configuration)
+[&#9650;](#)
 
 See also: [What are Components?](modules.md#what-are-components)
 

@@ -10,15 +10,21 @@
 
 ### What are Modules?
 
+[&#9650;](#)
+
 In essence happngin modules are simply node modules that have the additional capacity to be created asyncronously and instantiated by configuration.
 
 This paves the way for `code re-use by configuration` and `remote runtime initialization`
 
 ### What are Components?
 
+[&#9650;](#)
+
 Components are 'mesh aware' encapsulations of the Module they employ. It is the Components which become accessable as units of functionality on the mesh network.
 
 ### Mesh Awareness (with $happn)
+
+[&#9650;](#)
 
 Service injection is used to provide mesh awareness into modules. By declaring `$happn` in the arguments to a function the mesh can be used by that function. This injection methodology was selected to minimize the code footprint necessary to extend an existing codebase for use in the mesh.
 
@@ -173,6 +179,8 @@ The mesh is now sharing the contents of the `node_modules/hello/app/` as static 
 You browse to [http://localhost:8000/hello/app/index.html](http://localhost:8000/hello/app/index.html) and 'Hello World' pops up in the alert dialog.
 
 ### Default Configs
+
+[&#9650;](#)
 
 Modules can define a default configuration to be used by mesh components. By defining the `$happngin` variable on the module (or on the module prototype if it's a class) each component that uses the module will use these defaults.
 
