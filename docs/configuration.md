@@ -428,8 +428,6 @@ module.exports.createThing = function(param1, callback) {
 
 The most simple case. Modules are used directly as exported.
 
-eg.
-
 __in__ `node_modules/module-name/index.js`
 ```javascript
 module.exports.method1 = function() {}
