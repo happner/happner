@@ -30,7 +30,7 @@ The `config.name` is the name of __this__ MeshNode and serves to uniquely identi
 
 If the name is unspecified a random name will be used.
 
-__BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name.
+__BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name. It is strongly recommended that you provide the name.
 
 ### Utilities
 
@@ -439,22 +439,6 @@ module.exports.method2 = function() {}
   ...
   modules: {
     'module-name': {}
-  }
-  ...
-```
-
-#### TODO Modules from Instance
-
-(something like) eg.
-
-```javascript
-  ...
-  modules: {
-    'module-name': {
-      instance: {
-        method1: function($happn) {}
-      }
-    }
   }
   ...
 ```

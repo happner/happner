@@ -20,8 +20,7 @@
     "chai": "^2.2.0",
     "mocha": "^2.2.4",
     "request": "^2.53.0",
-    "when": "^3.7.3",
-    "zombie": "^2.5.1"
+    "when": "^3.7.3"
   },
   "dependencies": {
     "@smc/happn": "^0.1.19",

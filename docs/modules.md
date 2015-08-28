@@ -14,11 +14,12 @@ Components are 'mesh aware' encapsulations of the Module they employ. It is the 
 
 ### Mesh Awareness (with $happn)
 
-Service injection is used to provide mesh awareness into modules. By declaring `$happn` in the arguments to a mesh visible function the mesh can be used by that function. This injection methodology was selected to minimize the code footprint necessary to extend an existing codebase for use in the mesh.
+Service injection is used to provide mesh awareness into modules. By declaring `$happn` in the arguments to a function the mesh can be used by that function. This injection methodology was selected to minimize the code footprint necessary to extend an existing codebase for use in the mesh.
 
 ##### The `$happn` service contains:
 
 * `$happn.name` is the name of the ComponentInstance of __this__ Module
+* `$happn.log` is the ComponentInstance's logger
 * `$happn.config` is the config of the ComponentInstance
 * `$happn.module` contains the config and instance of __this__ Module as used by multiple ComponentInstances
 * `$happn.emit()` to emit events from the ComponentInstance into the mesh. See [Emitting Events](events.md#emitting-events)
@@ -56,39 +57,64 @@ The result is that there are two seprate instances of mesh and web functionality
 eg. (web routes)
 
 `http://localhost:port/company1/employees/...`<br/>
-`http://localhost:port/company1/clients/...`
+`http://localhost:port/company1/clients/...`<br/>
 
 The above example implies that there is polymorphism at play. It is not strictly so. All functionality must be defined in the module. The components are simply views into the module, each exposing a selected subset of functionality by configuration. And each having __it's own unique mesh ""channel"" by way of the `$happn`__ service injection (which is itself the actual ComponentInstance).
 
 __NOTE:__ The module is __shared by all components that use it__. This includes the case of the module as an instance of a class. "You are not alone with your 'this'".
 
-### A Imaginary Module (as example)
+### An Imaginary Module (as example)
 
-Having just done `npm install functionality --save` you will find:
+Having just done `npm install hello-world --save` you will find:
 
-In file `node_modules/functionality/index.js`
+__In file__ `node_modules/hello-world/index.js`
 ```javascript
-module.exports.doThing = function(opts, callback) {
-  callback(null, {/* result */});
+module.exports.greet = function(opts, callback) {
+  callback(null, {hello: 'world'});
 }
 ```
 
-Because the 'functionality' module requires no configuration it can be up and running in the mesh with a minimum of config.
+Because the 'hello' module requires no configuration it can be up and running in the mesh with a minimum of config.
 
 ```javascript
 meshConfig = {
   name: 'nodename', // name for this MeshNode
   components: {
-    'functionality': {}
+    'hello-world': {}
   }
 }
 ```
 
-`$happn.mesh.exchange.nodename.functionality.doThing()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
+`$happn.mesh.exchange.nodename['hello-world'].doThing()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
 All [System Components](system.md) are available by default. This includes the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8001/api/client](http://localhost:8001/api/client)
 
+Looking further you see that the 'hello-world' module also has an `app/` directory with the following:
 
+__In file__ `node_modules/hello-world/app/index.html`
+```html
+<html>
+  <head>
+    <!-- Load the MeshClient script from the system api module -->
+    <script src=/api/client></script>
+  </head>
+  <body>
+    <script>
+        // Connect to the mesh
+        MeshClient(function(err, mesh) {
+
+            // Call the greet function from node_modules/hello-world/index.js
+            mesh.api.exchange['hello-world'].greet(function(error, result) {
+
+                console.info(result);
+
+            });
+
+        });
+    </script>
+  </body>
+</html>
+```
 
 
 
