@@ -70,7 +70,7 @@ The result is that 'employees' and 'clients' are two seprate instances of mesh a
 `$happn.mesh.event.company1.clients.on(), .off()`<br/>
 
 
-The above example implies that there is polymorphism at play. It is not strictly so. All functionality must be defined in the module. The components are simply views into the module, each exposing a selected subset of functionality by configuration. And each having __it's own unique mesh ""channel"" by way of the `$happn`__ service injection (which is itself the actual ComponentInstance).
+The above example implies that there is polymorphism at play. It is not strictly so. All functionality must be defined in the module. The components are simply views into the module, each exposing a selected subset of functionality by configuration. And each having __it's own unique mesh ""channel""__ by way of the `$happn` service injection (which is itself the actual ComponentInstance).
 
 __NOTE:__ The module is __shared by all components that use it__. This includes the case of the module as an instance of a class. "You are not alone with your 'this'".
 
@@ -80,12 +80,14 @@ Having just done `npm install hello --save` you will find:
 
 __In file__ `node_modules/hello/index.js`
 ```javascript
-module.exports.greet = function(opts, callback) {
-  callback(null, {hello: 'world'});
+module.exports.world = function(opts, callback) {
+  var error = null;
+  var greeting = 'Hello World';
+  callback(error, greeting);
 }
 ```
 
-Because the 'hello' module requires no configuration it can be up and running in the mesh with a minimum of config.
+Because the 'hello' module can be up and running in the mesh with a minimum of config.
 
 ```javascript
 meshConfig = {
@@ -96,13 +98,21 @@ meshConfig = {
 }
 ```
 
-`$happn.mesh.exchange.nodename.hello.doThing()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
+`$happn.mesh.exchange.nodename.hello.world()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
-All [System Components](system.md) are available by default. This includes the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8001/api/client](http://localhost:8001/api/client)
+The mesh includes some [System Components](system.md) by default. These includes the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8001/api/client](http://localhost:8001/api/client)
 
-Looking further you see that the 'hello-world' module also has an `app/` directory with the following:
+__INTERRUPT:__ An additional step is required to fully enable the browser client as follows:
 
-__In file__ `node_modules/hello-world/app/index.html`
+```bash
+sudo install bower -g
+cd node_modules/happngin/lib/system/components/resources
+bower install
+```
+
+Looking further you see that the 'hello' module also has an `app/` directory with the following:
+
+__In file__ `node_modules/hello/app/index.html`
 ```html
 <html>
   <head>
@@ -114,10 +124,10 @@ __In file__ `node_modules/hello-world/app/index.html`
         // Connect to the mesh
         MeshClient(function(err, mesh) {
 
-            // Call the greet function from node_modules/hello-world/index.js
-            mesh.api.exchange['hello-world'].greet(function(error, result) {
+            // Call the world() function from node_modules/hello/index.js
+            mesh.api.exchange.hello.world(function(error, greeting) {
 
-                console.info(result);
+                console.info(greeting);
 
             });
 
