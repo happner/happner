@@ -19,7 +19,7 @@ Service injection is used to provide mesh awareness into modules. By declaring `
 ##### The `$happn` service contains:
 
 * `$happn.name` is the name of the ComponentInstance of __this__ Module
-* `$happn.log` is the ComponentInstance's logger
+* `$happn.log` is the ComponentInstance's __named logger__
 * `$happn.config` is the config of the ComponentInstance
 * `$happn.module` contains the config and instance of __this__ Module as used by multiple ComponentInstances
 * `$happn.emit()` to emit events from the ComponentInstance into the mesh. See [Emitting Events](events.md#emitting-events)
@@ -65,9 +65,9 @@ __NOTE:__ The module is __shared by all components that use it__. This includes 
 
 ### An Imaginary Module (as example)
 
-Having just done `npm install hello-world --save` you will find:
+Having just done `npm install hello --save` you will find:
 
-__In file__ `node_modules/hello-world/index.js`
+__In file__ `node_modules/hello/index.js`
 ```javascript
 module.exports.greet = function(opts, callback) {
   callback(null, {hello: 'world'});
@@ -78,14 +78,14 @@ Because the 'hello' module requires no configuration it can be up and running in
 
 ```javascript
 meshConfig = {
-  name: 'nodename', // name for this MeshNode
+  name: 'my', // name for this MeshNode
   components: {
-    'hello-world': {}
+    'hello': {}
   }
 }
 ```
 
-`$happn.mesh.exchange.nodename['hello-world'].doThing()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
+`$happn.mesh.exchange.nodename.hello.doThing()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
 All [System Components](system.md) are available by default. This includes the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8001/api/client](http://localhost:8001/api/client)
 
