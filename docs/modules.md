@@ -125,7 +125,7 @@ __In file__ `node_modules/hello/app/index.html`
         MeshClient(function(error, mesh) {
 
             // Call the world() function from node_modules/hello/index.js
-            mesh.api.exchange.hello.world(function(error, greeting) {
+            mesh.api.exchange.hello.world({/*opts*/}, function(error, greeting) {
 
                 alert(greeting);
 
@@ -160,16 +160,49 @@ meshConfig = {
 }
 ```
 
-The mesh is now sharing the contents of the `node_modules/hello/app/`.
+The mesh is now sharing the contents of the `node_modules/hello/app/` as static resources.
 
 You browse to [http://localhost:8000/hello/app/index.html](http://localhost:8000/hello/app/index.html) and 'Hello World' pops up in the alert dialog.
 
-More on configuring modules and components in [Configuration](configuration.md).
-
-
 ### Default Configs
 
+Modules can define a default configuration to be used by mesh components. By defining the `$happngin` variable on the module (or on the module prototype if it's a class) each component that uses the module will use these defaults.
 
+__In file__ `node_modules/hello/index.js`
+```javascript
+module.exports.world = function(opts, callback) {
+  var error = null;
+  var greeting = 'Hello World';
+  callback(error, greeting);
+}
 
-`$happngin.ignore`
+// define default component config
+module.exports.$happngin = {
+  config: {
+    component: {
+      schema: {
+        exclusive: true,  // Make so that ONLY world() is exposed
+        methods: {       // to the mesh, by specifying exclusive
+          world: {}     // and listing world() as the only method
+        }
+      },
+      web: {
+        routes: {
+          app: 'static'
+        }
+      }
+    }
+  }
+}
+```
 
+The mesh can now be started with the convenient minimum of config and still gain access to all the indended functionality of the 'hello' module.
+
+```javascript
+require('happngin')().initialise({
+  name: 'clappn',
+  components: {
+    'hello': {}
+  }
+});
+```
