@@ -87,20 +87,20 @@ module.exports.world = function(opts, callback) {
 }
 ```
 
-Because the 'hello' module can be up and running in the mesh with a minimum of config.
+The imaginary 'hello' module can be up and running in the mesh with a minimum of config.
 
 ```javascript
 meshConfig = {
-  name: 'my', // name for this MeshNode
+  name: 'myMeshNode', // name for this MeshNode
   components: {
     'hello': {}
   }
 }
 ```
 
-`$happn.mesh.exchange.nodename.hello.world()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
+`$happn.mesh.exchange.myMeshNode.hello.world()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
-The mesh includes some [System Components](system.md) by default. These includes the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8001/api/client](http://localhost:8001/api/client)
+The mesh provides some [System Components](system.md) by default. These include the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8001/api/client](http://localhost:8001/api/client)
 
 __INTERRUPT:__ An additional step is required to fully enable the browser client as follows:
 
@@ -110,7 +110,7 @@ cd node_modules/happngin/lib/system/components/resources
 bower install
 ```
 
-Looking further you see that the 'hello' module also has an `app/` directory with the following:
+Looking further you see that the imaginary 'hello' module also has an `app/` directory with the following:
 
 __In file__ `node_modules/hello/app/index.html`
 ```html
@@ -122,21 +122,52 @@ __In file__ `node_modules/hello/app/index.html`
   <body>
     <script>
         // Connect to the mesh
-        MeshClient(function(err, mesh) {
+        MeshClient(function(error, mesh) {
 
             // Call the world() function from node_modules/hello/index.js
             mesh.api.exchange.hello.world(function(error, greeting) {
 
-                console.info(greeting);
+                alert(greeting);
 
+                // Note: The same function is available on a path that includes
+                //       the MeshNode's name:
+                //
+                // mesh.api.exchange.myMeshNode.hello.world(...
+                //
             });
-
         });
     </script>
   </body>
 </html>
 ```
 
+Logically you assume that it can be reached by browsing to [http://localhost:8001/hello/app/index.html](http://localhost:8001/hello/app/index.html).
+
+It does not work. To enable a web route the component needs further config.
+
+```javascript
+meshConfig = {
+  name: 'myMeshNode', // name for this MeshNode
+  components: {
+    'hello': {
+      web: {
+        routes: {
+          app: 'static'
+        }
+      }
+    }
+  }
+}
+```
+
+The mesh is now sharing the contents of the `node_modules/hello/app/`.
+
+You browse to [http://localhost:8001/hello/app/index.html](http://localhost:8001/hello/app/index.html) and 'Hello World' pops up in the alert dialog.
+
+More on configuring modules and components in [Configuration](configuration.md).
+
+
+### Default Configs
 
 
 
