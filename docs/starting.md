@@ -60,7 +60,9 @@ Happngin = require('happngin');
 Happngin.start(require('./config/mesh1.js'));
 ```
 
-You can even start a `Blank`
+Or...
+
+You could just start another `Blank`
 
 ```bash
 node -e 'require("happngin").start()'
