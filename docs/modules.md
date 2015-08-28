@@ -52,12 +52,23 @@ eg. (config)
   ...
 ```
 
-The result is that there are two seprate instances of mesh and web functionality each sharing the same module instance.
+The result is that 'employees' and 'clients' are two seprate instances of mesh and web functionality each sharing the same module instance and providing the following functionalities:
 
-eg. (web routes)
+[Web Routes](webroutes.md)
 
 `http://localhost:port/company1/employees/...`<br/>
 `http://localhost:port/company1/clients/...`<br/>
+
+[Exchange](exchange.md)
+
+`$happn.mesh.exchange.company1.employees.method()'s`<br/>
+`$happn.mesh.exchange.company1.clients.method()'s`<br/>
+
+[Events](events.md)
+
+`$happn.mesh.event.company1.employees.on(), .off()`<br/>
+`$happn.mesh.event.company1.clients.on(), .off()`<br/>
+
 
 The above example implies that there is polymorphism at play. It is not strictly so. All functionality must be defined in the module. The components are simply views into the module, each exposing a selected subset of functionality by configuration. And each having __it's own unique mesh ""channel"" by way of the `$happn`__ service injection (which is itself the actual ComponentInstance).
 
