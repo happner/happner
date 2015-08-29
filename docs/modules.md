@@ -147,7 +147,7 @@ __In file__ `node_modules/hello/app/index.html`
 </html>
 ```
 
-Logically you assume that it can be reached by browsing to [http://localhost:8000/hello/app/index.html](http://localhost:8000/hello/app/index.html).
+Logically you assume that it can be reached by browsing to [http://localhost:8000/hello/app](http://localhost:8000/hello/app).
 
 It does not work. To enable a web route the component needs further config.
 
@@ -166,9 +166,9 @@ meshConfig = {
 }
 ```
 
-The mesh is now sharing the contents of the `node_modules/hello/app/` as static resources.
+The mesh is now sharing the contents of the `node_modules/hello/app/` as static resources and defaults to index.html.
 
-You browse to [http://localhost:8000/hello/app/index.html](http://localhost:8000/hello/app/index.html) and 'Hello World' pops up in the alert dialog.
+You browse to [http://localhost:8000/hello/app](http://localhost:8000/hello/app) and 'Hello World' pops up in the alert dialog.
 
 ### Default Configs
 

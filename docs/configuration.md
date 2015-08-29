@@ -61,7 +61,7 @@ Or.
     logStackTraces: false,
     logComponents: ['component', 'names'],
     logTimeDelta: false,
-    logMessageDelimiter: '\t',
+    logMessageDelimiter: ' ',
   }
   ...
 ```
