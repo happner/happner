@@ -18,7 +18,7 @@ Happngin also provides a set of built in components to facilitate providing the 
 [&#9654;](docs/datalayer.md) DataLayer<br/>
 [&#9654;](docs/modules.md) Modules and Components<br/>
 
-[&#9654;](docs/events.md) Events Api<br/>
+[&#9654;](docs/event.md) Event Api<br/>
 [&#9654;](docs/exchange.md) Exchange Api<br/>
 [&#9654;](docs/data.md) Data Api<br/>
 [&#9654;](docs/webroutes.md) Web Routes<br/>
