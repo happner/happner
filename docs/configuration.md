@@ -99,7 +99,7 @@ LOG_LEVEL=trace LOG_COMPONENTS=Api,PubSub,MyComponent bin/my.mesh
 ```
 
 ###### logTimeDelta
-Includes 'milliseconds since last log message' in log message.
+Includes 'milliseconds since last log message' in log message. The default is false unless `util.logLevel` is one of __all__, __trace__ or __info__
 
 ###### logMessageDelimiter
 Delimits between timeDelta and 'componentName message' in log lines.
