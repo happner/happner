@@ -21,10 +21,13 @@ MeshNode startup has been divided into two steps.
 These two steps can be done separately (by hand).
 
 ```javascript
-Happngin = require('happngin');
+var happngin = require('happngin');
 
 var config = {};
-var mesh = Happngin();
+var mesh = new happngin.Mesh();
+
+// or:
+// var mesh = happngin(); 
 
 mesh.initialize(config, function(error) {
   if (err) ... process.exit(1);
@@ -46,18 +49,16 @@ mesh.initialize(config, function(error) {
 Alternatively, there may be no reason to get inbetween the startup, so one call will do.
 
 ```javascript
-Happngin = require('happngin');
-
+var happngin = require('happngin');
 var config = {};
 
-Happngin.start(config, function(err, mesh) {});
+happngin.start(config, function(err, mesh) {});
 ```
 
 Needn't really bother with the callback either (unless you want the mesh object outside of components) 
 
 ```javascript
-Happngin = require('happngin');
-Happngin.start(require('./config/mesh1.js'));
+require('happngin').start(require('./config/mesh1.js'));
 ```
 
 Or...
