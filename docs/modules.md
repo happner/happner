@@ -99,7 +99,7 @@ module.exports.world = function(opts, callback) {
 }
 ```
 
-The imaginary 'hello' module can be up and running in the mesh with a minimum of config.
+This imaginary 'hello' module can be up and running in the mesh with a minimum of config.
 
 ```javascript
 meshConfig = {
@@ -110,7 +110,7 @@ meshConfig = {
 }
 ```
 
-`$happn.mesh.exchange.myMeshNode.hello.world()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
+`$happn.exchange.myMeshNode.hello.world()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
 The mesh provides some [System Components](system.md) by default. These include the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8000/api/client](http://localhost:8000/api/client)
 
@@ -129,14 +129,14 @@ __In file__ `node_modules/hello/app/index.html`
         MeshClient(function(error, mesh) {
 
             // Call the world() function from node_modules/hello/index.js
-            mesh.api.exchange.hello.world({/*opts*/}, function(error, greeting) {
+            mesh.exchange.hello.world({/*opts*/}, function(error, greeting) {
 
                 alert(greeting);
 
                 // Note: The same function is available on a path that includes
                 //       the MeshNode's name:
                 //
-                // mesh.api.exchange.myMeshNode.hello.world(...
+                // mesh.exchange.myMeshNode.hello.world(...
                 //
             });
         });
