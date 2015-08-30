@@ -71,13 +71,13 @@ The result is that 'employees' and 'clients' are two seprate instances of mesh a
 
 [Exchange](exchange.md)
 
-`$happn.mesh.exchange.company1.employees.method()'s`<br/>
-`$happn.mesh.exchange.company1.clients.method()'s`<br/>
+`$happn.exchange.company1.employees.method()'s`<br/>
+`$happn.exchange.company1.clients.method()'s`<br/>
 
 [Events](events.md)
 
-`$happn.mesh.event.company1.employees.on(), .off()`<br/>
-`$happn.mesh.event.company1.clients.on(), .off()`<br/>
+`$happn.event.company1.employees.on(), .off()`<br/>
+`$happn.event.company1.clients.on(), .off()`<br/>
 
 
 The above example implies that there is polymorphism at play. It is not strictly so. All functionality must be defined in the module. The components are simply views into the module, each exposing a selected subset of functionality by configuration. And each having __it's own unique mesh ""channel""__ by way of the `$happn` service injection (which is itself the actual ComponentInstance).
