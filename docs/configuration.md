@@ -178,7 +178,7 @@ find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
 
 [&#9650;](#)
 
-The MeshNode can be set to start a console repl listening on a unix socket.
+The MeshNode can be set to share a console repl on a socket file.
 
 ```javascript
   ...
