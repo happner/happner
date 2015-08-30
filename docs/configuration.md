@@ -183,7 +183,9 @@ The MeshNode can be set to start a console repl listening on a unix socket.
 ```javascript
   ...
   repl: {
-    socket: '/tmp/somefilename'
+    socket: '/tmp/somefilename',
+    ignoreUndefined: false,
+    useColors: true,
   }
   ...
 ```
@@ -203,7 +205,11 @@ rc /tmp/somefilename
 mesh-name> 
 mesh-name> meshNode.description()
 ...
+mesh-name> ^d
+
+rc /tmp/somefilename < script.js > result.txt
 ```
+
 
 ### DataLayer Config
 
