@@ -224,8 +224,8 @@ The `config.datalayer` section can contain the following items (shown with defau
   datalayer: {
     host: 'localhost',
     port: 8000,
+    secret: 'mesh',
     authTokenSecret: 'mesh',
-    systemSecret: 'mesh',
     setOptions: {
       noStore: true,
       timeout: 10000
@@ -236,8 +236,8 @@ The `config.datalayer` section can contain the following items (shown with defau
 
 `host` - The host (ip/interface) for __this__ MeshNode to listen on.<br/>
 `port` - The port to listen on.<br/>
+`secret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
 `authTokenSecret` - Used to encrypt the session webtoken. <br/>
-`systemSecret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
@@ -249,18 +249,24 @@ __NOTE:__ The `config.datalayer` section can be omitted if all defaults are acce
 
 The `config.endpoints` section should list all remote MeshNodes to which __this__ MeshNode should attach upon initialization - as follows:
 
+##### Long Form
+
 ```javascript
   ...
   endpoints: {
     'quay1-berth1-crane1': {
-      host: 'crane1.berth1.quay1.harbour.com',
-      port: 919,
-      secret: 'ƒ¡ƒ†¥'
+      config: {
+        host: 'crane1.berth1.quay1.harbour.com',
+        port: 919,
+        secret: 'ƒ¡ƒ†¥'
+      }
     },
     'quay1-berth2-crane1': {
-      host: 'crane1.berth2.quay1.harbour.com',
-      port: 919,
-      secret: 'ƒ¡ƒ†¥'
+      config: {
+        host: 'crane1.berth2.quay1.harbour.com',
+        port: 919,
+        secret: 'ƒ¡ƒ†¥'
+      }
     },
   }
   ...
@@ -271,9 +277,20 @@ The above attaches __this__ MeshNode to two remote MeshNodes.
 `quay1-berth1-crane1` - The remote MeshNode's name (as configured in the remote's `config.name`)<br/>
 `.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.datalayer.host`)<br/>
 `.port` - The remote MeshNode post (as configured in the remote's `config.datalayer.port`)<br/>
-`.secret` - The remote MeshNode secret (as configured in the remote's `config.datalayer.systemSecret`)<br/>
+`.secret` - The remote MeshNode secret (as configured in the remote's `config.datalayer.secret`)<br/>
 
-__NOTE:__ The `config.endpoints` section can be omitted if __this__ MeshNode attaches to no other.
+##### Short Form
+
+Assuming all nodes using default authtoken and secret.
+
+```javascript
+  ...
+  endpoints: {
+    'quay1-berth1-crane1': 919, // localhost
+    'quay1-berth2-crane1': 'crane1.berth2.quay1.harbour.com:919'
+  }
+  ...
+```
 
 ### Module Config
 
