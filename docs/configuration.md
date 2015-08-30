@@ -19,7 +19,7 @@ config = {
     name: 'mesh',
     util: {},
     repl: {},
-    dataLayer: {},
+    datalayer: {},
     endpoints: {},
     modules: {},
     components: {}
