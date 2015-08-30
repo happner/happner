@@ -6,6 +6,7 @@ Mesh configuration contains several sections.
 
 * [Mesh Name](#mesh-name)
 * [Utilities](#utilities)
+* [Repl](#repl)
 * [DataLayer Config](#datalayer-config)
 * [Endpoint Config](#endpoint-config)
 * [Module Config](#module-config)
@@ -17,6 +18,7 @@ These are arranged as a set of key/value pairs on the config object:
 config = {
     name: 'mesh',
     util: {},
+    repl: {},
     dataLayer: {},
     endpoints: {},
     modules: {},
@@ -170,6 +172,37 @@ find node_modules/*/lib -type f -regex '.*\.js' \
 ```bash
 find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
   | while read FILE; do echo; echo ${FILE%.ORIGINAL}; diff ${FILE%.ORIGINAL} $FILE; done
+```
+
+### Repl
+
+[&#9650;](#)
+
+The MeshNode can be set to start a console repl listening on a unix socket.
+
+```javascript
+  ...
+  repl: {
+    socket: '/tmp/somefilename'
+  }
+  ...
+```
+* The repl __is only started if the config is present__.
+* The mesh instance is in the variable `meshNode`
+* ^d is the best exit.
+
+__Important!__ The repl is insecure. Anyone with readwrite on the socket file has __full access to the meshNode instance__.
+
+##### Using the repl.
+
+```bash
+sudo npm install repl-client --global
+
+rc /tmp/somefilename
+
+mesh-name> 
+mesh-name> meshNode.description()
+...
 ```
 
 ### DataLayer Config
