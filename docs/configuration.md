@@ -217,7 +217,7 @@ rc /tmp/somefilename < script.js > result.txt
 
 See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
-The `config.dataLayer` section can contain the following items (shown with defaults):
+The `config.datalayer` section can contain the following items (shown with defaults):
 
 ```javascript
   ...
@@ -226,7 +226,6 @@ The `config.dataLayer` section can contain the following items (shown with defau
     port: 8000,
     authTokenSecret: 'mesh',
     systemSecret: 'mesh',
-    log_level: 'info|error|warning',
     setOptions: {
       noStore: true,
       timeout: 10000
@@ -239,11 +238,10 @@ The `config.dataLayer` section can contain the following items (shown with defau
 `port` - The port to listen on.<br/>
 `authTokenSecret` - Used to encrypt the session webtoken. <br/>
 `systemSecret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
-`log_level` -   TODO ??datalayer logger different to mesh logger?? <br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
-__NOTE:__ The `config.dataLayer` section can be omitted if all defaults are acceptable.
+__NOTE:__ The `config.datalayer` section can be omitted if all defaults are acceptable.
 
 ### Endpoint Config
 
@@ -271,9 +269,9 @@ The `config.endpoints` section should list all remote MeshNodes to which __this_
 The above attaches __this__ MeshNode to two remote MeshNodes.
 
 `quay1-berth1-crane1` - The remote MeshNode's name (as configured in the remote's `config.name`)<br/>
-`.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.dataLayer.host`)<br/>
-`.port` - The remote MeshNode post (as configured in the remote's `config.dataLayer.port`)<br/>
-`.secret` - The remote MeshNode secret (as configured in the remote's `config.dataLayer.systemSecret`)<br/>
+`.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.datalayer.host`)<br/>
+`.port` - The remote MeshNode post (as configured in the remote's `config.datalayer.port`)<br/>
+`.secret` - The remote MeshNode secret (as configured in the remote's `config.datalayer.systemSecret`)<br/>
 
 __NOTE:__ The `config.endpoints` section can be omitted if __this__ MeshNode attaches to no other.
 
