@@ -12,7 +12,7 @@
 
 [&#9650;](#)
 
-In essence happngin modules are simply node modules that have the additional capacity to be created asyncronously and instantiated by configuration.
+In essence __happner__ modules are simply node modules that have the additional capacity to be created asyncronously and instantiated by configuration.
 
 This paves the way for `code re-use by configuration` and `remote runtime initialization`
 
@@ -172,7 +172,7 @@ You browse to [http://localhost:8000/hello/app](http://localhost:8000/hello/app)
 
 [&#9650;](#)
 
-Modules can define a default configuration to be used by mesh components. By defining the `$happngin` variable on the module (or on the module prototype if it's a class) each component that uses the module will use these defaults.
+Modules can define a default configuration to be used by mesh components. By defining the `$happner` variable on the module (or on the module prototype if it's a class) each component that uses the module will use these defaults.
 
 __In file__ `node_modules/hello/index.js`
 ```javascript
@@ -183,7 +183,7 @@ module.exports.world = function(opts, callback) {
 }
 
 // define default component config
-module.exports.$happngin = {
+module.exports.$happner = {
   config: {
     component: {
       schema: {

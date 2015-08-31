@@ -1,1 +1,0 @@
-Docs readme [moved to front page](https://github.com/FieldServer/happngin)
