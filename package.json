@@ -1,21 +1,21 @@
 {
-  "name": "@smc/happngin",
+  "name": "happner",
   "version": "0.0.7",
-  "description": "SMC Application Engine that runs other components and have an API and data mesh service.",
+  "description": "Distributed application engine with evented storage and mesh services",
   "main": "lib/system/mesh.js",
   "scripts": {
     "test": "mocha test/*.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FieldServer/happngin"
+    "url": "https://github.com/happner/happner"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FieldServer/happngin/issues"
+    "url": "https://github.com/happner/happner/issues"
   },
-  "homepage": "https://github.com/FieldServer/happngin",
+  "homepage": "https://github.com/happner/happner",
   "devDependencies": {
     "chai": "^2.2.0",
     "mocha": "^2.2.4",
