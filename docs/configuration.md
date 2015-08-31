@@ -223,7 +223,7 @@ The `config.datalayer` section can contain the following items (shown with defau
   ...
   datalayer: {
     host: 'localhost',
-    port: 8000,
+    port: 55000,
     secret: 'mesh',
     authTokenSecret: 'mesh',
     setOptions: {

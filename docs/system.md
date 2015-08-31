@@ -8,7 +8,7 @@ The mesh starts with a default set of system components running.
 
 This component serves the MeshClient script for use in the browser.
 
-[http://localhost:8000/api/client](http://localhost:8000/api/client)
+[http://localhost:55000/api/client](http://localhost:55000/api/client)
 
 eg.
 
@@ -28,7 +28,7 @@ cd node_modules/happner/resources
 bower install
 ```
 
-http://localhost:8000/resources/...
+http://localhost:55000/resources/...
 
 eg.
 

@@ -112,7 +112,7 @@ meshConfig = {
 
 `$happn.exchange.myMeshNode.hello.world()` can now be called (as if a local function) from other MeshNodes in the network that have endpoints configured to connect to __this__ MeshNode. See [Endpoint Config](configuration.md#endpoint-config) 
 
-The mesh provides some [System Components](system.md) by default. These include the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:8000/api/client](http://localhost:8000/api/client)
+The mesh provides some [System Components](system.md) by default. These include the browser MeshClient that can be fetched from the defaut host and port: [http://localhost:55000/api/client](http://localhost:55000/api/client)
 
 Looking further you see that the imaginary 'hello' module also has an `app/` directory with the following:
 
@@ -145,7 +145,7 @@ __In file__ `node_modules/hello/app/index.html`
 </html>
 ```
 
-Logically you assume that it can be reached by browsing to [http://localhost:8000/hello/app](http://localhost:8000/hello/app).
+Logically you assume that it can be reached by browsing to [http://localhost:55000/hello/app](http://localhost:55000/hello/app).
 
 It does not work. To enable a web route the component needs further config.
 
@@ -166,7 +166,7 @@ meshConfig = {
 
 The mesh is now sharing the contents of the `node_modules/hello/app/` as static resources and defaults to index.html.
 
-You browse to [http://localhost:8000/hello/app](http://localhost:8000/hello/app) and 'Hello World' pops up in the alert dialog.
+You browse to [http://localhost:55000/hello/app](http://localhost:55000/hello/app) and 'Hello World' pops up in the alert dialog.
 
 ### Default Configs
 
