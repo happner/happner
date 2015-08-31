@@ -2,3 +2,6 @@
 
 ## Web Routes
 
+index.html default in static
+
+array of mware funcs

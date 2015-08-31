@@ -94,7 +94,7 @@ describe('Demonstrates the middleware functionality', function (done) {
     });
   });
 
-  it.only('tests that we can do chain middleware in a module', function (done) {
+  it('tests that we can do chain middleware in a module', function (done) {
     getBody('http://127.0.0.1:' + testport + '/component5/static5/test.html', function (e, body) {
 
       body.should.eql(fs.readFileSync(__dirname + '/lib/static5/preprocessed-test.html').toString());
