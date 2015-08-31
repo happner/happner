@@ -8,15 +8,16 @@ MeshNode startup has been divided into two steps.
 
 * Starts all internal local infrastructure
 * Begins listeing on the network.
+* Generates local module and componentInstances per the config
 * Begins connection attempts to remote MeshNodes (endpoints)
-* Generates modules and componentInstances per the config
 * Assembles the exchange and event api layers
 * Ammends the exchange and event api with each established connection to remote MeshNodes
-* Reports up
+* Reports ready
 
 ##### Start
 
 * Calls the start method on any components that specified one. This allows components an initialization step that occurs after all mesh connections have been made.
+* Reports started
 
 These two steps can be done separately (by hand).
 

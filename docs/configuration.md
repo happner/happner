@@ -62,7 +62,7 @@ Or.
     // logger: {}, // will silence all logging
     logStackTraces: false,
     logComponents: ['component', 'names'],
-    logTimeDelta: false,
+    logTimeDelta: true,
     logMessageDelimiter: '\t',
   }
   ...
@@ -101,7 +101,7 @@ LOG_LEVEL=trace LOG_COMPONENTS=Api,PubSub,MyComponent bin/my.mesh
 ```
 
 ###### logTimeDelta
-Includes 'milliseconds since last log message' in log message. The default is false unless `util.logLevel` is one of __all__, __trace__ or __info__
+Includes 'milliseconds since last log message' in log message. The default is true.
 
 ###### logMessageDelimiter
 Delimits between timeDelta and 'componentName message' in log lines.
@@ -581,7 +581,7 @@ __(optional)__
 
 Used to specify one of the `schema.methods` to run on the mesh.start to further initialize the module once the mesh is up, running and connected to other MeshNodes.
 
-When specifying `schema.startMethod` it is necessary to provide the initializer with the full complement of configuration for the start method. As expressed in the example config above, the start method will be called with the `opts` as specified in `value`
+When specifying `schema.startMethod`, if the corresponding startmethod is not defined in the schema it is asumed that the start method takes a callback as the only argument.
 
 ###### schema.methods
 __(optional)__
