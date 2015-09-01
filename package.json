@@ -33,6 +33,7 @@
     "http-proxy": "^1.11.1",
     "http-proxy-middleware": "^0.5.0",
     "log4js": "^0.6.24",
+    "merge": "^1.2.0",
     "moment": "^2.9.0",
     "objective": "0.0.31",
     "serve-static": "^1.9.3",
