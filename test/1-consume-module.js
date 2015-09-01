@@ -20,12 +20,12 @@ describe('Consumes an external module', function() {
     endpoints: {},
     modules: {
       "happnClient":{
-        path:"@smc/happn",
+        path:"happn",
         construct:{
           type:"async",
           name:"client",//if blank or null we just do new require
           parameters:[
-           {"name":"config", "required":true, "value":{config:{"host":"localhost", "port":8000, "secret":"mesh"}}},
+           {"name":"config", "required":true, "value":{config:{"host":"localhost", "secret":"mesh"}}},
            {"name":"callback", "parameterType":"callback"},    
           ],
           callback:{
@@ -99,7 +99,7 @@ describe('Consumes an external module', function() {
 
     this.timeout(10000);
 
-            // created in lib/0-hooks.js
+    // created in lib/0-hooks.js
     mesh = this.Mesh();
    
     mesh.initialize(config, function(err) {
@@ -120,7 +120,7 @@ describe('Consumes an external module', function() {
     var _this = this;
 
     //we require a 'real' happn client
-    new require('@smc/happn')["client"]({config:{"host":"localhost", "port":8000, "secret":"mesh"}}, function(e, client){
+    new require('happn')["client"]({config:{"host":"localhost", "secret":"mesh"}}, function(e, client){
       
       if (e) {
         console.log('real client init failure');
