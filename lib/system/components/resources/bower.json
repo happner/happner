@@ -27,7 +27,12 @@
     "async": "~1.2.1",
     "angular-route": "~1.4.3",
     "d3": "~3.5.6",
-    "nvd3": "~1.8.1"
+    "nvd3": "~1.8.1",
+    "font-awesome": "~4.4.0",
+    "ionicons": "~2.0.1",
+    "raphael": "~2.1.4",
+    "moment": "~2.10.6",
+    "angular-moment": "~0.10.2"
   },
   "resolutions": {
     "angular-ui-sortable": "~0.13.3",

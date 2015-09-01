@@ -53,6 +53,10 @@ describe('default component configs', function() {
     var mesh = this.mesh = this.Mesh();
     mesh.initialize({
 
+      util: {
+        logger: {}
+      },
+
       modules: {
         'see-above': {
           path: __filename
@@ -71,9 +75,13 @@ describe('default component configs', function() {
 
   it('created the module with the method schema as defaulted', function(done) {
     should.not.exist(this.mesh.api.exchange['see-above'].methodName2)
+    var _this = this;
     this.mesh.api.exchange['see-above'].methodName1(function(err, res) {
       res.should.equal('OK-GOOD');
-      done();
+      _this.mesh.api.exchange['see-above'].moo(function(err, res) {
+        res.should.equal('OK-GOOD');
+        done();
+      });
     });
   });
 

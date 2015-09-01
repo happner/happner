@@ -28,13 +28,23 @@ config = {
 
 The `config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
 
-If the name is unspecified and the mesh has no endpoints it will default the name to 'mesh'. If their are endpoints a random default name will be used.
+If the name is unspecified a random name will be used.
+
+__BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name.
 
 ### Utilities
 
 #### Configuring the Logger
 
-The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger configured as follows:
+The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger.
+
+There are configuration opportunities as follows:
+
+```javascript
+  // defaults
+```
+
+Or.
 
 ```javascript
   ...
@@ -43,19 +53,48 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger co
     logFile: '/absolute/path/to/file.log',
     logDateFormat: 'yyyy-MM-dd hh:mm:ss',
     logLayout: '%d{yyyy-MM-dd hh:mm:ss} - %m',
-    // logger: {},
-    logStackTraces: false
+    // logger: {}, // will silence all logging
+    logStackTraces: false,
+    logComponents: ['component', 'names'],
+    logTimeDelta: false,
+    logMessageDelimiter: '\t',
   }
   ...
 ```
 
-`logFile` - (optional) Must be absolute path. __If not present only the console will receive the log stream.__<br/>
-`logDateFormat` - (optional) To override the date format in log messages.<br/>
-`logLayout` - (optional) Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).<br/>
-`logger` - (optional) Provide your own log4js config. All preceding config keys will have no affect.<br/>
-`logStackTraces` - (optional) Prints the error stack. Default false.
+###### logLevel
+Default 'info' or LOG_LEVEL environment variable value<br/>
+Options include: __all__ __trace__ __debug__ __info__ __warn__ __error__ __fatal__ __off__.
 
-__NOTE:__ Definining `util.logger` as empty `{}` will silence all logging.
+```javascript
+LOG_LEVEL=debug bin/my.mesh
+```
+
+###### logFile
+Must be absolute path.<br/>
+__If not present only the console will receive the log stream.__
+
+###### logDateFormat
+To override the date format in log messages.
+
+###### logLayout
+Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).
+
+###### logger
+Provide your own log4js config.<br/>
+
+###### logStackTraces
+Prints the error stack. Default false.
+
+###### logComponents
+Prints __debug__ and __trace__ messages for only the listed names.
+
+###### logTimeDelta
+Includes 'milliseconds since last log message' in log message.
+
+###### logMessageDelimiter
+Delimits between timeDelta, componentName and message in log lines.
+
 
 #### Using the Logger
 
@@ -72,7 +111,7 @@ UTILITIES.log(message, level, componentName, obj)
 Alternatively mesh modules and components can use `UTILITIES.createLogger(name, obj)`
 
 * It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
-* It tests for `level enabled` before calling into the logger - this minimises the impact of excessive trace and debug usage.
+* It uses logLevel guards to minimise the impact of liberal trace and debug usage.
 * If `obj` is provided, log methods will be created on `obj`
 
 eg.
@@ -82,21 +121,43 @@ module.exports = MyMeshModule;
 
 function MyMeshModule() {
   this.log = UTILITIES.createLogger('MyMeshModule');
-  // this.log.trace('', {});
-  // this.log.debug('', {});
+  // this.log.$$TRACE('', {});
+  // this.log.$$DEBUG('', {});
   // this.log.info('', {});
   // this.log.warn('', {});
   // this.log.errror('..', err);
   // this.log.fatal('..', err);
 
   //// UTILITIES.createLogger('MyMeshModule', this);
-  //// this.info('') // it will stomp existing
+  //// this.info('') // it will stomp existing functions on 'this'
 }
 MyMeshModule.prototype.m = function() {
   this.log.trace('m()');
 }
 
 ```
+
+The `$$TRACE()` and `$$DEBUG()` are so named to enable optionally __FULLY__ productionizing with the following deployment step:
+
+##### Remove all calls to DEBUG and TRACE
+
+This is not paticularly recommended. Debugging can be usefull in production too. See `config.util.logComponents` option.
+
+```bash
+find node_modules/*/lib -type f -regex '.*\.js' \
+  | grep -v components/resources/lib \
+  | xargs sed -e s/[a-zA-Z\._-]*\$\$DEBUG\(.*\)\;//g -i .ORIGINAL
+
+# do the same with \$\$TRACE
+```
+
+##### Validate the Substitutions
+
+```bash
+find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
+  | while read FILE; do echo; echo ${FILE%.ORIGINAL}; diff ${FILE%.ORIGINAL} $FILE; done
+```
+
 
 
 ### DataLayer Config
@@ -127,7 +188,7 @@ The `config.dataLayer` section can contain the following items (shown with defau
 `port` - The port to listen on.<br/>
 `authTokenSecret` - Used to encrypt the session webtoken. <br/>
 `systemSecret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
-`log_level` - __?????????????????????????????????????????__<br/>
+`log_level` -   TODO ??datalayer logger different to mesh logger?? <br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
@@ -406,7 +467,7 @@ __NOTE:__ The `config.modules` section can be omitted if the [Components (see be
 
 See also: [What are Components?](components.md#what-are-components)
 
-The `config.components` section should list components to be loaded into the mesh. The full complement of possibly config looks as follows:
+The `config.components` section should list components to be loaded into the mesh. The full complement of possible config looks as follows:
 
 ```javascript
   ...
@@ -432,10 +493,6 @@ The `config.components` section should list components to be loaded into the mes
           },
           'methodName1': {
             alias: 'mn1',
-            parameters: [
-              {name: 'opts', required: true, value: {op:'tions2'}},
-              {name: 'callback', required: true, type: 'callback'}
-            ]
           },
           'methodName2': {}
         ]
@@ -447,12 +504,4 @@ The `config.components` section should list components to be loaded into the mes
   }
   ...
 ```
-
-
-
-
-
-
-
-
 
