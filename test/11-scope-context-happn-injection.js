@@ -11,6 +11,8 @@ describe('mesh awareness via $happn injection', function() {
 
     // test against multiple meshes and multiple components
 
+    this.timeout(10000);
+
     var Mesh = this.Mesh;
     var _this = this;
 
@@ -173,7 +175,7 @@ describe('mesh awareness via $happn injection', function() {
   
   it('leaves happn out of the description when defaulting method parameters', function(done) {
     var meshes = this.meshes;
-    meshes[0].description.components.component1.methods.getThingFromConfig.should.eql [
+    meshes[0]._mesh.description.components.component1.methods.getThingFromConfig.should.eql [
       {name: 'callback'}
     ]
     done()
@@ -181,7 +183,7 @@ describe('mesh awareness via $happn injection', function() {
 
   it('leaves happn out of the description when specifying method parameters', function(done) {
     var meshes = this.meshes;
-    meshes[0].description.components['special-component1'].should.eql({
+    meshes[0]._mesh.description.components['special-component1'].should.eql({
       "methods": {
         "getThingFromConfig": {
           "parameters": [
@@ -294,16 +296,16 @@ describe('mesh awareness via $happn injection', function() {
                                 // console.log('mesh'+i, 'component'+j)
                                 // mesh.api.exchange['mesh'+i]['component'+j]
 
-                                mesh.api.exchange['component'+j]
+                                mesh.exchange['component'+j]
                                 .getThingFromConfig(function(err, thing) {
                                   if (err) return reject(err);
                                   results.push(thing);
 
-                                  mesh.api.exchange['special-component'+j]
+                                  mesh.exchange['special-component'+j]
                                   .getThingFromConfig(function(err, thing) {
                                     if (err) return reject(err);
                                     results.push(thing);
-                                    resolve([mesh.config.name + '.component' + j,results]);
+                                    resolve([mesh._mesh.config.name + '.component' + j,results]);
                                   });
                                 });
                               }
@@ -419,7 +421,7 @@ describe('mesh awareness via $happn injection', function() {
   it('injects happn into first position', function(done) {
     var mesh = this.meshes[0];
 
-    mesh.api.exchange['special-component2'].methodNameFront('ARG1', function(err, res) {
+    mesh.exchange['special-component2'].methodNameFront('ARG1', function(err, res) {
       if (err) return done(err);
       res.should.eql([ 'ARG1', { mesh: 1, component: 2 } ]);
       done()
@@ -430,7 +432,7 @@ describe('mesh awareness via $happn injection', function() {
   it('injects happn into last position', function(done) {
     var mesh = this.meshes[0];
 
-    mesh.api.exchange['special-component3'].methodNameEnd('ARG1', function(err, res) {
+    mesh.exchange['special-component3'].methodNameEnd('ARG1', function(err, res) {
       if (err) return done(err);
       res.should.eql([ 'ARG1', { mesh: 1, component: 3 } ]);
       done()
@@ -440,7 +442,7 @@ describe('mesh awareness via $happn injection', function() {
   it('injects happn into middle position', function(done) {
     var mesh = this.meshes[0];
 
-    mesh.api.exchange['special-component4'].methodNameMiddle('ARG1', function(err, res) {
+    mesh.exchange['special-component4'].methodNameMiddle('ARG1', function(err, res) {
       if (err) return done(err);
       res.should.eql([ 'ARG1', { mesh: 1, component: 4 } ]);
       done()
@@ -450,7 +452,7 @@ describe('mesh awareness via $happn injection', function() {
   it('runs method without happn ok', function(done) {
     var mesh = this.meshes[0];
 
-    mesh.api.exchange['special-component5'].methodWithoutHappn('ARG1', function(err, res) {
+    mesh.exchange['special-component5'].methodWithoutHappn('ARG1', function(err, res) {
       if (err) return done(err);
       res.should.eql([ 'ARG1' ]);
       done()

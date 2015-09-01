@@ -2,14 +2,18 @@ module.exports = Explicit;
 
 function Explicit() {}
 
-Explicit.prototype.asyncStart = function(opts, optionalOpts, callback) {
+Explicit.prototype.asyncStart = function($happn, opts, optionalOpts, callback) {
+
+  if (typeof callback == 'undefined') callback = optionalOpts;
+
   setTimeout(function() {
-    Explicit.startCalled = arguments;
-    callback(null);
+    $happn.data.DONE = true;
+    callback(null)
   }, 200);
 }
 
 Explicit.prototype.asyncStartFails = function(callback) {
+
   callback(new Error('erm'));
 }
 
@@ -105,13 +109,7 @@ describe('component start and validation -', function() {
 
   it('has called and finished the component async start method', function(done) {
 
-    //
-    // This test is failing because mesh.start callback occurrs before 
-    // the component start method has finished
-    //
-
-    // console.log(require(__filename).startCalled);
-    require(__filename).startCalled[0].should.eql({ op: 'tions' });
+    this.mesh.data.DONE.should.eql(true)
     done();
 
   });
@@ -157,8 +155,8 @@ describe('component start and validation -', function() {
     }, function(err) {
       if (err) return done(err);
 
-      anotherMesh.start(function(err) {
-        // console.log(err);
+      anotherMesh.start(function(err, mesh) {
+        // console.log('ERROR', err);
         should.exist(err);
         done();
       });

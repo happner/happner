@@ -25,7 +25,7 @@ function Component1(options) {
 
     try{
 
-      console.log($happn);
+      // console.log($happn);
 
       this.moduleMethod();
       callback(null, 'hooray, message was: ' + message);
@@ -38,9 +38,6 @@ function Component1(options) {
   this.start = function(arg, $happn){
 
     //console.log('starting module1 component');
-
-    if (!$happn)
-      throw new Error('This module needs component level scope');
 
     $happn.mesh.exchange.component2.exposedMethod({message:"Component1", "timestamp":moment.utc(), "pingCount":0}, function(e, response){
       if (e) return //console.log('call to component2 broke...' + e);

@@ -36,18 +36,28 @@ describe('Proxy component', function() {
 
     mesh = _this.Mesh();
     mesh.initialize(config, function(err) {
+
       if (err) return done(err);
 
        // spawn remote mesh in another process
       remote = spawn('node',[libFolder + '14-proxy-mesh']);
       remote.stdout.on('data', function(data) {
 
-        //console.log('Remote:',data.toString());
-        if (!data.toString().match(/mesh up.../)) return;
+        console.log('Remote:',data.toString());
+        if (!data.toString().match(/ready/)) return;
 
         console.log('waiting for remote up');
         setTimeout(done, 3000);
       });
+
+      remote.on('error', function(e) {
+        console.log(e);
+      });
+
+      remote.on('exit', function() {
+        console.log('exit', arguments);
+      });
+
     });
 
     after(function(done) {

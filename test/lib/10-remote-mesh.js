@@ -1,4 +1,4 @@
-var Mesh = require('../../lib/system/mesh');
+var Mesh = require('../../lib/mesh');
 var meshName = 'mesh' + process.argv[2];
 
 var config = {

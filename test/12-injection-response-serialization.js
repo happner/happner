@@ -25,7 +25,7 @@ describe('Bounces a message between two components, demonstrates how the events 
     modules: {
       "module1":{
         path:libFolder + "12-module1",
-        constructor:{
+        construct:{
           type:"sync",
           parameters:[
             {value:{maximumPings:maximumPings}}
@@ -56,7 +56,7 @@ describe('Bounces a message between two components, demonstrates how the events 
         console.log(err.stack);
         done(err);
       }else{
-        mesh.api.exchange.component1.exposedMethod('a message', function(e, response){
+        mesh.exchange.component1.exposedMethod('a message', function(e, response){
           setTimeout(function(){
             done();
           }, 12000);

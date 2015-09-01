@@ -2,7 +2,8 @@ module.exports = Module1;
 
 function Module1() {}
 
-Module1.prototype.start = function() {
+Module1.prototype.start = function(callback) {
+  callback(null);
   // console.log('start', this.stop);
 }
 

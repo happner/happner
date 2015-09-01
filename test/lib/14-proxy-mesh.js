@@ -1,4 +1,4 @@
-var Mesh = require('../../lib/system/mesh');
+var Mesh = require('../../lib/mesh');
 
 var config = {
   name: 'Device1',
@@ -6,7 +6,6 @@ var config = {
     port: 3001,
     authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
     systemSecret: 'mesh',
-    log_level: 'info|error|warning'
   },
   endpoints: {
      cloud: {  // remote mesh node
@@ -24,7 +23,7 @@ var config = {
   modules: {
     "module-mesh":{
       path:__dirname + "/14-module-mesh.js",
-      constructor:{
+      construct:{
         type:"sync",
         parameters:[]
       }
