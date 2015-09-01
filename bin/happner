@@ -1,0 +1,102 @@
+#!/usr/bin/env node
+
+// BUG: prompt input longer than line gets unsightly
+
+var parallel = require('async').parallel;
+var show = require('../lib/console/show');
+var node = require('../lib/console/node');
+
+
+
+var meshConfig = { name: 'localnode' }
+
+
+
+require('objective')(function(prompt) {
+  
+  // Start mesh node
+
+  require('../').start(meshConfig, function(err, mesh) {
+
+    // Attach middleware on prompt's 'command registration' pipeline
+
+    objective.pipeline.on('prompt.commands.register.ask', function(command, next) {
+
+      // Enable async command creation (remote things can play too)
+
+      parallel([
+
+        function(done) {
+
+          // Pass mesh to show() function in '../lib/console/show',
+          // it calls back with the command action definition.
+
+          show(mesh, function(e, action) {
+
+            if (e) return done(e);
+
+            // Register command
+
+            command.create('show', action);
+            done();
+          });
+        },
+
+        function(done) {
+          node(mesh, prompt, function(e, action) {
+            if (e) return done(e);
+            command.create('node', action);
+            done();
+          });
+        },
+
+        // More console commands
+        function(done) {
+          done();
+        },
+
+
+
+      ], next);
+
+    });
+
+
+    // Check that prmpt appears undisturbed by log 
+
+    // setInterval(function() {
+    //   mesh.log.info('YYY - ' + require('sillyname')());
+    // }, 3000);
+
+
+
+    // Clear line for log message.
+    // The prompt (with current content) is re-written on next line.
+
+    UTILITIES.log.on('log.before', function() {
+
+      console._stdout.clearLine();  // node version 0.9 & higher (i think)
+      console._stdout.cursorTo(0);
+    
+    });
+
+    // Rewrite prompt after logger write 
+    
+    var replace;
+    
+    UTILITIES.log.on('log.after', function() {
+
+      clearTimeout(replace);
+      
+      replace = setTimeout(function() {
+        var newLine = false;
+        prompt.writePrompt(newLine);
+      }, 10);
+
+    });
+
+    prompt.start();
+
+  });
+
+});

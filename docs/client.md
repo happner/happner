@@ -1,3 +1,3 @@
-[&#9664;](starting.md) starting a mesh node | contents [&#9654;](readme.md)
+[&#9664;](system.md) system components | __back__ to contents [&#9654;](https://github.com/happner/happner#documentation)
 
 ## Using the Client

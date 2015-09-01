@@ -1,38 +1,40 @@
 {
-  "name": "@smc/happngin",
+  "name": "happner",
   "version": "0.0.7",
-  "description": "SMC Application Engine that runs other components and have an API and data mesh service.",
-  "main": "lib/system/mesh.js",
+  "description": "Distributed application engine with evented storage and mesh services",
+  "main": "lib/mesh.js",
+  "bin": {
+    "happner": "bin/happner"
+  },
   "scripts": {
     "test": "mocha test/*.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FieldServer/happngin"
+    "url": "https://github.com/happner/happner"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FieldServer/happngin/issues"
+    "url": "https://github.com/happner/happner/issues"
   },
-  "homepage": "https://github.com/FieldServer/happngin",
+  "homepage": "https://github.com/happner/happner",
   "devDependencies": {
     "chai": "^2.2.0",
     "mocha": "^2.2.4",
     "request": "^2.53.0",
-    "when": "^3.7.3",
-    "zombie": "^2.5.1"
+    "when": "^3.7.3"
   },
   "dependencies": {
     "happn": "^0.1.22",
     "happn-ui-module": "^0.1.15",
     "async": "^0.9.0",
     "byline": "^4.2.1",
-    "debug": "^2.2.0",
     "http-proxy": "^1.11.1",
     "http-proxy-middleware": "^0.5.0",
     "log4js": "^0.6.24",
     "moment": "^2.9.0",
+    "objective": "0.0.30",
     "serve-static": "^1.9.3",
     "shortid": "^2.2.2",
     "sillyname": "0.0.3"

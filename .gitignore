@@ -1,5 +1,4 @@
 node_modules
-lib/system/components/resources/lib/modules/*
 .idea
 npm-debug.log
 coverage

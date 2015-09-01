@@ -16,7 +16,7 @@ module.exports = function() {
 
     // new mesh object for use in tests
 
-    this.Mesh = require('../../lib/system/mesh');
+    this.Mesh = require('../../lib/mesh');
 
     // stub http create server to get a copy of all created servers
     // so that we can stop them in the after hook and get rid of all

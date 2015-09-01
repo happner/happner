@@ -1,4 +1,4 @@
-[&#9664;](readme.md) contents | datalayer [&#9654;](datalayer.md)
+[&#9664;](https://github.com/happner/happner#documentation) contents | datalayer [&#9654;](datalayer.md)
 
 ## Configuration
 
@@ -6,6 +6,7 @@ Mesh configuration contains several sections.
 
 * [Mesh Name](#mesh-name)
 * [Utilities](#utilities)
+* [Repl](#repl)
 * [DataLayer Config](#datalayer-config)
 * [Endpoint Config](#endpoint-config)
 * [Module Config](#module-config)
@@ -17,7 +18,8 @@ These are arranged as a set of key/value pairs on the config object:
 config = {
     name: 'mesh',
     util: {},
-    dataLayer: {},
+    repl: {},
+    datalayer: {},
     endpoints: {},
     modules: {},
     components: {}
@@ -26,13 +28,17 @@ config = {
 
 ### Mesh Name
 
+[&#9650;](#)
+
 The `config.name` is the name of __this__ MeshNode and serves to uniquely identify it in it's network.
 
 If the name is unspecified a random name will be used.
 
-__BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name.
+__BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name. It is strongly recommended that you provide the name.
 
 ### Utilities
+
+[&#9650;](#)
 
 #### Configuring the Logger
 
@@ -56,14 +62,14 @@ Or.
     // logger: {}, // will silence all logging
     logStackTraces: false,
     logComponents: ['component', 'names'],
-    logTimeDelta: false,
+    logTimeDelta: true,
     logMessageDelimiter: '\t',
   }
   ...
 ```
 
 ###### logLevel
-Default 'info' or LOG_LEVEL environment variable value<br/>
+Default 'info', LOG_LEVEL environment variable overrides<br/>
 Options include: __all__ __trace__ __debug__ __info__ __warn__ __error__ __fatal__ __off__.
 
 ```javascript
@@ -87,28 +93,25 @@ Provide your own log4js config.<br/>
 Prints the error stack. Default false.
 
 ###### logComponents
-Prints __debug__ and __trace__ messages for only the listed names.
+Prints __debug__ and __trace__ messages for only the listed Names.
+Setting LOG_COMPONENTS environment variable will override config.
+
+```javascript
+LOG_LEVEL=trace LOG_COMPONENTS=Api,PubSub,MyComponent bin/my.mesh
+```
 
 ###### logTimeDelta
-Includes 'milliseconds since last log message' in log message.
+Includes 'milliseconds since last log message' in log message. The default is true.
 
 ###### logMessageDelimiter
-Delimits between timeDelta, componentName and message in log lines.
+Delimits between timeDelta and 'componentName message' in log lines.
 
 
 #### Using the Logger
 
-The logger is accessable on the global `UTILITIES`
+##### Method 1
 
-```javascript
-UTILITIES.log(message, level, componentName, obj)
-```
-
-`level` - (optional) Defaults to 'info'<br/>
-`componentName` - (optional) Defaults to ''<br/>
-`obj` - (optional) Object or Error<br/>
-
-Alternatively mesh modules and components can use `UTILITIES.createLogger(name, obj)`
+Modules and components can use the global `UTILITIES.createLogger(Name, obj)`
 
 * It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
 * It uses logLevel guards to minimise the impact of liberal trace and debug usage.
@@ -132,9 +135,22 @@ function MyMeshModule() {
   //// this.info('') // it will stomp existing functions on 'this'
 }
 MyMeshModule.prototype.m = function() {
-  this.log.trace('m()');
+  this.log.$$TRACE('m()');
 }
+```
 
+##### Method 2
+
+Components can access their own logger in `$happn` (as injected by the mesh, see [Mesh Awareness](modules.md#mesh-awareness-with-happn))
+
+eg.
+
+```javascript
+module.exports = MyMeshModule;
+function MyMeshModule() {}
+MyMeshModule.prototype.m = function($happn) {
+  $happn.log.$$TRACE('m()');
+}
 ```
 
 The `$$TRACE()` and `$$DEBUG()` are so named to enable optionally __FULLY__ productionizing with the following deployment step:
@@ -158,24 +174,58 @@ find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
   | while read FILE; do echo; echo ${FILE%.ORIGINAL}; diff ${FILE%.ORIGINAL} $FILE; done
 ```
 
+### Repl
+
+[&#9650;](#)
+
+The MeshNode can be set to share a console repl on a socket file.
+
+```javascript
+  ...
+  repl: {
+    socket: '/tmp/somefilename',
+    ignoreUndefined: false,
+    useColors: true,
+  }
+  ...
+```
+* The repl __is only started if the config is present__.
+* The mesh instance is in the variable `meshNode`
+* ^d is the best exit.
+
+__Important!__ The repl is insecure. Anyone with readwrite on the socket file has __full access to the meshNode instance__.
+
+##### Using the repl.
+
+```bash
+sudo npm install repl-client --global
+
+rc /tmp/somefilename
+
+mesh-name> 
+mesh-name> meshNode.description()
+...
+mesh-name> ^d
+
+rc /tmp/somefilename < script.js > result.txt
+```
 
 
 ### DataLayer Config
 
-[&#9650;](#configuration)
+[&#9650;](#)
 
 See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
-The `config.dataLayer` section can contain the following items (shown with defaults):
+The `config.datalayer` section can contain the following items (shown with defaults):
 
 ```javascript
   ...
   datalayer: {
     host: 'localhost',
-    port: 8000,
+    port: 55000,
+    secret: 'mesh',
     authTokenSecret: 'mesh',
-    systemSecret: 'mesh',
-    log_level: 'info|error|warning',
     setOptions: {
       noStore: true,
       timeout: 10000
@@ -186,34 +236,37 @@ The `config.dataLayer` section can contain the following items (shown with defau
 
 `host` - The host (ip/interface) for __this__ MeshNode to listen on.<br/>
 `port` - The port to listen on.<br/>
+`secret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
 `authTokenSecret` - Used to encrypt the session webtoken. <br/>
-`systemSecret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
-`log_level` -   TODO ??datalayer logger different to mesh logger?? <br/>
 `setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
 `setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
 
-__NOTE:__ The `config.dataLayer` section can be omitted if all defaults are acceptable.
+__NOTE:__ The `config.datalayer` section can be omitted if all defaults are acceptable.
 
 ### Endpoint Config
 
-[&#9650;](#configuration)
-
-See also: [What are Endpoints?](endpoints.md#mdwhat-are-endpoints)
+[&#9650;](#)
 
 The `config.endpoints` section should list all remote MeshNodes to which __this__ MeshNode should attach upon initialization - as follows:
+
+##### Long Form
 
 ```javascript
   ...
   endpoints: {
     'quay1-berth1-crane1': {
-      host: 'crane1.berth1.quay1.harbour.com',
-      port: 919,
-      secret: 'ƒ¡ƒ†¥'
+      config: {
+        host: 'crane1.berth1.quay1.harbour.com',
+        port: 919,
+        secret: 'ƒ¡ƒ†¥'
+      }
     },
     'quay1-berth2-crane1': {
-      host: 'crane1.berth2.quay1.harbour.com',
-      port: 919,
-      secret: 'ƒ¡ƒ†¥'
+      config: {
+        host: 'crane1.berth2.quay1.harbour.com',
+        port: 919,
+        secret: 'ƒ¡ƒ†¥'
+      }
     },
   }
   ...
@@ -222,15 +275,26 @@ The `config.endpoints` section should list all remote MeshNodes to which __this_
 The above attaches __this__ MeshNode to two remote MeshNodes.
 
 `quay1-berth1-crane1` - The remote MeshNode's name (as configured in the remote's `config.name`)<br/>
-`.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.dataLayer.host`)<br/>
-`.port` - The remote MeshNode post (as configured in the remote's `config.dataLayer.port`)<br/>
-`.secret` - The remote MeshNode secret (as configured in the remote's `config.dataLayer.systemSecret`)<br/>
+`.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.datalayer.host`)<br/>
+`.port` - The remote MeshNode post (as configured in the remote's `config.datalayer.port`)<br/>
+`.secret` - The remote MeshNode secret (as configured in the remote's `config.datalayer.secret`)<br/>
 
-__NOTE:__ The `config.endpoints` section can be omitted if __this__ MeshNode attaches to no other.
+##### Short Form
+
+Assuming all nodes using default authtoken and secret.
+
+```javascript
+  ...
+  endpoints: {
+    'quay1-berth1-crane1': 919, // localhost
+    'quay1-berth2-crane1': 'crane1.berth2.quay1.harbour.com:919'
+  }
+  ...
+```
 
 ### Module Config
 
-[&#9650;](#configuration)
+[&#9650;](#)
 
 See also: [What are Modules?](modules.md#what-are-modules)
 
@@ -427,8 +491,6 @@ module.exports.createThing = function(param1, callback) {
 
 The most simple case. Modules are used directly as exported.
 
-eg.
-
 __in__ `node_modules/module-name/index.js`
 ```javascript
 module.exports.method1 = function() {}
@@ -442,30 +504,14 @@ module.exports.method2 = function() {}
   ...
 ```
 
-#### TODO Modules from Instance
-
-(something like) eg.
-
-```javascript
-  ...
-  modules: {
-    'module-name': {
-      instance: {
-        method1: function($happn) {}
-      }
-    }
-  }
-  ...
-```
-
 __NOTE:__ The `config.modules` section can be omitted if the [Components (see below)](#component-config) are calling modules that require no config and are named after their `require()` name.
 
 
 ### Component Config
 
-[&#9650;](#configuration)
+[&#9650;](#)
 
-See also: [What are Components?](components.md#what-are-components)
+See also: [What are Components?](modules.md#what-are-components)
 
 The `config.components` section should list components to be loaded into the mesh. The full complement of possible config looks as follows:
 
@@ -498,10 +544,58 @@ The `config.components` section should list components to be loaded into the mes
         ]
       },
       web: {
-
+        routes: {
+          method1: 'webMethod1',
+          app: 'static',
+          // app: ['middleware1', 'middleware2', 'static']
+        }
       }
     }
   }
   ...
 ```
+
+###### name-of-component
+__(required)__
+
+Components become accessable by name in the [Events](events.md) and [Exchange](exchange.md) APIs and also on [Web Routes](webroutes.md)
+
+###### moduleName
+__(optional)__
+
+Each Component in the MeshNode should specify which [Module](#module-config) it exposes. If the `moduleName` is unspecified the mesh will attempt to use a Module by the same name as the Component's name.
+
+###### schema
+__(optional)__
+
+The schema defines which methods on the Module should be exposed to the mesh. If no schema is specified the initializer will expose all methods and assume the last argument to each function is a 'node style' callback. This allows for the generic case to require no config.
+
+###### schema.exclusive
+__(optional)__
+
+If true - it informs the initializer to only expose the Methods specified in `schema.methods` to the mesh.
+The default is false.
+
+###### schema.startMethod
+__(optional)__
+
+Used to specify one of the `schema.methods` to run on the mesh.start to further initialize the module once the mesh is up, running and connected to other MeshNodes.
+
+When specifying `schema.startMethod`, if the corresponding startmethod is not defined in the schema it is asumed that the start method takes a callback as the only argument.
+
+###### schema.methods
+__(optional)__
+
+List the methods. Each has a subconfig defining the method details. In most cases no subconfig is required.
+
+###### web.routes
+__(optional)__
+
+This allows the binding of web routes to methods on the Module or 'static' directories on the Module's path.
+
+`http://meshhost:port/name-of-component/method1` runs `moduleInstance.webMethod(req, res)`
+`http://meshhost:port/name-of-component/static/..` serves files from `(module) __dirname`/app
+
+
+
 
