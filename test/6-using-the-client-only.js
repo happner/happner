@@ -28,7 +28,7 @@ describe('Using the clientside only', function() {
 
     it('can ride the slippery slip', function(done) {
       
-      var happn = require('@smc/happn');
+      var happn = require('happn');
      
       var MeshClient = require('../lib/system/api');
 
@@ -36,7 +36,7 @@ describe('Using the clientside only', function() {
 
         if (err) return done(err);
 
-        client.api.exchange
+        client.exchange
 
         .theFarawayTree.moonface.rideTheSlipperySlip(
           

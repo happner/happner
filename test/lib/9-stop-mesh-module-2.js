@@ -6,10 +6,10 @@
 var moment = require('moment');
 
 module.exports = function (options) {
-  return new StopMeshModule1(options);
+  return new StopMeshModule2(options);
 };
 
-function StopMeshModule1(options) {
+function StopMeshModule2(options) {
 
   this.start = function ($happn) {
 

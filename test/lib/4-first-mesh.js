@@ -1,4 +1,4 @@
-var Mesh = require('../../lib/system/mesh');
+var Mesh = require('../../lib/mesh');
 
 var config = {
   name: 'theFarawayTree',
@@ -49,6 +49,7 @@ Mesh().initialize(config, function(err) {
   if (err) {
     console.log(err);
     process.exit(err.code || 1);
+    return;
   }
 
   console.log('READY');
