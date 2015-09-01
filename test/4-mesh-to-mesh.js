@@ -40,38 +40,29 @@ describe('Mesh to Mesh', function() {
 
     var _this = this;
 
-    // start remote mesh then local mesh
-    // require('./lib/4-first-mesh')(
-    //   function(err) {
-    //     if (err) return done(err);
-    //     setTimeout(function() {
-    //       mesh = _this.Mesh();
-    //       mesh.initialize(config, function(err) {
-    //         if (err) return done(err);
-    //         done();
-    //       });
-
-    //     }, 1000);
-    //   }
-    // );
-
-
-    var _this = this;
+    this.timeout(5000);
 
     // spawn remote mesh in another process
-    remote = spawn('node',[libFolder + '4-first-mesh']);
+    remote = spawn('node', [libFolder + '4-first-mesh']);
+
     remote.stdout.on('data', function(data) {
 
-      // console.log('Remote:',data.toString());
-      if (!data.toString().match(/READY/)) return;
+      console.log(data.toString());
 
-      // once it says READY start local mesh
+      if (data.toString().match(/READY/)){
 
-      mesh = _this.Mesh();
-      mesh.initialize(config, function(err) {
-        if (err) return done(err);
-        done();
-      });
+      
+
+        mesh = _this.Mesh();
+        console.log('starting this one', mesh, config);
+        // mesh.initialize(config, function(err) {
+        mesh.initialize(config, function(e){
+
+          done(e);
+
+        });
+      }
+
     });
   });
 
@@ -84,8 +75,7 @@ describe('Mesh to Mesh', function() {
   context('the faraway tree', function() {
 
     it("we can ride moonface's slippery slip",function(done) {
-      mesh.api.exchange
-      .theFarawayTree.moonface.rideTheSlipperySlip(
+      mesh.exchange.theFarawayTree.moonface.rideTheSlipperySlip(
         'one!', 'two!', 'three!', function(err, res) {
 
           assert(res == 'one! two! three!, wheeeeeeeeeeeeheeee!');
@@ -96,8 +86,7 @@ describe('Mesh to Mesh', function() {
 
     it('we know when there was an accident', function(done) {
 
-      mesh.api.exchange
-      .theFarawayTree.moonface.haveAnAccident(function(err, res) {
+      mesh.exchange.theFarawayTree.moonface.haveAnAccident(function(err, res) {
 
         assert(err.toString().match(/SlipFailure: Stray patch of glue./))
         done();
