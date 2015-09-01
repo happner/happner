@@ -26,10 +26,10 @@
     "when": "^3.7.3"
   },
   "dependencies": {
-    "happn": "^0.1.22",
-    "happn-ui-module": "^0.1.15",
     "async": "^0.9.0",
     "byline": "^4.2.1",
+    "happn": "^0.1.22",
+    "happn-ui-module": "^0.1.15",
     "http-proxy": "^1.11.1",
     "http-proxy-middleware": "^0.5.0",
     "log4js": "^0.6.24",
@@ -37,6 +37,7 @@
     "objective": "0.0.31",
     "serve-static": "^1.9.3",
     "shortid": "^2.2.2",
-    "sillyname": "0.0.3"
+    "sillyname": "0.0.3",
+    "usage": "^0.7.0"
   }
 }
