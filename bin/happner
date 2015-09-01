@@ -1,115 +1,58 @@
 #!/usr/bin/env node
 
-// BUG: prompt input longer than line gets unsightly
+var commander = require('commander');
 
-var parallel = require('async').parallel;
-var actions = require('../lib/actions');
+var happner = require('../');
 
+var merge = require('merge');
 
-
-var meshConfig = { 
+var config = {
   name: 'localnode',
+  modules: {
+    'xxx': {
+      instance: {
+        mmm: function() {
+
+        }
+      }
+    }
+  },
   components: {
-    // 'terminal': {}
+    'terminal': {},
+    'xxx': {}
   }
+};
+
+var path = require('path');
+
+var loaded;
+
+commander
+
+.version(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version)
+.option('')
+.option('--conf [file]',    'Use mesh config from file/module (js)') // ie. module.exports = {/* the config */}
+.parse(process.argv);
+
+if (commander.conf) {
+  try {
+    loaded = require(commander.conf);
+  } catch (e) {
+    var ster = e.toString();
+    try {
+      loaded = require(process.cwd() + path.sep + commander.conf);
+    } catch (e) {
+      console.log(ster);
+      process.exit(1);
+    }
+  }
+  config = merge.recursive(config, loaded);
 }
 
-require('../').start(meshConfig);
-
-
-// require('objective')(function(prompt) {
-
-//   // Dont start mesh and prompt if --something has started 'Something' instead
-
-//   if (actions.running) return;
-  
-//   // Start mesh node
-
-//   require('../').start(meshConfig, function(err, mesh) {
-
-//     // Attach middleware on prompt's 'command registration' pipeline
-
-//     objective.pipeline.on('prompt.commands.register.ask', function(command, next) {
-
-//       // Enable async command creation (remote things can play too)
-
-//       parallel([
-
-//         function(done) {
-
-//           // Pass mesh to show() function in '../lib/console/show',
-//           // it calls back with the command action definition to register.
-
-//           actions.show(mesh, function(e, action) {
-
-//             if (e) return done(e);
-
-//             // Register command
-
-//             command.create('show', action);
-//             done();
-//           });
-//         },
-
-//         function(done) {
-//           actions.node(mesh, prompt, function(e, action) {
-//             if (e) return done(e);
-//             command.create('node', action);
-//             done();
-//           });
-//         },
-
-//         // More console commands
-//         function(done) {
-//           done();
-//         },
-
-
-
-//       ], next);
-
-//     });
-
-
-//     if (actions.program.noisey) {
-
-//       setInterval(function() {
-//         mesh.log.info('YYY - ' + require('sillyname')());
-//       }, 100);
-
-//     }
-
-//     // Clear line for log message.
-//     // The prompt (with current content) is re-written on next line.
-
-//     UTILITIES.log.on('before', function() {
-
-//       if (prompt.node) return;
-
-//       console._stdout.clearLine();  // node version 0.9 & higher (i think)
-//       console._stdout.cursorTo(0);
-    
-//     });
-
-//     // Rewrite prompt after logger write 
-    
-//     var replace;
-    
-//     UTILITIES.log.on('after', function() {
-
-//       if (prompt.node) return;
-
-//       clearTimeout(replace);
-      
-//       replace = setTimeout(function() {
-//         var newLine = false;
-//         prompt.writePrompt(newLine);
-//       }, 10);
-
-//     });
-
-//     prompt.start();
-
-//   });
-
-// });
+happner.start(config, function(e, mesh) {
+  if (e) {
+    console.log(e.toString());
+    process.exit(1);
+  }
+  mesh.exchange.terminal.start();
+});
