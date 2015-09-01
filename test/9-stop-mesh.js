@@ -38,6 +38,7 @@ describe('does some benchmarks on api calls, data events and events', function (
         moduleName: "stopMeshModule1",
         // scope: "component",//either component(mesh aware) or module - default is module
         startMethod: "start",
+        stopMethod: "stop",
         schema: {
           "exclusive": false,//means we dont dynamically share anything else
           "methods": {
@@ -52,6 +53,7 @@ describe('does some benchmarks on api calls, data events and events', function (
       },
       "component2": {
         moduleName: "stopMeshModule2",
+        stopMethod: "stop",
         // scope: "component",
         schema: {
           "exclusive": false,
@@ -73,21 +75,16 @@ describe('does some benchmarks on api calls, data events and events', function (
     });
   });
 
-  after(function () {
-    mesh.stop();
-  });
-
-  it('listens for the ping pong completed event, that module1 emits', function (done) {
+  
+  it('stops the mesh', function (done) {
     this.timeout(defaultTimeout);
-    
-    
+    mesh.stop({}, function(e, log){
+
+      done(e);
+
+    });
   });
 
-  it('listens for an event in module 2 that module 1 set 1000 data points', function (done) {
-    this.timeout(defaultTimeout);
-
-    
-  });
 });
 
 
