@@ -1,25 +1,13 @@
 #!/usr/bin/env node
 
 var commander = require('commander');
-
 var happner = require('../');
-
 var merge = require('merge');
 
 var config = {
   name: 'localnode',
-  modules: {
-    'xxx': {
-      instance: {
-        mmm: function() {
-
-        }
-      }
-    }
-  },
   components: {
-    'terminal': {},
-    'xxx': {}
+    'terminal': {}
   }
 };
 
