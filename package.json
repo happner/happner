@@ -38,6 +38,7 @@
     "objective": "0.0.31",
     "serve-static": "^1.9.3",
     "shortid": "^2.2.2",
-    "sillyname": "0.0.3"
+    "sillyname": "0.0.3",
+    "usage": "^0.7.0"
   }
 }
