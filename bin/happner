@@ -3,8 +3,7 @@
 // BUG: prompt input longer than line gets unsightly
 
 var parallel = require('async').parallel;
-var show = require('../lib/console/show');
-var node = require('../lib/console/node');
+var actions = require('../lib/actions');
 
 
 
@@ -13,6 +12,10 @@ var meshConfig = { name: 'localnode' }
 
 
 require('objective')(function(prompt) {
+
+  // Dont start mesh and prompt if --something has started 'Something' instead
+
+  if (actions.running) return;
   
   // Start mesh node
 
@@ -29,9 +32,9 @@ require('objective')(function(prompt) {
         function(done) {
 
           // Pass mesh to show() function in '../lib/console/show',
-          // it calls back with the command action definition.
+          // it calls back with the command action definition to register.
 
-          show(mesh, function(e, action) {
+          actions.show(mesh, function(e, action) {
 
             if (e) return done(e);
 
@@ -43,7 +46,7 @@ require('objective')(function(prompt) {
         },
 
         function(done) {
-          node(mesh, prompt, function(e, action) {
+          actions.node(mesh, prompt, function(e, action) {
             if (e) return done(e);
             command.create('node', action);
             done();
@@ -62,18 +65,20 @@ require('objective')(function(prompt) {
     });
 
 
-    // Check that prmpt appears undisturbed by log 
+    if (actions.program.noisey) {
 
-    // setInterval(function() {
-    //   mesh.log.info('YYY - ' + require('sillyname')());
-    // }, 3000);
+      setInterval(function() {
+        mesh.log.info('YYY - ' + require('sillyname')());
+      }, 100);
 
-
+    }
 
     // Clear line for log message.
     // The prompt (with current content) is re-written on next line.
 
-    UTILITIES.log.on('log.before', function() {
+    UTILITIES.log.on('before', function() {
+
+      if (prompt.node) return;
 
       console._stdout.clearLine();  // node version 0.9 & higher (i think)
       console._stdout.cursorTo(0);
@@ -84,7 +89,9 @@ require('objective')(function(prompt) {
     
     var replace;
     
-    UTILITIES.log.on('log.after', function() {
+    UTILITIES.log.on('after', function() {
+
+      if (prompt.node) return;
 
       clearTimeout(replace);
       

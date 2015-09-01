@@ -34,7 +34,7 @@
     "http-proxy-middleware": "^0.5.0",
     "log4js": "^0.6.24",
     "moment": "^2.9.0",
-    "objective": "0.0.30",
+    "objective": "0.0.31",
     "serve-static": "^1.9.3",
     "shortid": "^2.2.2",
     "sillyname": "0.0.3"
