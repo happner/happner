@@ -7,7 +7,7 @@
     "happner": "bin/happner"
   },
   "scripts": {
-    "test": "mocha test/*.js"
+    "test": "LOG_LEVEL=off mocha test/*.js"
   },
   "repository": {
     "type": "git",
