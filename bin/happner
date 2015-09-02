@@ -3,7 +3,6 @@
 // BUG: prompt input longer than line gets unsightly
 
 process.env.START_AS_ROOTED = 1;
-process.env.EXIT_ON_SIGINT = 1;
 
 var commander = require('commander');
 var happner = require('../');
