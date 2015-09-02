@@ -3,4 +3,5 @@ node_modules
 npm-debug.log
 coverage
 lib/system/activity.log*
+lib/system/data/*.nedb
 .DS_Store
