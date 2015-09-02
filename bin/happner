@@ -19,7 +19,10 @@ commander
 
 .version(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version)
 .option('')
-.option('--conf [file]',    'Use mesh config from file/module (js)') // ie. module.exports = {/* the config */}
+.option('--conf [file]',    'Load mesh config from file/module (js)') // ie. module.exports = {/* the config */}
+.option('',                 ' use: module.exports.config = {};')
+.option('',                 '  or: module.exports = { /* config */ };')
+.option('')
 .parse(process.argv);
 
 if (commander.conf) {
@@ -34,7 +37,7 @@ if (commander.conf) {
       process.exit(1);
     }
   }
-  config = merge.recursive(config, loaded);
+  config = merge.recursive(config, loaded.config || loaded);
 }
 
 happner.start(config, function(e, mesh) {
