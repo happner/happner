@@ -60,9 +60,9 @@ happner.start(config, function(e, mesh) {
   }
 
   mesh.exchange.terminal.start(commander.altPrompt 
-    || process.env.HAPPNER_PROMPT 
-    || '► ', function(e, prompt) {
-    // e is array! of [e,e,e]
+    || process.env.HAPPNER_PROMPT //  export HAPPNER_PROMPT='. '  # in .bash_profile
+    || '► ', function(eee, prompt) {
+    // eee is array! of [e,e,e] if errors ocurred
    // prompt started anyway.
   });
 });
