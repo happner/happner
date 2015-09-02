@@ -11,7 +11,11 @@ var merge = require('merge');
 var config = {
   name: 'localnode',
   components: {
-    'terminal': {}
+    'terminal': {},
+    'demo': {
+      startMethod: 'start',
+      stopMethod: 'stop'
+    }
   }
 };
 
