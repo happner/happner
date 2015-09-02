@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
+// BUG: prompt input longer than line gets unsightly
+
 process.env.START_AS_ROOTED = 1;
+process.env.EXIT_ON_SIGINT = 1;
 
 var commander = require('commander');
 var happner = require('../');
@@ -25,7 +28,15 @@ commander
 .option('',                 ' use: module.exports.config = {};')
 .option('',                 '  or: module.exports = { /* config */ };')
 .option('')
+.option('--trace',          'Set LOG_LEVEL=trace')
+.option('--debug',          'Set LOG_LEVEL=debug')
+.option('')
+.option('--alt-prompt [\'txt\']','Alternate prompt text')
+.option('')
 .parse(process.argv);
+
+if (commander.debug) process.env.LOG_LEVEL = 'debug';
+if (commander.trace) process.env.LOG_LEVEL = 'trace';
 
 if (commander.conf) {
   try {
@@ -47,5 +58,11 @@ happner.start(config, function(e, mesh) {
     console.log(e.toString());
     process.exit(1);
   }
-  mesh.exchange.terminal.start();
+
+  mesh.exchange.terminal.start(commander.altPrompt 
+    || process.env.HAPPNER_PROMPT 
+    || '► ', function(e, prompt) {
+    // e is array! of [e,e,e]
+   // prompt started anyway.
+  });
 });
