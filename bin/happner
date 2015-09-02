@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+process.env.START_AS_ROOTED = 1;
+
 var commander = require('commander');
 var happner = require('../');
 var merge = require('merge');
