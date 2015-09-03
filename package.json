@@ -32,6 +32,7 @@
     "commander": "^2.8.1",
     "happn": "^0.1.22",
     "happn-ui-module": "^0.1.15",
+    "happner-demo": "0.0.1",
     "http-proxy": "^1.11.1",
     "http-proxy-middleware": "^0.5.0",
     "keypress": "^0.2.1",
