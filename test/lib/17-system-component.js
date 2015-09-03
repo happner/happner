@@ -26,8 +26,6 @@ Mesh.start(config, function(err) {
     console.log(err);
     process.exit(err.code || 1);
   }
-
-  console.log('go to http://localhost:3001/system17/system/app/dashboard.html');
   console.log('READY');
   
 
