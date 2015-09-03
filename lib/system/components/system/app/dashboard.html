@@ -13,14 +13,12 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="/resources/bower/ionicons/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="css/skins/_all-skins.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
-    <!-- Morris chart -->
-    <link rel="stylesheet" href="plugins/morris/morris.css">
     <!-- jvectormap -->
     <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
     <!-- Date Picker -->
@@ -29,6 +27,8 @@
     <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <!-- nvd3 -->
+    <link rel="stylesheet" href="/resources/bower/nvd3/build/nv.d3.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -204,7 +204,7 @@
 	            <section class="col-lg-7 connectedSortable">
 	             
 	              <!-- sys stats -->
-	              <div class="box box-solid bg-light-blue" ng-include="'part_chart_meshstatistics.html'"></div>
+	              <div class="box box-solid bg-gray" ng-include="'part_chart_meshstatistics.html'"></div>
 
 	              <!-- Chat box -->
 	              <div class="box box-success todo" ng-include="'part_chatbox.html'"></div>
@@ -421,13 +421,9 @@
     </script>
 
     <script src="/resources/bower/angular/angular.min.js"></script>
-
     <!-- Bootstrap 3.3.5 -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
-    <!-- Morris.js charts -->
-    <script src="/resources/bower/raphael/raphael-min.js"></script>
-    <script src="plugins/morris/morris.min.js"></script>
-    <!-- Sparkline -->
+ 	 <!-- Sparkline -->
     <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
     <!-- jvectormap -->
     <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
@@ -445,14 +441,10 @@
     <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
     <script src="plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="dist/js/pages/dashboard.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
 
-   
+    <!-- AdminLTE App -->
+    <script src="js/grid-app.min.js"></script>
+    
 	<script src="/resources/bower/angular-ui/build/angular-ui.min.js"></script>
 
     <script src="/resources/bower/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -461,11 +453,17 @@
     <script src="/resources/bower/json-edit/js/directives.js"></script>
     <script src="/resources/bower/angular-moment/angular-moment.min.js"></script>
 
+    <script src="/resources/bower/d3/d3.min.js"></script>
+    <script src="/resources/bower/nvd3/build/nv.d3.min.js"></script>
+    <script src="/resources/bower/angular-nvd3/dist/angular-nvd3.js"></script>
+
 	<script src="/browser_client"></script>
     <script src="/resources/lib/happn-angular.js"></script>
    
 	<script src="js/dashboard-app.js"></script>
-	<script src="js/controllers/dashboard-system-data.js"></script>
+	<script src="js/controllers/part_chart_meshstatistics.js"></script>
+	<script src="js/controllers/part_chart_diskusage.js"></script>
+	
 	<script src="../../api/client"></script>
   </body>
 </html>

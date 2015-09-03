@@ -1,28 +1,30 @@
 <div class="box-header ui-sortable-handle" style="cursor: move;">
   <i class="fa fa-th"></i>
-  <h3 class="box-title">Mesh statistics</h3>
+  <h3 class="box-title">mesh statistics</h3>
   <div class="box-tools pull-right">
-    <button class="btn bg-light-blue btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-    <button class="btn bg-light-blue btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+    <button class="btn bg-gray btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+    <button class="btn bg-gray btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
   </div>
 </div>
-<div class="box-body border-radius-none">
-  <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+<div class="box-body border-radius-none" ng-controller="part_chart_meshstatistics" >
+  <nvd3 options='options' data='data' style="width:100%;height:100%"></nvd3>
 </div><!-- /.box-body -->
+<!--
 <div class="box-footer no-border">
   <div class="row">
     <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
       <div id="sparkline-1"></div>
       <div class="knob-label">Calls/sec</div>
-    </div><!-- ./col -->
+    </div>
     <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
       <div id="sparkline-2"></div>
       <div class="knob-label">Emits/sec</div>
-    </div><!-- ./col -->
+    </div>
     <div class="col-xs-4 text-center">
       <div id="sparkline-3"></div>
       <div class="knob-label">Errors/sec</div>
-    </div><!-- ./col -->
-  </div><!-- /.row -->
+    </div>
+  </div>
 </div>
+-->
 
