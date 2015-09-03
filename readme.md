@@ -10,23 +10,23 @@
 
 ## demonstration
 
-[&#9654;](docs/quickstart.md) Quick Start<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/quickstart.md) Quick Start<br/>
 
 ## documentation
 
-[&#9654;](docs/configuration.md) Configuation<br/>
-[&#9654;](docs/datalayer.md) DataLayer<br/>
-[&#9654;](docs/modules.md) Modules and Components<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/configuration.md) Configuation<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/datalayer.md) DataLayer<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/modules.md) Modules and Components<br/>
 
-[&#9654;](docs/event.md) Event Api<br/>
-[&#9654;](docs/exchange.md) Exchange Api<br/>
-[&#9654;](docs/data.md) Data Api<br/>
-[&#9654;](docs/webroutes.md) Web Routes<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/event.md) Event Api<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/exchange.md) Exchange Api<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/data.md) Data Api<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/webroutes.md) Web Routes<br/>
 
-[&#9654;](docs/starting.md) Starting a Mesh Node<br/>
-[&#9654;](docs/system.md) System Components<br/>
-[&#9654;](docs/client.md) Using the Client<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/starting.md) Starting a Mesh Node<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/system.md) System Components<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/client.md) Using the Client<br/>
 
 ## community
 
-[&#9654;](docs/community.md) Community Modules<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/community.md) Community Modules<br/>
