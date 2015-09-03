@@ -20,7 +20,7 @@ var config = {
   }
 }
 
-Mesh().initialize(config, function(err) {
+Mesh.start(config, function(err) {
 
   if (err) {
     console.log(err);
