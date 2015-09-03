@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <script src=/api/client></script>
+    </head>
+    <body>
+
+        <script>
+
+            MeshClient(function(err, mesh) {
+
+                if (err) return console.error(err);
+
+                mesh.exchange.www.method919('HELLO', function(err, res) {
+
+                    if (err) return console.error(err);
+
+                    alert(res);
+
+                });
+
+            });
+
+        </script>
+
+    </body>
+<html>
