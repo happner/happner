@@ -7,8 +7,16 @@
   </div>
 </div>
 <div class="box-body border-radius-none" ng-controller="part_chart_meshstatistics" >
-  <canvas id="line" class="chart chart-line realtime-timeseries" chart-data="data" chart-labels="labels" 
-    chart-legend="true" chart-series="series" chart-click="onClick"></canvas> 
+  <canvas id="line" 
+    class="chart chart-line realtime-timeseries" 
+    chart-data="data" 
+    chart-labels="labels" 
+    chart-legend="true" 
+    chart-series="series" 
+    chart-click="onClick" 
+    colours="colors" 
+    options="options"
+   ></canvas> 
 </div><!-- /.box-body -->
 <!--
 <div class="box-footer no-border">
