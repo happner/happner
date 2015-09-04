@@ -1,27 +1,17 @@
 #!/usr/bin/env node
 
-var dirname = require('path').dirname;
-var sep = require('path').sep;
-
 var happnerPath = '../../';
 var configPath = '../config/server';
 var happner  = require(happnerPath);
 var config = require(configPath).config;
 
-// // HACK! get this nested module's node_modules into modulepath
-// //       Not usually necessary!
-// //
-// module.paths.unshift(dirname(__dirname) + sep + 'node_modules');
-
-console.log('OUTER', module.paths);
-
-happner.start(config, function(e, meshNode) {
+happner.start(config, function(e, localnode) {
 
   if (e) {
     console.error(e);
     process.exit(1);
   }
 
-  console.log(meshNode);
+  // console.log(localnode);
 
 });
