@@ -1,4 +1,7 @@
-resources/bower
+resources/bower/*
+!resources/bower/async/lib/async
+!resources/bower/jquery/dist/jquery.js
+!resources/bower/jquery/dist/jquery.min.js
 .idea
 npm-debug.log
 coverage
