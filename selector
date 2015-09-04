@@ -2,13 +2,12 @@
 
 cat .selection | while read FILE; do
 
-    echo $FILE
+    # echo $FILE
 
-    
     SOURCE=./resources_temp/$FILE
     DESTINATION=./resources/$FILE
 
-    echo copy $SOURCE to $DESTINATION
+    # echo copy $SOURCE to $DESTINATION
 
     DIR=`dirname $DESTINATION`
 
