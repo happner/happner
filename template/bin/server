@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var happnerPath = '../../';
+var configPath = '../config/server';
+var happner  = require(happnerPath);
+var config = require(configPath).config;
+
+happner.start(config, function(e, localnode) {
+
+  if (e) {
+    console.error(e);
+    process.exit(1);
+  }
+
+  // console.log(localnode);
+
+});
