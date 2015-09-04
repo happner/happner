@@ -14,7 +14,8 @@ var merge = require('merge');        // - decided to use the happner version
 var config = {
   name: 'localnode',
   components: {
-    'terminal': {},
+    'terminal': {}, // <--- first, so that other's start methods can write in command actions
+    'www': {},
     'demo': {
       startMethod: 'start',
       stopMethod: 'stop'
@@ -32,8 +33,9 @@ var loaded, configPath;
 
 var replaceSearchPath = function(startAt) {
 
-  console.warn('WARN: Replacing search path!');
+  console.warn('WARN: Replacing module search path!');
   console.warn('WARN: New path starts at ' + startAt);
+  console.warn('INFO: Will load happner from that location.');
 
   // Flush existing path to prevent false resolves
   // from the meshnode being started at --conf location

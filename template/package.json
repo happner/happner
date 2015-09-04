@@ -1,0 +1,6 @@
+{
+  "name": "template",
+  "version": "0.0.0",
+  "description": "my happner project",
+  "main": "bin/server"
+}
