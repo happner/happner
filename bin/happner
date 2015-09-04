@@ -48,7 +48,7 @@ var config = {
   name: 'home', // <------- your localnode
   version: '0.0.1',
   datalayer: {
-    persist: true,
+    persist: true
   },
   components: {
     'terminal': {}, // <--- first, so that other's start methods can write in command actions
