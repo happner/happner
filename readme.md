@@ -6,7 +6,17 @@
 
 ## installation
 
-...
+__To use in your project:__
+
+`npm install happner --save`
+
+__To hack at the console:__
+
+```
+sudo npm install happner --global
+happner
+► 
+```
 
 ## demonstration
 
