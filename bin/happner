@@ -27,8 +27,6 @@ try {
   fs.mkdirpSync(happnHome);
   fs.mkdirpSync(happnHome + '/data');
   fs.mkdirpSync(happnHome + '/js');
-  fs.copySync(__dirname + '/../node_modules/happn/lib/public/browser_primus.js', happnHome + '/js/browser_primus.js');
-
   console.log('\nINFO: created directory ' + happnHome);
 }
 
@@ -38,6 +36,11 @@ try {
   fs.mkdirpSync(happnerHome);
   console.log('INFO: created directory ' + happnerHome);
 }
+
+// Primus compiles their script, need write permission
+// Only necessary for global install
+
+process.env.PRIMUS_SCRIPT = happnHome + '/js/browser_primus.js';
 
 console.log();
 
