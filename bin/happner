@@ -5,9 +5,12 @@
 process.env.START_AS_ROOTED = 1;
 
 var commander = require('commander');
-var happner = require('../');
-var merge = require('merge');
-
+var happner; // = require('../');      // hard choice:
+                                      //  ------------
+var merge = require('merge');        // - decided to use the happner version
+                                    //    from the --conf location
+                                   //   - the one which that config was
+                                  //      written for.
 var config = {
   name: 'localnode',
   components: {
@@ -21,7 +24,35 @@ var config = {
 
 var path = require('path');
 
-var loaded;
+var loaded, configPath;
+
+// Using --conf [../some/other/file] to load a mesh node
+// updates the module search paths to operate as if at
+// that location.
+
+var replaceSearchPath = function(startAt) {
+
+  console.warn('WARN: Replacing search path!');
+  console.warn('WARN: New path starts at ' + startAt);
+
+  // Flush existing path to prevent false resolves
+  // from the meshnode being started at --conf location
+
+  module.paths.length = 0;
+
+  var addPath = function(dir) {
+    module.paths.push(path.normalize(dir + path.sep + 'node_modules'));
+  }
+
+  var recurse = function(dir) {
+    addPath(dir);
+    var next = path.dirname(dir);
+    if (next.length < 2) return addPath(next);
+    recurse(next);
+  }
+
+  recurse(startAt);
+}
 
 commander
 
@@ -44,16 +75,28 @@ if (commander.trace) process.env.LOG_LEVEL = 'trace';
 if (commander.conf) {
   try {
     loaded = require(commander.conf);
+    happner = require('../');
   } catch (e) {
     var ster = e.toString();
     try {
-      loaded = require(process.cwd() + path.sep + commander.conf);
+      configPath = process.cwd() + path.sep + commander.conf;
+      loaded = require(configPath);
+      replaceSearchPath(path.dirname(require.resolve(configPath)));
+
+      try {
+        happner = require('happner');
+      } catch (e) {
+        happner = require('../');
+      }
+
     } catch (e) {
       console.log(ster);
       process.exit(1);
     }
   }
   config = merge.recursive(config, loaded.config || loaded);
+} else {
+  happner = require('../');
 }
 
 happner.start(config, function(e, mesh) {
