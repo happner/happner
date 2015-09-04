@@ -4,15 +4,49 @@
 
 process.env.START_AS_ROOTED = 1;
 
+var path = require('path');
+var fs = require('fs-extra');
+var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+var happnHome = homeDir + path.sep + '.happn';
+var happnerHome = homeDir + path.sep + '.happner';
+
 var commander = require('commander');
 var happner; // = require('../');      // hard choice:
                                       //  ------------
 var merge = require('merge');        // - decided to use the happner version
                                     //    from the --conf location
                                    //   - the one which that config was
-                                  //      written for.
+                                  //      written for
+
+// Happner / happn need to write, installed global dissallows
+// So create homes
+
+try {
+  fs.lstatSync(happnHome);
+} catch (e) {
+  fs.mkdirpSync(happnHome);
+  fs.mkdirpSync(happnHome + '/data');
+  fs.mkdirpSync(happnHome + '/js');
+  fs.copySync(__dirname + '/../node_modules/happn/lib/public/browser_primus.js', happnHome + '/js/browser_primus.js');
+
+  console.log('\nINFO: created directory ' + happnHome);
+}
+
+try {
+  fs.lstatSync(happnerHome);
+} catch (e) {
+  fs.mkdirpSync(happnerHome);
+  console.log('INFO: created directory ' + happnerHome);
+}
+
+console.log();
+
 var config = {
-  name: 'localnode',
+  name: 'home', // <------- your localnode
+  version: '0.0.1',
+  datalayer: {
+    persist: true,
+  },
   components: {
     'terminal': {}, // <--- first, so that other's start methods can write in command actions
     'www': {},
@@ -22,8 +56,6 @@ var config = {
     }
   }
 };
-
-var path = require('path');
 
 var loaded, configPath;
 
@@ -61,16 +93,20 @@ commander
 .version(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version)
 .option('')
 .option('--conf [file]',         'Load mesh config from file/module (js)') // ie. module.exports = {/* the config */}
-.option('',                      ' use: module.exports.config = {};')
-.option('',                      '  or: module.exports = { /* config */ };')
+.option('',                      'use: module.exports.config = {};')
+.option('',                      'or: module.exports = { /* config */ };')
 .option('')
+// .option('--create',              'Create new project happen project.')
+// .option('')
 .option('--trace',               'Set LOG_LEVEL=trace')
 .option('--debug',               'Set LOG_LEVEL=debug')
+.option('--warn',                'Set LOG_LEVEL=warn')
 .option('')
 .option('--alt-prompt [\'txt\']','Alternate prompt text')
 .option('')
 .parse(process.argv);
 
+if (commander.warn)  process.env.LOG_LEVEL = 'warn';
 if (commander.debug) process.env.LOG_LEVEL = 'debug';
 if (commander.trace) process.env.LOG_LEVEL = 'trace';
 
