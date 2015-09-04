@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+# min
+
+happner --warn --no-help

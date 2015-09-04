@@ -2,8 +2,6 @@
 
 // BUG: prompt input longer than line gets unsightly
 
-process.env.START_AS_ROOTED = 1;
-
 var path = require('path');
 var fs = require('fs-extra');
 var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
@@ -27,7 +25,7 @@ try {
   fs.mkdirpSync(happnHome);
   fs.mkdirpSync(happnHome + '/data');
   fs.mkdirpSync(happnHome + '/js');
-  console.log('\nINFO: created directory ' + happnHome);
+  console.log('INFO: created directory ' + happnHome);
 }
 
 try {
@@ -41,8 +39,6 @@ try {
 // Only necessary for global install
 
 process.env.PRIMUS_SCRIPT = happnHome + '/js/browser_primus.js';
-
-console.log();
 
 var config = {
   name: 'home', // <------- your localnode
@@ -106,6 +102,7 @@ commander
 .option('--warn',                'Set LOG_LEVEL=warn')
 .option('')
 .option('--alt-prompt [\'txt\']','Alternate prompt text')
+.option('--no-help',             'Skip intro help')
 .option('')
 .parse(process.argv);
 
@@ -146,9 +143,12 @@ happner.start(config, function(e, mesh) {
     process.exit(1);
   }
 
-  mesh.exchange.terminal.start(commander.altPrompt 
-    || process.env.HAPPNER_PROMPT //  export HAPPNER_PROMPT='. '  # in .bash_profile
-    || '► ', function(eee, prompt) {
+  var prefix = commander.altPrompt || process.env.HAPPNER_PROMPT || '► ';
+
+  mesh.exchange.terminal.start({
+    prefix: prefix,
+    help: typeof commander.help == 'boolean' ? commander.help : true,
+  }, function(eee, prompt) {
     // eee is array! of [e,e,e] if errors ocurred
    // prompt started anyway.
   });

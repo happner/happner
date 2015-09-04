@@ -4,7 +4,8 @@
   "description": "Distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
-    "happner": "bin/happner"
+    "happner": "bin/happner",
+    "h": "bin/h"
   },
   "scripts": {
     "test": "LOG_LEVEL=off mocha test/*.js"
