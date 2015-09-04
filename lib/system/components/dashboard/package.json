@@ -1,9 +1,0 @@
-{
-  "name": "happn-mesh-dashboard",
-  "version": "0.0.0",
-  "description": "Dashboard for SMC Application Engine that runs other components and have an API and data mesh service.",
-  "scripts": {},
-  "dependencies": {
-    
-  }
-}

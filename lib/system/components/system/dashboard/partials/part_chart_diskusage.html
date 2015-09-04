@@ -1,0 +1,13 @@
+<div class="box-header ui-sortable-handle" style="cursor: move;">
+  <i class="fa fa-th"></i>
+  <h3 class="box-title">disk usage</h3>
+  <div class="box-tools pull-right">
+    <button class="btn bg-yellow btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+    <button class="btn bg-yellow btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<div class="box-body border-radius-none" ng-controller="part_chart_diskusage">
+ 	<canvas id="diskusage" class="chart chart-doughnut"
+  		chart-data="data" chart-labels="labels">
+	</canvas> 
+</div><!-- /.box-body -->

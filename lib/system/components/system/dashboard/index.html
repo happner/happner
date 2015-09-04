@@ -27,8 +27,12 @@
     <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-    <!-- nvd3 -->
-    <link rel="stylesheet" href="/resources/bower/nvd3/build/nv.d3.css">
+    <!-- angular chart -->
+    <link rel="stylesheet" href="/resources/bower/angular-chart.js/dist/angular-chart.css" />
+
+    <!-- morris 
+    <link rel="stylesheet" href="/resources/bower/morris.js/morris.css">
+    -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,17 +47,21 @@
     	display:none!important;
     }
 
+    .vis-hidden {
+    	 visibility: hidden;
+    }
+
     </style>
 
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app="mesh_dashboard_app" >
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="grid_app" >
     <div class="wrapper" ng-controller="meshDashBoardController">
 
     	<div ng-hide="authenticated">
-	    	<ng-include src="'part_login.html'"></ng-include>
+	    	<ng-include src="'partials/part_login.html'"></ng-include>
 	    </div>
 
-	    <div ng-show="authenticated" >
+	    <div class="vis-hidden" ng-class="{'vis-hidden': authenticated==false}">
 
 	      <header class="main-header">
 	        <!-- Logo -->
@@ -72,16 +80,16 @@
 	          <div class="navbar-custom-menu">
 	            <ul class="nav navbar-nav">
 
-	            	<li class="dropdown messages-menu todo" ng-include="'part_menu_messages.html'"></li>
-	            	<li class="dropdown tasks-menu todo" ng-include="'part_menu_tasks.html'"></li>
-	            	<li class="dropdown notifications-menu todo" ng-include="'part_menu_notifications.html'"></li>
-	            	<li class="dropdown user user-menu todo" ng-include="'part_menu_user.html'"></li>
+	            	<li class="dropdown messages-menu todo" ng-include="'partials/part_menu_messages.html'"></li>
+	            	<li class="dropdown tasks-menu todo" ng-include="'partials/part_menu_tasks.html'"></li>
+	            	<li class="dropdown notifications-menu todo" ng-include="'partials/part_menu_notifications.html'"></li>
+	            	<li class="dropdown user user-menu todo" ng-include="'partials/part_menu_user.html'"></li>
 
 	            	<!-- 
 					
-	            	<ng-include src="'part_menu_notifications.html'"></ng-include>
-	            	<ng-include src="'part_menu_tasks.html'"></ng-include>
-	            	<ng-include src="'part_menu_user.html'"></ng-include>
+	            	<ng-include src="'partials/part_menu_notifications.html'"></ng-include>
+	            	<ng-include src="'partials/part_menu_tasks.html'"></ng-include>
+	            	<ng-include src="'partials/part_menu_user.html'"></ng-include>
 	            	-->
 
 	              <!-- Control Sidebar Toggle Button -->
@@ -98,10 +106,10 @@
 	        <section class="sidebar">
 	          
 	          	<!-- user info -->
-	        	<div class="user-panel todo" ng-include="'part_sidebar_user_panel.html'"></div>
+	        	<div class="user-panel todo" ng-include="'partials/part_sidebar_user_panel.html'"></div>
 
 	        	<!-- search -->
-	        	<form action="#" method="get" class="sidebar-form todo" ng-include="'part_search.html'"></form>
+	        	<form action="#" method="get" class="sidebar-form todo" ng-include="'partials/part_search.html'"></form>
 
 	     
 	          <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -204,16 +212,16 @@
 	            <section class="col-lg-7 connectedSortable">
 	             
 	              <!-- sys stats -->
-	              <div class="box box-solid bg-gray" ng-include="'part_chart_meshstatistics.html'"></div>
+	              <div class="box box-solid bg-gray" ng-include="'partials/part_chart_meshstatistics.html'"></div>
 
 	              <!-- Chat box -->
-	              <div class="box box-success todo" ng-include="'part_chatbox.html'"></div>
+	              <div class="box box-success todo" ng-include="'partials/part_chatbox.html'"></div>
 
 	              <!-- TO DO List -->
-	              <div class="box box-primary" ng-include="'part_logs.html'"></div><!-- /.box -->
+	              <div class="box box-primary" ng-include="'partials/part_logs.html'"></div><!-- /.box -->
 
 	              <!-- quick email widget -->
-	              <div class="box box-info todo" ng-include="'part_email.html'">
+	              <div class="box box-info todo" ng-include="'partials/part_email.html'">
 	                
 	              </div>
 
@@ -222,13 +230,13 @@
 	            <section class="col-lg-5 connectedSortable">
 
 	              <!-- sys resources cpu -->
-	              <div class="box box-solid bg-aqua" ng-include="'part_chart_cpu.html'"></div>
+	              <div class="box box-solid bg-aqua" ng-include="'partials/part_chart_cpu.html'"></div>
 
 	              <!-- sys resources disk -->
-	              <div class="box box-solid bg-yellow" ng-include="'part_chart_diskspace.html'"></div>
+	              <div class="box box-solid bg-yellow" ng-include="'partials/part_chart_diskusage.html'"></div>
 
 	              <!-- Calendar -->
-	              <div class="box box-solid bg-green-gradient todo" ng-include="'part_calendar.html'"></div><!-- /.box -->
+	              <div class="box box-solid bg-green-gradient todo" ng-include="'partials/part_calendar.html'"></div><!-- /.box -->
 
 	            </section><!-- right col -->
 	          </div><!-- /.row (main row) -->
@@ -420,7 +428,7 @@
       $.widget.bridge('uibutton', $.ui.button);
     </script>
 
-    <script src="/resources/bower/angular/angular.min.js"></script>
+    <script src="/resources/bower/angular/angular.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
  	 <!-- Sparkline -->
@@ -443,7 +451,7 @@
     <script src="plugins/fastclick/fastclick.min.js"></script>
 
     <!-- AdminLTE App -->
-    <script src="js/grid-app.min.js"></script>
+    <script src="js/grid-jquery.js"></script>
     
 	<script src="/resources/bower/angular-ui/build/angular-ui.min.js"></script>
 
@@ -453,16 +461,28 @@
     <script src="/resources/bower/json-edit/js/directives.js"></script>
     <script src="/resources/bower/angular-moment/angular-moment.min.js"></script>
 
-    <script src="/resources/bower/d3/d3.min.js"></script>
-    <script src="/resources/bower/nvd3/build/nv.d3.min.js"></script>
-    <script src="/resources/bower/angular-nvd3/dist/angular-nvd3.js"></script>
+    <!--
+  	<script src="/resources/bower/raphael/raphael.js"></script>
+  	<script src="/resources/bower/morris.js/morris.js"></script>
+  	<script src="/resources/bower/angular-morris-chart/src/angular-morris-chart.js"></script>
+	-->
+
+  	<script src="/resources/bower/Chart.js/Chart.min.js"></script>
+  	<script src="/resources/bower/angular-chart.js/dist/angular-chart.min.js"></script>
+
+	<!---
+	<script src="/resources/bower/d3/d3.js"></script>
+	<script src="/resources/bower/nvd3/build/nv.d3.js"></script>
+	<script src="/resources/bower/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+	-->
 
 	<script src="/browser_client"></script>
     <script src="/resources/lib/happn-angular.js"></script>
    
-	<script src="js/dashboard-app.js"></script>
-	<script src="js/controllers/part_chart_meshstatistics.js"></script>
-	<script src="js/controllers/part_chart_diskusage.js"></script>
+	<script src="js/grid-angular.js"></script>
+	<script src="js/controllers/part_chart_cpu.js"></script>
+    <script src="js/controllers/part_chart_diskusage.js"></script>
+    <script src="js/controllers/part_chart_meshstatistics.js"></script>
 	
 	<script src="../../api/client"></script>
   </body>
