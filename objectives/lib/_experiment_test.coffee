@@ -1,35 +1,97 @@
-objective.only 'Experiments with mesh nodes', ->
+objective.only 'plays with mesh nodes', ->
 
 
-    context 'What has bluebird\'s promisify enabled', ->
+    context 'bounce a request randomly for n hops between n nodes', ->
 
-        # start lots of mesh nodes
-        # ------------------------
-        # 
-        #       1 = 408ms
-        #      10 = 612ms  (huh?) the before hooks are not run in parallel
-        #     100 = 2243ms
-        #    1000 = 36958ms
-        #
+        # and collect the edges traversed
 
         before -> @nodes = []
 
-        for i in [1..1]
+        before (Mesh, done) ->
 
-            do (i) -> before (Mesh, done) ->
+            @timeout 20000
 
-                @timeout 2000
+            nodecount = 2
 
-                Mesh.start 40000 + i
+            # assemble endpoint list
+            #
+            # config supports a shortened endpoint definition
+            # endpoints: {
+            #   'name': port  // assumes localhost
+            #   'name': 'host:port'    
+            # }
+            #
+            #
 
-                .then (mesh) => 
+            endpoints = {}
 
-                    @nodes.push mesh
-                    done()
-
-                .catch done
+            endpoints["remote_node#{i}"] = 40000 + i for i in [1..nodecount]
+            # connects every pair including connection to self
 
 
+            class BounceModule
 
-        it '', -> console.log @nodes.map ({_mesh}) -> _mesh.config.name
+                constructor: (@i) ->
+
+                method: ($happn, {count, edges}, callback) ->
+
+                    console.log('run!', @i);
+
+                    console.log(count, edges);
+                    callback(null, {});
+
+
+            Mesh.Promise.all(
+
+                for i in [1..nodecount]
+
+                    do (i) -> Mesh.start
+
+                        datalayer: port: 40000 + i
+
+                        endpoints: endpoints
+
+                                            #
+                                            # Notice that an instance can be
+                                            # placed directly onto the config.
+                                            #
+                                            # Obviously this will prevent proper
+                                            # storage of the config in the datalayer,
+                                            # preventing functionality transmissions
+                                            # (jobs, etc.)
+                                            # between mesh nodes (future feature)
+                                            #
+                                            #
+                        modules: bouncer: instance:  new BounceModule i
+
+                        components: bouncer: {}
+
+
+            ).then (@nodes) => done()
+
+            .catch done
+
+
+
+        it 'start bouncing', (done) ->
+
+            @nodes[0].exchange
+
+            .remote_node1.bouncer.method
+
+                count: 0
+
+                edges: []
+
+            .then (reply) ->
+
+                console.log 'reply', reply
+
+                # ??????????? something's wrong.
+
+                done()
+
+            .catch done
+
+
 

@@ -24,6 +24,9 @@ objective('Mesh', {
 
   before(function(Mesh) {/*
 
+    About the tester
+    ================
+
     Capital named args are searched for in lib and auto-injected.
     -------------------------------------------------------------
 
