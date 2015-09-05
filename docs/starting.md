@@ -12,12 +12,12 @@ MeshNode startup has been divided into two steps.
 * Begins connection attempts to remote MeshNodes (endpoints)
 * Assembles the exchange and event api layers
 * Ammends the exchange and event api with each established connection to remote MeshNodes
-* Reports ready
+* Reports initialized! (runlevel 1)
 
 ##### Start
 
 * Calls the start method on any components that specified one. This allows components an initialization step that occurs after all mesh connections have been made.
-* Reports started
+* Reports started! (runlevel 2)
 
 These two steps can be done separately (by hand).
 

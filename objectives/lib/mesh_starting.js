@@ -15,10 +15,7 @@ module.exports = function() {
 
       .then(function(mesh) {
 
-        mesh.initialized.should.equal(true);
-        mesh.started.should.equal(true);
-        mesh.initializing.should.equal(false);
-        mesh.starting.should.equal(false);
+        mesh.runlevel.should.equal(4);
         
         mesh.stop().then(done).catch(done)
       })
