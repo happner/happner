@@ -8,7 +8,7 @@
     "h": "bin/h"
   },
   "scripts": {
-    "test": "LOG_LEVEL=off mocha test/*.js"
+    "test": "LOG_LEVEL=off objective --once"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,9 @@
   "devDependencies": {
     "chai": "^2.2.0",
     "mocha": "^2.2.4",
+    "objective": "0.0.31",
     "request": "^2.53.0",
+    "should": "^7.1.0",
     "when": "^3.7.3"
   },
   "postinstall": "bower install",
