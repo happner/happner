@@ -1,0 +1,18 @@
+#!/bin/bash
+
+cat .selection | while read FILE; do
+
+    # echo $FILE
+
+    SOURCE=./resources_temp/$FILE
+    DESTINATION=./resources/$FILE
+
+    # echo copy $SOURCE to $DESTINATION
+
+    DIR=`dirname $DESTINATION`
+
+    mkdir -p $DIR
+
+    cp -v $SOURCE $DESTINATION
+
+done
