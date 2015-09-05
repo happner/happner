@@ -22,8 +22,8 @@ happner
 ...
 [ INFO] - 1ms   home (Mesh) started!
 
-> 
-> prompt.
+► a prompt.
+
 ```
 
 ## demonstration
