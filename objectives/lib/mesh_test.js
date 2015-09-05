@@ -25,8 +25,8 @@ objective('Mesh', {
 
   before(function(Mesh) {/*
 
-    Capital names are searched for in lib and auto-injected.
-    --------------------------------------------------------
+    Capital named args are searched for in lib and auto-injected.
+    -------------------------------------------------------------
 
     eg.(Mesh) in the above args effectively has performed a require
               without all the '../../../' nonsense.
