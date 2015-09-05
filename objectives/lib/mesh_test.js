@@ -22,7 +22,6 @@ objective('Mesh', {
 
 }, function() {
 
-
   before(function(Mesh) {/*
 
     Capital named args are searched for in lib and auto-injected.
@@ -65,12 +64,12 @@ objective('Mesh', {
           });
 
     * NB! Objective_dev does not default you to sit through 2000ms
-          waiting for the timeout - it defaults to 200ms.
+          waiting for the timeout - it defaults to 500ms.
 
           But the mesh takes longer than that to start, so each test
           which starts a mesh needs to specify an override timeout
 
-      eg. this.timeout(400);
+      eg. this.timeout(700);
 
     */
 
@@ -85,6 +84,21 @@ objective('Mesh', {
   });
 
 
+  // beforeEach(function() {
+
+  //   // 'hack' into objective to set all timeouts... 
+    
+  //   objective.pipeline.on('dev.test.before.each', function(test, next) {
+
+  //     test.steps.forEach(function(step) {
+  //       // console.log(step.type, step.node.path);
+  //       step.timeout = 2000;
+  //     });
+  //     next();
+  //   });
+  // });   // meh!
+
+
   context('MeshServer (a.k.a. Mesh)', function() {
 
 
@@ -93,7 +107,6 @@ objective('Mesh', {
 
     // The delete is necessary to ensure a reload of the file on 
     // each require (pending fix in objective)
-
 
     context('starting', require('./mesh_starting'));
     delete require.cache[require.resolve('./mesh_starting')];
