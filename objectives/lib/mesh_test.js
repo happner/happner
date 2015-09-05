@@ -75,7 +75,7 @@ objective('Mesh', {
     */
 
 
-    this.example = {a:1};
+    this.example = { ABC: 123 };
     // this available in tests, see first test in mesh_configuration
 
 

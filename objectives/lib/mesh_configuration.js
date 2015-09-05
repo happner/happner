@@ -15,7 +15,7 @@ module.exports = function() {
 
   it('example', function() {
 
-    this.example.should.eql({a: 1});
+    this.example.should.eql( {ABC: 123});
 
   });
 
