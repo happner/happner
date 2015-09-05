@@ -22,7 +22,7 @@ happner
 ...
 [ INFO] - 1ms   home (Mesh) started!
 
-► a prompt.
+► play...
 
 ```
 
