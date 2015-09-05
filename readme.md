@@ -10,7 +10,7 @@ __To use in your project:__
 
 `npm install happner --save`
 
-__To hack at the console:__
+__To hack at the console of your 'home' mesh node:__
 
 ```
 sudo npm install happner --global
