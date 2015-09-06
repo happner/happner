@@ -1,4 +1,4 @@
-can be used as follows in the clone
+can be used as follows in the repo clone
 
 bin/happner --conf template/config/server.js
 
@@ -8,4 +8,6 @@ happner --create [name]
 
    -> to copy all this, as template, to cwd/name/...
       or something like that.
+
+installs a www comman into the prompt, to call up the browser to the www module 
 
