@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -31,6 +31,7 @@
   "postinstall": "bower install",
   "dependencies": {
     "async": "^0.9.0",
+    "bluebird": "^2.9.34",
     "bower": "^1.5.2",
     "byline": "^4.2.1",
     "commander": "^2.8.1",
