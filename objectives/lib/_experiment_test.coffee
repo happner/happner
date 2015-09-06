@@ -1,4 +1,4 @@
-objective.only 'plays with mesh nodes', ->
+xobjective 'plays with mesh nodes', ->
 
 
     context 'bounce a request randomly for n hops between n nodes', ->
@@ -11,21 +11,11 @@ objective.only 'plays with mesh nodes', ->
 
             @timeout 20000
 
-            nodecount = 2
-
-            # assemble endpoint list
-            #
-            # config supports a shortened endpoint definition
-            # endpoints: {
-            #   'name': port  // assumes localhost
-            #   'name': 'host:port'    
-            # }
-            #
-            #
+            @nodecount = 2
 
             endpoints = {}
 
-            endpoints["remote_node#{i}"] = 40000 + i for i in [1..nodecount]
+            endpoints["node#{i}"] = 40000 + i for i in [1..@nodecount]
             # connects every pair including connection to self
 
 
@@ -33,36 +23,26 @@ objective.only 'plays with mesh nodes', ->
 
                 constructor: (@i) ->
 
-                method: ($happn, {count, edges}, callback) ->
+                method: ($happn, {route, traversed}, callback) ->
 
                     console.log('run!', @i);
-
-                    console.log(count, edges);
+                    console.log(route, traversed);
                     callback(null, {});
 
 
             Mesh.Promise.all(
 
-                for i in [1..nodecount]
+                for i in [1..@nodecount]
 
                     do (i) -> Mesh.start
+
+                        name: "node#{i}"
 
                         datalayer: port: 40000 + i
 
                         endpoints: endpoints
 
-                                            #
-                                            # Notice that an instance can be
-                                            # placed directly onto the config.
-                                            #
-                                            # Obviously this will prevent proper
-                                            # storage of the config in the datalayer,
-                                            # preventing functionality transmissions
-                                            # (jobs, etc.)
-                                            # between mesh nodes (future feature)
-                                            #
-                                            #
-                        modules: bouncer: instance:  new BounceModule i
+                        modules: bouncer: instance: new BounceModule i
 
                         components: bouncer: {}
 
@@ -75,19 +55,21 @@ objective.only 'plays with mesh nodes', ->
 
         it 'start bouncing', (done) ->
 
+            console.log 'start'
+
+            @timeout 2000
+
             @nodes[0].exchange
 
-            .remote_node1.bouncer.method
+            .node2.bouncer.method
 
-                count: 0
+                route: []
 
-                edges: []
+                traversed: []
 
             .then (reply) ->
 
                 console.log 'reply', reply
-
-                # ??????????? something's wrong.
 
                 done()
 
