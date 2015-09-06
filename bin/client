@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+// Not part of module package!
+
+var happner = require ('../');
+
+happner.MeshClient()
+
+.then(function(client) {
+  client.log.info(Object.keys(client.exchange));
+  // client.close();  // TODO
+  process.exit(0);
+})
+
+.catch(function(err) {
+  console.log(err);
+  process.exit(1);
+})
