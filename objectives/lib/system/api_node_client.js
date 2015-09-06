@@ -39,11 +39,6 @@ module.exports = function() {
 
 
 
-    it('test from outside!', function(done) {
-      done(new Error(''));
-    })
-
-
 
     it('supports callbacks', function(done, Mesh) {
 
