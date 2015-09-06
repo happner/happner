@@ -1,4 +1,4 @@
-xobjective 'plays with mesh nodes', ->
+xobjective 'Play with mesh nodes', ->
 
 
     context 'bounce a request randomly for n hops between n nodes', ->

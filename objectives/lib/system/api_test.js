@@ -1,4 +1,4 @@
-objective.only('Api', function() {
+objective('Api', function() {
 
   before(function() {
     mock('should', new require('chai').should());

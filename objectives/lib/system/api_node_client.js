@@ -49,7 +49,7 @@ module.exports = function() {
 
       // trace.filter = true
 
-      Mesh.MeshClient('localhost', 54321, 'mesh', function(e, client) {
+      Mesh.MeshClient('localhost', 54321, function(e, client) {
         if (e) return done(e);
 
         // client.log.warn('Mooo!');
@@ -64,9 +64,23 @@ module.exports = function() {
       });
     });
 
-    
 
-    it('supports promises')
+
+    it('supports promises', function(done, Mesh) {
+
+      Mesh.MeshClient(54321)
+      .then(function(client) {
+
+        client.exchange
+        .testnode.test.method('hello')
+        .then(function(res) {
+
+          res.should.equal('OK: hello');
+          done();
+
+        }).catch(done);
+      }).catch(done);
+    });
 
   });
 

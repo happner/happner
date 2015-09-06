@@ -15,7 +15,8 @@ module.exports = function() {
 
   it('example', function() {
 
-    this.example.should.eql( {ABC: 123});
+    // this.example was set in the before hook in mesh_test.js
+    this.example.should.eql({ABC: 123});
 
   });
 
