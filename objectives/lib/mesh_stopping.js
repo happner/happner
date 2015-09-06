@@ -12,7 +12,7 @@ module.exports = function() {
 
       Mesh.start(12345).then(function(mesh){
 
-        mesh.runlevel.should.equal(4);
+        mesh.runlevel.should.equal(40);
 
         mesh.stop().then(function() {
 

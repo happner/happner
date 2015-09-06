@@ -16,7 +16,7 @@ module.exports = function() {
       Mesh.start(12345)
 
       .then(function(mesh) {
-        mesh.runlevel.should.equal(4);
+        mesh.runlevel.should.equal(40);
         mesh.stop().then(done).catch(done);
       })
 
@@ -30,7 +30,7 @@ module.exports = function() {
       this.timeout(2000);
 
       Mesh.start(12345, function(e, mesh) {
-        mesh.runlevel.should.equal(4);
+        mesh.runlevel.should.equal(40);
         mesh.stop().then(done).catch(done);
       });
     });
@@ -38,7 +38,7 @@ module.exports = function() {
 
 
   context('long start()', {
-    description: 'Allows access between run levels (2:initialized! and 4:started!)'
+    description: 'Allows access between run levels (20:initialized! and 40:started!)'
   }, function() {
 
 
@@ -52,12 +52,12 @@ module.exports = function() {
       mesh.initialize()
 
       .then(function(mesh) {
-        mesh.runlevel.should.equal(2); // <-------------
+        mesh.runlevel.should.equal(20); // <-------------
         return mesh.start();
       })
 
       .then(function(mesh) {
-        mesh.runlevel.should.equal(4); // <--------------
+        mesh.runlevel.should.equal(40); // <--------------
         mesh.stop().then(done).catch(done);
       })
 
@@ -78,11 +78,11 @@ module.exports = function() {
           return done(e)
         }
 
-        mesh.runlevel.should.equal(2);
+        mesh.runlevel.should.equal(20);
 
         mesh.start(function(e, mesh) {
 
-          mesh.runlevel.should.equal(4);
+          mesh.runlevel.should.equal(40);
           mesh.stop().then(done).catch(done);
 
         });
