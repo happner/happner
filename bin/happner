@@ -112,6 +112,8 @@ commander
 .option('')
 // .option('--create',              'Create new project happen project.')
 // .option('')
+.option('--port [number]',       'Start localnode listening at port')
+.option('')
 .option('--trace',               'Set LOG_LEVEL=trace')
 .option('--debug',               'Set LOG_LEVEL=debug')
 .option('--warn',                'Set LOG_LEVEL=warn')
@@ -170,8 +172,20 @@ if (!home) home = path.dirname(__dirname);
 
 config.home = config.home || home;
 
+if (!isNaN(commander.port)) {
+  config.datalayer = config.datalayer || {};
+  config.datalayer.port = parseInt(commander.port);
+  delete config.port; // just incase
+}
+
+
+
 happner.start(config, function(e, mesh) {
   if (e) {
+    if (mesh.log) {
+      mesh.log.error(e, e);
+      process.exit(1);
+    }
     console.log('EXIT 1 ' + __filename + '\n' + e.toString());
     process.exit(1);
   }
