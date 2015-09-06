@@ -1,3 +1,7 @@
 ```
-bin/happner --conf template/config/server.js
+../bin/happner --conf config/server.js
 ```
+or 
+```
+bin/server
+``
