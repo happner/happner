@@ -4,17 +4,30 @@
 
 var path = require('path');
 var fs = require('fs-extra');
+var merge = require('merge');
 var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 var happnHome = homeDir + path.sep + '.happn';
 var happnerHome = homeDir + path.sep + '.happner';
-
 var commander = require('commander');
-var happner; // = require('../');      // hard choice:
-                                      //  ------------
-var merge = require('merge');        // - decided to use the happner version
-                                    //    from the --conf location
-                                   //   - the one which that config was
-                                  //      written for
+var happner;
+var home; // dirname of the --conf [file], for module searchpath corrections
+
+if (process.env.USE_LOCAL_HAPPNER) {
+
+  //
+  // Will reset the module search path to use the version of
+  // happen at --conf [file]'s location.
+  //
+  // ie. the node_modules/happner as installed there
+  //
+  // This allows running the config on the version of happner
+  // that it was made for.
+  //
+
+} 
+else {
+  happner = require('../');
+}
 
 // Happner / happn need to write, installed global dissallows
 // So create homes
@@ -38,7 +51,10 @@ try {
 // Primus compiles their script, need write permission
 // Only necessary for global install
 
+// Happn uses this if defined.
+
 process.env.PRIMUS_SCRIPT = happnHome + '/js/browser_primus.js';
+
 
 var config = {
   name: 'home', // <------- your localnode
@@ -83,7 +99,6 @@ var replaceSearchPath = function(startAt) {
     if (next.length < 2) return addPath(next);
     recurse(next);
   }
-
   recurse(startAt);
 }
 
@@ -113,14 +128,28 @@ if (commander.trace) process.env.LOG_LEVEL = 'trace';
 if (commander.conf) {
   try {
     loaded = require(commander.conf);
-    happner = require('../');
+    home = path.dirname(require.resolve(commander.conf));
+    if (process.env.USE_LOCAL_HAPPNER) {
+      try {
+        replaceSearchPath(home);                                       // m
+        happner = require('happner');                                 // e
+      } catch (e) {                                                  // s
+        // no happner at home, use this one                         // s
+        happner = require('../');                                  // y 
+      }                                                           // !
+    } else {                                                     // spend more time here...
+      happner = require('../');
+    }
   } catch (e) {
-    var ster = e.toString();
-    try {
+    var ster = e.toString(); // require to conf failed
+    try {                    // maybe it's a relative path
       configPath = process.cwd() + path.sep + commander.conf;
       loaded = require(configPath);
-      replaceSearchPath(path.dirname(require.resolve(configPath)));
-
+      home = path.dirname(require.resolve(configPath));
+      if (process.env.USE_LOCAL_HAPPNER) {
+        // will load the happner from home
+        replaceSearchPath(home);
+      }
       try {
         happner = require('happner');
       } catch (e) {
@@ -137,9 +166,13 @@ if (commander.conf) {
   happner = require('../');
 }
 
+if (!home) home = path.dirname(__dirname);
+
+config.home = config.home || home;
+
 happner.start(config, function(e, mesh) {
   if (e) {
-    console.log(e.toString());
+    console.log('EXIT 1 ' + __filename + '\n' + e.toString());
     process.exit(1);
   }
 

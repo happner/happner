@@ -1,0 +1,11 @@
+can be used as follows in the clone
+
+bin/happner --conf template/config/server.js
+
+to be used as follows 
+
+happner --create [name]
+
+   -> to copy all this, as template, to cwd/name/...
+      or something like that.
+
