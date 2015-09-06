@@ -1,6 +1,8 @@
 bower/async/lib/async.js
 bower/jquery/dist/jquery.js
 bower/jquery/dist/jquery.min.js
+bower/bluebird/js/browser/bluebird.js
+bower/bluebird/js/browser/bluebird.min.js
 bower/font-awesome/css/font-awesome.min.css
 bower/ionicons/css/ionicons.min.css
 bower/angular-chart.js/dist/angular-chart.css

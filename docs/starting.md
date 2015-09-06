@@ -12,12 +12,12 @@ MeshNode startup has been divided into two steps.
 * Begins connection attempts to remote MeshNodes (endpoints)
 * Assembles the exchange and event api layers
 * Ammends the exchange and event api with each established connection to remote MeshNodes
-* Reports ready
+* Reports initialized! (runlevel 2)
 
 ##### Start
 
 * Calls the start method on any components that specified one. This allows components an initialization step that occurs after all mesh connections have been made.
-* Reports started
+* Reports started! (runlevel 4)
 
 These two steps can be done separately (by hand).
 
@@ -54,18 +54,4 @@ var happner = require('happner');
 var config = {};
 
 happner.start(config, function(err, mesh) {});
-```
-
-Needn't really bother with the callback either (unless you want the mesh object outside of components) 
-
-```javascript
-require('happner').start(require('./config/mesh1.js'));
-```
-
-Or...
-
-You could just start another `Blank`
-
-```bash
-node -e 'require("happner").start()'
 ```
