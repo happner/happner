@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -39,7 +39,7 @@
     "fs-extra": "^0.24.0",
     "happn": "^0.1.26",
     "happn-ui-module": "^0.1.15",
-    "happner-terminal": "^0.0.1",
+    "happner-terminal": "^0.0.2",
     "happner-demo": "^0.0.1",
     "http-proxy": "^1.11.1",
     "http-proxy-middleware": "^0.5.0",
