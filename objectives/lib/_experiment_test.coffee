@@ -1,4 +1,4 @@
-xobjective 'Play with mesh nodes', ->
+objective.only 'Play with mesh nodes', ->
 
 
     context 'bounce a request randomly for n hops between n nodes', ->
@@ -11,11 +11,11 @@ xobjective 'Play with mesh nodes', ->
 
             @timeout 20000
 
-            @nodecount = 3
+            nodecount = 3
 
             endpoints = {}
 
-            endpoints["node#{i}"] = 40000 + i for i in [1..@nodecount]
+            endpoints["node#{i}"] = 40000 + i for i in [1..nodecount]
             # connects every pair including connection to self
 
 
@@ -23,24 +23,84 @@ xobjective 'Play with mesh nodes', ->
 
                 constructor: (@i) ->
 
-                method: ($happn, {hops, traversed}, callback) ->
+                method: ($happn, hops, stopAt, callback) ->
 
-                    #console.log 'name', $happn.info.mesh.name, $happn.info.datalayer.address, $happn.info.datalayer.options
+                    hops++
 
-                    callback null, traversed if hops == 0
+                    name = $happn.info.mesh.name
 
-                    next = Math.round Math.random() * 1000 / 100
+                                    #
+                                    # end of hops,
+                                    # callback with array for traversals accumulations
+                                    #
+                    return callback null, [ ] if hops >= stopAt
 
-                    endpoint = "node#{next}"
+                    next = Math.floor( Math.random() * nodecount ) + 1
+                    nextEndpoint = "node#{next}"
 
-                    console.log('run!', @i);
-                    console.log(hops, traversed);
-                    callback(null, {});
+                    $happn.log.info('at hop ' +hops+ ' - ' + name + ' forwarding to ' + nextEndpoint);
+
+                    $happn.exchange[nextEndpoint].bouncer.method hops, stopAt
+
+                    .then (traversals) -> 
+
+                        # put this hop into the array and callback further
+                        # 
+                        # - the callback stack unwinds toward the original
+                        #   caller.
+                        #
+                        # - along the way the array of traversals is built.
+                        #
+
+                        console.log 'back1'
+
+                        traversals.unshift([name, nextEndpoint]);
+
+                        console.log 'back2'
+
+                        callback(null, traversals);
+
+                        console.log 'back3'
+
+                        #
+                        # datalayer issue
+                        # ---------------
+                        #
+                        # (with no change in test code)
+                        #
+                        # sometimes i get this:
+                        #
+                        #   (silence)
+                        #
+                        #
+                        # sometimes i get this:
+                        #
+                        #      back1
+                        #      back2
+                        #      back3
+                        #    (silence)
+                        #
+                        #
+                        # sometimes i get this:
+                        #
+                        #      back1
+                        #      back2
+                        #      back3
+                        #      back1
+                        #      back2
+                        #      back3
+                        #    (silence)
+                        #
+                        #  It has never gotten more than 2 hops back to the caller.
+                        #
+                        
+
+                    .catch (err) -> callback(err);
 
 
             Mesh.Promise.all(
 
-                for i in [1..@nodecount]
+                for i in [1..nodecount]
 
                     do (i) -> Mesh.start
 
@@ -62,17 +122,11 @@ xobjective 'Play with mesh nodes', ->
 
         it 'start bouncing', (done) ->
 
-            console.log 'start'
-
             @timeout 2000
 
             @nodes[0].exchange
 
-            .node2.bouncer.method
-
-                hops: 10
-
-                traversed: []
+            .node2.bouncer.method hops = 0, stopAt = 10
 
             .then (reply) ->
 
