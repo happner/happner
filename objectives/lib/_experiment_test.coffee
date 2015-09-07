@@ -1,4 +1,8 @@
-xobjective 'Play with mesh nodes', ->
+objective 'Play with mesh nodes', ->
+
+    before ->
+
+        mock 'should', new require('chai').should()
 
 
     context 'bounce a request randomly for n hops between n nodes', ->
@@ -120,7 +124,7 @@ xobjective 'Play with mesh nodes', ->
             .catch done
 
 
-        it 'start bouncing', (done) ->
+        xit 'start bouncing', (done) ->
 
             @timeout 2000
 
@@ -137,4 +141,81 @@ xobjective 'Play with mesh nodes', ->
             .catch done
 
 
+    context 'the promisified functions on the exchange', ->
+
+        before (done, Mesh) ->
+
+            @timeout 2000
+
+            Mesh.start
+
+                port: 45678
+
+                modules:
+
+                    test: instance:
+
+                        func1: (arg1, callback) ->
+
+                            setTimeout (-> callback null, value: arg1), 10
+                        
+                        func2: (arg1, arg2, arg3, callback) -> 
+
+                            callback null,
+
+                                a: arg1
+                                b: arg2
+                                c: arg3
+
+                components: test: {}
+
+            .then (mesh) ->
+
+                mock 't', mesh.exchange.test
+                done()
+
+            .catch done
+
+        xit """(update: it does not) 
+              might automatically deal with promises as arguments""", {
+
+            description: """
+
+                eg.
+
+                $happn.exchange.component.methodThatTakesNormalArgs(
+
+                    // but the method also detects inbound promises
+                    // and behaves accordingly
+
+                    $happn.exchange.component.methodThetReturnsPromise(args),
+                    'normal arg value',
+                    $happn.exchange.component.methodThetReturnsPromise(args),
+                    $happn.exchange.component.methodThetReturnsPromise(args)
+
+                ).then...
+
+            """
+
+        }, (done, t) ->
+
+            promise1 = t.func1 1
+            promise2 = t.func1 2
+            promise3 = t.func1 3
+
+            t.func2 promise1, promise2, promise3
+
+            .then (r) ->
+
+                r.should.eql
+
+                    a: value: 1
+                    b: value: 2
+                    c: value: 3
+
+                done()
+
+            .catch done
+
+            
 
