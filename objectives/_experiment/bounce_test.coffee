@@ -2,22 +2,19 @@ objective 'bounce a request randomly for n hops between n nodes', ->
 
     before -> mock 'should', new require('chai').should()
 
-
-
-    # and collect the edges traversed
-
     before -> @nodes = []
 
     before (Mesh, done) ->
 
         @timeout 20000
 
-        nodecount = 3
+        nodecount = 10
 
         endpoints = {}
 
         endpoints["node#{i}"] = 40000 + i for i in [1..nodecount]
         # connects every pair including connection to self
+
 
 
         class BounceModule
@@ -53,50 +50,12 @@ objective 'bounce a request randomly for n hops between n nodes', ->
                     # - along the way the array of traversals is built.
                     #
 
-                    console.log 'back1'
-
                     traversals.unshift([name, nextEndpoint]);
-
-                    console.log 'back2'
 
                     callback(null, traversals);
 
-                    console.log 'back3'
-
-                    #
-                    # datalayer issue
-                    # ---------------
-                    #
-                    # (with no change in test code)
-                    #
-                    # sometimes i get this:
-                    #
-                    #   (silence)
-                    #
-                    #
-                    # sometimes i get this:
-                    #
-                    #      back1
-                    #      back2
-                    #      back3
-                    #    (silence)
-                    #
-                    #
-                    # sometimes i get this:
-                    #
-                    #      back1
-                    #      back2
-                    #      back3
-                    #      back1
-                    #      back2
-                    #      back3
-                    #    (silence)
-                    #
-                    #  It has never gotten more than 2 hops back to the caller.
-                    #
-                    
-
                 .catch (err) -> callback(err);
+
 
 
         Mesh.Promise.all(
@@ -121,18 +80,19 @@ objective 'bounce a request randomly for n hops between n nodes', ->
         .catch done
 
 
-    xit 'start bouncing', (done) ->
+    it.only 'start bouncing', (done) ->
 
-        @timeout 2000
+        trace.filter = true
+
+        @timeout 5000
 
         @nodes[0].exchange
 
-        .node2.bouncer.method hops = 0, stopAt = 10
+        .node2.bouncer.method hops = 0, stopAt = 1000
 
         .then (reply) ->
 
-            console.log 'reply', reply
-
+            reply.length.should.eql 999
             done()
 
         .catch done
