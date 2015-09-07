@@ -143,7 +143,7 @@ objective 'Play with mesh nodes', ->
 
     context 'the promisified functions on the exchange', ->
 
-        before (done, Mesh) ->
+        before (done, bluebird, Mesh) ->
 
             @timeout 2000
 
@@ -166,6 +166,26 @@ objective 'Play with mesh nodes', ->
                                 a: arg1
                                 b: arg2
                                 c: arg3
+
+
+                        func3: (arg1, arg2, arg3, $happn, arg4, callback) ->
+
+                            # handle possible promises (or not) in the inbound args
+
+                            bluebird.Promise.all([arg1, arg2, arg3, arg4])
+
+                            .spread (arg1, arg2, arg3, arg4) ->
+
+                                callback null,
+
+                                    a: arg1
+                                    b: arg2
+                                    c: arg3
+                                    d: arg4
+
+                            .catch callback # send error back
+
+
 
                 components: test: {}
 
@@ -216,6 +236,29 @@ objective 'Play with mesh nodes', ->
                 done()
 
             .catch done
+
+        it.only 'can handle promises as arguments if the method can', (done, t) ->
+
+            t.func3(
+                t.func1 1
+                'Not a promise.'
+                t.func1 3
+                t.func1 4
+            )
+
+            .then (r) ->
+
+                r.should.eql
+
+                    a: value: 1
+                    b: 'Not a promise.'
+                    c: value: 3
+                    d: value: 4
+
+                done()
+
+            .catch done
+
 
             
 
