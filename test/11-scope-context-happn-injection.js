@@ -467,13 +467,7 @@ describe('mesh awareness via $happn injection', function() {
       // console.log(JSON.stringify(JSON.parse(res.body),null,2));
 
       JSON.parse(res.body).should.eql({
-        "meshName": "mesh1",
-        "meshPort": 3001, // <-------------
         "moduleName": "module3",
-        "setOptions": {
-          "noStore": true,
-          "timeout": 10000
-        },
         "web": {
           "routes": {
             "methodWithHappn": "methodWithHappn",

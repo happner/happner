@@ -11,7 +11,7 @@ xobjective 'Play with mesh nodes', ->
 
             @timeout 20000
 
-            @nodecount = 2
+            @nodecount = 3
 
             endpoints = {}
 
@@ -23,10 +23,18 @@ xobjective 'Play with mesh nodes', ->
 
                 constructor: (@i) ->
 
-                method: ($happn, {route, traversed}, callback) ->
+                method: ($happn, {hops, traversed}, callback) ->
+
+                    #console.log 'name', $happn.info.mesh.name, $happn.info.datalayer.address, $happn.info.datalayer.options
+
+                    callback null, traversed if hops == 0
+
+                    next = Math.round Math.random() * 1000 / 100
+
+                    endpoint = "node#{next}"
 
                     console.log('run!', @i);
-                    console.log(route, traversed);
+                    console.log(hops, traversed);
                     callback(null, {});
 
 
@@ -52,7 +60,6 @@ xobjective 'Play with mesh nodes', ->
             .catch done
 
 
-
         it 'start bouncing', (done) ->
 
             console.log 'start'
@@ -63,7 +70,7 @@ xobjective 'Play with mesh nodes', ->
 
             .node2.bouncer.method
 
-                route: []
+                hops: 10
 
                 traversed: []
 
