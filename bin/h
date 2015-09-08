@@ -2,4 +2,4 @@
 
 # min
 
-happner --warn --no-help
+happner --warn --no-help $@

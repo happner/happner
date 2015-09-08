@@ -460,17 +460,14 @@ describe('mesh awareness via $happn injection', function() {
   });
 
 
-  it('injects happn into webmethods', function(done) {
+  it.only('injects happn into webmethods', function(done) {
 
     request('http://localhost:3001/mesh1/webComponent1/methodWithHappn', function(err, res) {
 
+      // console.log(JSON.stringify(JSON.parse(res.body),null,2));
+
       JSON.parse(res.body).should.eql({
-        "meshName": "mesh1",
         "moduleName": "module3",
-        "setOptions": {
-          "noStore": true,
-          "timeout": 10000
-        },
         "web": {
           "routes": {
             "methodWithHappn": "methodWithHappn",

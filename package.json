@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "0.0.15",
+  "version": "0.0.23",
   "description": "Distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -8,7 +8,7 @@
     "h": "bin/h"
   },
   "scripts": {
-    "test": "LOG_LEVEL=off mocha test/*.js"
+    "test": "LOG_LEVEL=off objective --once"
   },
   "repository": {
     "type": "git",
@@ -23,19 +23,23 @@
   "devDependencies": {
     "chai": "^2.2.0",
     "mocha": "^2.2.4",
+    "objective": "0.0.31",
     "request": "^2.53.0",
+    "should": "^7.1.0",
     "when": "^3.7.3"
   },
   "postinstall": "bower install",
   "dependencies": {
     "async": "^0.9.0",
+    "bluebird": "^2.9.34",
     "bower": "^1.5.2",
     "byline": "^4.2.1",
     "commander": "^2.8.1",
     "diskspace": "^0.1.7",
     "fs-extra": "^0.24.0",
-    "happn": "^0.1.24",
+    "happn": "^0.1.26",
     "happn-ui-module": "^0.1.15",
+    "happner-terminal": "^0.0.4",
     "happner-demo": "^0.0.1",
     "http-proxy": "^1.11.1",
     "http-proxy-middleware": "^0.5.0",
