@@ -1,5 +1,11 @@
 module.exports.config = {
   version: '0.0.0',
+
+  port: 56000,
+
+  endpoints: {
+    'moon': 55000
+  },
   
   components: {
     'www': {
