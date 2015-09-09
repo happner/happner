@@ -1,11 +1,7 @@
 module.exports.config = {
   version: '0.0.0',
 
-  port: 56000,
-
-  endpoints: {
-    'moon': 55000
-  },
+  // port: 80,  // sudo...
   
   components: {
     'www': {
