@@ -1,10 +1,6 @@
 objective('Api', function() {
 
-  before(function() {
-    mock('should', new require('chai').should());
-  })
-
-  after(function() {
+  before(function(Mesh) {
     mock('should', new require('chai').should());
   })
 

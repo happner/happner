@@ -104,30 +104,13 @@ objective('Mesh', {
 
   context('MeshServer (a.k.a. Mesh)', function() {
 
-
     context('configuration', require('./mesh_configuration'));
-    delete require.cache[require.resolve('./mesh_configuration')]
-
-    // The delete is necessary to ensure a reload of the file on 
-    // each require (pending fix in objective)
-
-    context('starting', require('./mesh_starting'));
-    delete require.cache[require.resolve('./mesh_starting')];
-
-    context('stopping', require('./mesh_stopping'));
-    delete require.cache[require.resolve('./mesh_stopping')];
-
-    context('restarting', require('./mesh_restarting'));
-    delete require.cache[require.resolve('./mesh_restarting')];
-
-    context('exchange api', require('./mesh_exchange'));
-    delete require.cache[require.resolve('./mesh_exchange')];
-
-    context('event api', require('./mesh_event'));
-    delete require.cache[require.resolve('./mesh_event')];
-
-    context('data api', require('./mesh_data'));
-    delete require.cache[require.resolve('./mesh_data')];
+    context('starting',      require('./mesh_starting'));
+    context('stopping',      require('./mesh_stopping'));
+    context('restarting',    require('./mesh_restarting'));
+    context('exchange api',  require('./mesh_exchange'));
+    context('event api',     require('./mesh_event'));
+    context('data api',      require('./mesh_data'));
 
   });
 

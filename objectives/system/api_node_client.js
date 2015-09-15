@@ -35,12 +35,8 @@ module.exports = function() {
   after(function(done) {
     var _this = this;
     this.mesh.stop(function() {
-      console.log('stopped');
       done();
-    }).catch(function(e) {
-      console.log('ee', e);
-      done(e);
-    });
+    }).catch(done);
   });
 
 
