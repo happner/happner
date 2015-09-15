@@ -25,36 +25,46 @@ module.exports = function() {
     }).then(function(mesh){
       _this.mesh = mesh;
       done();
-    }).catch(done);
+    }).catch(function(e) {
+      console.log(e);
+      done(e);
+    });
   });
 
 
   after(function(done) {
-    this.mesh.stop(done).catch(done);
+    var _this = this;
+    this.mesh.stop(function() {
+      console.log('stopped');
+      done();
+    }).catch(function(e) {
+      console.log('ee', e);
+      done(e);
+    });
   });
 
 
 
   context('connects to mesh node', function() {
 
-
-
-
     it('supports callbacks', function(done, Mesh) {
 
       // trace.filter = true
 
       Mesh.MeshClient('localhost', 54321, function(e, client) {
-        if (e) return done(e);
 
-        // client.log.warn('Mooo!');
+        if (e) return done(e);
 
         client.exchange
         .testnode.test.method('hello', function(err, res) {
+
           if (err) return done(err);
 
           res.should.equal('OK: hello');
-          done();
+
+          client.data.stop().then(done).catch(done);
+
+
         });
       });
     });
@@ -71,8 +81,8 @@ module.exports = function() {
         .then(function(res) {
 
           res.should.equal('OK: hello');
-          done();
 
+          client.data.stop().then(done).catch(done);
         }).catch(done);
       }).catch(done);
     });

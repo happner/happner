@@ -96,7 +96,7 @@ describe('does some benchmarks on api calls, data events and events', function (
           console.log('Couldnt detach from event maximum-pings-reached');
 
         console.log('Detaching from maximum-pings-reached');
-        console.log(message.payload.data);
+        console.log(message);
         done(err);
       });
 

@@ -46,7 +46,7 @@ function Component2(options) {
       event_type: 'set',
       count: options.maximumPings   // Subscribe to 1 more to make sure we don't get too many events
     }, function (message) {
-      if (message.payload.data != count++) {
+      if (message.count != count++) {
         $happn.emit('date_test_complete', 'Test failed', function (e, response) {
         });
       }
@@ -63,9 +63,9 @@ function Component2(options) {
         var endTime = moment.utc();
         timeOut = setTimeout(function () {
           $happn.mesh.data.get('/component1/testStartTime', null, function (e, result) {
-            var timeDiff = endTime - moment(result.payload[0].data);
+            var timeDiff = endTime - moment(result.timestamp);
             var message = 'Hooray, data event test is over!! ' + count + ' sets, elapsed time:' + timeDiff + 'ms';
-            $happn.emit('data-test-complete', message, function (e, response) {
+            $happn.emit('data-test-complete', {m: message}, function (e, response) {
             });
           });
         }, 500);

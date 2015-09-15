@@ -131,7 +131,7 @@ describe('Consumes an external module', function() {
         //calling a local component
         mesh.api.exchange.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
          
-          response.payload.data.test.should.eql(directClientResponse.payload.data.test);
+          response.test.should.eql(directClientResponse.test);
 
           if (e) 
             return done(e);
@@ -139,19 +139,19 @@ describe('Consumes an external module', function() {
          //calling a local component as if it was on another mesh
          mesh.api.exchange.testMesh.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
            
-            response.payload.data.test.should.eql(directClientResponse.payload.data.test);
+            response.test.should.eql(directClientResponse.test);
 
             if (e) return done(e);
 
             //doing the same call using a post to the api
             mesh.api.post('/happnClient/set', '/mytest/678687', {"test":"test1"}, {}, function(e, response){
               
-              response.payload.data.test.should.eql(directClientResponse.payload.data.test);
+              response.test.should.eql(directClientResponse.test);
               //console.log({response: response});
               //test aliases
               mesh.api.exchange.testMesh.happnClient.PUT('/mytest/678687', {"test":"test1"}, {}, function(e, response){
 
-                response.payload.data.test.should.eql(directClientResponse.payload.data.test);
+                response.test.should.eql(directClientResponse.test);
 
                 return done(e);
               });
@@ -167,7 +167,7 @@ describe('Consumes an external module', function() {
     var _this = this;
 
     mesh.api.data.on('/mytest/datalayer/test', {event_type:'set', count:1}, function (message) {
-      message.payload.data.value.should.eql(10);
+      message.value.should.eql(10);
       done();
     }, function(e){
       if (e) return done(e);

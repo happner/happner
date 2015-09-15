@@ -40,7 +40,7 @@ function Component1(options) {
       else{
         var timeDiff = moment.utc() - message.timestamp;
         var message = 'Hooray, component ping pong test is over!! ' + message.pingCount + ' pings, elapsed time:' + timeDiff + 'ms';
-        $happn.emit('maximum-pings-reached', message, function(e, response){
+        $happn.emit('maximum-pings-reached', {m: message}, function(e, response){
 
         });
       }

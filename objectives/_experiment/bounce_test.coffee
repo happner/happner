@@ -1,4 +1,4 @@
-objective 'bounce a request randomly for n hops between n nodes', ->
+xobjective 'bounce a request randomly for n hops between n nodes', ->
 
     before -> mock 'should', new require('chai').should()
 
@@ -12,7 +12,7 @@ objective 'bounce a request randomly for n hops between n nodes', ->
 
         @timeout 20000
 
-        nodecount = 3
+        nodecount = 7
 
         endpoints = {}
 
@@ -53,48 +53,9 @@ objective 'bounce a request randomly for n hops between n nodes', ->
                     # - along the way the array of traversals is built.
                     #
 
-                    console.log 'back1'
-
                     traversals.unshift([name, nextEndpoint]);
 
-                    console.log 'back2'
-
-                    callback(null, traversals);
-
-                    console.log 'back3'
-
-                    #
-                    # datalayer issue
-                    # ---------------
-                    #
-                    # (with no change in test code)
-                    #
-                    # sometimes i get this:
-                    #
-                    #   (silence)
-                    #
-                    #
-                    # sometimes i get this:
-                    #
-                    #      back1
-                    #      back2
-                    #      back3
-                    #    (silence)
-                    #
-                    #
-                    # sometimes i get this:
-                    #
-                    #      back1
-                    #      back2
-                    #      back3
-                    #      back1
-                    #      back2
-                    #      back3
-                    #    (silence)
-                    #
-                    #  It has never gotten more than 2 hops back to the caller.
-                    #
-                    
+                    callback(null, traversals);                    
 
                 .catch (err) -> callback(err);
 
@@ -121,17 +82,17 @@ objective 'bounce a request randomly for n hops between n nodes', ->
         .catch done
 
 
-    xit 'start bouncing', (done) ->
+    it 'start bouncing', (done) ->
 
         @timeout 2000
 
         @nodes[0].exchange
 
-        .node2.bouncer.method hops = 0, stopAt = 10
+        .node2.bouncer.method hops = 0, stopAt = 100
 
         .then (reply) ->
 
-            console.log 'reply', reply
+            # console.log 'reply', reply
 
             done()
 

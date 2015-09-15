@@ -83,7 +83,9 @@ describe('Bounces a message between two components, demonstrates how the events 
         done(err);
       }else{
 
-        mesh.event.component1.on('maximum-pings-reached', function(message){
+        mesh.event.component1.on('maximum-pings-reached', function(message, meta){
+
+          console.log(message.m);
 
           //console.log(mesh.api.event.component1.off.toString());
           mesh.event.component1.off(onEventRef, function(err){
