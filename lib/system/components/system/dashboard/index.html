@@ -152,63 +152,9 @@
 
 	        <!-- Main content -->
 	        <section class="content">
-	          <!-- Small boxes (Stat box) -->
-	          <div class="row">
-	            <div class="col-lg-3 col-xs-6">
-	              <!-- small box -->
-	              <div class="small-box bg-aqua">
-	                <div class="inner">
-	                  <h3>{{stats.system.upTime}}<sup style="font-size: 20px">ms</sup></h3>
-	                  <p>uptime</p>
-	                </div>
-	                <div class="icon">
-	                  <i class="ion ion-bag"></i>
-	                </div>
-	                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-	              </div>
-	            </div><!-- ./col -->
-	            <div class="col-lg-3 col-xs-6">
-	              <!-- small box -->
-	              <div class="small-box bg-green">
-	                <div class="inner">
-	                  <h3>{{stats.totalCalls}}</h3>
-	                  <p>total calls</p>
-	                </div>
-	                <div class="icon">
-	                  <i class="ion ion-stats-bars"></i>
-	                </div>
-	                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-	              </div>
-	            </div><!-- ./col -->
-	            <div class="col-lg-3 col-xs-6">
-	              <!-- small box -->
-	              <div class="small-box bg-yellow">
-	                <div class="inner">
-	                  <h3>{{stats.totalEmits}}</h3>
-	                  <p>total emits</p>
-	                </div>
-	                <div class="icon">
-	                  <i class="ion ion-person-add"></i>
-	                </div>
-	                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-	              </div>
-	            </div><!-- ./col -->
-	            <div class="col-lg-3 col-xs-6">
-	              <!-- small box -->
-	              <div class="small-box bg-red">
-	                <div class="inner">
-	                  <h3>{{stats.totalErrors}}</h3>
-	                  <p>total errors</p>
-	                </div>
-	                <div class="icon">
-	                  <i class="ion ion-pie-graph"></i>
-	                </div>
-	                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-	              </div>
-	            </div><!-- ./col -->
-	          </div><!-- /.row -->
 	          <!-- Main row -->
 	          <div class="row">
+
 	            <!-- Left col -->
 	            <section class="col-lg-7 connectedSortable">
 	             
@@ -229,6 +175,9 @@
 	            </section><!-- /.Left col -->
 	            <!-- right col (We are only adding the ID to make the widgets sortable)-->
 	            <section class="col-lg-5 connectedSortable">
+
+	               <!-- sys resources cpu -->
+	              <div class="box box-solid bg-black" ng-include="'partials/part_systeminfo.html'"></div>
 
 	              <!-- sys resources cpu -->
 	              <div class="box box-solid bg-gray" ng-include="'partials/part_chart_cpu.html'"></div>
@@ -429,6 +378,7 @@
       $.widget.bridge('uibutton', $.ui.button);
     </script>
 
+
     <script src="/resources/bower/angular/angular.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
@@ -464,14 +414,13 @@
 
   	<script src="/resources/bower/Chart.js/Chart.min.js"></script>
   	<script src="/resources/bower/angular-chart.js/dist/angular-chart.min.js"></script>
-	<script src="/browser_client"></script>
-    <script src="/resources/lib/happn-angular.js"></script>
-   
+	
+   	<script src="../../api/client"></script>
 	<script src="js/grid-angular.js"></script>
+	<script src="js/controllers/part_systeminfo.js"></script>
 	<script src="js/controllers/part_chart_cpu.js"></script>
     <script src="js/controllers/part_chart_diskusage.js"></script>
     <script src="js/controllers/part_chart_meshstatistics.js"></script>
 	
-	<script src="../../api/client"></script>
   </body>
 </html>

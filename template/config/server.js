@@ -1,5 +1,7 @@
 module.exports.config = {
   version: '0.0.0',
+
+  // port: 80,  // sudo...
   
   components: {
     'www': {

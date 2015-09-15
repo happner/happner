@@ -1,0 +1,66 @@
+<div class="box-header ui-sortable-handle" style="cursor: move;">
+  <i class="fa fa-th"></i>
+  <h3 class="box-title">System information</h3>
+  <div class="box-tools pull-right">
+    <button class="btn bg-black btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+    <button class="btn bg-black btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<div class="box-body table-responsive no-padding">
+  <table class="table table-hover" ng-controller="part_systeminfo">
+    <tbody>
+    <tr>
+      <td>{{data.system.host}}&nbsp;{{data.system.meshName}}</td>
+      <td><span class="label label-success">up</span></td>
+      <td>started <span am-time-ago="data.proc.up"></span></td>
+    </tr>
+    <tr ng-if="data.system.platform && data.system.release">
+      <td>platform</td>
+      <td>{{data.system.platform}} {{data.system.release}}</td>
+      <td></td>
+    </tr>
+    <tr ng-if="data.system.arch">
+      <td>cpu architecture</td>
+      <td>{{data.system.arch}}</td>
+      <td></td>
+    </tr>
+    <tr ng-if="data.system.cpus">
+      <td>cpu count</td>
+      <td>{{data.system.cpus.length}}</td>
+      <td></td>
+    </tr>
+    <tr ng-if="data.system.totalmem">
+      <td>total memory</td>
+      <td>{{data.system.totalmem}}</td>
+      <td></td>
+    </tr>
+    <tr ng-if="data.system.freemem">
+      <td>free memory</td>
+      <td>{{data.system.freemem}}</td>
+      <td></td>
+    </tr>
+    <tr ng-if="data.system.cpus">
+      <td>cpu count</td>
+      <td>{{data.system.cpus.length}}</td>
+      <td></td>
+    </tr>
+    <tr ng-if="data.dbfile">
+      <td>db file</td>
+      <td>{{data.dbfile.filename}}</td>
+      <td></td>
+    </tr>
+    <tr ng-if="data.totalCalls">
+      <td>total calls</td>
+      <td class="bg-green" colspan="2">{{data.totalCalls}}</td>
+    </tr>
+    <tr ng-if="data.totalEmits">
+      <td>total emits</td>
+      <td class="bg-yellow" colspan="2">{{data.totalEmits}}</td>
+    </tr>
+    <tr ng-if="data.totalErrors">
+      <td>total errors</td>
+      <td class="bg-red" colspan="2">{{data.totalErrors}}</td>
+    </tr>
+  </tbody></table>
+</div>
+

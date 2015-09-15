@@ -2,15 +2,12 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
 
     before -> mock 'should', new require('chai').should()
 
-
-
-    # and collect the edges traversed
-
     before -> @nodes = []
 
     before (Mesh, done) ->
 
         @timeout 20000
+
 
         nodecount = 7
 
@@ -18,6 +15,7 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
 
         endpoints["node#{i}"] = 40000 + i for i in [1..nodecount]
         # connects every pair including connection to self
+
 
 
         class BounceModule
@@ -57,7 +55,9 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
 
                     callback(null, traversals);                    
 
+
                 .catch (err) -> callback(err);
+
 
 
         Mesh.Promise.all(
@@ -82,9 +82,12 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
         .catch done
 
 
+
     it 'start bouncing', (done) ->
 
-        @timeout 2000
+        trace.filter = true
+
+        @timeout 5000
 
         @nodes[0].exchange
 
@@ -94,6 +97,11 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
 
             # console.log 'reply', reply
 
+        .node2.bouncer.method hops = 0, stopAt = 1000
+
+        .then (reply) ->
+
+            reply.length.should.eql 999
             done()
 
         .catch done
