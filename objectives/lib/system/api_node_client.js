@@ -1,6 +1,7 @@
 module.exports = function() {
 
   before(function (Mesh, done) {
+
     this.timeout(2000);
     var _this = this;
     Mesh.start({
@@ -26,7 +27,6 @@ module.exports = function() {
       _this.mesh = mesh;
       done();
     }).catch(function(e) {
-      console.log(e);
       done(e);
     });
   });
@@ -49,8 +49,6 @@ module.exports = function() {
 
     it('supports callbacks', function(done, Mesh) {
 
-      // trace.filter = true
-
       Mesh.MeshClient('localhost', 54321, function(e, client) {
 
         if (e) return done(e);
@@ -64,11 +62,9 @@ module.exports = function() {
 
           client.data.stop().then(done).catch(done);
 
-
         });
       });
     });
-
 
 
     it('supports promises', function(done, Mesh) {

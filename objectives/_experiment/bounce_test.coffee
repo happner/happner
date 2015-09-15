@@ -91,12 +91,6 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
 
         @nodes[0].exchange
 
-        .node2.bouncer.method hops = 0, stopAt = 100
-
-        .then (reply) ->
-
-            # console.log 'reply', reply
-
         .node2.bouncer.method hops = 0, stopAt = 1000
 
         .then (reply) ->

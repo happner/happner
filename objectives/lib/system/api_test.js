@@ -4,6 +4,10 @@ objective('Api', function() {
     mock('should', new require('chai').should());
   })
 
+  after(function() {
+    mock('should', new require('chai').should());
+  })
+
   context('MeshClient', function() {
 
     context('in browser', require('./api_browser_client'));
