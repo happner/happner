@@ -1,4 +1,4 @@
-objective 'try the promisified functions on the exchange', ->
+xobjective 'try the promisified functions on the exchange', ->
 
     before -> mock 'should', new require('chai').should()
 

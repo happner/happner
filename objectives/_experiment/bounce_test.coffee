@@ -1,4 +1,4 @@
-objective 'bounce a request randomly for n hops between n nodes', ->
+xobjective 'bounce a request randomly for n hops between n nodes', ->
 
     before -> mock 'should', new require('chai').should()
 
@@ -80,7 +80,7 @@ objective 'bounce a request randomly for n hops between n nodes', ->
         .catch done
 
 
-    it.only 'start bouncing', (done) ->
+    it 'start bouncing', (done) ->
 
         trace.filter = true
 
