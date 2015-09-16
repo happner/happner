@@ -3,12 +3,9 @@ var testport = 8080;
 var fs = require('fs');
 var should = require('chai').should();
 
-
 describe('Demonstrates the middleware functionality', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
-
-  require('./lib/0-hooks')();
 
   var config = {
     name: "testMiddleware",
@@ -61,7 +58,7 @@ describe('Demonstrates the middleware functionality', function (done) {
 
   before(function (done) {
 
-    var mesh = this.Mesh();
+    var mesh = require('../lib/mesh')();
 
     mesh.initialize(config, function (err) {
       if (err) {
@@ -79,6 +76,9 @@ describe('Demonstrates the middleware functionality', function (done) {
 
 
     getBody('http://127.0.0.1:' + testport + '/testMiddleware/api/client', function (e, body) {
+
+      console.log('boo d',body);
+
       if (e) return done(e);
 
       if (body.substring(0, 11) != '// mesh api')
