@@ -1,5 +1,3 @@
-// mesh_event
-
 module.exports = function() {
 
   context('local events', function() {
