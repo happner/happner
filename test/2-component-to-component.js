@@ -67,7 +67,7 @@ describe('Bounces a message between two components, demonstrates how the events 
   };
 
   after(function(done){
-     mesh.stop({}, done);
+     mesh.stop(done);
   });
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {

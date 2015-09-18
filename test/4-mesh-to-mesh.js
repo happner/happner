@@ -51,9 +51,7 @@ describe('Mesh to Mesh', function() {
         console.log('starting this one', mesh, config);
         // mesh.initialize(config, function(err) {
         mesh.initialize(config, function(e){
-
           done(e);
-
         });
       }
 
@@ -62,9 +60,9 @@ describe('Mesh to Mesh', function() {
 
 
   after(function(done) {
-    remote.kill();
-    done();
-  })
+    remote.kill(); 
+    mesh.stop(done);
+  });
 
   context('the faraway tree', function() {
 

@@ -1,4 +1,4 @@
-// cannot do mocha test/4-mesh-to-mesh.js --watch
+/*// cannot do mocha test/4-mesh-to-mesh.js --watch
 // address already in use for 2nd... runs
 
 var spawn = require('child_process').spawn
@@ -33,7 +33,6 @@ describe('Proxy component', function() {
 
     var _this = this;
     
-
     mesh = _this.Mesh();
     mesh.initialize(config, function(err) {
 
@@ -60,12 +59,16 @@ describe('Proxy component', function() {
 
     });
 
-    after(function(done) {
-      remote.kill();
-      done();
-    })
-
   });
+
+  after(function(done) {
+    remote.kill();
+
+    if (mesh)
+      return mesh.stop(done);
+
+    done();
+  })
 
   context('testing the proxy', function() {
 
@@ -111,3 +114,4 @@ describe('Proxy component', function() {
     });
 
 });
+*/

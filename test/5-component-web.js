@@ -7,6 +7,8 @@ describe('Demonstrates the middleware functionality', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
+  var mesh = require('../lib/mesh')();
+
   var config = {
     name: "testMiddleware",
     dataLayer: {
@@ -18,9 +20,8 @@ describe('Demonstrates the middleware functionality', function (done) {
     modules: {
       "module5": {
         path: __dirname + "/lib/5-module-middleware",
-        constructor: {
-          type: "sync",
-          parameters: []
+        construct:{
+          type:"sync"
         }
       }
     },
@@ -58,15 +59,19 @@ describe('Demonstrates the middleware functionality', function (done) {
 
   before(function (done) {
 
-    var mesh = require('../lib/mesh')();
+    console.log('DOING BEFORE');
 
     mesh.initialize(config, function (err) {
-      if (err) {
-        console.log(err.stack);
-      }
-      done(err);
+      if (err) return done(err);
+
+      console.log('INITIALIZED!!');
+      done();
 
     });
+  });
+
+  after(function(done){
+     mesh.stop(done);
   });
 
 
@@ -121,8 +126,8 @@ describe('Demonstrates the middleware functionality', function (done) {
 });
 
 function getBody(url, done) {
-  console.log('connecting to ' + url);
   request({
+      gzip: true,
       uri: url,
       method: 'GET'
     },

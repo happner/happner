@@ -116,7 +116,7 @@ describe('Multiple component initialization', function() {
     });
 
     after(function(done){
-      mesh.stop(done);
+       mesh.stop(done);
     });
 
   });

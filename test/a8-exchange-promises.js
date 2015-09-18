@@ -33,6 +33,7 @@ if (global.TESTING_18) return; // When 'requiring' the module above,
                              //.............
 
 var should = require('chai').should();
+var mesh;
 
 describe('exchange supports promises', function() {
 
@@ -43,7 +44,7 @@ describe('exchange supports promises', function() {
 
     global.TESTING_18 = true; //.............
 
-    var mesh = this.mesh = this.Mesh();
+    mesh = this.mesh = this.Mesh();
     mesh.initialize({
       util: {
         // logger: {}
@@ -63,6 +64,9 @@ describe('exchange supports promises', function() {
     });
   });
 
+  after(function(done){
+     mesh.stop(done);
+  });
 
   it('supports non-promises in the exchange', function(done) {
 

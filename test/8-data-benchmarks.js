@@ -79,8 +79,8 @@ describe('does some benchmarks on api calls, data events and events', function (
     });
   });
 
-  after(function () {
-    mesh.stop();
+   after(function(done){
+     mesh.stop(done);
   });
 
   it('listens for the ping pong completed event, that module1 emits', function (done) {

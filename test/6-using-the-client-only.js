@@ -19,6 +19,7 @@ describe('Using the clientside only', function() {
       done();
     });
   });
+
   after(function(done) {
     remote.kill();
     done();

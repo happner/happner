@@ -10,13 +10,14 @@ var bunchOfRemoteNodes = [1, 2, 3];
 describe('attach to multiple meshes (meshs?)', function() {
 
   require('./lib/0-hooks')();
+  var mesh;
 
   before(function(done) {
 
     this.timeout(5000);
 
     var kids = this.kids = [];
-    var mesh = this.mesh = this.Mesh();
+    mesh = this.mesh = this.Mesh();
     var config = {
       endpoints: {}
     };
@@ -71,7 +72,7 @@ describe('attach to multiple meshes (meshs?)', function() {
     this.kids.forEach(function(kid) {
       kid.kill();
     });
-    done();
+    mesh.stop(done);
   });
 
   it('can call methods on all', function(done) {

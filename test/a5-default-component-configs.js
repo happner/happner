@@ -40,6 +40,7 @@ if (global.TESTING_15) return; // When 'requiring' the module above,
 
 var should = require('chai').should();
 var request = require('request');
+var mesh;
 
 describe('default component configs', function() {
 
@@ -48,7 +49,7 @@ describe('default component configs', function() {
 
     global.TESTING_15 = true; //.............
 
-    var mesh = this.mesh = this.Mesh();
+    mesh = this.mesh = this.Mesh();
     mesh.initialize({
 
       util: {
@@ -69,6 +70,10 @@ describe('default component configs', function() {
       if (err) return done(err);
       done();
     });
+  });
+
+   after(function(done){
+     mesh.stop(done);
   });
 
   it('created the module with the method schema as defaulted', function(done) {
