@@ -3,6 +3,7 @@ objective('Mesh', function() {
   before(function() {
     mock('should', new require('chai').should());
     mock('expect', require('chai').expect);
+    mock('Promise', require('bluebird'));
   });
 
   context('Configuration', require('./_mesh_configuration'));
