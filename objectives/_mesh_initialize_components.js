@@ -212,7 +212,7 @@ module.exports = function() {
   });
 
   
-  context.only('load multiple components with the same module', function() {
+  context('load multiple components with the same module', function() {
 
     before(function(done, Mesh) {
 

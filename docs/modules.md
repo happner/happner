@@ -53,10 +53,10 @@ eg. (config)
   },
   components: {
     'employees': {
-        moduleName: 'group-of-people'
+        module: 'group-of-people'
     },
     'clients': {
-        moduleName: 'group-of-people'
+        module: 'group-of-people'
     }
   }
   ...
