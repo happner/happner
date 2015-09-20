@@ -61,7 +61,7 @@ describe('Demonstrates the middleware functionality', function (done) {
 
   before(function (done) {
 
-    var mesh = this.Mesh();
+    var mesh = new this.Mesh();
 
     mesh.initialize(config, function (err) {
       if (err) {

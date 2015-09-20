@@ -44,7 +44,7 @@ var config = {
   }
 };
 
-Mesh().initialize(config, function(err) {
+(new Mesh()).initialize(config, function(err) {
 
   if (err) {
     console.log(err);

@@ -68,7 +68,7 @@ describe('does some benchmarks on api calls, data events and events', function (
   before(function (done) {
     this.timeout(defaultTimeout);
     console.time('startup');
-    mesh = this.Mesh();
+    mesh = new this.Mesh();
     mesh.initialize(config, function (err) {
       console.timeEnd('startup');
       done();

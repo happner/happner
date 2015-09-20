@@ -53,7 +53,7 @@ describe('Mesh to Mesh', function() {
 
       
 
-        mesh = _this.Mesh();
+        mesh = new _this.Mesh();
         console.log('starting this one', mesh, config);
         // mesh.initialize(config, function(err) {
         mesh.initialize(config, function(e){

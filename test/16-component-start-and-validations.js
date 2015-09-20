@@ -40,7 +40,7 @@ describe('component start and validation -', function() {
 
     global.TESTING_16 = true; //.............
 
-    var mesh = this.mesh = this.Mesh();
+    var mesh = this.mesh = new this.Mesh();
     mesh.initialize({
       util: {
         // logLevel: ['error']
@@ -117,7 +117,7 @@ describe('component start and validation -', function() {
 
   it('has called back with error into the mesh start callback because the component start failed', function(done) {
 
-    var anotherMesh = this.Mesh();
+    var anotherMesh = new this.Mesh();
     anotherMesh.initialize({
       util: {
         logger: {}

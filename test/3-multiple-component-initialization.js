@@ -110,7 +110,7 @@ describe('Multiple component initialization', function() {
       }
     }
 
-    this.mesh = this.Mesh();
+    this.mesh = new this.Mesh();
     this.mesh.initialize(config, function(err) {
       if (err) return done(err);
       done();

@@ -44,7 +44,7 @@ describe('Bounces a message between two components, demonstrates how the events 
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
     
-    mesh = this.Mesh();
+    mesh = new this.Mesh();
 
     this.timeout(15000);
 

@@ -34,7 +34,7 @@ describe('Proxy component', function() {
     var _this = this;
     
 
-    mesh = _this.Mesh();
+    mesh = new _this.Mesh();
     mesh.initialize(config, function(err) {
 
       if (err) return done(err);
