@@ -1,4 +1,5 @@
 var should = require('chai').should();
+var Mesh = require('../');
 
 describe('Multiple component initialization', function() {
   var mesh;
@@ -111,7 +112,7 @@ describe('Multiple component initialization', function() {
     }
 
 
-    mesh = new this.Mesh();
+    mesh = new Mesh();
     mesh.initialize(config, function(err) {
 
       if (err) return done(err);

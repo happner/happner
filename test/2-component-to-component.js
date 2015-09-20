@@ -6,6 +6,7 @@ var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
 var maximumPings = 1000;
 var libFolder ;
+var Mesh = require('../');
 
 describe('Bounces a message between two components, demonstrates how the events layer works', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
@@ -72,7 +73,7 @@ describe('Bounces a message between two components, demonstrates how the events 
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
     
-    mesh = new this.Mesh();
+    mesh = new Mesh();
 
     this.timeout(10000);
 

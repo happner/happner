@@ -26,7 +26,6 @@ config = {
 
 describe('Proxy component', function() {
 
-  require('./lib/0-hooks')();
   this.timeout(10000);
 
   before(function(done) {
