@@ -1,6 +1,6 @@
 module.exports = function() {
 
-  context.only('Simultaneous start with slow server', function() {
+  context('Simultaneous start with slow server', function() {
 
     before(function(done, Mesh, ConfigFactory, Promise) {
 
