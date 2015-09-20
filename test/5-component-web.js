@@ -3,12 +3,11 @@ var testport = 8080;
 var fs = require('fs');
 var should = require('chai').should();
 
-
 describe('Demonstrates the middleware functionality', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
-  require('./lib/0-hooks')();
+  var mesh = require('../lib/mesh')();
 
   var config = {
     name: "testMiddleware",
@@ -21,9 +20,8 @@ describe('Demonstrates the middleware functionality', function (done) {
     modules: {
       "module5": {
         path: __dirname + "/lib/5-module-middleware",
-        constructor: {
-          type: "sync",
-          parameters: []
+        construct:{
+          type:"sync"
         }
       }
     },
@@ -63,13 +61,19 @@ describe('Demonstrates the middleware functionality', function (done) {
 
     var mesh = new this.Mesh();
 
+    console.log('DOING BEFORE');
+
     mesh.initialize(config, function (err) {
-      if (err) {
-        console.log(err.stack);
-      }
-      done(err);
+      if (err) return done(err);
+
+      console.log('INITIALIZED!!');
+      done();
 
     });
+  });
+
+  after(function(done){
+     mesh.stop(done);
   });
 
 
@@ -79,6 +83,9 @@ describe('Demonstrates the middleware functionality', function (done) {
 
 
     getBody('http://127.0.0.1:' + testport + '/testMiddleware/api/client', function (e, body) {
+
+      console.log('boo d',body);
+
       if (e) return done(e);
 
 
@@ -121,8 +128,8 @@ describe('Demonstrates the middleware functionality', function (done) {
 });
 
 function getBody(url, done) {
-  console.log('connecting to ' + url);
   request({
+      gzip: true,
       uri: url,
       method: 'GET'
     },

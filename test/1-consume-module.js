@@ -1,14 +1,10 @@
-
-
 var should = require('chai').should();
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
 
 describe('Consumes an external module', function() {
 
-  require('./lib/0-hooks')();
-
-  var mesh;
+  var mesh = require('../lib/mesh')();
 
   var config = {
     name:"testMesh",
@@ -94,6 +90,9 @@ describe('Consumes an external module', function() {
     },
   };
 
+  after(function(done){
+     mesh.stop(done);
+  });
 
   it('starts a local mesh', function(done) {
 
@@ -168,6 +167,9 @@ describe('Consumes an external module', function() {
 
     mesh.api.data.on('/mytest/datalayer/test', {event_type:'set', count:1}, function (message) {
       message.value.should.eql(10);
+
+      console.log('TESTS DONE');
+
       done();
     }, function(e){
       if (e) return done(e);

@@ -11,7 +11,7 @@ describe('Bounces a message between two components, demonstrates how the events 
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
-  require('./lib/0-hooks')();
+  var mesh = require('../lib/mesh')();
 
   var config = {
     name:"testComponent2Component",
@@ -66,7 +66,9 @@ describe('Bounces a message between two components, demonstrates how the events 
     }
   };
 
-  var mesh;
+  after(function(done){
+     mesh.stop(done);
+  });
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
     

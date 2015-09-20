@@ -64,6 +64,12 @@ describe('Bounces a message between two components, demonstrates how the events 
       }
     });
   });
+
+
+  after(function(done){
+     mesh.stop(done);
+  });
+
 });
 
 

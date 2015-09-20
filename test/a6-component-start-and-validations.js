@@ -32,6 +32,7 @@ if (global.TESTING_16) return; // When 'requiring' the module above,
 
 
 var should = require('chai').should();
+var mesh;
 
 describe('component start and validation -', function() {
 
@@ -41,6 +42,7 @@ describe('component start and validation -', function() {
     global.TESTING_16 = true; //.............
 
     var mesh = this.mesh = new this.Mesh();
+
     mesh.initialize({
       util: {
         // logLevel: ['error']
@@ -103,8 +105,9 @@ describe('component start and validation -', function() {
     });
   });
 
-  after(function() {
+  after(function(done) {
     delete global.TESTING_16; //.............
+     mesh.stop(done);
   })
 
   it('has called and finished the component async start method', function(done) {

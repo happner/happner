@@ -1,7 +1,7 @@
 var should = require('chai').should();
 
 describe('Multiple component initialization', function() {
-  require('./lib/0-hooks')();
+  var mesh;
 
   before(function(done) {
     config = {
@@ -110,16 +110,23 @@ describe('Multiple component initialization', function() {
       }
     }
 
-    this.mesh = new this.Mesh();
-    this.mesh.initialize(config, function(err) {
+
+    mesh = new this.Mesh();
+    mesh.initialize(config, function(err) {
+
       if (err) return done(err);
       done();
     });
+
+    after(function(done){
+       mesh.stop(done);
+    });
+
   });
 
 
   it('loads the class ok', function(done) {
-    this.mesh.api.exchange.one_class.method(function(err, res) {
+    mesh.api.exchange.one_class.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
@@ -127,42 +134,36 @@ describe('Multiple component initialization', function() {
   });
 
   it('loads the class with parameters ok', function(done) {
-    this.mesh.api.exchange.one_class_with_params.method(function(err, res) {
+    mesh.api.exchange.one_class_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
     
   });
 
-
-
-
   it('loads the returned from sync ok', function(done) {
-    this.mesh.api.exchange.two_sync.method(function(err, res) {
+    mesh.api.exchange.two_sync.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
   it('loads the returned from sync with params ok', function(done) {
-    this.mesh.api.exchange.two_sync_with_params.method(function(err, res) {
+    mesh.api.exchange.two_sync_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
   });
 
-
-
-
   it('loads the async ok', function(done) {
-    this.mesh.api.exchange.three_async.method(function(err, res) {
+    mesh.api.exchange.three_async.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
   it('loads the async with params ok', function(done) {
-    this.mesh.api.exchange.three_async_with_params.method(function(err, res) {
+    mesh.api.exchange.three_async_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
@@ -170,7 +171,7 @@ describe('Multiple component initialization', function() {
 
 
   it('loads the object ok', function(done) {
-    this.mesh.api.exchange.four_object.method(function(err, res) {
+    mesh.api.exchange.four_object.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
@@ -179,14 +180,14 @@ describe('Multiple component initialization', function() {
 
 
   it('loads the hidden class ok', function(done) {
-    this.mesh.api.exchange.five_hidden_class.method(function(err, res) {
+    mesh.api.exchange.five_hidden_class.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
   it('loads the class with parameters ok', function(done) {
-    this.mesh.api.exchange.five_hidden_class_with_params.method(function(err, res) {
+    mesh.api.exchange.five_hidden_class_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
@@ -194,14 +195,14 @@ describe('Multiple component initialization', function() {
 
 
   it('loads the nested class ok', function(done) {
-    this.mesh.api.exchange.six_nested_class.method(function(err, res) {
+    mesh.api.exchange.six_nested_class.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
   it('loads the nested class with parameters ok', function(done) {
-    this.mesh.api.exchange.six_nested_class_with_params.method(function(err, res) {
+    mesh.api.exchange.six_nested_class_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
