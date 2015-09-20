@@ -77,6 +77,114 @@ module.exports = function() {
 
   });
 
+  context.only('updates to remote description create local api changes', function() {
+
+    before(function(done, Mesh, ConfigFactory) {
+      ConfigFactory.mesh.makeTwoConnected()
+      .spread(function(meshA, meshB) {
+        mock('meshA', meshA);
+        mock('meshB', meshB);
+        mock('xA', meshA.exchange);
+        mock('xB', meshB.exchange);
+      })
+      .then(done).catch(done);
+    });
+
+    after(function(done, Promise, meshA, meshB) {
+      Promise.all([
+        meshA.stop(),
+        meshB.stop(),
+      ])
+      .then(done).catch(done);
+    });
+
+    it('meshA got all api on endpoint to meshB', function(done, expect, xA) {
+      expect(Object.keys(xA.meshB)).to.eql([
+        "as_class",
+        "as_async_factory",
+        "as_sync_factory",
+        "as_module",
+        "api",
+        "resources",
+        "proxy",
+        "system"
+      ]);
+      done();
+    });
+
+
+    it('meshA has updated api on endpoint after adding new compoonent to meshB',
+
+      function(done, expect, xA, meshB, Promise) {
+
+        // Confirm meshB has no component called 'late'
+
+        expect(Object.keys(xA.meshB).indexOf('late')).to.equal(-1);
+
+        // Add new component called 'late'
+
+        meshB._createElement({
+          module: {
+            name: 'late',
+            config: {
+              path: 'happner-test-modules.AsLate',
+              construct: {
+                parameters: [ // TODO: wishlist: rename to params, or args
+                  {value: 'ARGU'},
+                  {value: 'MENT'},
+                  {value: 'S'},
+                ]
+              }
+            }
+          },
+          component: {
+            name: 'late',
+            config: {
+              module: 'late',
+            }
+          }
+        })
+
+        .then(function() {
+          return new Promise(function(resolve, reject) {
+
+            // Need to wait a bit for the out-of-tick description change
+            // replication to reach meshA
+
+            setTimeout(function() {
+
+              // Confirm new module at meshB is now available at meshA
+
+              expect(Object.keys(xA.meshB).indexOf('late')).to.not.equal(-1);
+
+              // Call it.
+
+              xA.meshB.late.exchangeMethod({opt:'ions'}, function(e, res) {
+
+                if (e) return reject(e);
+
+                console.log('RES', res);
+
+                resolve(
+                  expect(res).to.eql({
+                    opt: 'ions',
+                    args: 'ARGUMENTS',
+                    started: false
+                  })
+                );
+
+              })
+            }, 100);
+          });
+        })
+
+        .then(done).catch(done);
+
+      }
+    );
+
+  });
+
   context('recover from remote endpoint crash/restart during initialization')
 
   context('wait for remote endpoint that is not listening yet')

@@ -8,7 +8,7 @@
     "h": "bin/h"
   },
   "scripts": {
-    "test": "LOG_LEVEL=off objective --once"
+    "test": "LOG_LEVEL=off ./mocha && LOG_LEVEL=off objective --once"
   },
   "repository": {
     "type": "git",

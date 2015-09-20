@@ -1,7 +1,28 @@
 // Uses devDependency node_modules/happner-test-modules to create mesh configs.
 
+var Mesh = require('../');
+var Promise = require('bluebird');
 
 module.exports.mesh = {
+
+  makeTwoConnected: function() {
+    return Promise.all([
+      Mesh.start(module.exports.mesh.fullSingle({
+        name: 'meshA',
+        port: 10001,
+        endpoints: {
+          meshB: 10002      // connecting to.....
+        }
+      })),
+      Mesh.start(module.exports.mesh.fullSingle({
+        name: 'meshB',
+        port: 10002,
+        endpoints: {
+          meshA: 10001     // .....each other
+        }
+      }))
+    ])
+  },
 
   fullSingle: function(opts) {
 
@@ -57,26 +78,26 @@ module.exports.mesh = {
         },
         'module-as-module': {
           path: 'happner-test-modules.AsModule'
-        }
+        },
       },
       components: {
         'as_class': {
-          moduleName: 'module-as-class',
+          module: 'module-as-class',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_async_factory': {
-          moduleName: 'module-as-async-factory',
+          module: 'module-as-async-factory',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_sync_factory': {
-          moduleName: 'module-as-sync-factory',
+          module: 'module-as-sync-factory',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_module': {
-          moduleName: 'module-as-module',
+          module: 'module-as-module',
           startMethod: 'start',
           stopMethod: 'stop'
         },
@@ -143,42 +164,42 @@ module.exports.mesh = {
       },
       components: {
         'as_class_1': {
-          moduleName: 'module-as-class',
+          module: 'module-as-class',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_class_2': {
-          moduleName: 'module-as-class',
+          module: 'module-as-class',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_async_factory_1': {
-          moduleName: 'module-as-async-factory',
+          module: 'module-as-async-factory',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_async_factory_2': {
-          moduleName: 'module-as-async-factory',
+          module: 'module-as-async-factory',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_sync_factory_1': {
-          moduleName: 'module-as-sync-factory',
+          module: 'module-as-sync-factory',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_sync_factory_2': {
-          moduleName: 'module-as-sync-factory',
+          module: 'module-as-sync-factory',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_module_1': {
-          moduleName: 'module-as-module',
+          module: 'module-as-module',
           startMethod: 'start',
           stopMethod: 'stop'
         },
         'as_module_2': {
-          moduleName: 'module-as-module',
+          module: 'module-as-module',
           startMethod: 'start',
           stopMethod: 'stop'
         },
