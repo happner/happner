@@ -43,7 +43,7 @@ describe('exchange supports promises', function() {
 
     global.TESTING_18 = true; //.............
 
-    var mesh = this.mesh = this.Mesh();
+    var mesh = this.mesh = new this.Mesh();
     mesh.initialize({
       util: {
         // logger: {}

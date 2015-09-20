@@ -519,7 +519,7 @@ The `config.components` section should list components to be loaded into the mes
   ...
   components: {
     'name-of-component': {
-      moduleName: 'name-of-implementing-module',
+      module: 'name-of-implementing-module',
       schema: {
         exclusive: true,
         startMethod: 'start',
@@ -560,10 +560,10 @@ __(required)__
 
 Components become accessable by name in the [Events](events.md) and [Exchange](exchange.md) APIs and also on [Web Routes](webroutes.md)
 
-###### moduleName
+###### module
 __(optional)__
 
-Each Component in the MeshNode should specify which [Module](#module-config) it exposes. If the `moduleName` is unspecified the mesh will attempt to use a Module by the same name as the Component's name.
+Each Component in the MeshNode should specify which [Module](#module-config) it exposes. If the `module` is unspecified the mesh will attempt to use a Module by the same name as the Component's name.
 
 ###### schema
 __(optional)__

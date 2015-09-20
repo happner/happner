@@ -1,5 +1,3 @@
-// mesh_data.js
-
 module.exports = function() {
 
   context('local data', function() {
@@ -7,11 +5,5 @@ module.exports = function() {
     it('pending');
 
   });
-
-  // context('remote??', function() {
-
-  //   it('pending');
-
-  // });
 
 }

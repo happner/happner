@@ -48,7 +48,7 @@ describe('default component configs', function() {
 
     global.TESTING_15 = true; //.............
 
-    var mesh = this.mesh = this.Mesh();
+    var mesh = this.mesh = new this.Mesh();
     mesh.initialize({
 
       util: {

@@ -21,11 +21,6 @@ function Component2(options) {
 
     try {
 
-      if (!$happn.mesh)
-        throw new Error('This module needs component level scope');
-
-      //console.log("Message from " + message.message);
-
       message.message = "Component2";
 
       $happn.mesh.exchange.component1.exposedMethod(message, function (e, response) {
@@ -47,7 +42,7 @@ function Component2(options) {
       count: options.maximumPings   // Subscribe to 1 more to make sure we don't get too many events
     }, function (message) {
       if (message.count != count++) {
-        $happn.emit('date_test_complete', 'Test failed', function (e, response) {
+        $happn.emit('date_test_complete', {m: 'Test failed'}, function (e, response) {
         });
       }
 
@@ -55,7 +50,7 @@ function Component2(options) {
       if (count > options.maximumPings) {
         console.log("Too many received");
         clearTimeout(timeOut);
-        $happn.emit('data-test-complete', "Too many messages", function (e, response) {
+        $happn.emit('data-test-complete', {m: "Too many messages"}, function (e, response) {
         });
       }
 

@@ -72,7 +72,7 @@ describe('does some benchmarks on api calls, data events and events', function (
   before(function (done) {
     this.timeout(defaultTimeout);
     console.time('startup');
-    mesh = this.Mesh();
+    mesh = new this.Mesh();
     mesh.initialize(config, function (err) {
       console.timeEnd('startup');
       done();
@@ -125,8 +125,7 @@ describe('does some benchmarks on api calls, data events and events', function (
     mesh.api.exchange.component2.startData(function () {
 
       mesh.api.event.component2.on('data-test-complete', function (message) {
-        console.log(message.payload.data);
-        message.payload.data.should.contain('Hooray');
+        message.m.should.contain('Hooray');
         done();
       }, function () {
       });

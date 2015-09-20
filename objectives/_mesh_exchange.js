@@ -1,5 +1,3 @@
-// mesh_exchange
-
 module.exports = function() {
 
   return; // 

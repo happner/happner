@@ -100,7 +100,7 @@ describe('Consumes an external module', function() {
     this.timeout(10000);
 
     // created in lib/0-hooks.js
-    mesh = this.Mesh();
+    mesh = new this.Mesh();
    
     mesh.initialize(config, function(err) {
 

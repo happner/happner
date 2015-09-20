@@ -52,7 +52,7 @@ describe('mesh awareness via $happn injection', function() {
           return function() {
             return promise(
               function(resolve, reject) {
-                var mesh = Mesh();
+                var mesh = new Mesh();
                 // meshes.push(mesh = Mesh());
 
                 var COMPONENTS = {};

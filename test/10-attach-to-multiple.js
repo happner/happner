@@ -16,7 +16,7 @@ describe('attach to multiple meshes (meshs?)', function() {
     this.timeout(5000);
 
     var kids = this.kids = [];
-    var mesh = this.mesh = this.Mesh();
+    var mesh = this.mesh = new this.Mesh();
     var config = {
       endpoints: {}
     };
