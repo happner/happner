@@ -4,6 +4,8 @@ module.exports = function() {
 
     before(function(done, Promise, Mesh, ConfigFactory) {
 
+      this.timeout(20000);
+
       // Replace _registerSchema() on Mesh prorotype to make mesh 'B'
       // slow to get it's `description` into place.
 
@@ -20,8 +22,8 @@ module.exports = function() {
           var _this = this, args = arguments;
           setTimeout(function() {
             // B takes 200 to register.
-            return _registerSchema.apply(this, args);
-          }, 200);
+            return _registerSchema.apply(_this, args);
+          }, 5000);
         }
       );
 
@@ -52,7 +54,7 @@ module.exports = function() {
 
     });
 
-    after(function(done, meshA, meshB) {
+    after(function(done, Promise, meshA, meshB) {
 
       Promise.all([
         meshA.stop(),
@@ -65,11 +67,17 @@ module.exports = function() {
 
     it('both got a full description from the other', function(done, expect, xA, xB) {
 
+      // endpoint init waits for full description
+
       expect(Object.keys(xA.B)).to.eql(Object.keys(xB.A));
       done();
 
     })
 
   });
+
+  context('recover from remote endpoint crash/restart during initialization')
+
+  context('wait for remote endpoint that is not listening yet')
 
 }

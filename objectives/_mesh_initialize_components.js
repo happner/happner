@@ -2,66 +2,12 @@ module.exports = function() {
 
   context('load one module per component', function() {
 
-    before(function(done, Mesh) {
+    before(function(done, ConfigFactory, Mesh) {
       
-      Mesh.start({
+      Mesh.start(ConfigFactory.mesh.fullSingle({
         name: 'mesh_name',
         port: 12345,
-        modules: {
-          'module-as-class': {
-            path: 'happner-test-modules',
-            construct: {
-              name: 'AsClass',
-              parameters: [
-                {value: 'ARG'},
-                {value: 'U'},
-                {value: 'MENTS'}
-              ]
-            }
-          },                                  // note "deeper" module path
-          'module-as-async-factory': {       //
-            path: 'happner-test-modules.AsFactory',
-            create: {
-              name: 'asyncCreate',
-              type: 'async',
-              parameters: [
-                {value: 'ARG'},
-                {value: 'U'},
-                {value: 'MENTS'}
-              ] 
-            }
-          },
-          'module-as-sync-factory': {
-            path: 'happner-test-modules.AsFactory',
-            create: {
-              name: 'syncCreate',
-              // type: 'sync',
-              parameters: [
-                {value: 'ARG'},
-                {value: 'U'},
-                {value: 'MENTS'}
-              ] 
-            }
-          },
-          'module-as-module': {
-            path: 'happner-test-modules.AsModule'
-          }
-        },
-        components: {
-          'as_class': {
-            moduleName: 'module-as-class'
-          },
-          'as_async_factory': {
-            moduleName: 'module-as-async-factory'
-          },
-          'as_sync_factory': {
-            moduleName: 'module-as-sync-factory'
-          },
-          'as_module': {
-            moduleName: 'module-as-module',
-          },
-        }
-      })
+      }))
 
       .then(function(mesh) {
         mock('mesh', mesh);
@@ -214,96 +160,12 @@ module.exports = function() {
   
   context('load multiple components with the same module', function() {
 
-    before(function(done, Mesh) {
+    before(function(done, Mesh, ConfigFactory) {
 
-      Mesh.start({
+      Mesh.start(ConfigFactory.mesh.fullDouble({
         name: 'mesh_name',
-        port: 12347,
-
-        modules: {
-          'module-as-class': {
-            path: 'happner-test-modules',
-            construct: {
-              name: 'AsClass',
-              parameters: [
-                {value: 'ARG'},
-                {value: 'U'},
-                {value: 'MENTS'}
-              ]
-            }
-          },                                  // note "deeper" module path
-          'module-as-async-factory': {       //
-            path: 'happner-test-modules.AsFactory',
-            create: {
-              name: 'asyncCreate',
-              type: 'async',
-              parameters: [
-                {value: 'ARG'},
-                {value: 'U'},
-                {value: 'MENTS'}
-              ] 
-            }
-          },
-          'module-as-sync-factory': {
-            path: 'happner-test-modules.AsFactory',
-            create: {
-              name: 'syncCreate',
-              // type: 'sync',
-              parameters: [
-                {value: 'ARG'},
-                {value: 'U'},
-                {value: 'MENTS'}
-              ] 
-            }
-          },
-          'module-as-module': {
-            path: 'happner-test-modules.AsModule'
-          }
-        },
-        components: {
-          'as_class_1': {
-            moduleName: 'module-as-class',
-            startMethod: 'start',
-            stopMethod: 'stop'
-          },
-          'as_class_2': {
-            moduleName: 'module-as-class',
-            startMethod: 'start',
-            stopMethod: 'stop'
-          },
-          'as_async_factory_1': {
-            moduleName: 'module-as-async-factory',
-            startMethod: 'start',
-            stopMethod: 'stop'
-          },
-          'as_async_factory_2': {
-            moduleName: 'module-as-async-factory',
-            startMethod: 'start',
-            stopMethod: 'stop'
-          },
-          'as_sync_factory_1': {
-            moduleName: 'module-as-sync-factory',
-            startMethod: 'start',
-            stopMethod: 'stop'
-          },
-          'as_sync_factory_2': {
-            moduleName: 'module-as-sync-factory',
-            startMethod: 'start',
-            stopMethod: 'stop'
-          },
-          'as_module_1': {
-            moduleName: 'module-as-module',
-            startMethod: 'start',
-            stopMethod: 'stop'
-          },
-          'as_module_2': {
-            moduleName: 'module-as-module',
-            startMethod: 'start',
-            stopMethod: 'stop'
-          },
-        }
-
-      })
+        port: 12347
+      }))
 
       .then(function(mesh) {
         mock('mesh', mesh);
@@ -503,7 +365,7 @@ module.exports = function() {
   });
 
 
-  context('loading components into already running mesh', function() {
+  context('load components into already running mesh', function() {
 
     it('pending');
 

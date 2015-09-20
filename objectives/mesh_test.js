@@ -4,6 +4,7 @@ objective('Mesh', function() {
     mock('should', new require('chai').should());
     mock('expect', require('chai').expect);
     mock('Promise', require('bluebird'));
+    mock('ConfigFactory', require('./__config_factory'));
   });
 
   context('Configuration', require('./_mesh_configuration'));

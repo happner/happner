@@ -108,8 +108,6 @@ module.exports = function() {
     it('pending')
   });
 
-  context('Initializes remote endpoints', function() {
-    it('pending')
-  });
+  context('Initializes remote endpoints', require('./_mesh_initialize_remote_endpoints'));
 
 }
