@@ -77,7 +77,7 @@ module.exports = function() {
 
   });
 
-  context.only('updates to remote description create local api changes', function() {
+  context('updates to remote description create local api changes', function() {
 
     before(function(done, Mesh, ConfigFactory) {
       ConfigFactory.mesh.makeTwoConnected()
@@ -165,13 +165,16 @@ module.exports = function() {
 
                 console.log('RES', res);
 
-                resolve(
+                try {
                   expect(res).to.eql({
                     opt: 'ions',
                     args: 'ARGUMENTS',
-                    started: false
-                  })
-                );
+                    started: true // ensure component's startMethod ran
+                  });
+                  resolve();
+                } catch (e) {
+                  reject(e);
+                }
 
               })
             }, 100);
