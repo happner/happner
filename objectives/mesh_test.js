@@ -14,5 +14,6 @@ objective('Mesh', function() {
   context('Exchange api',  require('./_mesh_exchange'));
   context('Event api',     require('./_mesh_event'));
   context('Data api',      require('./_mesh_data'));
+  context('Mesh Client',   require('./_mesh_client'));
 
 });

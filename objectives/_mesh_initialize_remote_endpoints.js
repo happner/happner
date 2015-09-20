@@ -1,6 +1,6 @@
 module.exports = function() {
 
-  context.only('bi-directionaly connected concurrent start with a slow device', function() {
+  context('bi-directionaly connected concurrent start with a slow device', function() {
 
     before(function(done, Promise, Mesh, ConfigFactory) {
 
@@ -23,7 +23,8 @@ module.exports = function() {
           setTimeout(function() {
             // B takes 200 to register.
             return _registerSchema.apply(_this, args);
-          }, 5000);
+          //}, 5000);
+          }, 200);
         }
       );
 
