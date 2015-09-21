@@ -202,6 +202,8 @@ module.exports = function() {
 
     it('emits "destroy/components" when components are removed from the mesh')
 
+    it('component description includes web routes')
+
   });  
 
   context('exchange api', function() {
