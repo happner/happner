@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/happner/happner.svg?branch=release%2F0.0.28)](https://travis-ci.org/happner/happner)
+[![Build Status](https://travis-ci.org/happner/happner.svg?branch=release%2F0.0.28)](https://travis-ci.org/happner/happner) problem with node v4.1.0
 
 # happner
 
