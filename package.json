@@ -52,7 +52,6 @@
     "serve-static": "^1.9.3",
     "shortid": "^2.2.2",
     "sillyname": "0.0.3",
-    "uglify-js": "^2.4.24",
-    "usage": "^0.7.0"
+    "uglify-js": "^2.4.24"
   }
 }
