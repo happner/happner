@@ -58,7 +58,7 @@ module.exports = function() {
   });
 
 
-  context.only('New component into running mesh informs clientside api', function() {
+  context('New component into running mesh informs clientside api', function() {
 
     require('./__start_stop').mesh(1).client(1);
 
@@ -118,6 +118,44 @@ module.exports = function() {
     })
 
   });
+
+
+  context.only('Client (browser) internal event emitter', function() {
+
+    require('./__start_stop').mesh(1).client(1);
+
+    it('emits "create/components" for all components on start()',
+      function(done, expect, client) {
+
+        client.on('create/components', function(componentsArray) {
+
+          componentsArray.length.should.equal(8)
+          expect(componentsArray.map(
+            function(comp) {
+              return Object.keys(comp);
+            }
+          )).to.eql([
+            ['name', 'description'],
+            ['name', 'description'],
+            ['name', 'description'],
+            ['name', 'description'],
+            ['name', 'description'],
+            ['name', 'description'],
+            ['name', 'description'],
+            ['name', 'description'],
+          ]);
+          done();
+        });
+
+        client.start();
+      }
+    );
+
+    it('emits "create/components" when components are added to the mesh');
+
+    it('emits "destroy/components" when components are added to the mesh')
+
+  });  
 
   context('exchange api', function() {
 
