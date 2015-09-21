@@ -200,7 +200,7 @@ module.exports = function() {
       }
     );
 
-    it('emits "destroy/components" when components are added to the mesh')
+    it('emits "destroy/components" when components are removed from the mesh')
 
   });  
 

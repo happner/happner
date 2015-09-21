@@ -204,8 +204,7 @@ module.exports.$happner = {
 The mesh can now be started with the convenient minimum of config and still gain access to all the indended functionality of the 'hello' module.
 
 ```javascript
-require('happner')().initialise({
-  name: 'clappn',
+require('happner').create({
   components: {
     'hello': {}
   }
