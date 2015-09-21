@@ -124,13 +124,14 @@ module.exports = function() {
 
     require('./__start_stop').mesh(1).client(1);
 
-    it('emits "create/components" for all components on start()',
+    it('emits "create/components" array for all components on start()',
       function(done, expect, client) {
 
-        client.on('create/components', function(componentsArray) {
+        // client.on(...
+        client.once('create/components', function(components) {
 
-          componentsArray.length.should.equal(8)
-          expect(componentsArray.map(
+          components.length.should.equal(8)
+          expect(components.map(
             function(comp) {
               return Object.keys(comp);
             }
@@ -151,7 +152,53 @@ module.exports = function() {
       }
     );
 
-    it('emits "create/components" when components are added to the mesh');
+    it('emits "create/components" array (1 element) when components are added to the mesh',
+      function(done, expect, client, mesh) {
+
+        var actualDescription = mesh._mesh.endpoints.mesh_name.description.components.late;
+
+        client.start();
+
+        // client.on(...
+        client.once('create/components', function(newComponents) {
+
+          try {
+            expect(newComponents).to.eql(
+              [
+                {
+                  name: 'late',
+                  description: actualDescription
+                }
+              ]
+            );
+            done();
+          } catch (e) { done(e); }
+          
+        });
+
+        mesh._createElement({
+          module: {
+            name: 'late',
+            config: {
+              path: 'happner-test-modules.AsLate',
+              construct: {
+                parameters: [ // TODO: wishlist: rename to params, or args
+                  {value: 'ARGU'},
+                  {value: 'MENT'},
+                  {value: 'S'},
+                ]
+              }
+            }
+          },
+          component: {
+            name: 'late',
+            config: {
+              module: 'late',
+            }
+          }
+        });
+      }
+    );
 
     it('emits "destroy/components" when components are added to the mesh')
 
