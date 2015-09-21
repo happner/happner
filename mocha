@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# # something's wrong... 
+# 
+# mocha \
+#     test/1-consume-module.js \
+#     test/2-component-to-component.js \
+#     test/3-multiple-component-initialization.js \
+#     test/4-mesh-to-mesh.js \
+#     test/5-component-web.js \
+#     test/6-using-the-client-only.js \
+#     test/7-seven.js \
+#     test/8-data-benchmarks.js \
+#     test/9-stop-mesh.js
+# 
+# Going manual: 
+
+ls test/*.js | grep -v ^test/a | while read FILE; do
+
+    mocha $FILE
+
+    if [ $? -ne 0 ]; then
+
+        exit 1
+    
+    fi
+
+done

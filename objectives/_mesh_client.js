@@ -26,18 +26,18 @@ module.exports = function() {
 
       ])
 
-      .spread(function(server, client) {
+      .spread(function(mesh, client) {
         mock('client', client);
         mock('cX', client.exchange);
-        mock('server', server);
+        mock('mesh', mesh);
       })
 
       .then(done).catch(done);
 
     });
 
-    after(function(done, server) {
-      server.stop().then(done).catch(done);
+    after(function(done, mesh) {
+      mesh.stop().then(done).catch(done);
     });
 
     it('waits for the unready mesh', function(done, expect, cX) {
@@ -52,6 +52,24 @@ module.exports = function() {
         "proxy",
         "system"
       ]); 
+      done();
+    })
+
+  });
+
+  context.only('new component into running mesh informs clientside api', function() {
+
+    before(function(done, Mesh, ConfigFactory) {
+
+      Mesh.start()
+
+    })
+
+    after(function(done, mesh) {
+      mesh.stop().then(done).catch(done);
+    });
+
+    it('can call the new component', function(done, mesh, cX) {
       done();
     })
 
