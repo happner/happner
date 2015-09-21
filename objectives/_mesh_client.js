@@ -28,7 +28,7 @@ module.exports = function() {
 
       .spread(function(mesh, client) {
         mock('client', client);
-        mock('cX', client.exchange);
+        mock('Xc', client.exchange);
         mock('mesh', mesh);
       })
 
@@ -40,9 +40,9 @@ module.exports = function() {
       mesh.stop().then(done).catch(done);
     });
 
-    it('waits for the unready mesh', function(done, expect, cX) {
+    it('waits for the unready mesh', function(done, expect, Xc) {
 
-      expect(Object.keys(cX.mesh_name)).to.eql([
+      expect(Object.keys(Xc.mesh_name)).to.eql([
         "as_class",
         "as_async_factory",
         "as_sync_factory",
@@ -57,20 +57,64 @@ module.exports = function() {
 
   });
 
-  context('new component into running mesh informs clientside api', function() {
 
-    before(function(done, Mesh, ConfigFactory) {
+  context.only('New component into running mesh informs clientside api', function() {
 
-      Mesh.start()
+    require('./__start_stop').mesh(1).client(1);
 
-    })
+    it('can call the new component', function(done, expect, Promise, mesh, Xc) {
 
-    after(function(done, mesh) {
-      mesh.stop().then(done).catch(done);
-    });
+      expect(Object.keys(Xc.mesh_name)).to.eql([
+        "as_class",
+        "as_async_factory",
+        "as_sync_factory",
+        "as_module",
+        "api",
+        "resources",
+        "proxy",
+        "system"
+      ]);
 
-    it('can call the new component', function(done, mesh, cX) {
-      done();
+      mesh._createElement({
+        module: {
+          name: 'late',
+          config: {
+            path: 'happner-test-modules.AsLate',
+            construct: {
+              parameters: [ // TODO: wishlist: rename to params, or args
+                {value: 'ARGU'},
+                {value: 'MENT'},
+                {value: 'S'},
+              ]
+            }
+          }
+        },
+        component: {
+          name: 'late',
+          config: {
+            module: 'late',
+          }
+        }
+      })
+
+      .delay(200)
+
+      // Call new component from client.
+
+      .then(function() {
+        return Xc.mesh_name.late.exchangeMethod({opt:'ions'});
+      })
+
+      .then(function(r) {
+        expect(r).to.eql({
+          opt: 'ions',
+          args: 'ARGUMENTS',
+          started: true
+        });
+      })
+
+      .then(done).catch(done);
+
     })
 
   });

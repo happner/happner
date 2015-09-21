@@ -17,7 +17,7 @@ __To hack at the console of your 'home' mesh node:__
 ```
 sudo npm install happner --global
 happner
-[ INFO] - 0ms   home (Mesh) happner v0.0.15
+[ INFO] - 0ms   home (Mesh) happner v0.0.29
 [ INFO] - 4ms   home (Mesh) config v0.0.1
 [ INFO] - 2ms   home (Mesh) localnode 'home' at pid 16623
 [ INFO] - 3ms   home (DataLayer) persisting /Users/.../.happn/data/home.nedb

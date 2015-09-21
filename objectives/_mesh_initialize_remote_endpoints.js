@@ -121,7 +121,7 @@ module.exports = function() {
 
         expect(Object.keys(xA.meshB).indexOf('late')).to.equal(-1);
 
-        // Add new component called 'late'
+        // Add new component called 'late' to meshB
 
         meshB._createElement({
           module: {
@@ -145,39 +145,22 @@ module.exports = function() {
           }
         })
 
+        // Need to wait a bit for the out-of-tick description change
+        // replication to reach meshA
+
+        .delay(200)
+
+        // Use new function at meshB from meshA exchange
+
         .then(function() {
-          return new Promise(function(resolve, reject) {
+          return xA.meshB.late.exchangeMethod({opt:'ions'});
+        })
 
-            // Need to wait a bit for the out-of-tick description change
-            // replication to reach meshA
-
-            setTimeout(function() {
-
-              // Confirm new module at meshB is now available at meshA
-
-              expect(Object.keys(xA.meshB).indexOf('late')).to.not.equal(-1);
-
-              // Call it.
-
-              xA.meshB.late.exchangeMethod({opt:'ions'}, function(e, res) {
-
-                if (e) return reject(e);
-
-                console.log('RES', res);
-
-                try {
-                  expect(res).to.eql({
-                    opt: 'ions',
-                    args: 'ARGUMENTS',
-                    started: true // ensure component's startMethod ran
-                  });
-                  resolve();
-                } catch (e) {
-                  reject(e);
-                }
-
-              })
-            }, 100);
+        .then(function(r) {
+          expect(r).to.eql({
+            opt: 'ions',
+            args: 'ARGUMENTS',
+            started: true // ensure component's startMethod ran
           });
         })
 
