@@ -175,7 +175,7 @@ if (!isNaN(commander.port)) {
 
 
 
-happner.start(config, function(e, mesh) {
+happner.create(config, function(e, mesh) {
   if (e) {
     if (mesh.log) {
       mesh.log.error(e, e);
