@@ -12,3 +12,4 @@ mocha
 objective.*
 selector
 .a-*
+.travis.yml
