@@ -57,7 +57,7 @@ module.exports = function() {
 
   });
 
-  context.only('new component into running mesh informs clientside api', function() {
+  xcontext('new component into running mesh informs clientside api', function() {
 
     before(function(done, Mesh, ConfigFactory) {
 
