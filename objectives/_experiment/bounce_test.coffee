@@ -8,7 +8,8 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
 
         @timeout 20000
 
-        nodecount = 10
+
+        nodecount = 7
 
         endpoints = {}
 
@@ -52,7 +53,8 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
 
                     traversals.unshift([name, nextEndpoint]);
 
-                    callback(null, traversals);
+                    callback(null, traversals);                    
+
 
                 .catch (err) -> callback(err);
 
@@ -78,6 +80,7 @@ xobjective 'bounce a request randomly for n hops between n nodes', ->
         ).then (@nodes) => done()
 
         .catch done
+
 
 
     it 'start bouncing', (done) ->

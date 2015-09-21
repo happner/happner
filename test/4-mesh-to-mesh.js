@@ -6,7 +6,7 @@ var spawn = require('child_process').spawn
   , remote
   , assert = require('assert')
   , mesh
-  ;
+  , Mesh = require('../')
 
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
@@ -33,9 +33,7 @@ config = {
 };
 
 describe('Mesh to Mesh', function() {
-
-  require('./lib/0-hooks')();
-  
+ 
   before(function(done) {
 
     var _this = this;
@@ -47,19 +45,17 @@ describe('Mesh to Mesh', function() {
 
     remote.stdout.on('data', function(data) {
 
-      console.log(data.toString());
+      // console.log(data.toString());
 
       if (data.toString().match(/READY/)){
-
       
 
-        mesh = _this.Mesh();
-        console.log('starting this one', mesh, config);
+        mesh = new Mesh();
+
+        // console.log('starting this one', mesh, config);
         // mesh.initialize(config, function(err) {
         mesh.initialize(config, function(e){
-
           done(e);
-
         });
       }
 
@@ -68,9 +64,9 @@ describe('Mesh to Mesh', function() {
 
 
   after(function(done) {
-    remote.kill();
-    done();
-  })
+    remote.kill(); 
+    mesh.stop(done);
+  });
 
   context('the faraway tree', function() {
 

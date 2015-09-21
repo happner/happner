@@ -68,7 +68,7 @@ var config = {
 };
 
 console.log('REMOTE STARTING, port:', 3001);
-(mesh = Mesh()).initialize(config, function(e) {
+(mesh = new Mesh()).initialize(config, function(e) {
 
   if (e) {
     console.log(e.stack);

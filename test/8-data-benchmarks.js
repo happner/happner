@@ -1,11 +1,11 @@
 // Uses unit test 2 modules
 var should = require('chai').should();
+var Mesh = require('../');
 
 
 describe('does some benchmarks on api calls, data events and events', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
-  require('./lib/0-hooks')();
 
   var maximumPings = 1000;
   var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
@@ -72,15 +72,15 @@ describe('does some benchmarks on api calls, data events and events', function (
   before(function (done) {
     this.timeout(defaultTimeout);
     console.time('startup');
-    mesh = this.Mesh();
+    mesh = new Mesh();
     mesh.initialize(config, function (err) {
       console.timeEnd('startup');
       done();
     });
   });
 
-  after(function () {
-    mesh.stop();
+   after(function(done){
+     mesh.stop(done);
   });
 
   it('listens for the ping pong completed event, that module1 emits', function (done) {
@@ -96,7 +96,7 @@ describe('does some benchmarks on api calls, data events and events', function (
           console.log('Couldnt detach from event maximum-pings-reached');
 
         console.log('Detaching from maximum-pings-reached');
-        console.log(message.payload.data);
+        console.log(message);
         done(err);
       });
 
@@ -125,8 +125,7 @@ describe('does some benchmarks on api calls, data events and events', function (
     mesh.api.exchange.component2.startData(function () {
 
       mesh.api.event.component2.on('data-test-complete', function (message) {
-        console.log(message.payload.data);
-        message.payload.data.should.contain('Hooray');
+        message.m.should.contain('Hooray');
         done();
       }, function () {
       });

@@ -16,7 +16,7 @@ var config = {
   }
 };
 
-var mesh = Mesh();
+var mesh = new Mesh();
 
 mesh.initialize(config, function(err) {
 

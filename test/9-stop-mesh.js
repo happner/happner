@@ -1,11 +1,11 @@
 // Uses unit test 2 modules
 var should = require('chai').should();
+var Mesh = require('../');
 
 
 describe('does some benchmarks on api calls, data events and events', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
-  require('./lib/0-hooks')();
 
   var maximumPings = 1000;
   var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
@@ -68,7 +68,7 @@ describe('does some benchmarks on api calls, data events and events', function (
   before(function (done) {
     this.timeout(defaultTimeout);
     console.time('startup');
-    mesh = this.Mesh();
+    mesh = new Mesh();
     mesh.initialize(config, function (err) {
       console.timeEnd('startup');
       done();

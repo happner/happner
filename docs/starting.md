@@ -6,7 +6,7 @@ MeshNode startup has been divided into two steps.
 
 ##### Initialize
 
-* Starts all internal local infrastructure
+* Starts all local internal infrastructure
 * Begins listeing on the network.
 * Generates local module and componentInstances per the config
 * Begins connection attempts to remote MeshNodes (endpoints)
@@ -22,15 +22,12 @@ MeshNode startup has been divided into two steps.
 These two steps can be done separately (by hand).
 
 ```javascript
-var happner = require('happner');
+var Happner = require('happner');
 
 var config = {};
-var mesh = new happner.Mesh();
+var mesh = new Happner();
 
-// or:
-// var mesh = happner(); 
-
-mesh.initialize(config, function(error) {
+mesh.initialize(config, function(err) {
   if (err) ... process.exit(1);
 
   /* MeshNode is up */
@@ -47,11 +44,13 @@ mesh.initialize(config, function(error) {
 
 ```
 
-Alternatively, there may be no reason to get inbetween the startup, so one call will do.
+Alternatively, there may be no reason to get inbetween the runlevels, so one call to the 'factory' will do.
 
 ```javascript
-var happner = require('happner');
+var Happner = require('happner');
 var config = {};
 
-happner.start(config, function(err, mesh) {});
+Happner.create(config, function(err, mesh) {
+  /* _ */
+});
 ```

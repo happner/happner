@@ -34,7 +34,7 @@ function Component1(options) {
       else {
         var timeDiff = moment.utc() - message.timestamp;
         var message = 'Hooray, component ping pong test is over!! ' + message.pingCount + ' pings, elapsed time:' + timeDiff + 'ms';
-        $happn.emit('maximum-pings-reached', message, function (e, response) {
+        $happn.emit('maximum-pings-reached', {m: message}, function (e, response) {
 
         });
       }
@@ -69,9 +69,9 @@ function Component1(options) {
 
   this.startData = function ($happn) {
     
-    $happn.mesh.data.set('/component1/testStartTime', moment.utc());
+    $happn.mesh.data.set('/component1/testStartTime', {timestamp: moment.utc()});
     for (var i = 0; i < options.maximumPings; i++) {
-      $happn.mesh.data.set('/component1/testDataCount', i);
+      $happn.mesh.data.set('/component1/testDataCount', {count: i});
     }
   }
 }

@@ -6,12 +6,13 @@ var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
 var maximumPings = 1000;
 var libFolder ;
+var Mesh = require('../');
 
 describe('Bounces a message between two components, demonstrates how the events layer works', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
-  require('./lib/0-hooks')();
+  var mesh = require('../lib/mesh')();
 
   var config = {
     name:"testComponent2Component",
@@ -66,11 +67,13 @@ describe('Bounces a message between two components, demonstrates how the events 
     }
   };
 
-  var mesh;
+  after(function(done){
+     mesh.stop(done);
+  });
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
     
-    mesh = this.Mesh();
+    mesh = new Mesh();
 
     this.timeout(10000);
 
@@ -83,7 +86,9 @@ describe('Bounces a message between two components, demonstrates how the events 
         done(err);
       }else{
 
-        mesh.event.component1.on('maximum-pings-reached', function(message){
+        mesh.event.component1.on('maximum-pings-reached', function(message, meta){
+
+          console.log(message.m);
 
           //console.log(mesh.api.event.component1.off.toString());
           mesh.event.component1.off(onEventRef, function(err){
