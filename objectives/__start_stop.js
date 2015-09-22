@@ -75,6 +75,7 @@ module.exports.createClient = function(count, opts) {
     .then(function(client) {
       mock('client', client);
       mock('Xc', client.exchange);
+      mock('Ec', client.event);
     })
     .then(done).catch(done);
   })
@@ -116,7 +117,9 @@ module.exports.components = components = {
             module: componentName,
           }
         }
-      }).then(done).catch(done);
+      })
+      .delay(50)
+      .then(done).catch(done);
     });
 
     return components; // chainable .create()

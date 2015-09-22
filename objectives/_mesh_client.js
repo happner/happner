@@ -58,11 +58,13 @@ module.exports = function() {
   });
 
 
-  context('New component into running mesh informs clientside api', function() {
+  context.only('Component ADDED to running mesh', function() {
 
-    require('./__start_stop').createMesh(1, {port: 40001}).createClient(1, {port: 40001});
+    require('./__start_stop')
+    .createMesh(1, {port: 40001})
+    .createClient(1, {port: 40001});
 
-    it('can call the new component', function(done, expect, Promise, mesh, Xc) {
+    it('informs clientside api', function(done, expect, mesh, Xc) {
 
       expect(Object.keys(Xc.mesh_name)).to.eql([
         "as_class",
@@ -102,7 +104,8 @@ module.exports = function() {
       // Call new component from client.
 
       .then(function() {
-        return Xc.mesh_name.late.exchangeMethod({opt:'ions'});
+        expect(Xc.mesh_name.late.exchangeMethod).to.exist;
+        return Xc.late.exchangeMethod({opt:'ions'});
       })
 
       .then(function(r) {
@@ -119,10 +122,43 @@ module.exports = function() {
 
   });
 
+  context('Component REMOVED from running mesh', function() {
+
+    require('./__start_stop')
+    .createMesh(1, {port: 40003})
+    .createClient(1, {port: 40003})
+    .components.createAsClass(1);
+
+    it('informs clientside api', function(done, expect, mesh, Ec, Xc) {
+
+      expect(Xc.mesh_name.late.exchangeMethod).to.exist;
+      expect(Xc.late.exchangeMethod).to.exist;
+      expect(Ec.mesh_name.late).to.exist;
+      expect(Ec.late).to.exist;
+
+      mesh._destroyElement('late')
+
+      .delay(50)
+
+      .then(function() {
+        expect(Xc.mesh_name.late).to.not.exist;
+        expect(Xc.late).to.not.exist;
+      })
+
+      .then(done).catch(done);
+      
+    });
+
+
+  });
+
 
   context('Client (browser) internal event emitter', function() {
 
-    require('./__start_stop').createMesh(1, {port: 40002}).createClient(1, {port: 40002});
+    require('./__start_stop')
+    .createMesh(1, {port: 40002})
+    .createClient(1, {port: 40002})
+    .components.createAsClass(1);
 
     it('emits "create/components" array for all components on start()',
       function(done, expect, client) {
@@ -161,24 +197,24 @@ module.exports = function() {
 
         // client.on(...
         client.once('create/components', function(newComponents) {
-
-          try {
-            expect(newComponents).to.eql(
-              [
-                {
-                  name: 'late',
-                  description: actualDescription
-                }
-              ]
-            );
-            done();
-          } catch (e) { done(e); }
-          
+          setTimeout(function() { // wait for actual description
+            try {
+              expect(newComponents).to.eql(
+                [
+                  {
+                    name: 'late2',
+                    description: actualDescription
+                  }
+                ]
+              );
+              done();
+            } catch (e) { done(e); }
+          }, 50);
         });
 
         mesh._createElement({
           module: {
-            name: 'late',
+            name: 'late2',
             config: {
               path: 'happner-test-modules.AsLate',
               construct: {
@@ -191,23 +227,43 @@ module.exports = function() {
             }
           },
           component: {
-            name: 'late',
+            name: 'late2',
             config: {
-              module: 'late',
+              module: 'late2',
             }
           }
         })
 
         .then(function() {
-          actualDescription = mesh._mesh.endpoints.mesh_name.description.components.late;
+          actualDescription = mesh._mesh.endpoints.mesh_name.description.components.late2
         })
 
         .catch(done);
-
       }
     );
 
-    xit('emits "destroy/components" when components are removed from the mesh');
+    it('emits "destroy/components" when components are removed from the mesh',
+      function(done, expect, client, mesh) {
+
+        var description = mesh._mesh.endpoints.mesh_name.description.components.late;
+
+        client.start();
+
+        client.once('destroy/components', function(components) {
+          try {
+            expect(components).to.eql([{
+              name: 'late',
+              description: description
+            }])
+            done();
+          } catch (e) {done(e)}
+        });
+
+        mesh._destroyElement('late')
+
+        .catch(done);
+      }
+    );
 
     xit('re-balances clientside api (description) on client re-connect');
 

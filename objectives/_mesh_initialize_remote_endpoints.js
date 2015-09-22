@@ -113,19 +113,19 @@ module.exports = function() {
     });
 
 
-    it('meshA has updated api on endpoint after adding new component to meshB',
+    it('meshA has updated api on endpoint after ADDING component to meshB',
 
-      function(done, expect, xA, meshB, Promise) {
+      function(done, expect, xA, meshB) {
 
         // Confirm meshB has no component called 'late'
 
-        expect(Object.keys(xA.meshB).indexOf('late')).to.equal(-1);
+        expect(Object.keys(xA.meshB).indexOf('late1')).to.equal(-1);
 
         // Add new component called 'late' to meshB
 
         meshB._createElement({
           module: {
-            name: 'late',
+            name: 'late1',
             config: {
               path: 'happner-test-modules.AsLate',
               construct: {
@@ -138,9 +138,9 @@ module.exports = function() {
             }
           },
           component: {
-            name: 'late',
+            name: 'late1',
             config: {
-              module: 'late',
+              module: 'late1',
             }
           }
         })
@@ -148,12 +148,12 @@ module.exports = function() {
         // Need to wait a bit for the out-of-tick description change
         // replication to reach meshA
 
-        .delay(200)
+        .delay(50)
 
         // Use new function at meshB from meshA exchange
 
         .then(function() {
-          return xA.meshB.late.exchangeMethod({opt:'ions'});
+          return xA.meshB.late1.exchangeMethod({opt:'ions'});
         })
 
         .then(function(r) {
@@ -162,6 +162,52 @@ module.exports = function() {
             args: 'ARGUMENTS',
             started: true // ensure component's startMethod ran
           });
+        })
+
+        .then(done).catch(done);
+
+      }
+    );
+
+    it('meshA has updated api on endpoint after REMOVING component from meshB',
+
+      function(done, expect, xA, meshB) {
+
+        expect(Object.keys(xA.meshB).indexOf('late2')).to.equal(-1);
+
+        meshB._createElement({
+          module: {
+            name: 'late2',
+            config: {
+              path: 'happner-test-modules.AsLate',
+              construct: {
+                parameters: [
+                  {value: 'ARGU'},
+                  {value: 'MENT'},
+                  {value: 'S'},
+                ]
+              }
+            }
+          },
+          component: {
+            name: 'late2',
+            config: {
+              module: 'late2',
+            }
+          }
+        })
+
+        .delay(50)
+
+        .then(function() {
+          expect(xA.meshB.late2).to.exist;
+          return meshB._destroyElement('late2');
+        })
+
+        .delay(50)
+
+        .then(function() {
+          expect(xA.meshB.late2).to.not.exist;
         })
 
         .then(done).catch(done);
