@@ -81,7 +81,7 @@ module.exports = function() {
           config: {
             path: 'happner-test-modules.AsLate',
             construct: {
-              parameters: [ // TODO: wishlist: rename to params, or args
+              parameters: [
                 {value: 'ARGU'},
                 {value: 'MENT'},
                 {value: 'S'},
@@ -120,7 +120,7 @@ module.exports = function() {
   });
 
 
-  context.only('Client (browser) internal event emitter', function() {
+  context('Client (browser) internal event emitter', function() {
 
     require('./__start_stop').mesh(1).client(1);
 
@@ -155,7 +155,7 @@ module.exports = function() {
     it('emits "create/components" array (1 element) when components are added to the mesh',
       function(done, expect, client, mesh) {
 
-        var actualDescription = mesh._mesh.endpoints.mesh_name.description.components.late;
+        var actualDescription;
 
         client.start();
 
@@ -182,7 +182,7 @@ module.exports = function() {
             config: {
               path: 'happner-test-modules.AsLate',
               construct: {
-                parameters: [ // TODO: wishlist: rename to params, or args
+                parameters: [
                   {value: 'ARGU'},
                   {value: 'MENT'},
                   {value: 'S'},
@@ -196,11 +196,20 @@ module.exports = function() {
               module: 'late',
             }
           }
-        });
+        })
+
+        .then(function() {
+          actualDescription = mesh._mesh.endpoints.mesh_name.description.components.late;
+        })
+
+        .catch(done);
+
       }
     );
 
     it('emits "destroy/components" when components are removed from the mesh')
+
+    it('re-balances clientside api (description) on client re-connect')
 
     it('component description includes web routes')
 

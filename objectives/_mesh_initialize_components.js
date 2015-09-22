@@ -1,5 +1,7 @@
 module.exports = function() {
 
+  // TODO: objective, module.exports = function(__start_stop) {
+
   context('load one module per component', function() {
 
     before(function(done, ConfigFactory, Mesh) {
@@ -365,9 +367,68 @@ module.exports = function() {
   });
 
 
-  context('load components into already running mesh', function() {
+  context.only('create/destroy components in already running mesh', function() {
 
-    it('pending');
+    require('./__start_stop').mesh(1)
+
+    context('createElement()', function() {
+
+      require('./__start_stop').components.createAsClass(1, 'for_create');
+
+      it('updates the descrition', function(done, expect, mesh) {
+        expect(mesh._mesh.description.components.for_create).to.exist;
+        done();
+      });
+
+      it('updates the exchange api', function(done, expect, mesh) {
+        expect(mesh.exchange.for_create).to.exist;
+        expect(mesh.exchange.mesh_name.for_create).to.exist;
+        done();
+      });
+
+      xit('the updated exchange api works');
+
+      it('updates the event api', function(done, expect, mesh) {
+        console.log(mesh.event.for_create);
+        console.log(mesh.event.mesh_name.for_create);
+        expect(mesh.event.for_create).to.exist;
+        expect(mesh.event.mesh_name.for_create).to.exist;
+        done();
+      });
+
+      xit('the updated event api works');
+
+    });
+
+    context('destroyElement()', function() {
+
+      require('./__start_stop').components
+
+      .createAsClass(1, 'for_destroy_1')
+      .createAsClass(1, 'for_destroy_2')
+      .createAsClass(1, 'for_destroy_3')
+      // .createAsClass(1, 'for_destroy_4')
+
+      it('updates the descrition', function(done, expect, mesh) {
+        expect(mesh._mesh.description.components.for_destroy_1).to.exist;
+        done();
+      });
+
+      xit('updates the exchange api', function(done, expect, mesh) {
+        expect(mesh.exchange.for_destroy_2).to.exist;
+        expect(mesh.exchange.mesh_name.for_destroy_2).to.exist;
+        done();
+      });
+
+      xit('updates the event api', function(done, expect, mesh) {
+        expect(mesh.event.for_destroy_3).to.exist;
+        expect(mesh.event.mesh_name.for_destroy_3).to.exist;
+        done();
+      });
+
+    });
+
+    xit('What to do in createElement where name already exists?!')
 
   });
 

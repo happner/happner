@@ -113,7 +113,7 @@ module.exports = function() {
     });
 
 
-    it('meshA has updated api on endpoint after adding new compoonent to meshB',
+    it('meshA has updated api on endpoint after adding new component to meshB',
 
       function(done, expect, xA, meshB, Promise) {
 
@@ -129,7 +129,7 @@ module.exports = function() {
             config: {
               path: 'happner-test-modules.AsLate',
               construct: {
-                parameters: [ // TODO: wishlist: rename to params, or args
+                parameters: [
                   {value: 'ARGU'},
                   {value: 'MENT'},
                   {value: 'S'},
