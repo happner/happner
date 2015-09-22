@@ -389,14 +389,14 @@ module.exports = function() {
       xit('the updated exchange api works');
 
       it('updates the event api', function(done, expect, mesh) {
-        console.log(mesh.event.for_create);
-        console.log(mesh.event.mesh_name.for_create);
         expect(mesh.event.for_create).to.exist;
         expect(mesh.event.mesh_name.for_create).to.exist;
         done();
       });
 
       xit('the updated event api works');
+
+      xit('creates webroutes');
 
     });
 
@@ -409,26 +409,49 @@ module.exports = function() {
       .createAsClass(1, 'for_destroy_3')
       // .createAsClass(1, 'for_destroy_4')
 
-      it('updates the descrition', function(done, expect, mesh) {
+
+      it('updates the descrition, removes messengers from exchange', function(done, expect, mesh, Xm) {
         expect(mesh._mesh.description.components.for_destroy_1).to.exist;
-        done();
+        mesh._destroyElement('for_destroy_1')
+        .then(function() {
+          expect(mesh._mesh.description.components.for_destroy_1).to.not.exist;
+          expect(Object.keys(mesh._mesh.exchange).filter(function(path) {
+            return path.match(/for_destroy_1/);
+          })).to.eql([]);
+        })
+        .then(done).catch(done);
       });
 
-      xit('updates the exchange api', function(done, expect, mesh) {
+
+      it('updates the exchange api', function(done, expect, mesh) {
         expect(mesh.exchange.for_destroy_2).to.exist;
         expect(mesh.exchange.mesh_name.for_destroy_2).to.exist;
-        done();
+        mesh._destroyElement('for_destroy_2')
+        .then(function() {
+          expect(mesh.exchange.mesh_name.for_destroy_2).to.not.exist;
+          expect(mesh.exchange.for_destroy_2).to.not.exist;
+        })
+        .then(done).catch(done);
       });
 
-      xit('updates the event api', function(done, expect, mesh) {
+      it('updates the event api', function(done, expect, mesh) {
         expect(mesh.event.for_destroy_3).to.exist;
         expect(mesh.event.mesh_name.for_destroy_3).to.exist;
-        done();
+        mesh._destroyElement('for_destroy_3')
+        .then(function() {
+          expect(mesh.event.mesh_name.for_destroy_3).to.not.exist;
+          expect(mesh.event.for_destroy_3).to.not.exist;
+        })
+        .then(done).catch(done);
       });
+
+      it('removes pertinent subscriptions from event api');
+
+      it('destroys webroutes')
 
     });
 
-    xit('What to do in createElement where name already exists?!')
+    it('What to do in createElement where name already exists?!')
 
   });
 

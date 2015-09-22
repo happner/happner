@@ -19,7 +19,7 @@ module.exports = function() {
 
       Promise.all([
 
-        Mesh.start(ConfigFactory.mesh.fullSingle({
+        Mesh.create(ConfigFactory.mesh.fullSingle({
           port: 12345
         })),
         Mesh.MeshClient(12345),
@@ -207,11 +207,15 @@ module.exports = function() {
       }
     );
 
-    it('emits "destroy/components" when components are removed from the mesh')
+    xit('emits "destroy/components" when components are removed from the mesh');
 
-    it('re-balances clientside api (description) on client re-connect')
+    xit('re-balances clientside api (description) on client re-connect');
 
-    it('component description includes web routes')
+    xit('component description includes web routes');
+
+    xit('component description includes registerd events paths (security)');
+
+    xit('component description includes registerd data paths (security)');
 
   });  
 

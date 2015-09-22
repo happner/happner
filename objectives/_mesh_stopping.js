@@ -32,7 +32,7 @@ module.exports = function() {
 
     it('supports callbacks', function(done, should, Mesh) {
 
-      Mesh.start(12345).then(function(mesh){
+      Mesh.create(12345).then(function(mesh){
 
         mesh.stop(function(e) {
 
