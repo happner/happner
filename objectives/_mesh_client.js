@@ -58,7 +58,7 @@ module.exports = function() {
   });
 
 
-  context.only('Component ADDED to running mesh', function() {
+  context('Component ADDED to running mesh', function() {
 
     require('./__start_stop')
     .createMesh(1, {port: 40001})
@@ -250,6 +250,7 @@ module.exports = function() {
         client.start();
 
         client.once('destroy/components', function(components) {
+          console.log('DESCRIPTION\n', components[0].description);
           try {
             expect(components).to.eql([{
               name: 'late',
