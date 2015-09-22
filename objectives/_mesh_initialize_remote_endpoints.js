@@ -31,16 +31,16 @@ module.exports = function() {
       // Start 'A' and 'B' simultaneously
 
       Promise.all([
-        Mesh.start(ConfigFactory.mesh.fullDouble({
+        Mesh.create(ConfigFactory.mesh.fullDouble({
           name: 'A',
-          port: 10001,
-          endpoints: {'B': 10002} //      both connect...
+          port: 20001,
+          endpoints: {'B': 20002} //      both connect...
         })),
 
-        Mesh.start(ConfigFactory.mesh.fullDouble({
+        Mesh.create(ConfigFactory.mesh.fullDouble({
           name: 'B',
-          port: 10002,
-          endpoints: {'A': 10001} //      ...to eachother    
+          port: 20002,
+          endpoints: {'A': 20001} //      ...to eachother    
         })),
       ])
 

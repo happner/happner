@@ -6,7 +6,7 @@ module.exports = function() {
 
     before(function(done, ConfigFactory, Mesh) {
       
-      Mesh.start(ConfigFactory.mesh.fullSingle({
+      Mesh.create(ConfigFactory.mesh.fullSingle({
         name: 'mesh_name',
         port: 12345,
       }))
@@ -121,7 +121,7 @@ module.exports = function() {
 
       var mesh;
 
-      Mesh.start({
+      Mesh.create({
         port: 12346,
         endpoints: {
           'mesh_name': 12345
@@ -164,7 +164,7 @@ module.exports = function() {
 
     before(function(done, Mesh, ConfigFactory) {
 
-      Mesh.start(ConfigFactory.mesh.fullDouble({
+      Mesh.create(ConfigFactory.mesh.fullDouble({
         name: 'mesh_name',
         port: 12347
       }))
@@ -288,7 +288,7 @@ module.exports = function() {
 
       var mesh;
 
-      Mesh.start({
+      Mesh.create({
         port: 12348,
         endpoints: {
           'mesh_name': 12347
@@ -367,9 +367,9 @@ module.exports = function() {
   });
 
 
-  context.only('create/destroy components in already running mesh', function() {
+  context('create/destroy components in already running mesh', function() {
 
-    require('./__start_stop').mesh(1)
+    require('./__start_stop').createMesh(1)
 
     context('createElement()', function() {
 

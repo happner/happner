@@ -5,9 +5,9 @@
 //
 //        var StartStop = require('/this/file');
 //
-//        StartStop.mesh(1, 'configName')  // create 1 mesh with specified config
+//        StartStop.createMesh(1, 'configName')  // create 1 mesh with specified config
 //
-//        .client(1)                       // (chained from above) Attach one client to the new mesh
+//        .createClient(1)                       // (chained from above) Attach one client to the new mesh
 //
 //        .components                      // Late instert components (After mesh start)
 //
@@ -19,22 +19,34 @@ var ConfigFactory = require('./__config_factory');
 
 // var meshes = []; // tricky on stop
 
-var _mesh;
+var __mesh;
 
-module.exports.mesh = function(count, configName) {
+module.exports.createMesh = function(count, opts, configName) {
   if (count != 1) throw new Error('not yet implemented ++');
 
+  if (typeof opts == 'string') {
+    configName = opts;
+    opts = {};
+  }
+
+  opts = opts || {};
+  opts.port = opts.port || 10001;
+  opts.name = opts.name || 'mesh_name';
+
   configName = configName || 'fullSingle';
+
+  var _mesh;
 
   before(function(done, Mesh) {
     this.timeout(1000);
 
-    Mesh.start(ConfigFactory.mesh[configName]({
-      name: 'mesh_name',
-      port: 10001,
+    Mesh.create(ConfigFactory.mesh[configName]({
+      name: opts.name,
+      port: opts.port,
       endpoints: {}
     }))
     .then(function(mesh) {
+      __mesh = mesh;
       _mesh = mesh;
       mock('mesh', mesh);
       mock('Xm', mesh.exchange);
@@ -44,20 +56,22 @@ module.exports.mesh = function(count, configName) {
     .then(done).catch(done);
   });
 
-  after(function(done, mesh) {
-    mesh.stop().then(done).catch(done);
+  after(function(done) {   // <-------------------- BUG: objective: not running this.
+    _mesh.stop().then(done).catch(done);
   });
 
   return module.exports; // chainable
 }
 
-module.exports.client = function(count) {
+module.exports.createClient = function(count, opts) {
   if (count != 1) throw new Error('not yet implemented ++');
+
+  opts = opts || {};
 
   before(function(done, Mesh) {
     this.timeout(1000);
 
-    Mesh.MeshClient(10001)
+    Mesh.MeshClient(opts.port || 10001)
     .then(function(client) {
       mock('client', client);
       mock('Xc', client.exchange);

@@ -60,7 +60,7 @@ module.exports = function() {
 
   context('New component into running mesh informs clientside api', function() {
 
-    require('./__start_stop').mesh(1).client(1);
+    require('./__start_stop').createMesh(1, {port: 40001}).createClient(1, {port: 40001});
 
     it('can call the new component', function(done, expect, Promise, mesh, Xc) {
 
@@ -122,7 +122,7 @@ module.exports = function() {
 
   context('Client (browser) internal event emitter', function() {
 
-    require('./__start_stop').mesh(1).client(1);
+    require('./__start_stop').createMesh(1, {port: 40002}).createClient(1, {port: 40002});
 
     it('emits "create/components" array for all components on start()',
       function(done, expect, client) {
