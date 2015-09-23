@@ -366,7 +366,7 @@ module.exports = function() {
 
   });
 
-  context.only('Component description', function() {
+  context('Component description', function() {
 
     before(function(done, Mesh) {
       Mesh.create({
@@ -431,11 +431,12 @@ module.exports = function() {
 
   context('create/destroy components in already running mesh', function() {
 
-    require('./__start_stop').createMesh(1)
+    require('./__start_stop').createMesh(1, {port: 12349})
 
     context('createElement()', function() {
 
-      require('./__start_stop').components.createAsClass(1, 'for_create');
+      require('./__start_stop').components.createAsDefault(1, 'for_create');
+      require('./__start_stop').components.createAsDefault(1, 'www');
 
       it('updates the descrition', function(done, expect, mesh) {
         expect(mesh._mesh.description.components.for_create).to.exist;
@@ -458,18 +459,51 @@ module.exports = function() {
 
       xit('the updated event api works');
 
-      xit('creates webroutes');
+      it('creates webroutes', function(done, expect, get, Promise) {
+
+        Promise.all([
+          get('http://localhost:12349/long-route'),
+          get('http://localhost:12349/short-route'),
+          get('http://localhost:12349/widget'),
+          get('http://localhost:12349/'),
+        ])
+
+        .spread(function(long, short, widget, root) {
+          expect(long[0].body).to.equal('mware1\nmware2\ndone');
+          expect(short[0].body).to.equal('done');
+          expect(widget[0].body).to.equal('widget');
+          expect(root[0].body).to.equal('www');
+        })
+
+        .then(function() {
+          return Promise.all([
+            get('http://localhost:12349/for_create/long-route'),
+            get('http://localhost:12349/for_create/short-route'),
+            get('http://localhost:12349/for_create/widget'),
+            get('http://localhost:12349/for_create/static'),
+          ])
+        })
+
+        .spread(function(long, short, widget, static) {
+          expect(long[0].body).to.equal('mware1\nmware2\ndone');
+          expect(short[0].body).to.equal('done');
+          expect(widget[0].body).to.equal('widget');
+          expect(static[0].body).to.equal('www');
+        })
+        
+        .then(done).catch(done);
+      });
 
     });
 
-    context('destroyElement()', function() {
+    context.only('destroyElement()', function() {
 
       require('./__start_stop').components
 
       .createAsClass(1, 'for_destroy_1')
       .createAsClass(1, 'for_destroy_2')
       .createAsClass(1, 'for_destroy_3')
-      // .createAsClass(1, 'for_destroy_4')
+      .createAsDefault(1, 'for_destroy_4')
 
 
       it('updates the descrition, removes messengers from exchange', function(done, expect, mesh, Xm) {
@@ -509,7 +543,51 @@ module.exports = function() {
 
       it('removes pertinent subscriptions from event api');
 
-      it('destroys webroutes')
+      it('destroys webroutes', function(done, mesh, expect, get, Promise) {
+
+        Promise.all([
+          get('http://localhost:12349/for_destroy_4/long-route'),
+          get('http://localhost:12349/for_destroy_4/short-route'),
+          get('http://localhost:12349/for_destroy_4/widget'),
+          get('http://localhost:12349/for_destroy_4/static'),
+        ])
+
+        .spread(function(long, short, widget, root) {
+          expect(long[0].body).to.equal('mware1\nmware2\ndone');
+          expect(short[0].body).to.equal('done');
+          expect(widget[0].body).to.equal('widget');
+          expect(root[0].body).to.equal('www');
+        })
+
+        .then(function() {
+          return mesh._destroyElement('for_destroy_4')
+        })
+
+        .delay(50)
+
+        .then(function() {
+          return Promise.all([
+            get('http://localhost:12349/for_destroy_4/long-route'),
+            get('http://localhost:12349/for_destroy_4/short-route'),
+            get('http://localhost:12349/for_destroy_4/widget'),
+            get('http://localhost:12349/for_destroy_4/static'),
+          ])
+        })
+
+        .spread(function(long, short, widget, static) {
+
+          throw new Error('pending');
+
+
+          // expect(long[0].body).to.equal('mware1\nmware2\ndone');
+          // expect(short[0].body).to.equal('done');
+          // expect(widget[0].body).to.equal('widget');
+          // expect(static[0].body).to.equal('www');
+        })
+
+        .then(done).catch(done);
+
+      });
 
     });
 

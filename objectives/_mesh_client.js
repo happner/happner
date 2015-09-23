@@ -268,7 +268,7 @@ module.exports = function() {
 
     xit('re-balances clientside api (description) on client re-connect');
 
-  });  
+  });
 
   context('exchange api', function() {
 

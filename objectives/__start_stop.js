@@ -123,6 +123,37 @@ module.exports.components = components = {
     });
 
     return components; // chainable .create()
+  },
+
+  createAsDefault: function(count, componentName) {
+    if (count != 1) throw new Error('not yet implemented ++');
+
+    before(function(done, mesh) {
+      mesh._createElement({
+        module: {
+          name: 'happner-test-modules',
+          config: {
+            construct: {
+              parameters: [
+                {value: 'ARGU'},
+                {value: 'MENT'},
+                {value: 'S'},
+              ]
+            }
+          }
+        },
+        component: {
+          name: componentName,
+          config: {
+            module: 'happner-test-modules',
+          }
+        }
+      })
+      .delay(50)
+      .then(done).catch(done);
+    });
+
+    return components; // chainable .create()
   }
 
 
