@@ -366,6 +366,56 @@ module.exports = function() {
 
   });
 
+  context.only('Component description', function() {
+
+    before(function(done, Mesh) {
+      Mesh.create({
+        name: 'mesh_name',
+        port: 12348,
+        modules: {
+          'test': {
+            path: 'test-modules'
+          }
+        },
+        components: {
+          'www': {
+            module: 'test'
+          },
+          'test': {}
+        }
+      })
+      .then(function(mesh) {
+        mock('mesh', mesh);
+      })
+      .then(done).catch(done);
+    });
+
+    it('Includes exchange methods');
+
+    it('Includes event listing');
+
+    it('Includes data paths');
+
+    it('Includes web routes', function (done, expect, mesh) {
+
+      expect(mesh.describe(true).components.www.routes).to.eql({
+        '/': {type: 'static'},
+        '/long-route': {type: 'mware'},
+        '/short-route': {type: 'mware'},
+        '/widget': {type: 'static'},
+      });
+
+      expect(mesh.describe(true).components.test.routes).to.eql({
+        '/test/static': {type: 'static'},
+        '/test/long-route': {type: 'mware'},
+        '/test/short-route': {type: 'mware'},
+        '/test/widget': {type: 'static'},
+      });
+
+      done();
+    });
+
+  });
 
   context('create/destroy components in already running mesh', function() {
 

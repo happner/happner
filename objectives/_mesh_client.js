@@ -268,12 +268,6 @@ module.exports = function() {
 
     xit('re-balances clientside api (description) on client re-connect');
 
-    xit('component description includes web routes');
-
-    xit('component description includes registerd events paths (security)');
-
-    xit('component description includes registerd data paths (security)');
-
   });  
 
   context('exchange api', function() {
