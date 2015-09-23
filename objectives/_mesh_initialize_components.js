@@ -390,7 +390,19 @@ module.exports = function() {
       .then(done).catch(done);
     });
 
-    it('Includes exchange methods');
+    it('Includes exchange methods', function (done, expect, mesh) {
+
+      expect(Object.keys(mesh.exchange.test)).to.eql([
+        "start",  // TODO: ?? start/stop advertized and available on exchange
+        "stop",   // 
+        "exchangeMethod",
+        // "mware1", // Dow no include webMethods
+        // "mware2",
+        // "webMethod"
+      ]);
+
+      done();
+    });
 
     it('Includes event listing');
 
