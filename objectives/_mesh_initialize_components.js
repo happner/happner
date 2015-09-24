@@ -541,7 +541,8 @@ module.exports = function() {
         .then(done).catch(done);
       });
 
-      it('removes pertinent subscriptions from event api');
+      // TODO: event and data register in component config.
+      it('removes pertinent subscriptions from event and data api');
 
       it.only('destroys webroutes', function(done, mesh, expect, get, Promise) {
 
@@ -595,7 +596,7 @@ module.exports = function() {
 
             "/mesh_name/for_destroy_4/widget",
             "/for_destroy_4/widget",
-            
+
             "/mesh_name/for_destroy_4/static",
             "/for_destroy_4/static"
           ]);
