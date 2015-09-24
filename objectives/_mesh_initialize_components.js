@@ -496,7 +496,7 @@ module.exports = function() {
 
     });
 
-    context.only('destroyElement()', function() {
+    context('destroyElement()', function() {
 
       require('./__start_stop').components
 
@@ -543,7 +543,13 @@ module.exports = function() {
 
       it('removes pertinent subscriptions from event api');
 
-      it('destroys webroutes', function(done, mesh, expect, get, Promise) {
+      it.only('destroys webroutes', function(done, mesh, expect, get, Promise) {
+
+        
+        var connect = mesh._mesh.datalayer.server.connect;
+        var routesBefore = connect.stack.map(function(mware) {
+          return mware.route;
+        });
 
         Promise.all([
           get('http://localhost:12349/for_destroy_4/long-route'),
@@ -566,6 +572,37 @@ module.exports = function() {
         .delay(50)
 
         .then(function() {
+
+          var routesAfter = connect.stack.map(function(mware) {
+            return mware.route;
+          });
+
+          var removed = routesBefore.filter(function(route) {
+            return routesAfter.indexOf(route) == -1;
+          });
+
+          expect(removed).to.eql([
+
+            "/mesh_name/for_destroy_4/long-route", // 3 mwares on this route
+            "/for_destroy_4/long-route",
+            "/mesh_name/for_destroy_4/long-route",
+            "/for_destroy_4/long-route",
+            "/mesh_name/for_destroy_4/long-route",
+            "/for_destroy_4/long-route",
+
+            "/mesh_name/for_destroy_4/short-route",
+            "/for_destroy_4/short-route",
+
+            "/mesh_name/for_destroy_4/widget",
+            "/for_destroy_4/widget",
+            
+            "/mesh_name/for_destroy_4/static",
+            "/for_destroy_4/static"
+          ]);
+
+        })
+
+        .then(function() {
           return Promise.all([
             get('http://localhost:12349/for_destroy_4/long-route'),
             get('http://localhost:12349/for_destroy_4/short-route'),
@@ -575,14 +612,10 @@ module.exports = function() {
         })
 
         .spread(function(long, short, widget, static) {
-
-          throw new Error('pending');
-
-
-          // expect(long[0].body).to.equal('mware1\nmware2\ndone');
-          // expect(short[0].body).to.equal('done');
-          // expect(widget[0].body).to.equal('widget');
-          // expect(static[0].body).to.equal('www');
+          expect(long[0].body).to.equal(  'Cannot GET /for_destroy_4/long-route\n');
+          expect(short[0].body).to.equal( 'Cannot GET /for_destroy_4/short-route\n');
+          expect(widget[0].body).to.equal('Cannot GET /for_destroy_4/widget\n');
+          expect(static[0].body).to.equal('Cannot GET /for_destroy_4/static\n');
         })
 
         .then(done).catch(done);
