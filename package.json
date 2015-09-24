@@ -27,7 +27,7 @@
     "request": "^2.53.0",
     "should": "^7.1.0",
     "when": "^3.7.3",
-    "happner-test-modules": "0.0.1"
+    "happner-test-modules": "0.0.3"
   },
   "postinstall": "bower install",
   "dependencies": {

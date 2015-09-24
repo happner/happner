@@ -3,7 +3,7 @@
 module.exports = function() {
 
 
-  context('short start()', {
+  context('create() factory', {
     description: 'Calls through both run levels (2:initialized! and 4:started!)'
   }, function() {
 
@@ -13,7 +13,7 @@ module.exports = function() {
 
       this.timeout(2000);
 
-      Mesh.start(12345)
+      Mesh.create(12345)
 
       .then(function(mesh) {
         mesh.runlevel.should.equal(40);
@@ -29,7 +29,7 @@ module.exports = function() {
 
       this.timeout(2000);
 
-      Mesh.start(12345, function(e, mesh) {
+      Mesh.create(12345, function(e, mesh) {
         mesh.runlevel.should.equal(40);
         mesh.stop().then(done).catch(done);
       });

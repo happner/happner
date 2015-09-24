@@ -1,9 +1,16 @@
 objective('Mesh', function() {
 
   before(function() {
-    mock('should', new require('chai').should());
-    mock('expect', require('chai').expect);
-    mock('Promise', require('bluebird'));
+    var request = require('request');
+    var Promise = require('bluebird');
+    var should = new require('chai').should();
+    var expect = require('chai').expect;
+    var get = Promise.promisify(request.get);
+
+    mock('should', should);
+    mock('expect', expect);
+    mock('Promise', Promise);
+    mock('get', get);
     mock('ConfigFactory', require('./__config_factory'));
   });
 

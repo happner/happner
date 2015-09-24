@@ -7,18 +7,18 @@ module.exports.mesh = {
 
   makeTwoConnected: function() {
     return Promise.all([
-      Mesh.start(module.exports.mesh.fullSingle({
+      Mesh.create(module.exports.mesh.fullSingle({
         name: 'meshA',
-        port: 10001,
+        port: 30001,
         endpoints: {
-          meshB: 10002      // connecting to.....
+          meshB: 30002      // connecting to.....
         }
       })),
-      Mesh.start(module.exports.mesh.fullSingle({
+      Mesh.create(module.exports.mesh.fullSingle({
         name: 'meshB',
-        port: 10002,
+        port: 30002,
         endpoints: {
-          meshA: 10001     // .....each other
+          meshA: 30001     // .....each other
         }
       }))
     ])
