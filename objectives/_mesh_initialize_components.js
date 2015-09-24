@@ -544,7 +544,7 @@ module.exports = function() {
       // TODO: event and data register in component config.
       it('removes pertinent subscriptions from event and data api');
 
-      it.only('destroys webroutes', function(done, mesh, expect, get, Promise) {
+      it('destroys webroutes', function(done, mesh, expect, get, Promise) {
 
         
         var connect = mesh._mesh.datalayer.server.connect;
