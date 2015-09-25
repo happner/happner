@@ -1,5 +1,3 @@
-// mesh_exchange
-
 module.exports = function() {
 
   return; // 
@@ -9,7 +7,7 @@ module.exports = function() {
   before(function(done, Mesh) {
     this.timeout(2000);
 
-    Mesh.start({
+    Mesh.create({
       name: 'testnode',
       port: 54321,
       modules: {
@@ -98,7 +96,7 @@ module.exports = function() {
 
       before(function(done, Mesh) {
         this.timeout(2000);
-        Mesh.start({
+        Mesh.create({
 
           port: 12346,
           name: 'doesntmatter',

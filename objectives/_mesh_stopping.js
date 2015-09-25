@@ -10,7 +10,7 @@ module.exports = function() {
 
       this.timeout(2000);
 
-      Mesh.start(12345).then(function(mesh){
+      Mesh.create(12345).then(function(mesh){
 
         mesh.runlevel.should.equal(40);
 
@@ -32,7 +32,7 @@ module.exports = function() {
 
     it('supports callbacks', function(done, should, Mesh) {
 
-      Mesh.start(12345).then(function(mesh){
+      Mesh.create(12345).then(function(mesh){
 
         mesh.stop(function(e) {
 

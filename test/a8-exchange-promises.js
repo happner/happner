@@ -34,17 +34,16 @@ if (global.TESTING_18) return; // When 'requiring' the module above,
 
 var should = require('chai').should();
 var mesh;
+var Mesh = require('../');
 
 describe('exchange supports promises', function() {
-
-  require('./lib/0-hooks')();
-
 
   before(function(done) {
 
     global.TESTING_18 = true; //.............
 
-    mesh = this.mesh = this.Mesh();
+    mesh = this.mesh = new Mesh();
+
     mesh.initialize({
       util: {
         // logger: {}

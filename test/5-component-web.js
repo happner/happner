@@ -2,12 +2,13 @@ var request = require('request');
 var testport = 8080;
 var fs = require('fs');
 var should = require('chai').should();
+var Mesh = require('../');
+var mesh;
+
 
 describe('Demonstrates the middleware functionality', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
-
-  var mesh = require('../lib/mesh')();
 
   var config = {
     name: "testMiddleware",
@@ -59,6 +60,8 @@ describe('Demonstrates the middleware functionality', function (done) {
 
   before(function (done) {
 
+    mesh = new Mesh();
+
     console.log('DOING BEFORE');
 
     mesh.initialize(config, function (err) {
@@ -82,7 +85,7 @@ describe('Demonstrates the middleware functionality', function (done) {
 
     getBody('http://127.0.0.1:' + testport + '/testMiddleware/api/client', function (e, body) {
 
-      console.log('boo d',body);
+      // console.log('boo d',body);
 
       if (e) return done(e);
 

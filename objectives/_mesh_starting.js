@@ -3,17 +3,17 @@
 module.exports = function() {
 
 
-  context('short start()', {
+  context('create() factory', {
     description: 'Calls through both run levels (2:initialized! and 4:started!)'
   }, function() {
 
 
 
-    it('supports promises', function(done, should, Mesh) {
+    it('Supports promises', function(done, should, Mesh) {
 
       this.timeout(2000);
 
-      Mesh.start(12345)
+      Mesh.create(12345)
 
       .then(function(mesh) {
         mesh.runlevel.should.equal(40);
@@ -25,11 +25,11 @@ module.exports = function() {
 
 
 
-    it('supports callbacks', function(done, should, Mesh) {
+    it('Supports callbacks', function(done, should, Mesh) {
 
       this.timeout(2000);
 
-      Mesh.start(12345, function(e, mesh) {
+      Mesh.create(12345, function(e, mesh) {
         mesh.runlevel.should.equal(40);
         mesh.stop().then(done).catch(done);
       });
@@ -43,7 +43,7 @@ module.exports = function() {
 
 
 
-    it('supports promises', function(done, should, Mesh) {
+    it('Supports promises', function(done, should, Mesh) {
 
       this.timeout(2000);
 
@@ -65,7 +65,7 @@ module.exports = function() {
     });
 
 
-    it('supports callbacks', function(done, should, Mesh) {
+    it('Supports callbacks', function(done, should, Mesh) {
 
       this.timeout(2000);
 
@@ -90,28 +90,24 @@ module.exports = function() {
     });
   });
 
-  context('default the config', function() {
+  context('Default the config', function() {
     it('pending')
   });
 
-  context('initializes the datalayer', function() {
+  context('Initializes the datalayer', function() {
     it('pending')
   });
 
-  context('initializes modules', function() {
+  context('Initializes modules', function() {
     it('pending')
   });
 
-  context('initializes components', function() {
+  context('Initializes components', require('./_mesh_initialize_components'));
+
+  context('Initializes the local endpoint', function() {
     it('pending')
   });
 
-  context('initializes the local endpoint', function() {
-    it('pending')
-  });
-
-  context('initializes remote endpoint', function() {
-    it('pending')
-  });
+  context('Initializes remote endpoints', require('./_mesh_initialize_remote_endpoints'));
 
 }

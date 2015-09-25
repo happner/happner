@@ -63,11 +63,7 @@ var config = {
     persist: true
   },
   components: {
-    'terminal': {}, // <--- first, so that other's start methods can write in command actions
-    'demo': {
-      startMethod: 'start',
-      stopMethod: 'stop'
-    }
+    'terminal': {} // <--- first, so that other's start methods can write in command actions
   }
 };
 
@@ -179,7 +175,7 @@ if (!isNaN(commander.port)) {
 
 
 
-happner.start(config, function(e, mesh) {
+happner.create(config, function(e, mesh) {
   if (e) {
     if (mesh.log) {
       mesh.log.error(e, e);

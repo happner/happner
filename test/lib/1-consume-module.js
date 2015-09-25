@@ -102,7 +102,7 @@ describe('Consumes an external module', function() {
 
     this.timeout(10000);
 
-    mesh = Mesh();
+    mesh = new Mesh();
    
     mesh.initialize(config, function(err) {
 

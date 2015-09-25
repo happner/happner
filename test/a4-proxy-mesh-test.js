@@ -26,14 +26,15 @@ config = {
 
 describe('Proxy component', function() {
 
-  require('./lib/0-hooks')();
   this.timeout(10000);
 
   before(function(done) {
 
     var _this = this;
     
-    mesh = _this.Mesh();
+
+    mesh = new _this.Mesh();
+
     mesh.initialize(config, function(err) {
 
       if (err) return done(err);

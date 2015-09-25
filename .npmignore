@@ -5,3 +5,11 @@ lib/system/activity.log*
 lib/system/data/*.nedb
 .DS_Store
 resources_temp/*
+test
+objectives
+.selection
+mocha
+objective.*
+selector
+.a-*
+.travis.yml

@@ -8,8 +8,6 @@ describe('Using the clientside only', function() {
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
 
-  require('./lib/0-hooks')();
-
   // Spawn mesh in another process.
   before(function(done) {
     remote = spawn('node',[libFolder + '4-first-mesh']);
