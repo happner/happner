@@ -64,7 +64,6 @@ var config = {
   },
   components: {
     'terminal': {}, // <--- first, so that other's start methods can write in command actions
-    'www': {},
     'demo': {
       startMethod: 'start',
       stopMethod: 'stop'
