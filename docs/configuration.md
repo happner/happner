@@ -523,7 +523,7 @@ The `config.components` section should list components to be loaded into the mes
       schema: {
         exclusive: true,
         startMethod: 'start',
-        methods: [
+        methods: {
           'start': {
             type: 'async',
             parameters: [
@@ -541,7 +541,7 @@ The `config.components` section should list components to be loaded into the mes
             alias: 'mn1',
           },
           'methodName2': {}
-        ]
+        }
       },
       web: {
         routes: {
