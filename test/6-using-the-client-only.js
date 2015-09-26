@@ -1,5 +1,7 @@
 describe('Using the clientside only', function() {
 
+  this.timeout(20000);
+
   var spawn = require('child_process').spawn;
   var sep = require('path').sep;
   var remote;

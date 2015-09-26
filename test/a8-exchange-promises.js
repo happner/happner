@@ -38,6 +38,8 @@ var Mesh = require('../');
 
 describe('exchange supports promises', function() {
 
+  this.timeout(20000);
+
   before(function(done) {
 
     global.TESTING_18 = true; //.............

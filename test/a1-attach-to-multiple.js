@@ -10,9 +10,9 @@ var bunchOfRemoteNodes = [1, 2, 3];
 
 describe('attach to multiple meshes (meshs?)', function() {
 
-  before(function(done) {
+  this.timeout(20000);
 
-    this.timeout(5000);
+  before(function(done) {
 
     var kids = this.kids = [];
 
