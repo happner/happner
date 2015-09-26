@@ -38,7 +38,7 @@
     "commander": "^2.8.1",
     "diskspace": "^0.1.7",
     "fs-extra": "^0.24.0",
-    "happn": "^0.1.30",
+    "happn": "^0.1.31",
     "happn-ui-module": "^0.1.15",
     "happner-terminal": "0.0.5",
     "http-proxy": "^1.11.1",
