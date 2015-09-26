@@ -549,6 +549,16 @@ The `config.components` section should list components to be loaded into the mes
           app: 'static',
           // app: ['middleware1', 'middleware2', 'static']
         }
+      },
+      events: {
+        'ping': {},
+        'event/with/wildcard/*': {},
+      },
+      data: {
+        'friends/*': {},
+        'lovers/monday/*': {},
+        'lovers/wednesday/*': {},
+        'lovers/friday/*': {}
       }
     }
   }
@@ -596,6 +606,14 @@ This allows the binding of web routes to methods on the Module or 'static' direc
 `http://meshhost:port/name-of-component/method1` runs `moduleInstance.webMethod(req, res)`
 `http://meshhost:port/name-of-component/static/..` serves files from `(module) __dirname`/app
 
+###### events
+__(optional)__
 
+List the events that this component generates. See [Events](events.md)
+
+###### data
+__(optional)__
+
+List the data paths where this component stores, retrieves or subscribes. See [Data](data.md)
 
 
