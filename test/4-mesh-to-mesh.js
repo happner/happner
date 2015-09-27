@@ -34,11 +34,11 @@ config = {
 
 describe('Mesh to Mesh', function() {
  
+  this.timeout(20000);
+
   before(function(done) {
 
     var _this = this;
-
-    this.timeout(5000);
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + '4-first-mesh']);

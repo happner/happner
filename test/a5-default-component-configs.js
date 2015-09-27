@@ -45,6 +45,8 @@ var Mesh = require('../');
 
 describe('default component configs', function() {
 
+   this.timeout(20000);
+
   before(function(done) {
 
     global.TESTING_15 = true; //.............
