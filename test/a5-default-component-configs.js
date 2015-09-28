@@ -41,15 +41,18 @@ if (global.TESTING_15) return; // When 'requiring' the module above,
 var should = require('chai').should();
 var request = require('request');
 var mesh;
+var Mesh = require('../');
 
 describe('default component configs', function() {
 
-  require('./lib/0-hooks')();
+   this.timeout(20000);
+
   before(function(done) {
 
     global.TESTING_15 = true; //.............
 
-    mesh = this.mesh = this.Mesh();
+    mesh = this.mesh = new Mesh();
+
     mesh.initialize({
 
       util: {

@@ -6,12 +6,12 @@ var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
 var maximumPings = 1000;
 var libFolder ;
+var Mesh = require('../');
 
 describe('Bounces a message between two components, demonstrates how the events layer works', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
-  require('./lib/0-hooks')();
 
   var config = {
     name:"testInjectionResponse",
@@ -44,7 +44,7 @@ describe('Bounces a message between two components, demonstrates how the events 
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
     
-    mesh = this.Mesh();
+    mesh = new Mesh();
 
     this.timeout(15000);
 

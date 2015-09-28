@@ -2,18 +2,16 @@ var promise = require('when').promise;
 var parallel = require('when/parallel');
 var should = require('chai').should();
 var request = require('request');
+var Mesh = require('../');
 
 describe('mesh awareness via $happn injection', function() {
 
-  require('./lib/0-hooks')();
+   this.timeout(40000);
 
   before(function(done) {
 
     // test against multiple meshes and multiple components
 
-    this.timeout(10000);
-
-    var Mesh = this.Mesh;
     var _this = this;
 
     _this.meshNo = [1,2,3,4,5,6,7,8,9];
@@ -52,7 +50,7 @@ describe('mesh awareness via $happn injection', function() {
           return function() {
             return promise(
               function(resolve, reject) {
-                var mesh = Mesh();
+                var mesh = new Mesh();
                 // meshes.push(mesh = Mesh());
 
                 var COMPONENTS = {};

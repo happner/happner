@@ -519,11 +519,11 @@ The `config.components` section should list components to be loaded into the mes
   ...
   components: {
     'name-of-component': {
-      moduleName: 'name-of-implementing-module',
+      module: 'name-of-implementing-module',
       schema: {
         exclusive: true,
         startMethod: 'start',
-        methods: [
+        methods: {
           'start': {
             type: 'async',
             parameters: [
@@ -541,7 +541,7 @@ The `config.components` section should list components to be loaded into the mes
             alias: 'mn1',
           },
           'methodName2': {}
-        ]
+        }
       },
       web: {
         routes: {
@@ -549,6 +549,16 @@ The `config.components` section should list components to be loaded into the mes
           app: 'static',
           // app: ['middleware1', 'middleware2', 'static']
         }
+      },
+      events: {
+        'ping': {},
+        'event/with/wildcard/*': {},
+      },
+      data: {
+        'friends/*': {},
+        'lovers/monday/*': {},
+        'lovers/wednesday/*': {},
+        'lovers/friday/*': {}
       }
     }
   }
@@ -560,10 +570,10 @@ __(required)__
 
 Components become accessable by name in the [Events](events.md) and [Exchange](exchange.md) APIs and also on [Web Routes](webroutes.md)
 
-###### moduleName
+###### module
 __(optional)__
 
-Each Component in the MeshNode should specify which [Module](#module-config) it exposes. If the `moduleName` is unspecified the mesh will attempt to use a Module by the same name as the Component's name.
+Each Component in the MeshNode should specify which [Module](#module-config) it exposes. If the `module` is unspecified the mesh will attempt to use a Module by the same name as the Component's name.
 
 ###### schema
 __(optional)__
@@ -594,8 +604,16 @@ __(optional)__
 This allows the binding of web routes to methods on the Module or 'static' directories on the Module's path.
 
 `http://meshhost:port/name-of-component/method1` runs `moduleInstance.webMethod(req, res)`
-`http://meshhost:port/name-of-component/static/..` serves files from `(module) __dirname`/app
+`http://meshhost:port/name-of-component/app/..` serves files from `(module) __dirname`/app
 
+###### events
+__(optional)__
 
+List the events that this component generates. See [Events](events.md)
+
+###### data
+__(optional)__
+
+List the data paths where this component stores, retrieves or subscribes. See [Data](data.md)
 
 

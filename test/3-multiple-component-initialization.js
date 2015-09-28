@@ -1,7 +1,10 @@
 var should = require('chai').should();
+var Mesh = require('../');
 
 describe('Multiple component initialization', function() {
-  var mesh = require('../lib/mesh')();
+  var mesh;
+
+  this.timeout(10000);
 
   before(function(done) {
     config = {
@@ -110,7 +113,10 @@ describe('Multiple component initialization', function() {
       }
     }
 
+
+    mesh = new Mesh();
     mesh.initialize(config, function(err) {
+
       if (err) return done(err);
       done();
     });

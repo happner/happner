@@ -30,7 +30,7 @@ var config = {
     }
 };
 
-var mesh = Mesh();
+var mesh = new Mesh();
 mesh.initialize(config, function(err) {
 
   if (err) console.log(err.stack);

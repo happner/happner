@@ -5,7 +5,8 @@ var spawn = require('child_process').spawn
   , sep = require('path').sep
   , remote
   , assert = require('assert')
-  , mesh = require('../lib/mesh')();
+  , mesh
+  , Mesh = require('../')
 
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
@@ -33,22 +34,25 @@ config = {
 
 describe('Mesh to Mesh', function() {
  
+  this.timeout(20000);
+
   before(function(done) {
 
     var _this = this;
-
-    this.timeout(5000);
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + '4-first-mesh']);
 
     remote.stdout.on('data', function(data) {
 
-      console.log(data.toString());
+      // console.log(data.toString());
 
       if (data.toString().match(/READY/)){
+      
 
-        console.log('starting this one', mesh, config);
+        mesh = new Mesh();
+
+        // console.log('starting this one', mesh, config);
         // mesh.initialize(config, function(err) {
         mesh.initialize(config, function(e){
           done(e);

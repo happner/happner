@@ -12,7 +12,8 @@
       "testAppend": "_test",
       "runAll": true,
       "showTrace": false,
-      "filterTrace": false
+      "filterTrace": true,
+      "timeout": 3000
     }
   }
 }

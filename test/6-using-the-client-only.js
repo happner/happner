@@ -1,5 +1,7 @@
 describe('Using the clientside only', function() {
 
+  this.timeout(20000);
+
   var spawn = require('child_process').spawn;
   var sep = require('path').sep;
   var remote;
@@ -7,8 +9,6 @@ describe('Using the clientside only', function() {
 
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
-
-  require('./lib/0-hooks')();
 
   // Spawn mesh in another process.
   before(function(done) {

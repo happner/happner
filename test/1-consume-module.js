@@ -1,10 +1,9 @@
 var should = require('chai').should();
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
+var Mesh = require('../');
 
 describe('Consumes an external module', function() {
-
-  var mesh = require('../lib/mesh')();
 
   var config = {
     name:"testMesh",
@@ -97,6 +96,8 @@ describe('Consumes an external module', function() {
   it('starts a local mesh', function(done) {
 
     this.timeout(10000);
+
+    mesh = new Mesh();
    
     mesh.initialize(config, function(err) {
 

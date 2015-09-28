@@ -4,20 +4,20 @@ var spawn = require('child_process').spawn;
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
 var should = require('chai').should();
+var Mesh = require('../');
 
 var bunchOfRemoteNodes = [1, 2, 3];
 
 describe('attach to multiple meshes (meshs?)', function() {
 
-  require('./lib/0-hooks')();
-  var mesh;
+  this.timeout(20000);
 
   before(function(done) {
 
-    this.timeout(5000);
-
     var kids = this.kids = [];
-    mesh = this.mesh = this.Mesh();
+
+    var mesh = this.mesh = new Mesh();
+
     var config = {
       endpoints: {}
     };
@@ -72,7 +72,7 @@ describe('attach to multiple meshes (meshs?)', function() {
     this.kids.forEach(function(kid) {
       kid.kill();
     });
-    mesh.stop(done);
+    this.mesh.stop(done);
   });
 
   it('can call methods on all', function(done) {
