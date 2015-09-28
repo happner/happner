@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "Distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -8,11 +8,11 @@
     "h": "bin/h"
   },
   "scripts": {
-    "test": "LOG_LEVEL=off ./mocha && LOG_LEVEL=off objective --once"
+    "test": "LOG_LEVEL=off ./mocha && LOG_LEVEL=off SKIP_AUTO_LOAD=1 objective --once"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/happner/happner"
+    "url": "https://github.com/happner/happner.git"
   },
   "author": "",
   "license": "MIT",
@@ -23,36 +23,35 @@
   "devDependencies": {
     "chai": "^2.2.0",
     "mocha": "^2.2.4",
-    "objective": "0.0.36",
+    "objective": "0.0.40",
     "request": "^2.53.0",
     "should": "^7.1.0",
     "when": "^3.7.3",
-    "happner-test-modules": "0.0.1"
+
+    "happner-test-modules": "0.0.3",
+    "happner-dashboard": "0.0.7",
+    "happner-demo": "0.0.1",
+    "happner-resources": "0.0.4"
+
   },
-  "postinstall": "bower install",
   "dependencies": {
     "async": "^0.9.0",
     "bluebird": "^2.9.34",
-    "bower": "^1.5.2",
-    "byline": "^4.2.1",
     "commander": "^2.8.1",
     "diskspace": "^0.1.7",
     "fs-extra": "^0.24.0",
-    "happn": "^0.1.29",
-    "happn-ui-module": "^0.1.15",
-    "happner-terminal": "0.0.5",
-    "http-proxy": "^1.11.1",
-    "http-proxy-middleware": "^0.5.0",
-    "keypress": "^0.2.1",
+    "glob": "^5.0.14",
     "log4js": "^0.6.24",
     "md5": "^2.0.0",
     "merge": "^1.2.0",
     "moment": "^2.9.0",
-    "repl.history": "^0.1.3",
+    "proc-stats": "0.0.4",
     "serve-static": "^1.9.3",
     "shortid": "^2.2.2",
     "sillyname": "0.0.3",
     "uglify-js": "^2.4.24",
-    "usage": "^0.7.0"
+
+    "happn": "^0.1.33",
+    "happner-terminal": "0.0.6"
   }
 }

@@ -4,7 +4,7 @@ module.exports = function() {
 
     this.timeout(2000);
     var _this = this;
-    Mesh.start({
+    Mesh.create({
 
 
       name: 'testnode',
