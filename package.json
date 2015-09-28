@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "0.0.27",
+  "version": "0.0.27-tr2132-neptronic-0.0.29",
   "description": "Distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -37,7 +37,7 @@
     "commander": "^2.8.1",
     "diskspace": "^0.1.7",
     "fs-extra": "^0.24.0",
-    "happn": "^0.1.28",
+    "happn": "0.1.28",
     "happn-ui-module": "^0.1.15",
     "happner-demo": "^0.0.1",
     "happner-terminal": "^0.0.4",
