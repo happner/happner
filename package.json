@@ -27,12 +27,6 @@
     "request": "^2.53.0",
     "should": "^7.1.0",
     "when": "^3.7.3",
-
-    "happner-test-modules": "0.0.3",
-    "happner-dashboard": "0.0.9",
-    "happner-demo": "0.0.1",
-    "happner-resources": "0.0.6"
-
   },
   "dependencies": {
     "async": "^0.9.0",
