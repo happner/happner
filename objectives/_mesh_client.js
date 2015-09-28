@@ -48,7 +48,6 @@ module.exports = function() {
         "as_sync_factory",
         "as_module",
         "api",
-        "resources",
         "proxy",
         "system"
       ]); 
@@ -72,7 +71,6 @@ module.exports = function() {
         "as_sync_factory",
         "as_module",
         "api",
-        "resources",
         "proxy",
         "system"
       ]);
@@ -166,20 +164,19 @@ module.exports = function() {
         // client.on(...
         client.once('create/components', function(components) {
 
-          components.length.should.equal(8)
+          components.length.should.equal(7)
           expect(components.map(
             function(comp) {
               return Object.keys(comp);
             }
           )).to.eql([
-            ['name', 'description'],
-            ['name', 'description'],
-            ['name', 'description'],
-            ['name', 'description'],
-            ['name', 'description'],
-            ['name', 'description'],
-            ['name', 'description'],
-            ['name', 'description'],
+            ['description'],
+            ['description'],
+            ['description'],
+            ['description'],
+            ['description'],
+            ['description'],
+            ['description'],
           ]);
           done();
         });
@@ -202,7 +199,6 @@ module.exports = function() {
               expect(newComponents).to.eql(
                 [
                   {
-                    name: 'late2',
                     description: actualDescription
                   }
                 ]
@@ -253,7 +249,6 @@ module.exports = function() {
           console.log('DESCRIPTION\n', components[0].description);
           try {
             expect(components).to.eql([{
-              name: 'late',
               description: description
             }])
             done();

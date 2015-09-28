@@ -418,7 +418,7 @@ module.exports = function() {
       });
 
       expect(mesh.describe(true).components.test.routes).to.eql({
-        '/test/static': {type: 'static'},
+        '/': {type: 'static'},
         '/test/long-route': {type: 'mware'},
         '/test/short-route': {type: 'mware'},
         '/test/widget': {type: 'static'},
