@@ -48,7 +48,7 @@ module.exports = function() {
         "as_sync_factory",
         "as_module",
         "api",
-        "proxy",
+        // "proxy",
         "system"
       ]); 
       done();
@@ -71,7 +71,7 @@ module.exports = function() {
         "as_sync_factory",
         "as_module",
         "api",
-        "proxy",
+        // "proxy",
         "system"
       ]);
 
@@ -164,13 +164,12 @@ module.exports = function() {
         // client.on(...
         client.once('create/components', function(components) {
 
-          components.length.should.equal(7)
+          components.length.should.equal(6)
           expect(components.map(
             function(comp) {
               return Object.keys(comp);
             }
           )).to.eql([
-            ['description'],
             ['description'],
             ['description'],
             ['description'],

@@ -23,7 +23,7 @@ objective('Mesh', function() {
   });
 
   context('Configuration', require('./_mesh_configuration'));
-  context.only('Autoload',      require('./_mesh_autoload'));
+  context('Autoload',      require('./_mesh_autoload'));
   context('Starting',      require('./_mesh_starting'));
   context('Stopping',      require('./_mesh_stopping'));
   context('Restarting',    require('./_mesh_restarting'));
