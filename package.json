@@ -31,7 +31,7 @@
     "happner-test-modules": "0.0.3",
     "happner-dashboard": "0.0.7",
     "happner-demo": "0.0.1",
-    "happner-resources": "0.0.4"
+    "happner-resources": "0.0.6"
 
   },
   "dependencies": {
