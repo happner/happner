@@ -246,7 +246,6 @@ module.exports = function() {
         client.start();
 
         client.once('destroy/components', function(components) {
-          console.log('DESCRIPTION\n', components[0].description);
           try {
             expect(components).to.eql([{
               description: description
