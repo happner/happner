@@ -4,6 +4,8 @@ var Mesh = require('../');
 describe('Multiple component initialization', function() {
   var mesh;
 
+  this.timeout(10000);
+
   before(function(done) {
     config = {
       name: 'meshName',

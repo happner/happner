@@ -523,7 +523,7 @@ The `config.components` section should list components to be loaded into the mes
       schema: {
         exclusive: true,
         startMethod: 'start',
-        methods: [
+        methods: {
           'start': {
             type: 'async',
             parameters: [
@@ -541,7 +541,7 @@ The `config.components` section should list components to be loaded into the mes
             alias: 'mn1',
           },
           'methodName2': {}
-        ]
+        }
       },
       web: {
         routes: {
@@ -549,6 +549,16 @@ The `config.components` section should list components to be loaded into the mes
           app: 'static',
           // app: ['middleware1', 'middleware2', 'static']
         }
+      },
+      events: {
+        'ping': {},
+        'event/with/wildcard/*': {},
+      },
+      data: {
+        'friends/*': {},
+        'lovers/monday/*': {},
+        'lovers/wednesday/*': {},
+        'lovers/friday/*': {}
       }
     }
   }
@@ -594,8 +604,16 @@ __(optional)__
 This allows the binding of web routes to methods on the Module or 'static' directories on the Module's path.
 
 `http://meshhost:port/name-of-component/method1` runs `moduleInstance.webMethod(req, res)`
-`http://meshhost:port/name-of-component/static/..` serves files from `(module) __dirname`/app
+`http://meshhost:port/name-of-component/app/..` serves files from `(module) __dirname`/app
 
+###### events
+__(optional)__
 
+List the events that this component generates. See [Events](events.md)
+
+###### data
+__(optional)__
+
+List the data paths where this component stores, retrieves or subscribes. See [Data](data.md)
 
 

@@ -1,6 +1,6 @@
 objective('Mesh', function() {
 
-  before(function() {
+  before(function(os) {
     var request = require('request');
     var Promise = require('bluebird');
     var should = new require('chai').should();
@@ -12,9 +12,18 @@ objective('Mesh', function() {
     mock('Promise', Promise);
     mock('get', get);
     mock('ConfigFactory', require('./__config_factory'));
+
+    mock('txt', function(fn) {
+      var array = fn.toString().split(os.EOL);
+      array.shift();
+      array.pop();
+      return array.join(os.EOL);
+    });
+
   });
 
   context('Configuration', require('./_mesh_configuration'));
+  context('Autoload',      require('./_mesh_autoload'));
   context('Starting',      require('./_mesh_starting'));
   context('Stopping',      require('./_mesh_stopping'));
   context('Restarting',    require('./_mesh_restarting'));

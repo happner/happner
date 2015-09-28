@@ -105,8 +105,7 @@ module.exports = function() {
         "as_sync_factory",
         "as_module",
         "api",
-        "resources",
-        "proxy",
+        // "proxy",
         "system"
       ]);
       done();

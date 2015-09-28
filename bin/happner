@@ -63,7 +63,7 @@ var config = {
     persist: true
   },
   components: {
-    'terminal': {}, // <--- first, so that other's start methods can write in command actions
+    'terminal': {} // <--- first, so that other's start methods can write in command actions
   }
 };
 

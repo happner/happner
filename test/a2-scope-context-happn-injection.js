@@ -6,11 +6,11 @@ var Mesh = require('../');
 
 describe('mesh awareness via $happn injection', function() {
 
+   this.timeout(40000);
+
   before(function(done) {
 
     // test against multiple meshes and multiple components
-
-    this.timeout(10000);
 
     var _this = this;
 

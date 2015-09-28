@@ -7,6 +7,8 @@ describe('does some benchmarks on api calls, data events and events', function (
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
+  this.timeout(20000);
+
   var maximumPings = 1000;
   var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
 
