@@ -35,7 +35,61 @@ module.exports = function() {
       }
     );
 
-    it('does not load the module happner.js contains no configs.autoload');
+    it('does not load the module if happner.js contains no configs.autoload',
+
+      function(done, fs, Mesh, path, expect, txt) {
+
+        // force require to reload happner-resources/happner.js
+
+        delete require.cache[process.cwd() + '/' + 'node_modules/happner-resources/happner.js'];
+
+
+        // stub fs.readFileSync() to return alternate file content for happner-resources/happner.js
+
+        fs.stub(function readFileSync(file) {
+
+          // call original readFileSync for all but happner-resources/happner.js
+
+          if (path.relative(process.cwd(), file) != 'node_modules/happner-resources/happner.js') {
+            return mock.original.apply(this, arguments);
+          }
+
+          // 'pretend' happner-resources/happner.js content contains no autoload
+
+          var alternateContent = txt(function() {/* 
+
+            module.exports = {
+              configs: {
+                // 'autoload': [],
+                'someotherconfigsuite': []
+              }
+            }
+
+            // console.log('confirm run');
+
+          */});
+
+          return alternateContent;
+
+        });
+
+        Mesh.create({port: 52386}).then(function(mesh) {
+
+          expect(mesh._mesh.elements['happner-dashboard']).to.exist;
+          expect(mesh._mesh.elements['happner-resources']).to.not.exist;
+
+          done();
+
+        }).catch(done).finally(function() {
+
+          // delete again so that subsequent tests get the original 
+
+          delete require.cache[process.cwd() + '/' + 'node_modules/happner-resources/happner.js'];
+
+        });
+
+      }
+    );
 
 
     it('loads modules in the mesh where happner.js existed with autoload config present',
@@ -54,12 +108,6 @@ module.exports = function() {
     );
 
     it('allows autoloading from alternative config name and only loads modules whose happner.js define that config name');
-
-    context('suites', function() {
-
-      xit('arrays')
-
-    });
 
   });
 
