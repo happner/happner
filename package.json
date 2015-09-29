@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "0.0.30",
+  "version": "0.0.32",
   "description": "Distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -26,13 +26,7 @@
     "objective": "0.0.40",
     "request": "^2.53.0",
     "should": "^7.1.0",
-    "when": "^3.7.3",
-
-    "happner-test-modules": "0.0.3",
-    "happner-dashboard": "0.0.7",
-    "happner-demo": "0.0.1",
-    "happner-resources": "0.0.4"
-
+    "when": "^3.7.3"
   },
   "dependencies": {
     "async": "^0.9.0",
