@@ -14,6 +14,10 @@ objective.only('utilities', function() {
 
         utils.findInModules('package.json', function(e, results) {
 
+          console.log(results.filter(function(d) {
+            return d.base;
+          }));
+
           (results.length > 100).should.equal(true);
 
           utils.findInModules('non-existant', function(e, results) {
