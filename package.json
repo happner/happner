@@ -26,6 +26,7 @@
     "objective": "0.0.40",
     "request": "^2.53.0",
     "should": "^7.1.0",
+    "traverse": "^0.6.6",
     "when": "^3.7.3"
   },
   "dependencies": {
@@ -44,7 +45,6 @@
     "shortid": "^2.2.2",
     "sillyname": "0.0.3",
     "uglify-js": "^2.4.24",
-
     "happn": "^0.1.37",
     "happner-terminal": "0.0.6"
   }
