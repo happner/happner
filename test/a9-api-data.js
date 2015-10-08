@@ -89,7 +89,7 @@ describe('passes data between component APIs, also works with events', function(
   it('stores some data on component1, we look at the output from happn', function(done) {
 
     mesh.exchange.component1.storeData(test_id, {"testprop1":"testval1"}, {}, function(e, result){
-      result._meta.path.should.equal('/mesh/system/data/testProtectedDataAPI/component1/' + test_id);
+      result._meta.path.should.equal('/_data/component1/' + test_id);
       done();
 
     });
@@ -99,7 +99,7 @@ describe('passes data between component APIs, also works with events', function(
   it('stores some data on component2, we look at the output from happn', function(done) {
 
      mesh.exchange.component2.storeData(test_id, {"testprop2":"testval2"}, {}, function(e, result){
-      result._meta.path.should.equal('/mesh/system/data/testProtectedDataAPI/component2/' + test_id);
+      result._meta.path.should.equal('/_data/component2/' + test_id);
       done();
 
     });
