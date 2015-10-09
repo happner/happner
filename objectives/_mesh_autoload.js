@@ -11,7 +11,7 @@ module.exports = function() {
     });
 
 
-    it('loads happner.js where found in node_modules',
+    xit('loads happner.js where found in node_modules',
 
       function(done, fs, Mesh, path, expect) {
 
@@ -35,7 +35,7 @@ module.exports = function() {
       }
     );
 
-    it('does not load the module if happner.js contains no configs.autoload',
+    xit('does not load the module if happner.js contains no configs.autoload',
 
       function(done, fs, Mesh, path, expect, txt) {
 
@@ -92,7 +92,7 @@ module.exports = function() {
     );
 
 
-    it('loads modules in the mesh where happner.js existed with autoload config present',
+    xit('loads modules in the mesh where happner.js existed with autoload config present',
 
       function(done, Mesh, expect) {
 
