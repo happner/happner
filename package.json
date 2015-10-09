@@ -27,7 +27,8 @@
     "request": "^2.53.0",
     "should": "^7.1.0",
     "traverse": "^0.6.6",
-    "when": "^3.7.3"
+    "when": "^3.7.3",
+    "happner-test-modules": "0.0.3"
   },
   "dependencies": {
     "async": "^0.9.0",

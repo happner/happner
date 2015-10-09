@@ -22,7 +22,14 @@ module.exports = function() {
         Mesh.create(ConfigFactory.mesh.fullSingle({
           port: 12345
         })),
-        Mesh.MeshClient(12345),
+        new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            Mesh.MeshClient(12345, function(e, client) {
+              if (e) return reject(e);
+              resolve(client);
+            })
+          }, 10);
+        }),
 
       ])
 
