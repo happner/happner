@@ -24,7 +24,7 @@ describe('does some benchmarks on api calls, data events and events', function (
     modules: {
       "module1": {
         path: __dirname + "/lib/8-module1",
-        constructor: {
+        create: {
           type: "sync",
           parameters: [
             {value: {maximumPings: maximumPings}}
@@ -33,7 +33,7 @@ describe('does some benchmarks on api calls, data events and events', function (
       },
       "module2": {
         path: __dirname + "/lib/8-module2",
-        constructor: {
+        create: {
           type: "sync",
           parameters: [
             {value: {maximumPings: maximumPings}}
@@ -130,6 +130,7 @@ describe('does some benchmarks on api calls, data events and events', function (
 
       mesh.api.event.component2.on('data-test-complete', function (message) {
         message.m.should.contain('Hooray');
+        console.log(message);
         done();
       }, function () {
       });
