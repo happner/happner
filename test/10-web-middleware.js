@@ -33,7 +33,7 @@ describe('tests that we can add middleware before a static', function (done) {
       }
     },
     components: {
-      "www": {
+      "www": { // <------------------- because of www, routes.static goes /
         moduleName: "middlewareTest",
         // scope: "component",//either component(mesh aware) or module - default is module
         schema: {
@@ -53,11 +53,15 @@ describe('tests that we can add middleware before a static', function (done) {
 
   before(function (done) {
     this.timeout(defaultTimeout);
-    mesh = new Mesh();
-    mesh.initialize(config, function (err) {
+    this.mesh = new Mesh();
+    this.mesh.initialize(config, function (err) {
       done();
     });
   });
+
+  after(function (done) {
+    this.mesh.stop(done);
+  })
 
 
   it('can get index.html that middleware renames to index.htm', function (done) {
