@@ -137,6 +137,37 @@ describe('passes data between component APIs, also works with events', function(
       done();
 
   });
+  
+  it('should unsubscribe from data', function(done) {
+    mesh.exchange.component2.subscribeToData(
+      {
+        path:'/testUnsub',
+        callback:function(err){
+          should.not.exist(err);
+          mesh.exchange.component2.unsubscribeFromData(
+            {
+              path:'/testUnsub',
+              callback:function(err) {
+                should.not.exist(err);
+                mesh.exchange.component2.setData(
+                  {
+                    path:'/testUnsub',
+                    value:10,
+                    callback:function(){
+                      done();
+                    }
+                  }
+                )
+              }
+            }
+          )
+        },
+        handler:function(){
+          done('Should not be called');
+        }
+      }
+    )
+  });
 
 });
 

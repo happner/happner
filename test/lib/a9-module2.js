@@ -43,6 +43,18 @@ function Component2(options) {
     }
     
   }
+  
+  this.subscribeToData = function($happn,options) {
+    $happn.data.on(options.path,{event_type:'set',count:0}, options.handler,options.callback);
+  };
+  
+  this.unsubscribeFromData = function($happn,options) {
+    $happn.data.off(options.path,options.callback);
+  };
+  
+  this.setData = function($happn,options) {
+    $happn.data.set(options.path,options.value,{},options.callback);
+  };
 
   this.start = function(arg, $happn){
 
