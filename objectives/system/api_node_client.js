@@ -41,7 +41,7 @@ module.exports = function() {
 
 
 
-  context.only('connects to mesh node', function() {
+  context('connects to mesh node', function() {
 
     it('supports callbacks', function(done, Mesh) {
 

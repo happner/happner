@@ -46,16 +46,17 @@ __something.html__
         // password: 'password', // pending
       }
 
-      client.login(credentials); // .then(function(client) {... etc.
+      client.login(credentials); // .then(function() {... etc.
 
 
       client.on('login/allow', function() {
 
       });
 
-      client.on('login/deny', function() {
-
-      });
+      // pending
+      // client.on('login/deny', function() {
+      //
+      // });
 
       client.on('login/error', function(err) {
 
@@ -67,7 +68,8 @@ __something.html__
 </html>
 ```
 
-#### Other events
+#### Other Events
+
 __something.html__
 ```html
   ...
@@ -102,13 +104,25 @@ __something.html__
 ```
 
 
-
-
 #### Bonus Functionality
 
 The client loads the following additional classes into the browser's runtime:
 
 [Promise](https://github.com/petkaantonov/bluebird/blob/master/API.md) - Bluebird promise implementation.</br>
 [Primus](https://github.com/primus/primus) - The websocket client used by the MeshClient.</br>
-EventEmitter - Precisely the same as node's EventEmitter. (Part of Primus).</br>
+__EventEmitter__ - Same as node's EventEmitter. (Part of Primus).</br>
+
+
+
+### From a node process
+
+```javascript
+
+var MeshClient = require('happner').MeshClient;
+
+var client = new MeshClient(...
+
+// same as for the browser
+
+```
 
