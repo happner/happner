@@ -1,4 +1,4 @@
-objective.only('utilities', function() {
+objective('utilities', function() {
 
   before(function(Utilities) {
 

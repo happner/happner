@@ -71,8 +71,9 @@ module.exports.createClient = function(count, opts) {
   before(function(done, Mesh) {
     this.timeout(1000);
 
-    Mesh.MeshClient(opts.port || 10001)
-    .then(function(client) {
+    var client = new Mesh.MeshClient(opts.port || 10001);
+    client.login()
+    .then(function() {
       mock('client', client);
       mock('Xc', client.exchange);
       mock('Ec', client.event);

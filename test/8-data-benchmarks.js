@@ -44,6 +44,7 @@ describe('does some benchmarks on api calls, data events and events', function (
     components: {
       "component1": {
         moduleName: "module1",
+        accessLevel:"mesh",
         // scope: "component",//either component(mesh aware) or module - default is module
         startMethod: "start",
         schema: {
@@ -60,6 +61,7 @@ describe('does some benchmarks on api calls, data events and events', function (
       },
       "component2": {
         moduleName: "module2",
+        accessLevel:"mesh",
         // scope: "component",
         schema: {
           "exclusive": false,

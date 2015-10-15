@@ -69,9 +69,9 @@ function Component1(options) {
 
   this.startData = function ($happn) {
     
-    $happn.mesh.data.set('/component1/testStartTime', {timestamp: moment.utc()});
+    $happn._mesh.data.set('/component1/testStartTime', {timestamp: moment.utc()});
     for (var i = 0; i < options.maximumPings; i++) {
-      $happn.mesh.data.set('/component1/testDataCount', {count: i});
+      $happn._mesh.data.set('/component1/testDataCount', {count: i});
     }
   }
 }
