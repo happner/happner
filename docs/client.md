@@ -34,12 +34,13 @@ __something.html__
         port: window.location.port || 80,
       };
 
+
       // Create the client instance.
 
       var client = new MeshClient( /* options */ );
 
-      // Credentials for the login method
 
+      // Credentials for the login method
       var credentials = {
         secret: 'mesh',
         // username: 'username', // pending
