@@ -85,11 +85,11 @@ __something.html__
 
       client.on('create/components', function(array) {
 
-        // First call receives all components.
+        // First call lists all components.
 
-        // Subsequent calls receive only new components dynamically
+        // Subsequent calls list only new components
         // inserted into the running mesh node.
-        // (see: meshInstance._createElement())
+        // (see: mesh._createElement())
 
       });
 
