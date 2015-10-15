@@ -47,7 +47,7 @@ __index.html__
 
 The client loads the following additional classes into the browser's runtime:
 
-[Promise](https://github.com/petkaantonov/bluebird/blob/master/API.md) - Bluebird promise implementation.
-[Primus](https://github.com/primus/primus) - The websocket client used by the MeshClient.
-EventEmitter Precisely the same as node's EventEmitter. Part of Primus.
+[Promise](https://github.com/petkaantonov/bluebird/blob/master/API.md) - Bluebird promise implementation.</br>
+[Primus](https://github.com/primus/primus) - The websocket client used by the MeshClient.</br>
+EventEmitter Precisely the same as node's EventEmitter. Part of Primus.</br>
 
