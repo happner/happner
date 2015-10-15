@@ -105,7 +105,7 @@ __something.html__
 ```
 
 
-#### Bonus Functionality
+#### Additional Functionality
 
 The client loads the following additional classes into the browser's runtime:
 
