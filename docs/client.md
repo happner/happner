@@ -18,7 +18,7 @@ __something.html__
   ...
 ```
 
-#### Performing a login.
+#### Initialize and Login.
 
 __something.html__
 ```html
