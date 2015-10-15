@@ -37,7 +37,7 @@ function Component2(options) {
   this.startData = function ($happn, callback) {
     var count = 0;
     var _this = this;
-    $happn.mesh.data.on('/component1/testDataCount', {
+    $happn._mesh.data.on('/component1/testDataCount', {
       event_type: 'set',
       count: options.maximumPings   // Subscribe to 1 more to make sure we don't get too many events
     }, function (message) {
@@ -57,7 +57,8 @@ function Component2(options) {
       if (count == options.maximumPings) {
         var endTime = moment.utc();
         timeOut = setTimeout(function () {
-          $happn.mesh.data.get('/component1/testStartTime', null, function (e, result) {
+          $happn._mesh.data.get('/component1/testStartTime', null, function (e, result) {
+
             var timeDiff = endTime - moment(result.timestamp);
             var message = 'Hooray, data event test is over!! ' + count + ' sets, elapsed time:' + timeDiff + 'ms';
             $happn.emit('data-test-complete', {m: message}, function (e, response) {

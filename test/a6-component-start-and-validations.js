@@ -1,5 +1,7 @@
 module.exports = Explicit;
 
+var DONE = false;
+
 function Explicit() {}
 
 Explicit.prototype.asyncStart = function($happn, opts, optionalOpts, callback) {
@@ -7,7 +9,7 @@ Explicit.prototype.asyncStart = function($happn, opts, optionalOpts, callback) {
   if (typeof callback == 'undefined') callback = optionalOpts;
 
   setTimeout(function() {
-    $happn.data.DONE = true;
+    DONE = true;
     callback(null)
   }, 200);
 }
@@ -114,7 +116,7 @@ describe('component start and validation -', function() {
 
   it('has called and finished the component async start method', function(done) {
 
-    this.mesh.data.DONE.should.eql(true)
+    DONE.should.eql(true)
     done();
 
   });
