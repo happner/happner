@@ -8,7 +8,7 @@ The api client script can be accessed from the browser at `/api/client`.
 
 #### Loading the script.
 
-__index.html__
+__something.html__
 ```html
 <html>
   <head>
@@ -18,9 +18,9 @@ __index.html__
   ...
 ```
 
-#### Using the script.
+#### Performing a login.
 
-__index.html__
+__something.html__
 ```html
   ...
   <body>
@@ -46,14 +46,55 @@ __index.html__
         // password: 'password', // pending
       }
 
-      client.login(credentials); // .then(function(client) {...
+      client.login(credentials); // .then(function(client) {... etc.
 
 
+      client.on('login/allow', function() {
+
+      });
+
+      client.on('login/deny', function() {
+
+      });
+
+      client.on('login/error', function(err) {
+
+      });
 
 
+    </script>
+  </body>
+</html>
+```
+
+#### Other events
+__something.html__
+```html
+  ...
+  <body>
+    <script>
+
+      // got client from above
 
 
+      // Component notifications to enable the dynamic creation of
+      // widgets or menu updates (or similar) into the running app.
 
+      client.on('create/components', function(array) {
+
+        // First call receives all components.
+
+        // Subsequent calls receive only new components dynamically
+        // inserted into the running mesh node.
+        // (see: meshInstance._createElement())
+
+      });
+
+      client.on('destroy/components', function(array) {
+
+        // Components being removed from the mesh.
+
+      });
 
     </script>
   </body>
