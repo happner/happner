@@ -8,8 +8,6 @@ The api client script can be accessed from the browser at `/api/client`.
 
 #### Loading the script.
 
-Assuming your browser is being servered by a happner mesh node.
-
 __index.html__
 ```html
 <html>
@@ -47,21 +45,11 @@ __index.html__
 
 #### Bonus Functionality
 
-The client also loads the following additional classes into the browser's runtime:
+The client loads the following additional classes into the browser's runtime:
 
-##### Promise
+##### [Promise](https://github.com/petkaantonov/bluebird/blob/master/API.md) Bluebird promise implementation.
 
-[link](https://github.com/petkaantonov/bluebird/blob/master/API.md)
+##### [Primus](https://github.com/primus/primus)The websocket client used by the MeshClient.
 
-Bluebird promise implementation.
-
-##### Primus
-
-[link](https://github.com/primus/primus)
-
-The websocket client used by the MeshClient.
-
-##### EventEmitter
-
-Precisely the same as node's EventEmitter. Part of Primus.
+##### EventEmitter Precisely the same as node's EventEmitter. Part of Primus.
 
