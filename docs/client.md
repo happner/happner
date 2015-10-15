@@ -26,14 +26,34 @@ __index.html__
   <body>
     <script>
 
-      var opts = {
-        hostname: 'defaults to where _this_ page came from',
-        port: 'defaults to where _this_ page came from',
+      window.LOG_LEVEL = 'trace';
+
+      // Connection options (displaying defaults)
+      var options = {
+        hostname: window.location.hostname,
+        port: window.location.port || 80,
       };
 
       // Create the client instance.
 
-      var client = new MeshClient( /* opts */ );
+      var client = new MeshClient( /* options */ );
+
+      // Credentials for the login method
+
+      var credentials = {
+        secret: 'mesh',
+        // username: 'username', // pending
+        // password: 'password', // pending
+      }
+
+      client.login(credentials); // .then(function(client) {...
+
+
+
+
+
+
+
 
     </script>
   </body>

@@ -35,6 +35,8 @@ describe('Using the clientside only', function() {
 
       MeshClient('localhost', 3001, 'mesh', function(err, client) {
 
+        console.log('CLIENT', client.exchange);
+
         if (err) return done(err);
 
         client.exchange
