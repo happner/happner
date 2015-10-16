@@ -85,6 +85,8 @@ describe('b1-advanced-security.js', function(done) {
     }
   }
 
+  var testGroupSaved;
+
   it('creates a test group, with permissions to access the security component', function(done) {
 
     adminClient.exchange.security.addGroup(testGroup, function(e, result){
@@ -95,7 +97,7 @@ describe('b1-advanced-security.js', function(done) {
       expect(result.custom_data.customString == testGroup.custom_data.customString).to.be(true);
       expect(result.custom_data.customNumber == testGroup.custom_data.customNumber).to.be(true);
       
-      addedGroup = result;
+      testGroupSaved = result;
       done();
 
     });
@@ -110,12 +112,17 @@ describe('b1-advanced-security.js', function(done) {
     }
   }
 
+  var testUserSaved;
+  var testGroupSaved;
+
   it('creates a test user', function(done) {
      adminClient.exchange.security.addUser(testUser, function(e, result){
         if (e) return done(e);
 
         expect(result.username).to.be(testUser.username);
         expect(result.password).to.be(undefined);
+
+        testUserSaved = result;
 
         done();
 
@@ -125,7 +132,7 @@ describe('b1-advanced-security.js', function(done) {
 
   it('adds test group to the test user', function(done) {
 
-    adminClient.exchange.security.linkGroup(testGroup, testUser, function(e){
+    adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
       //we'll need to fetch user groups, do that later
       done(e);
     });
