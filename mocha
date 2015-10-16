@@ -17,6 +17,7 @@
 
 ls test/*.js | while read FILE; do
 
+    echo $FILE
     mocha $FILE
 
     if [ $? -ne 0 ]; then
