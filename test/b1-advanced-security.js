@@ -111,15 +111,13 @@ describe('b1-advanced-security.js', function(done) {
   }
 
   it('creates a test user', function(done) {
-     adminClient.exchange.security.addUser(testUser, {overwrite: false}, function(e, result){
+     adminClient.exchange.security.addUser(testUser, function(e, result){
         if (e) return done(e);
 
-        expect(result).to.eql({
-          custom_data: {
-            something: 'usefull',
-          },
-          username: testUser.username
-        });
+        expect(result.username).to.be(testUser.username);
+        expect(result.password).to.be(undefined);
+
+        done();
 
      });
 
@@ -134,7 +132,7 @@ describe('b1-advanced-security.js', function(done) {
 
   });
 
-  var testSecurityManager;
+  //var testSecurityManager;
 
   it('logs in with the test user', function(done) {
 
