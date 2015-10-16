@@ -1,4 +1,4 @@
-
+var expect = require('expect.js');
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
 var maximumPings = 1000;
@@ -7,7 +7,7 @@ var Mesh = require('../');
 var test_id = Date.now() + '_' + require('shortid').generate();
 var should = require('chai').should();
 
-var dbFileName = libFolder + test_id + '.nedb';
+var dbFileName = __dirname + sep + 'temp/' + test_id + '.nedb';
 
 describe('b1-advanced-security.js', function(done) {
 
@@ -17,8 +17,8 @@ describe('b1-advanced-security.js', function(done) {
 
   var config = {
     name:"testadvancedSecurity",
-    dataLayer: {
-      adminSecret:'test_id',
+    datalayer: {
+      adminSecret: test_id,
       log_level: 'info|error|warning',
       filename:dbFileName
     }
@@ -46,21 +46,19 @@ describe('b1-advanced-security.js', function(done) {
   });
 
   var adminClient = new Mesh.MeshClient();
+  var testUserClient = new Mesh.MeshClient();
   //NB in browser is: new MeshClient();
   //in node is: require('happner').MeshClient;
-
-  var securityManager;
 
   it('logs in with the admin user', function(done) {
 
       // Credentials for the login method
       var credentials = {
-        username: 'ADMIN', // pending
+        username: '_ADMIN', // pending
         password: test_id
       }
 
       adminClient.login(credentials).then(function(){
-        securityManager = adminClient.api.exchange.security;
         done();
       }).catch(done);
 
@@ -75,18 +73,20 @@ describe('b1-advanced-security.js', function(done) {
     },
 
     permissions:{
-      '/some/test/path':{actions:['*']},
-      '/some/test/path*':{actions:['*']},
-      '/some/test/path1':{actions:['get']},
-      '/some/test/path2':{actions:['set']},
-      '/some/test/path3':{actions:['on']},
-      '/some/test/path4':{actions:['remove']},
+      methods:[
+        //in a /Mesh name/component name/method name - with possible wildcards
+        '/testadvancedSecurity/security/*'
+      ],
+      events:[
+         //in a /Mesh name/component name/event key - with possible wildcards
+         '/testadvancedSecurity/security/*'
+      ]
     }
   }
 
-  it('creates a test group, with some permissions', function(done) {
+  it('creates a test group, with permissions to access the security component', function(done) {
 
-    securityManager.upsertGroup(testGroup, function(e, result){
+    adminClient.api.exchange.security.upsertGroup(testGroup, function(e, result){
 
       if (e) return callback(e);
 
@@ -95,33 +95,58 @@ describe('b1-advanced-security.js', function(done) {
       expect(result.custom_data.customNumber == testGroup.custom_data.customNumber).to.be(true);
       
       addedGroup = result;
-      callback();
+      done();
 
     });
 
   });
 
+  var testUser = {
+    username:'TEST USER@blah.com' + test_id,
+    password:'TEST PWD',
+    custom_data:{
+      something: 'usefull'
+    }
+  }
+
   it('creates a test user', function(done) {
+     adminClient.api.exchange.security.upsertUser(testUser, {overwrite: false}, function(e, result){
+        if (e) return done(e);
 
+        expect(result).to.eql({
+          custom_data: {
+            something: 'usefull',
+          },
+          username: testUser.username
+        });
 
-   
+     });
+
   });
-
-
 
   it('adds test group to the test user', function(done) {
 
-   
-   
+    adminClient.api.exchange.security.linkGroup(testGroup, testUser, function(e){
+      //we'll need to fetch user groups, do that later
+      done(e);
+    });
+
+  });
+
+  var testSecurityManager;
+
+  it('logs in with the test user', function(done) {
+
+    testUserClient.login(testUser).then(function(){
+      securityManager = testUserClient.api.exchange.security;
+
+      //do some stuff with the security manager here
+      //NB - we dont have the security checks on method/component calls yet
+
+      done();
+    }).catch(done);
+
   });
 
 });
-
-
-
-
-
-
-
-
 
