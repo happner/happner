@@ -14,7 +14,7 @@ describe('passes data between component APIs, also works with events', function(
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
-  this.timeout(10000);
+  this.timeout(15000);
 
   var mesh = require('../lib/mesh')();
 
