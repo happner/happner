@@ -87,7 +87,7 @@ describe('b1-advanced-security.js', function(done) {
 
   it('creates a test group, with permissions to access the security component', function(done) {
 
-    adminClient.api.exchange.security.upsertGroup(testGroup, function(e, result){
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
 
       if (e) return callback(e);
 
@@ -111,7 +111,7 @@ describe('b1-advanced-security.js', function(done) {
   }
 
   it('creates a test user', function(done) {
-     adminClient.api.exchange.security.upsertUser(testUser, {overwrite: false}, function(e, result){
+     adminClient.exchange.security.addUser(testUser, {overwrite: false}, function(e, result){
         if (e) return done(e);
 
         expect(result).to.eql({
@@ -127,7 +127,7 @@ describe('b1-advanced-security.js', function(done) {
 
   it('adds test group to the test user', function(done) {
 
-    adminClient.api.exchange.security.linkGroup(testGroup, testUser, function(e){
+    adminClient.exchange.security.linkGroup(testGroup, testUser, function(e){
       //we'll need to fetch user groups, do that later
       done(e);
     });
@@ -139,13 +139,25 @@ describe('b1-advanced-security.js', function(done) {
   it('logs in with the test user', function(done) {
 
     testUserClient.login(testUser).then(function(){
-      securityManager = testUserClient.api.exchange.security;
 
       //do some stuff with the security manager here
+      //securityManager = testUserClient.exchange.security;
       //NB - we dont have the security checks on method/component calls yet
 
       done();
     }).catch(done);
+
+  });
+
+  it('should fail to login with a bad user', function(done) {
+
+    testUserClient.login({username:'naughty', password:'1234'}).then(function(){
+      done(new Error('this was not meant to happn'));
+    }).catch(function(e){
+
+      done();
+
+    });
 
   });
 
