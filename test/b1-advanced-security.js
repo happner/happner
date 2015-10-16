@@ -8,6 +8,7 @@ var test_id = Date.now() + '_' + require('shortid').generate();
 var should = require('chai').should();
 
 var dbFileName = __dirname + sep + 'temp/' + test_id + '.nedb';
+var fs = require('fs-extra');
 
 describe('b1-advanced-security.js', function(done) {
 
@@ -18,7 +19,7 @@ describe('b1-advanced-security.js', function(done) {
   var config = {
     name:"testadvancedSecurity",
     datalayer: {
-      adminSecret: test_id,
+      adminPassword: test_id,
       log_level: 'info|error|warning',
       filename:dbFileName
     }
