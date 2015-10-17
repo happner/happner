@@ -80,7 +80,7 @@ describe('passes data between component APIs, also works with events', function(
       if (err) {
         console.log(err.stack);
         done(err);
-      } else done();
+      } else mesh.start(done);
 
     });
 
@@ -90,8 +90,21 @@ describe('passes data between component APIs, also works with events', function(
 
     mesh.exchange.component1.storeData(test_id, {"testprop1":"testval1"}, {}, function(e, result){
       result._meta.path.should.equal('/_data/component1/' + test_id);
-      done();
 
+      setTimeout( done(), 3000);//so the on picks something up?
+     
+    });
+
+  });
+
+  it('checks the on count on component1 must be greater than 0', function(done) {
+
+    mesh.exchange.component1.getOnCount(function(e, result){
+      
+      if (!result || result == 0)
+        return done(new Error('result should be greater than 0'));
+
+      done();
     });
 
   });

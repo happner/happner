@@ -22,19 +22,22 @@ function Component1(options) {
     }
   }
 
-  this.lookForForbiddenMethods = function($happn, callback){
-    try{
+  this.onCount = 0;
 
-      //look in $happn
-
-      return callback(null, []);
-    }catch(e){
-      return callback(e);
-    }
-    
+  this.getOnCount = function($happn, callback){
+    callback(null, this.onCount);
   }
 
-  this.start = function(arg, $happn){
+  this.start = function($happn, arg){
+    //path, parameters, handler, done
+    $happn.data.on('/*', {}, function(result){
+      console.log('on happned:::');
+      this.onCount++;
+    }, 
+    function(e){
+      if (e) throw e;
+      console.log('on ok:::');
+    });
 
   };
 
