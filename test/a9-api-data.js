@@ -91,7 +91,7 @@ describe('passes data between component APIs, also works with events', function(
     mesh.exchange.component1.storeData(test_id, {"testprop1":"testval1"}, {}, function(e, result){
       result._meta.path.should.equal('/_data/component1/' + test_id);
 
-      setTimeout( done(), 3000);//so the on picks something up?
+      setTimeout( done, 3000);//so the on picks something up?
      
     });
 

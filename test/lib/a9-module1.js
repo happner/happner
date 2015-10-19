@@ -29,10 +29,13 @@ function Component1(options) {
   }
 
   this.start = function($happn, arg){
+
+    var _this = this;
+
     //path, parameters, handler, done
-    $happn.data.on('/*', {}, function(result){
+    $happn.data.on('*', {}, function(result){
       console.log('on happned:::');
-      this.onCount++;
+      _this.onCount++;
     }, 
     function(e){
       if (e) throw e;

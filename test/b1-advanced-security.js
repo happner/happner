@@ -166,5 +166,62 @@ describe('b1-advanced-security.js', function(done) {
 
   });
 
+  it('should list all groups', function(done) {
+
+    adminClient.exchange.security.listGroups('*', function(e, groups){
+      
+      if (e) return done(e);
+
+      expect(groups.length).to.be(2);
+      done();
+
+    });
+
+  });
+
+  it('should list all users', function(done) {
+
+    adminClient.exchange.security.listUsers('*', function(e, users){
+      
+      if (e) return done(e);
+
+      expect(users.length).to.be(2);
+      done();
+
+    });
+
+  });
+
+  it('should get a specific user, with rolled up group data', function(done) {
+
+    adminClient.exchange.security.getUser(testUserSaved.username, function(e, user){
+      
+      if (e) return done(e);
+
+      expect(user.groups[testGroupSaved.name] != undefined).to.be(true);
+      done();
+
+    });
+
+  });
+
+  it('should list the mesh permissions', function(done) {
+
+    adminClient.exchange.security.getSystemPermissions({nocache:true}, function(e, permissions){
+      
+      if (e) return done(e);
+
+      console.log(permissions);
+
+      expect(permissions.events != undefined).to.be(true);
+      expect(permissions.methods != undefined).to.be(true);
+      expect(permissions.web != undefined).to.be(true);
+
+      done();
+
+    });
+
+  });
+
 });
 
