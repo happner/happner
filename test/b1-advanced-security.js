@@ -19,6 +19,7 @@ describe('b1-advanced-security.js', function(done) {
   var config = {
     name:"testadvancedSecurity",
     datalayer: {
+      secure:true,
       adminPassword: test_id,
       log_level: 'info|error|warning',
       filename:dbFileName
@@ -46,8 +47,8 @@ describe('b1-advanced-security.js', function(done) {
 
   });
 
-  var adminClient = new Mesh.MeshClient();
-  var testUserClient = new Mesh.MeshClient();
+  var adminClient = new Mesh.MeshClient({secure:true});
+  var testUserClient = new Mesh.MeshClient({secure:true});
   //NB in browser is: new MeshClient();
   //in node is: require('happner').MeshClient;
 
@@ -142,6 +143,8 @@ describe('b1-advanced-security.js', function(done) {
   //var testSecurityManager;
 
   it('logs in with the test user', function(done) {
+
+    console.log('logging in with test user:::', testUser);
 
     testUserClient.login(testUser).then(function(){
 
