@@ -146,14 +146,23 @@ describe('b1-advanced-security.js', function(done) {
 
     console.log('logging in with test user:::', testUser);
 
+    //TODO - this is breaking because we dont have access to /mesh/schema/* - so all good, need to fix
+
     testUserClient.login(testUser).then(function(){
 
       //do some stuff with the security manager here
       //securityManager = testUserClient.exchange.security;
       //NB - we dont have the security checks on method/component calls yet
 
+      console.log('logged in with test user:::', testUser);
+
       done();
-    }).catch(done);
+    }).catch(function(e){
+
+      console.log('failed to log in with test user:::', testUser, e);
+
+      done(e);
+    });
 
   });
 
