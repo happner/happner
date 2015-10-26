@@ -12,7 +12,7 @@ var fs = require('fs-extra');
 
 describe('b1-advanced-security.js', function(done) {
 
-  //this.timeout(10000);
+  this.timeout(3000);
 
   var mesh = require('../lib/mesh')();
 
@@ -109,20 +109,18 @@ describe('b1-advanced-security.js', function(done) {
     username:'TEST USER@blah.com' + test_id,
     password:'TEST PWD',
     custom_data:{
-      something: 'usefull'
+      something: 'useful'
     }
   }
 
   var testUserSaved;
-  var testGroupSaved;
-
+  
   it('creates a test user', function(done) {
      adminClient.exchange.security.addUser(testUser, function(e, result){
+
         if (e) return done(e);
 
         expect(result.username).to.be(testUser.username);
-        expect(result.password).to.be(undefined);
-
         testUserSaved = result;
 
         done();
@@ -143,9 +141,6 @@ describe('b1-advanced-security.js', function(done) {
   //var testSecurityManager;
 
   it('logs in with the test user', function(done) {
-
-    console.log('logging in with test user:::', testUser);
-
     //TODO - this is breaking because we dont have access to /mesh/schema/* - so all good, need to fix
 
     testUserClient.login(testUser).then(function(){
@@ -154,13 +149,8 @@ describe('b1-advanced-security.js', function(done) {
       //securityManager = testUserClient.exchange.security;
       //NB - we dont have the security checks on method/component calls yet
 
-      console.log('logged in with test user:::', testUser);
-
       done();
     }).catch(function(e){
-
-      console.log('failed to log in with test user:::', testUser, e);
-
       done(e);
     });
 
@@ -184,7 +174,8 @@ describe('b1-advanced-security.js', function(done) {
       
       if (e) return done(e);
 
-      expect(groups.length).to.be(2);
+      expect(groups.length).to.be(4);
+
       done();
 
     });
@@ -197,7 +188,7 @@ describe('b1-advanced-security.js', function(done) {
       
       if (e) return done(e);
 
-      expect(users.length).to.be(2);
+      expect(users.length).to.be(3);
       done();
 
     });
