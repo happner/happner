@@ -138,11 +138,8 @@ describe('b1-advanced-security.js', function(done) {
 
   });
 
-  //var testSecurityManager;
-
   it('logs in with the test user', function(done) {
-    //TODO - this is breaking because we dont have access to /mesh/schema/* - so all good, need to fix
-
+    
     testUserClient.login(testUser).then(function(){
 
       //do some stuff with the security manager here
@@ -152,6 +149,38 @@ describe('b1-advanced-security.js', function(done) {
       done();
     }).catch(function(e){
       done(e);
+    });
+
+  });
+
+  it('changes the password and custom data for the test user, then logs in with the new password', function(done) {
+    
+    var updatedPassword = 'PWD-UPD';
+
+    testUserSaved.password = updatedPassword;
+    testUserSaved.custom_data = {'changedCustom':'changedCustom'};
+
+    adminClient.exchange.security.updateUser(testUserSaved, function(e, result){
+
+      if (e) return done(e);
+      expect(result.custom_data.changedCustom).to.be('changedCustom');
+      testUserClient.login(testUserSaved).then(done).catch(done);
+
+    });
+
+  });
+
+  it('fails to modify permissions using a non-admin user', function(done) {
+    
+    testUserClient.exchange.security.linkGroup('_ADMIN', testUserSaved, function(e){
+      
+      if (!e)
+         return done(new Error('this was not meant to happn'));
+
+      expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+      done();
+
     });
 
   });
@@ -225,6 +254,27 @@ describe('b1-advanced-security.js', function(done) {
     });
 
   });
+
+  it('delete a user, fail to access the system with the deleted user', function(done) {
+
+    adminClient.exchange.security.deleteUser(testUserSaved, function(e, result){
+      
+      if (e) return done(e);
+
+      testUserClient.login({username:testUserSaved.username, password:'PWD-UPD'}).then(function(){
+        done(new Error('this was not meant to happn'));
+      }).catch(function(e){
+
+        expect(e.toString()).to.be('AccessDenied: user does not exist');
+        done();
+
+      });
+
+    });
+
+  });
+
+  //deleteUser
 
 });
 
