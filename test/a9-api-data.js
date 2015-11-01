@@ -14,7 +14,7 @@ describe('passes data between component APIs, also works with events', function(
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
-  this.timeout(15000);
+  this.timeout(5000);
 
   var mesh = require('../lib/mesh')();
 
@@ -88,10 +88,10 @@ describe('passes data between component APIs, also works with events', function(
 
   it('stores some data on component1, we look at the output from happn', function(done) {
 
-    mesh.exchange.component1.storeData(test_id, {"testprop1":"testval1"}, {}, function(e, result){
-      result._meta.path.should.equal('/_data/component1/' + test_id);
+    mesh.exchange.component1.storeData('/test/a9-api-data', {"testprop1":"testval1"}, {}, function(e, result){
+      result._meta.path.should.equal('/_data/component1/' + 'test/a9-api-data');
 
-      setTimeout( done, 3000);//so the on picks something up?
+      setTimeout( done, 1000);//so the on picks something up?
      
     });
 
@@ -121,6 +121,8 @@ describe('passes data between component APIs, also works with events', function(
 
   it('uses component2 to inspect $happn for forbidden data methods', function(done) {
 
+    this.timeout(10000);
+
     mesh.exchange.component2.lookForForbiddenMethods(function(e, result){
 
       result.length.should.equal(0);
@@ -132,8 +134,9 @@ describe('passes data between component APIs, also works with events', function(
 
   it('checks that it can find the happn class paths in the mesh, negative test', function(done){
 
-    var traverse = require('traverse');
+    this.timeout(10000);
 
+    var traverse = require('traverse');
     var permittedFruit = ['_remoteOff'];
     var appetiteSated = [];
 
@@ -151,6 +154,29 @@ describe('passes data between component APIs, also works with events', function(
 
   });
   
+  it('should subscribe to data', function(done) {
+    mesh.exchange.component2.subscribeToData(
+      {
+        path:'/testSub',
+        callback:function(err){
+          should.not.exist(err);
+          
+          mesh.exchange.component2.setData(
+            {
+              path:'/testSub',
+              value:10,
+              callback:function(){}
+            }
+          )
+
+        },
+        handler:function(){
+          done();
+        }
+      }
+    )
+  });
+
   it('should unsubscribe from data', function(done) {
     mesh.exchange.component2.subscribeToData(
       {

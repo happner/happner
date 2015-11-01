@@ -44,7 +44,7 @@ function Component2(options) {
     
   }
   
-  this.subscribeToData = function($happn,options) {
+  this.subscribeToData = function($happn, options) {
     $happn.data.on(options.path,{event_type:'set',count:0}, options.handler,options.callback);
   };
   

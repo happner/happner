@@ -15,6 +15,7 @@ function Component1(options) {
 
     try{
 
+     console.log('setting:::', path);
      $happn.data.set(path, data, parameters, callback);
 
     }catch(e){
