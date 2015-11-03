@@ -237,23 +237,6 @@ describe('b1-advanced-security.js', function(done) {
 
   });
 
-  it('should list the mesh permissions', function(done) {
-
-    adminClient.exchange.security.getSystemPermissions({nocache:true}, function(e, permissions){
-      
-      if (e) return done(e);
-
-      console.log(permissions);
-
-      expect(permissions.events != undefined).to.be(true);
-      expect(permissions.methods != undefined).to.be(true);
-      expect(permissions.web != undefined).to.be(true);
-
-      done();
-
-    });
-
-  });
 
   it('delete a user, fail to access the system with the deleted user', function(done) {
 
