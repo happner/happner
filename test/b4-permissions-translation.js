@@ -22,6 +22,11 @@ SecuredComponent.prototype.method3 = function($happn, options, callback) {
   callback(null, options);
 }
 
+SecuredComponent.prototype.fireEvent = function($happn, eventName, callback) {
+  $happn.emit(eventName, eventName);
+  callback(null, eventName + ' emitted');
+}
+
 if (global.TESTING_B4) return; // When 'requiring' the module above,
                               // don't run the tests below
                              //............. 
@@ -114,10 +119,10 @@ describe('component start and validation -', function() {
 
       //console.log(permissions.methods['/b4_permissions_translation/SecuredComponent/*']);
 
-      expect(permissions.methods['/b4_permissions_translation/SecuredComponent/*'].action[0]).to.be('*');
-      expect(permissions.methods['/b4_permissions_translation/SecuredComponent/method1'].action[0]).to.be('*');
-      expect(permissions.methods['/b4_permissions_translation/SecuredComponent/method2'].action[0]).to.be('*');
-      expect(permissions.methods['/b4_permissions_translation/SecuredComponent/method3'].action[0]).to.be('*');
+      expect(permissions.methods['/b4_permissions_translation/SecuredComponent/*'].actions[0]).to.be('*');
+      expect(permissions.methods['/b4_permissions_translation/SecuredComponent/method1'].actions[0]).to.be('*');
+      expect(permissions.methods['/b4_permissions_translation/SecuredComponent/method2'].actions[0]).to.be('*');
+      expect(permissions.methods['/b4_permissions_translation/SecuredComponent/method3'].actions[0]).to.be('*');
 
       done();
 
@@ -128,7 +133,7 @@ describe('component start and validation -', function() {
  it('we add a test user that belongs to a group that has permissions to access all of the ProtectedComponent methods, we test that this works', function(done) {
 
     var testGroup = {
-      name:'B4_TEST GROUP' + test_id,
+      name:'B4_TESTGROUP_ALLOWED_ALL_' + test_id,
       
       custom_data:{
         customString:'custom1',
@@ -137,8 +142,7 @@ describe('component start and validation -', function() {
 
       permissions:{
         methods:{
-          //in a /Mesh name/component name/method name - with possible wildcards
-          '/b4_permissions_translation/SecuredComponent/*':{action:['*']}
+          '/b4_permissions_translation/SecuredComponent/*':{actions:['*']}
         }
       }
     }
@@ -149,14 +153,12 @@ describe('component start and validation -', function() {
 
     adminClient.exchange.security.addGroup(testGroup, function(e, result){
 
-      if (e) return callback(e);
+      if (e) return done(e);
 
       testGroupSaved = result;
     
-      console.log('added group:::', testGroupSaved);
-
       var testUser = {
-        username:'B4_TEST_ALL_USER_' + test_id,
+        username:'B4_TEST_USER_ALLOWED_ALL_' + test_id,
         password:'TEST PWD',
         custom_data:{
           something: 'useful'
@@ -182,8 +184,6 @@ describe('component start and validation -', function() {
               //securityManager = testUserClient.exchange.security;
               //NB - we dont have the security checks on method/component calls yet
 
-              console.log('logged in:::');
-
               async.eachSeries(['method1','method2','method3'], function(method, methodCB){
 
                 testUserClient.exchange.b4_permissions_translation.SecuredComponent[method]({}, function(e, result){
@@ -204,18 +204,244 @@ describe('component start and validation -', function() {
 
       });
     });
+
  });
 
- xit('we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent methods, we test that this works', function(done) {
-    done();
+ it('we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent methods, we test that this works', function(done) {
+    
+    var testGroup = {
+      name:'B4_TESTGROUP_ALLOWED_NONE_' + test_id,
+      
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
+
+      permissions:{
+        methods:{}
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+    
+      var testUser = {
+        username:'B4_TEST_USER_ALLOWED_NONE_' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+
+          expect(result.username).to.be(testUser.username);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true});
+
+            testUserClient.login(testUser).then(function(){
+
+              //do some stuff with the security manager here
+              //securityManager = testUserClient.exchange.security;
+              //NB - we dont have the security checks on method/component calls yet
+
+              async.eachSeries(['method1','method2','method3'], function(method, methodCB){
+
+                testUserClient.exchange.b4_permissions_translation.SecuredComponent[method]({}, function(e, result){
+
+                  if (!e) return methodCB(new Error('this wasn\'t meant to be'));
+
+                  expect(e.toString()).to.be('AccessDenied: unauthorized');
+                  methodCB();
+
+                });
+
+              }, done);
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+
+      });
+    });
  });
 
- xit('we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent methods, we test that this works', function(done) {
-    done();
+ it('we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent methods, we test that this works', function(done) {
+      
+    var testGroup = {
+      name:'B4_TESTGROUP_ALLOWED_ONE_' + test_id,
+      
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
+
+      permissions:{
+        methods:{
+          '/b4_permissions_translation/SecuredComponent/method2':{actions:['*']}
+        }
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+    
+      var testUser = {
+        username:'B4_TEST_USER_ALLOWED_ONE_' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+
+          expect(result.username).to.be(testUser.username);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true});
+
+            testUserClient.login(testUser).then(function(){
+
+              //do some stuff with the security manager here
+              //securityManager = testUserClient.exchange.security;
+              //NB - we dont have the security checks on method/component calls yet
+
+              async.eachSeries(['method1','method2','method3'], function(method, methodCB){
+
+                testUserClient.exchange.b4_permissions_translation.SecuredComponent[method]({}, function(e, result){
+
+                  if (method == 'method2'){
+                    expect(result.methodName).to.be(method);
+                    methodCB();
+                  }else{
+                    if (!e) return methodCB(new Error('this wasn\'t meant to be'));
+
+                    expect(e.toString()).to.be('AccessDenied: unauthorized');
+                    methodCB();
+                  }
+
+                });
+
+              }, done);
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+      });
+    });
  });
 
- xit('we add a test user that belongs to a group that has permissions to access all of the ProtectedComponent events, we test that this works', function(done) {
-    done();
+ it('we add a test user that belongs to a group that has permissions to access all of the ProtectedComponent events, we test that this works', function(done) {
+   
+   var testGroup = {
+      name:'B4_TESTGROUP_EVENT_ALLOWED_ALL_' + test_id,
+      
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
+
+      permissions:{
+        methods:{},
+        events:{
+          '/b4_permissions_translation/SecuredComponent/*':{actions:['*']}
+        }
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+    
+      var testUser = {
+        username:'B4_TESTGROUP_EVENT_ALLOWED_ALL_' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+
+          expect(result.username).to.be(testUser.username);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true});
+
+            testUserClient.login(testUser).then(function(){
+
+              //do some stuff with the security manager here
+              //securityManager = testUserClient.exchange.security;
+              //NB - we dont have the security checks on method/component calls yet
+
+              async.eachSeries(['event-1','event-2','event-3'], function(eventName, methodCB){
+
+               testUserClient.event.b4_permissions_translation.SecuredComponent.on(eventName, function(message){
+                  //this should get fired
+                  expect(message.value).to.be(eventName);
+                  methodCB();
+                },
+                function(e){
+                  adminClient.exchange.b4_permissions_translation.SecuredComponent.fireEvent(eventName, function(e, result){
+                    if (e) return done(e);
+                    //now we are waiting
+                  });
+                });
+
+              }, done);
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+      });
+    });
+
  });
 
  xit('we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent events, we test that this works', function(done) {

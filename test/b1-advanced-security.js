@@ -77,11 +77,11 @@ describe('b1-advanced-security.js', function(done) {
     permissions:{
       methods:{
         //in a /Mesh name/component name/method name - with possible wildcards
-        '/testadvancedSecurity/security/*':{action:['*']}
+        '/testadvancedSecurity/security/*':{actions:['*']}
       },
       events:{
          //in a /Mesh name/component name/event key - with possible wildcards
-         '/testadvancedSecurity/security/*':{action:['*']}
+         '/testadvancedSecurity/security/*':{actions:['*']}
       }
     }
   }
