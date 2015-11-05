@@ -46,8 +46,6 @@ describe('creates a user on the parent mesh, logs into the child mesh using the 
 
     remote.stdout.on('data', function(data) {
 
-      // console.log(data.toString());
-
       if (data.toString().match(/READY/)){
       
 

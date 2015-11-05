@@ -230,8 +230,6 @@ it('we add a test user that belongs to a group that has permissions to access al
 
       if (e) return done(e);
 
-       console.log('ADDED GROUP:::');
-
       testGroupSaved = result;
     
       var testUser = {
@@ -246,8 +244,6 @@ it('we add a test user that belongs to a group that has permissions to access al
 
           if (e) return done(e);
 
-          console.log('ADDED USER:::');
-
           expect(result.username).to.be(testUser.username);
           testUserSaved = result;
 
@@ -255,34 +251,32 @@ it('we add a test user that belongs to a group that has permissions to access al
             //we'll need to fetch user groups, do that later
             if (e) return done(e);
 
-            console.log('LINKED GROUP:::');
+            adminClient.exchange.security.getGroup('B4_TESTGROUP_ALLOWED_ALL_' + test_id, function(e, linkedGroup){
 
-            testUserClient = new Mesh.MeshClient({secure:true});
+              testUserClient = new Mesh.MeshClient({secure:true});
+              testUserClient.login(testUser).then(function(){
 
-            testUserClient.login(testUser).then(function(){
+                //do some stuff with the security manager here
+                //securityManager = testUserClient.exchange.security;
+                //NB - we dont have the security checks on method/component calls yet
 
-              console.log('LOGGED IN:::');
+                async.eachSeries(['method1','method2','method3'], function(method, methodCB){
 
-              //do some stuff with the security manager here
-              //securityManager = testUserClient.exchange.security;
-              //NB - we dont have the security checks on method/component calls yet
+                  testUserClient.exchange.b4_permissions_translation.SecuredComponent[method]({}, function(e, result){
 
-              async.eachSeries(['method1','method2','method3'], function(method, methodCB){
+                    if (e) return methodCB(e);
+                    expect(result.methodName).to.be(method);
+                    methodCB();
 
-                testUserClient.exchange.b4_permissions_translation.SecuredComponent[method]({}, function(e, result){
+                  });
 
-                  if (e) return methodCB(e);
-                  expect(result.methodName).to.be(method);
-                  methodCB();
+                }, done);
 
-                });
+              }).catch(function(e){
+                done(e);
+              });
 
-              }, done);
-
-            }).catch(function(e){
-              done(e);
             });
-
           });
 
       });
@@ -290,7 +284,7 @@ it('we add a test user that belongs to a group that has permissions to access al
 
  });
 
- xit('we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent methods, we test that this works', function(done) {
+ it('we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent methods, we test that this works', function(done) {
       
     var testGroup = {
       name:'B4_TESTGROUP_ALLOWED_ONE_' + test_id,
@@ -349,8 +343,10 @@ it('we add a test user that belongs to a group that has permissions to access al
               async.eachSeries(['method1','method2','method3'], function(method, methodCB){
 
                 testUserClient.exchange.b4_permissions_translation.SecuredComponent[method]({}, function(e, result){
-
                   if (method == 'method2'){
+
+                    if (e) return methodCB(e);
+
                     expect(result.methodName).to.be(method);
                     methodCB();
                   }else{
@@ -373,7 +369,7 @@ it('we add a test user that belongs to a group that has permissions to access al
     });
  });
 
- xit('we add a test user that belongs to a group that has permissions to access all of the ProtectedComponent events, we test that this works', function(done) {
+ it('we add a test user that belongs to a group that has permissions to access all of the ProtectedComponent events, we test that this works', function(done) {
    
    var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_ALL_' + test_id,
@@ -460,7 +456,7 @@ it('we add a test user that belongs to a group that has permissions to access al
 
  });
 
- xit('we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent events, we test that this works', function(done) {
+ it('we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent events, we test that this works', function(done) {
      var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_NONE_' + test_id,
       
@@ -538,7 +534,7 @@ it('we add a test user that belongs to a group that has permissions to access al
     });
  });
 
- xit('we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent events, we test that this works', function(done) {
+ it('we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent events, we test that this works', function(done) {
      
      var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_ONE_' + test_id,
