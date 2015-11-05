@@ -77,11 +77,11 @@ describe('b1-advanced-security.js', function(done) {
     permissions:{
       methods:{
         //in a /Mesh name/component name/method name - with possible wildcards
-        '/testadvancedSecurity/security/*':{actions:['*']}
+        '/testadvancedSecurity/security/*':{authorized:true}
       },
       events:{
          //in a /Mesh name/component name/event key - with possible wildcards
-         '/testadvancedSecurity/security/*':{actions:['*']}
+         '/testadvancedSecurity/security/*':{authorized:true}
       }
     }
   }
@@ -172,15 +172,70 @@ describe('b1-advanced-security.js', function(done) {
 
   it('fails to modify permissions using a non-admin user', function(done) {
     
-    testUserClient.exchange.security.linkGroup('_ADMIN', testUserSaved, function(e){
+     var testGroup = {
+      name:'B1USER_NONADMIN' + test_id,
       
-      if (!e)
-         return done(new Error('this was not meant to happn'));
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
 
-      expect(e.toString()).to.be('AccessDenied: unauthorized');
+      permissions:{
+        methods:{},
+        events:{}
+      }
+    }
 
-      done();
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
 
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+    
+      var testUser = {
+        username:'B1USER_NONADMIN' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+
+          expect(result.username).to.be(testUser.username);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+  
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true});
+
+            testUserClient.login(testUser).then(function(){
+
+             testUserClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e, result){
+      
+                if (!e)
+                   return done(new Error('this was not meant to happn'));
+
+                expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+                done();
+
+              });
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+      });
     });
 
   });
@@ -203,7 +258,7 @@ describe('b1-advanced-security.js', function(done) {
       
       if (e) return done(e);
 
-      expect(groups.length).to.be(4);
+      expect(groups.length).to.be(5);
 
       done();
 
@@ -217,7 +272,7 @@ describe('b1-advanced-security.js', function(done) {
       
       if (e) return done(e);
 
-      expect(users.length).to.be(3);
+      expect(users.length).to.be(4);
       done();
 
     });
