@@ -30,7 +30,7 @@ $happn._mesh.datalayer.events.on('attach', function(ev) {
     info: {
       happner: {
         mesh: {
-          name: "marshal"
+          name: "remote_mesh_name"
         }
       },
       _browser: false,
@@ -50,7 +50,7 @@ $happn._mesh.datalayer.events.on('detatch', function(ev) {
     info: {
       happner: {
         mesh: {
-          name: "marshal"
+          name: "remote_mesh_name"
         }
       },
       _browser: false,
