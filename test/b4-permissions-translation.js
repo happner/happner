@@ -56,6 +56,7 @@ describe('component start and validation -', function() {
         // logLevel: ['error']
       },
       datalayer: {
+        persist:true,
         secure:true,
         adminPassword: test_id,
         log_level: 'error'

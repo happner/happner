@@ -64,7 +64,7 @@ describe('secure mesh to mesh fails', function() {
 
           if (!e) return done(new Error('this should not have been possible'));
 
-          assert(e.toString() == 'AccessDenied: login failed');
+          assert(e.toString() == 'AccessDenied: Invalid credentials');
 
           done();
 

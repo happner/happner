@@ -272,7 +272,7 @@ describe('b1-advanced-security.js', function(done) {
       
       if (e) return done(e);
 
-      expect(users.length).to.be(4);
+      expect(users.length).to.be(3);
       done();
 
     });
@@ -303,7 +303,7 @@ describe('b1-advanced-security.js', function(done) {
         done(new Error('this was not meant to happn'));
       }).catch(function(e){
 
-        expect(e.toString()).to.be('AccessDenied: user does not exist');
+        expect(e.toString()).to.be('AccessDenied: Invalid credentials');
         done();
 
       });
