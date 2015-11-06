@@ -14,13 +14,13 @@ Configured in the datalayer is the host and port upon which __this__ MeshNode li
 * subscription to storage events by key (and wildcards)
 
 
-##### Datalayer Events
+### Datalayer Events
 
 Components with `accessLevel: 'mesh'` in their config have direct access to datalayer event emitter.
 
 Note: Data content of these events is in flux. 
 
-###### Event: attach
+##### Event: attach
 
 Another MeshNode has attached to this one.
 
@@ -40,7 +40,7 @@ $happn._mesh.datalayer.events.on('attach', function(ev) {
 });
 ```
 
-###### Event: detatch
+##### Event: detatch
 
 An attached MeshNode has disconnected.
 
