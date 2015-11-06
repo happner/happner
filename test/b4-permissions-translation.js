@@ -6,7 +6,7 @@ function SecuredComponent() {}
 
 SecuredComponent.prototype.method1 = function($happn, options, callback) {
   options.methodName = 'method1';
-
+   console.log('ran method1...');
   callback(null, options);
 }
 
