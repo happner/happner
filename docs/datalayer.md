@@ -28,10 +28,8 @@ Another MeshNode has attached to this one.
 $happn._mesh.datalayer.events.on('attach', function(ev) {
   ev == {
     info: {
-      happner: {
-        mesh: {
-          name: "remote_mesh_name"
-        }
+      mesh: {
+        name: "remote_mesh_name"
       },
       _browser: false,
       _local: false
@@ -48,10 +46,8 @@ An attached MeshNode has disconnected.
 $happn._mesh.datalayer.events.on('detatch', function(ev) {
   ev == {
     info: {
-      happner: {
-        mesh: {
-          name: "remote_mesh_name"
-        }
+      mesh: {
+        name: "remote_mesh_name"
       },
       _browser: false,
       _local: false
