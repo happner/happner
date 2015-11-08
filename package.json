@@ -47,7 +47,7 @@
     "shortid": "^2.2.2",
     "sillyname": "0.0.3",
     "uglify-js": "^2.4.24",
-    "happn": "0.0.48-prerelease",
+    "happn": "happner/happn#1.0/prerelease",
     "happner-terminal": "0.0.6"
   }
 }
