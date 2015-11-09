@@ -24,6 +24,8 @@ happner.js
 
 ### happner.js file format
 
+[&#9650;](#)
+
 The `happner.js` can define an assortment of configs. Each config should define an element, or suite of elements, or function that returns the promise of an element or suite of elements to be loaded into the mesh.
 
 An element is defined as the combination of a __named module__ and a __named component__.
@@ -80,6 +82,8 @@ module.exports = {
 
 ### A config defining a config factory function.
 
+[&#9650;](#)
+
 The function should return the promise of an element config or suite of element configs.
 
 ```javascript
@@ -105,6 +109,8 @@ module.exports = {
 
 
 ### Startup Autoloader
+
+[&#9650;](#)
 
 The elements specified in the special config called __'autoload'__ in the `happner.js` file will be automatically loaded into the mesh.
 
@@ -137,9 +143,13 @@ var meshConfig = {
 
 ### Autoloading Alternative Configs
 
+[&#9650;](#)
+
 
 
 ### Component Specified Configs
+
+[&#9650;](#)
 
 
 
