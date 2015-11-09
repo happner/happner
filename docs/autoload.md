@@ -75,7 +75,7 @@ module.exports = {
 ```
 
 
-### A config defining config factory function.
+### A config defining a config factory function.
 
 The function should return the promise of an element config or suite of element configs.
 
