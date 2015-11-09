@@ -193,6 +193,7 @@ eg.
 ```javascript
 meshConfig = {
   name: 'house',
+  autoload: false,
   component: {
     'irrigation-controller': {
       config: 'spray-mate-v2.0',
