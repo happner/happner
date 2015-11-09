@@ -20,13 +20,13 @@ describe('passes data between component APIs, also works with events', function(
 
   var config = {
     name:"testProtectedDataAPI",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-      log_level: 'info|error|warning',
-      //setOptions:{}
-    },
-    endpoints: {},
+    // dataLayer: {
+    //   authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
+    //   systemSecret: 'mesh',
+    //   log_level: 'info|error|warning',
+    //   //setOptions:{}
+    // },
+    // endpoints: {},
     modules: {
       "module1":{
         path:libFolder + "a9-module1",
