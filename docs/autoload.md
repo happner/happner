@@ -27,6 +27,8 @@ The `happner.js` can define an assortment of configs. Each config should define 
 
 An element is defined as the combination of a __named module__ and a __named component__.
 
+Note: The module part of the element config can be omitted if `require()` can resolve the component name and the module requires no special construction parameters.
+
 #### A config defining a single mesh element
 
 ```javascript
@@ -96,28 +98,6 @@ module.exports = {
       });
     }
 
-  }
-}
-```
-
-The module definition can be defaulted out of the element if no construction parameters are needed for the module and the component name is resolvable by `require()`.
-
-eg. (happner.js)
-
-```javascript
-module.exports = {
-  configs: {
-    'configName1': {
-      component: {
-        name: 'module-name',
-        config: {
-          schema: {},
-          web: {},
-          events: {},
-          data: {},
-        }
-      }
-    }
   }
 }
 ```
