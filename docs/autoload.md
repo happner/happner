@@ -90,7 +90,7 @@ module.exports = {
 
 ### Startup Autoloader
 
-The elements specified in the spacial config called 'autoload' in the happner.js will be automatically loaded into the mesh.
+The elements specified in the special config called __'autoload'__ in the `happner.js` will be automatically loaded into the mesh.
 
 eg. (autoload in happner.js)
 ```javascript
@@ -105,6 +105,8 @@ module.exports = {
 This enables building a near-zero-config mesh simply by installing the component node_modules. 
 
 The entire `module.paths` array is recursed for modules that contain a `happner.js` file. This includes nested node_modules. If more than one module by the same name is found, the shallowest wins.
+
+#### Disabling the Autoloader
 
 If this behaviour is undesirable the autoloader can be disabled by defining the environment variable SKIP_AUTO_LOAD, or by setting `autoload: false,` in the meshConfig
 
