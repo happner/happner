@@ -4,7 +4,8 @@
 
 * [happner.js file format](#happnerjs-file-format)
 * [Startup Autoloader](#startup-autoloader)
-* [Using Specific Configs](#using-specific-configs)
+* [Autoloading Alternative Configs](#autoloading-alternative-configs)
+* [Component Specified Configs](#component-specified-configs)
 
 
 Modules can be packaged with a configuration file (`happner.js`) that is used by the loading MeshNode to default or autoload elements into the mesh.
@@ -134,7 +135,11 @@ var meshConfig = {
 }
 ```
 
+### Autoloading Alternative Configs
 
 
-### Using Specific Configs
+
+### Component Specified Configs
+
+
 
