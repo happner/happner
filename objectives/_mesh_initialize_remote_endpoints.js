@@ -106,6 +106,7 @@ module.exports = function() {
         "as_module",
         "api",
         // "proxy",
+        "security",
         "system"
       ]);
       done();
