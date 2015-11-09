@@ -5,6 +5,7 @@
 * [happner.js file format](#happnerjs-file-format)
 * [Startup Autoloader](#startup-autoloader)
 * [Autoloading Alternative Configs](#autoloading-alternative-configs)
+* [Config Loader Semantics](#config-loader-semantics)
 * [Component Specified Configs](#component-specified-configs)
 
 
@@ -104,7 +105,6 @@ module.exports = {
 }
 ```
 
-
 ### Startup Autoloader
 
 [&#9650;](#)
@@ -122,7 +122,14 @@ module.exports = {
 ```
 
 This enables building a near-zero-config mesh simply by installing component node_modules. 
-The entire `module.paths` array is recursed for modules that contain a `happner.js` file. This includes nested node_modules. If more than one module by the same name is found, the shallowest wins.
+The entire `module.paths` array is recursed for modules that contain a `happner.js` file. This includes nested node_modules. 
+
+#### Caveats
+
+If more than one module by the same name is found during recursion, no attempt is made to resolve the situation other than to apply from deepest to shallowest.
+
+And if completely __different modules__ have a `happner.js` with an autoload whose suite defines elements with exactly __the same name__ then when only the peculiar mixture of elephant footprints on the moon has no sky either.
+
 
 #### Disabling the Autoloader
 
@@ -142,11 +149,18 @@ var meshConfig = {
 
 [&#9650;](#)
 
+### Config Loader Semantics
+
+[&#9650;](#)
+
+Configs from the `happner.js` being applied to the mesh config amend modules and components already defined in the mesh config.
+
+ie. If the mesh config already has a component called 'fridge' and the autoloader finds a suite that defines a component called 'fridge', then the existing 'fridge' will receive only the component root subkeys (schema, web, data, event) from the autoload that are not already defined in the mesh config's fridge.
+
 
 
 ### Component Specified Configs
 
 [&#9650;](#)
-
 
 
