@@ -150,7 +150,7 @@ var meshConfig = {
 
 [&#9650;](#)
 
-The mesh config can specify an alternative configName to autoload.
+The mesh config can specify an alternative config name to autoload.
 
 eg.
 ```javascript
@@ -159,6 +159,7 @@ meshConfig = {
   autoload: 'my-config-name'
   endpoints: {},
 }
+```
 
 This will recurse all node_modules in the path for `happner.js` files and autoload from only the configs called 'my-config-name'.
 
