@@ -29,7 +29,7 @@ function Component1(options) {
     callback(null, this.onCount);
   }
 
-  this.start = function($happn, arg){
+  this.start = function($happn, arg, callback){
 
     var _this = this;
 
@@ -39,8 +39,9 @@ function Component1(options) {
       _this.onCount++;
     }, 
     function(e){
-      if (e) throw e;
+      if (e) return callback(e);
       console.log('on ok:::');
+      callback();
     });
 
   };

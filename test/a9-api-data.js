@@ -30,7 +30,7 @@ describe('passes data between component APIs, also works with events', function(
     modules: {
       "module1":{
         path:libFolder + "a9-module1",
-        constructor:{
+        construct:{
           type:"sync",
           parameters:[
             {value:{maximumPings:maximumPings}}
@@ -39,7 +39,7 @@ describe('passes data between component APIs, also works with events', function(
       },
       "module2":{
         path:libFolder + "a9-module2",
-        constructor:{
+        construct:{
           type:"sync"
         }
       }
@@ -52,7 +52,7 @@ describe('passes data between component APIs, also works with events', function(
           "exclusive":false,//means we dont dynamically share anything else
           "methods":{
             "start":{
-              type:"sync",
+              type:"async",
               parameters:[
                {"required":true, "value":{"message":"this is a start parameter"}}  
               ]
@@ -75,8 +75,7 @@ describe('passes data between component APIs, also works with events', function(
 
   before(function(done){
     var _this = this;
-    Mesh.create(config)
-    .then(function(mesh) {
+    Mesh.create(config).then(function(mesh) {
       _this.mesh = mesh;
       done();
     }).catch(done);
@@ -104,8 +103,6 @@ describe('passes data between component APIs, also works with events', function(
   it('checks the on count on component1 must be greater than 0', function(done) {
 
     this.mesh.exchange.component1.getOnCount(function(e, result){
-
-      console.log('RR', result);
       
       if (!result || result == 0)
         return done(new Error('result should be greater than 0'));
@@ -115,7 +112,7 @@ describe('passes data between component APIs, also works with events', function(
 
   });
 
-  xit('stores some data on component2, we look at the output from happn', function(done) {
+  it('stores some data on component2, we look at the output from happn', function(done) {
 
      this.mesh.exchange.component2.storeData(test_id, {"testprop2":"testval2"}, {}, function(e, result){
       result._meta.path.should.equal('/_data/component2/' + test_id);
@@ -125,7 +122,7 @@ describe('passes data between component APIs, also works with events', function(
 
   });
 
-  xit('uses component2 to inspect $happn for forbidden data methods', function(done) {
+  it('uses component2 to inspect $happn for forbidden data methods', function(done) {
 
     this.timeout(10000);
 
@@ -138,7 +135,7 @@ describe('passes data between component APIs, also works with events', function(
 
   });
 
-  xit('checks that it can find the happn class paths in the mesh, negative test', function(done){
+  it('checks that it can find the happn class paths in the mesh, negative test', function(done){
 
     this.timeout(10000);
 
@@ -159,8 +156,8 @@ describe('passes data between component APIs, also works with events', function(
     done();
 
   });
-  
-  xit('should subscribe to data', function(done) {
+
+  it('should subscribe to data', function(done) {
     var _this = this;
     this.mesh.exchange.component2.subscribeToData(
       {
@@ -184,7 +181,7 @@ describe('passes data between component APIs, also works with events', function(
     )
   });
 
-  xit('should unsubscribe from data', function(done) {
+  it('should unsubscribe from data', function(done) {
     var _this = this;
     this.mesh.exchange.component2.subscribeToData(
       {
