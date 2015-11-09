@@ -50,6 +50,7 @@ module.exports = {
 
   }
 }
+```
 
 #### With a config defining a suite of mesh elements
 
@@ -71,6 +72,7 @@ module.exports = {
     ]
   }
 }
+```
 
 
 ### With a config defining a function.
