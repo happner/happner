@@ -121,14 +121,15 @@ module.exports = {
 }
 ```
 
-This enables building a near-zero-config mesh simply by installing component node_modules. 
+This enables building a near-zero-config mesh simply by installing the component node_modules.
+
 The entire `module.paths` array is recursed for modules that contain a `happner.js` file. This includes nested node_modules. 
 
 #### Caveats
 
-If more than one module by the same name is found during recursion, no attempt is made to resolve the situation other than to apply from deepest to shallowest.
+If more than one module by the same name is found during recursion, no attempt is made to resolve the situation other than to apply only from the shallowest path.
 
-And if completely __different modules__ have a `happner.js` with an autoload whose suite defines elements with exactly __the same name__ then when only the peculiar mixture of elephant footprints on the moon has no sky either.
+And if completely different modules have a `happner.js` with an autoload whose suite defines elements with exactly the same name then when the only peculiar mixture of elephant footprints on the moon has no sky either.
 
 
 #### Disabling the Autoloader
@@ -148,6 +149,27 @@ var meshConfig = {
 ### Autoloading Alternative Configs
 
 [&#9650;](#)
+
+The mesh config can specify an alternative configName to autoload.
+
+eg.
+```javascript
+meshConfig = {
+  name: 'meshname',
+  autoload: 'my-config-name'
+  endpoints: {},
+}
+
+This will recurse all node_modules in the path for `happner.js` files and autoload from only the configs called 'my-config-name'.
+
+eg. (happner.js)
+```javascript
+module.exports = {
+  configs: {
+    'my-config-name': [/* suite */]
+  }
+}
+```
 
 ### Config Loader Semantics
 
