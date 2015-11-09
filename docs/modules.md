@@ -1,4 +1,4 @@
-[&#9664;](datalayer.md) datalayer | event api [&#9654;](event.md)
+[&#9664;](datalayer.md) datalayer | defaulting and autoload [&#9654;](autoload.md)
 
 ## Modules and Components
 
