@@ -95,9 +95,8 @@ module.exports = {
 
         // dynamically determine elements to run in the mesh
         // eg. by os.hostname...
-
         resolve(/* element or suite of elements */);
-        // reject(new Error(''));
+
       });
     }
 
