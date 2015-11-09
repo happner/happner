@@ -210,7 +210,7 @@ meshConfig = {
 
 The mesh resolves where the 'irrigation-controller' module is defined and then loads the config suite called 'spray-mate-v2.0' from the `happner.js` file contained there.
 
-Alternatively, this uses the autoload config without running the autoload resurse:
+Alternatively, this uses the autoload config without running the autoload recurse:
 
 ```javascript
 meshConfig = {
