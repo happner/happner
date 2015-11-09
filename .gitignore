@@ -7,4 +7,5 @@ lib/system/data/*.nedb
 .DS_Store
 resources_temp/*
 test/temp/*
+test/Users
 .a-*
