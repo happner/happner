@@ -23,11 +23,11 @@ happner.js
 
 ### happner.js file format
 
-The `happner.js` can define an assortment of configs. Each config should define an element or suite of elements to be loaded into the mesh.
+The `happner.js` can define an assortment of configs. Each config should define an element, or suite of elements, or function that returns the promise of an element or suite of elements to be loaded into the mesh.
 
-An element is the combination of a module and component definition.  
+An element is the combination of a module and component definition.
 
-eg. (happner.js defining two configs)
+#### With a config defining a single mesh element
 
 ```javascript
 module.exports = {
@@ -46,9 +46,18 @@ module.exports = {
           // component's config
         }
       }
-    },
+    }
 
-    // the following config will load multiple elements into the mesh
+  }
+}
+
+#### With a config defining a suite of mesh elements
+
+```javascript
+module.exports = {
+  configs: {
+
+    // array of elements (suite)
 
     'configName2': [
       {
@@ -59,13 +68,35 @@ module.exports = {
         module: {},
         component: {},
       }
-    ],
+    ]
+  }
+}
+
+
+### With a config defining a function.
+
+The function should return the promise of an element config or suite of element configs.
+
+```javascript
+var Promise = require('bluebird');
+
+module.exports = {
+  configs: {
+
+    'configName3': function(config) {
+      return new Promise(function(resolve, reject) {
+
+        // dynamically determine elements to run in the mesh
+        // eg. by os.hostname...
+
+      });
+    }
 
   }
 }
 ```
 
-The module definition can be defaulted out of the element no construction parameters are needed and the component name is resolvable by require.
+The module definition can be defaulted out of the element if no construction parameters are needed for the module and the component name is resolvable by `require()`.
 
 eg. (happner.js)
 
@@ -90,7 +121,7 @@ module.exports = {
 
 ### Startup Autoloader
 
-The elements specified in the special config called __'autoload'__ in the `happner.js` will be automatically loaded into the mesh.
+The elements specified in the special config called __'autoload'__ in the `happner.js` file will be automatically loaded into the mesh.
 
 eg. (autoload in happner.js)
 ```javascript
@@ -102,8 +133,7 @@ module.exports = {
 }
 ```
 
-This enables building a near-zero-config mesh simply by installing the component node_modules. 
-
+This enables building a near-zero-config mesh simply by installing component node_modules. 
 The entire `module.paths` array is recursed for modules that contain a `happner.js` file. This includes nested node_modules. If more than one module by the same name is found, the shallowest wins.
 
 #### Disabling the Autoloader
