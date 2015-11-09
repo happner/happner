@@ -2,6 +2,11 @@
 
 ## Autoloading and Defaulting
 
+* [happner.js file format](#happner-js-file-format)
+* [Startup Autoloader](#startup-autoloader)
+* [Using Specific Configs](#using-specific-configs)
+
+
 Modules can be packaged with a configuration file (`happner.js`) that is used by the loading MeshNode to default or autoload elements into the mesh.
 
 The `happner.js` file should be placed into the module's root.
@@ -22,7 +27,7 @@ The `happner.js` can define an assortment of configs. Each config should define 
 
 An element is the combination of a module and component definition.  
 
-eg. (defining two configs)
+eg. (happner.js defining two configs)
 
 ```javascript
 module.exports = {
@@ -59,3 +64,60 @@ module.exports = {
   }
 }
 ```
+
+The module definition can be defaulted out of the element no construction parameters are needed and the component name is resolvable by require.
+
+eg. (happner.js)
+
+```javascript
+module.exports = {
+  configs: {
+    'configName1': {
+      component: {
+        name: 'module-name',
+        config: {
+          schema: {},
+          web: {},
+          events: {},
+          data: {},
+        }
+      }
+    }
+  }
+}
+
+
+### Startup Autoloader
+
+The elements specified in the spacial config called 'autoload' in the happner.js will be automatically loaded into the mesh.
+
+eg. (autoload in happner.js)
+```javascript
+module.exports = {
+  configs: {
+    'autoload': [/* elements */]
+    // 'autoload': element
+  }
+}
+```
+
+This enables building a near-zero-config mesh simply by installing the component node_modules. 
+
+The entire `module.paths` array is recursed for modules that contain a `happner.js` file. This includes nested node_modules. If more than one module by the same name is found, the shallowest wins.
+
+If this behaviour is undesirable the autoloader can be disabled by defining the environment variable SKIP_AUTO_LOAD, or by setting `autoload: false,` in the meshConfig
+
+eg. 
+```javascript
+var meshConfig = {
+  name: 'meshname',
+  autoload: false,
+  endpoints: {},
+    // ...etc
+}
+```
+
+
+
+### Using Specific Configs
+
