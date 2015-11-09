@@ -80,9 +80,7 @@ module.exports = {
 ```
 
 
-### A config defining a config factory function.
-
-[&#9650;](#)
+#### A config defining a config factory function.
 
 The function should return the promise of an element config or suite of element configs.
 
