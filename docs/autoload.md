@@ -2,7 +2,7 @@
 
 ## Autoloading and Defaulting
 
-* [happner.js file format](#happner-js-file-format)
+* [happner.js file format](#happnerjs-file-format)
 * [Startup Autoloader](#startup-autoloader)
 * [Using Specific Configs](#using-specific-configs)
 
@@ -85,6 +85,7 @@ module.exports = {
     }
   }
 }
+```
 
 
 ### Startup Autoloader
