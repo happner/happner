@@ -25,9 +25,9 @@ happner.js
 
 The `happner.js` can define an assortment of configs. Each config should define an element, or suite of elements, or function that returns the promise of an element or suite of elements to be loaded into the mesh.
 
-An element is the combination of a module and component definition.
+An element is defined as the combination of a __named module__ and a __named component__.
 
-#### With a config defining a single mesh element
+#### A config defining a single mesh element
 
 ```javascript
 module.exports = {
@@ -52,7 +52,7 @@ module.exports = {
 }
 ```
 
-#### With a config defining a suite of mesh elements
+#### A config defining a suite of mesh elements
 
 ```javascript
 module.exports = {
@@ -75,7 +75,7 @@ module.exports = {
 ```
 
 
-### With a config defining a function.
+### A config defining config factory function.
 
 The function should return the promise of an element config or suite of element configs.
 
@@ -91,6 +91,8 @@ module.exports = {
         // dynamically determine elements to run in the mesh
         // eg. by os.hostname...
 
+        resolve(/* element or suite of elements */);
+        // reject(new Error(''));
       });
     }
 
