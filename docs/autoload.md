@@ -180,10 +180,47 @@ Configs from the `happner.js` being applied to the mesh config amend modules and
 
 ie. If the mesh config already has a component called 'fridge' and the autoloader finds a suite that defines a component called 'fridge', then the existing 'fridge' will receive only the component root subkeys (schema, web, data, event) from the autoload that are not already defined in the mesh config's fridge.
 
+This allows for the `happner.js` file to define "defaults" that can "fill in" the config keys not already defined in the mesh config's components.
 
 
 ### Component Specified Configs
 
 [&#9650;](#)
 
+Mesh components can directly specify the config name to load.
+
+eg.
+```javascript
+meshConfig = {
+  name: 'house',
+  component: {
+    'irrigation-controller': {
+      config: 'spray-mate-v2.0',
+      schema: {
+        // schema will not be loaded from 'spray-mate-v2.0'
+        // because it's already defined here
+      },
+      // events: {},
+      // data: {},
+      // web: {},
+    }
+  }
+}
+```
+
+The mesh resolves where the 'irrigation-controller' module is defined and then loads the config suite called 'spray-mate-v2.0' from the `happner.js` file contained there.
+
+Alternatively, this uses the autoload config without running the autoload resurse:
+
+```javascript
+meshConfig = {
+  name: 'meshname',
+  autoload: false,
+  components: {
+    'componentname': {
+      config: 'autoload'
+    }
+  }
+}
+```
 
