@@ -28,7 +28,7 @@ describe('b1-advanced-security.js', function(done) {
 
   after(function(done){
     fs.unlink(dbFileName, function(e){
-      if (e) return callback(e);
+      if (e) return done(e);
       mesh.stop(done);
     });
   });
