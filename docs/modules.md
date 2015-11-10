@@ -1,4 +1,4 @@
-[&#9664;](datalayer.md) datalayer | event api [&#9654;](event.md)
+[&#9664;](datalayer.md) datalayer | autoloading and defaulting [&#9654;](autoload.md)
 
 ## Modules and Components
 
@@ -6,7 +6,6 @@
 * [What are Components?](#what-are-components)
 * [Mesh Awareness (with $happn)](#mesh-awareness-with-happn)
 * [An Imaginary Module (as example)](#an-imaginary-module-as-example)
-* [Default Configs](#default-configs)
 
 ### What are Modules?
 
@@ -167,47 +166,5 @@ The mesh is now sharing the contents of the `node_modules/hello/app/` as static 
 
 You browse to [http://localhost:55000/hello/app](http://localhost:55000/hello/app) and 'Hello World' pops up in the alert dialog.
 
-### Default Configs
 
-[&#9650;](#)
-
-Modules can define a default configuration to be used by mesh components. By defining the `$happner` variable on the module (or on the module prototype if it's a class) each component that uses the module will use these defaults.
-
-__In file__ `node_modules/hello/index.js`
-```javascript
-module.exports.world = function(opts, callback) {
-  var error = null;
-  var greeting = 'Hello World';
-  callback(error, greeting);
-}
-
-// define default component config
-module.exports.$happner = {
-  config: {
-    component: {
-      schema: {
-        exclusive: true,  // Make so that ONLY world() is exposed
-        methods: {       // to the mesh, by specifying exclusive
-          world: {}     // and listing world() as the only method
-        }
-      },
-      web: {
-        routes: {
-          app: 'static'
-        }
-      }
-    }
-  }
-}
-```
-
-The mesh can now be started with the convenient minimum of config and still gain access to all the indended functionality of the 'hello' module.
-
-```javascript
-require('happner').create({
-  components: {
-    'hello': {}
-  }
-});
-```
 
