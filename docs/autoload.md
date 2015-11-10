@@ -188,7 +188,7 @@ This allows for the `happner.js` file to define "defaults" that can "fill in" th
 
 [&#9650;](#)
 
-Mesh components can directly specify the a config name (suite) to load.
+Mesh components can directly specify a config name (suite) to load.
 
 eg.
 ```javascript
