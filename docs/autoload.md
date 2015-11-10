@@ -95,7 +95,8 @@ module.exports = {
       return new Promise(function(resolve, reject) {
 
         // dynamically determine elements to run in the mesh
-        // eg. by os.hostname...
+        // eg. by os.hostname()...
+
         resolve(/* element or suite of elements */);
 
       });
