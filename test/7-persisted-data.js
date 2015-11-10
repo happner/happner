@@ -21,7 +21,7 @@ DataComponent7.prototype.storeData = function($happn, path, data, callback){
 DataComponent7.prototype.method1 = function($happn, options, callback) {
   options.methodName = 'method1';
    console.log('ran method1...');
-  callback(null, options);
+  callback(null, options); 
 }
 
 DataComponent7.prototype.method2 = function($happn, options, callback) {
@@ -66,6 +66,7 @@ describe('test persisted config, check memory and persisted data stores', functi
     name:"testPersistedData",
     datalayer: {
       persist:true,
+      defaultRoute:"mem", //mem anyhow
       filename:dbFileName,
       log_level: 'info|error|warning'
     },
@@ -77,6 +78,14 @@ describe('test persisted config, check memory and persisted data stores', functi
     components: {
       'DataComponent7': {
         moduleName: 'DataComponent7',
+        datalayer:{
+          routes:{
+            "test/persisted/data":"persist",
+            "test/persisted/all/*":"persist",
+            "test/mem/data":"mem",
+            "test/mem/all/*":"mem"
+          }
+        },
         schema: {
           exclusive: false,
           methods: {}
