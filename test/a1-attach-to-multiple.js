@@ -61,6 +61,8 @@ describe('attach to multiple meshes (meshs?)', function() {
       )
     ).then(function() {
 
+      console.log(config);
+
       // local mesh init
       mesh.initialize(config, done);
 
