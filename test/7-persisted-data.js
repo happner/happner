@@ -18,37 +18,37 @@ DataComponent7.prototype.storeData = function($happn, path, data, callback){
   }
 }
 
-DataComponent7.prototype.method1 = function($happn, options, callback) {
-  options.methodName = 'method1';
-   console.log('ran method1...');
-  callback(null, options); 
-}
+// DataComponent7.prototype.method1 = function($happn, options, callback) {
+//   options.methodName = 'method1';
+//    console.log('ran method1...');
+//   callback(null, options); 
+// }
 
-DataComponent7.prototype.method2 = function($happn, options, callback) {
-  options.methodName = 'method2';
-  console.log('ran method2...');
-  callback(null, options);
-}
+// DataComponent7.prototype.method2 = function($happn, options, callback) {
+//   options.methodName = 'method2';
+//   console.log('ran method2...');
+//   callback(null, options);
+// }
 
-DataComponent7.prototype.method3 = function($happn, options, callback) {
-  options.methodName = 'method3';
-   console.log('ran method3...');
-  callback(null, options);
-}
+// DataComponent7.prototype.method3 = function($happn, options, callback) {
+//   options.methodName = 'method3';
+//    console.log('ran method3...');
+//   callback(null, options);
+// }
 
-DataComponent7.prototype.fireEvent = function($happn, eventName, callback) {
-  $happn.emit(eventName, eventName);
-  callback(null, eventName + ' emitted');
-}
+// DataComponent7.prototype.fireEvent = function($happn, eventName, callback) {
+//   $happn.emit(eventName, eventName);
+//   callback(null, eventName + ' emitted');
+// }
 
 if (global.TESTING_7) return; // When 'requiring' the module above,
                               // don't run the tests below
                              //............. 
 
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
-var maximumPings = 1000;
-var libFolder ;
+// var sep = require('path').sep;
+// var libFolder = __dirname + sep + 'lib' + sep;
+// var maximumPings = 1000;
+// var libFolder ;
 var Mesh = require('../');
 var test_id = Date.now() + '_' + require('shortid').generate();
 var should = require('chai').should();
@@ -119,10 +119,15 @@ describe('test persisted config, check memory and persisted data stores', functi
 
     try{
 
-      mesh.exchange.DataComponent7.storeData('test/data', {'test':'data'}, function(e, response){
+      mesh.exchange.DataComponent7.storeData('test/mem/all/xxx', {'test':'data'}, function(e, response){
 
         if (e) return done(e);
-        response._meta.path.should.equal('/_data/DataComponent7/test/data');
+
+        try {
+          response._meta.path.should.equal('/_data/DataComponent7/test/data');
+        } catch(e) {
+          return done(e);
+        }
 
         done();
 
