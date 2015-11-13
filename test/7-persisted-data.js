@@ -78,7 +78,7 @@ describe('test persisted config, check memory and persisted data stores', functi
     components: {
       'DataComponent7': {
         moduleName: 'DataComponent7',
-        datalayer:{
+        data:{
           routes:{
             "test/persisted/data":"persist",
             "test/persisted/all/*":"persist",
