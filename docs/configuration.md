@@ -60,6 +60,10 @@ Configuration as follows (__shown with defaults__):
     secure: false,
     // adminPassword: shortid.generate(),
 
+    setOptions: {
+      timeout: 5000,
+      noStore: true
+    }
   }
   ...
 ```
@@ -72,6 +76,7 @@ Configuration as follows (__shown with defaults__):
 `defaultRoute` - Where to store data when no match is found in the per component `data.route` masks.<br/>
 `secure` - Set true will enable security. Users in groups with permissions will need to be created. See [Security](security.md)<br/>
 `adminPassword` - If secure is true, this sets a password for the genesis user (_ADMIN).<br/>
+`setOptions` - Default options set by the exchange when calling functions through the datalayer.
 
 
 __NOTE:__ The `config.datalayer` section can be omitted if all defaults are acceptable.
