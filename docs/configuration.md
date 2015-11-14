@@ -96,14 +96,16 @@ The `config.endpoints` section should list all remote MeshNodes to which __this_
       config: {
         host: 'crane1.berth1.quay1.harbour.com',
         port: 919,
-        secret: 'ƒ¡ƒ†¥'
+
+        //security enabled?
+        username: '',
+        password: '',
       }
     },
     'quay1-berth2-crane1': {
       config: {
         host: 'crane1.berth2.quay1.harbour.com',
         port: 919,
-        secret: 'ƒ¡ƒ†¥'
       }
     },
   }
@@ -115,11 +117,10 @@ The above attaches __this__ MeshNode to two remote MeshNodes.
 `quay1-berth1-crane1` - The remote MeshNode's name (as configured in the remote's `config.name`)<br/>
 `.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.datalayer.host`)<br/>
 `.port` - The remote MeshNode post (as configured in the remote's `config.datalayer.port`)<br/>
-`.secret` - The remote MeshNode secret (as configured in the remote's `config.datalayer.secret`)<br/>
+`.username` - Username with the required priviledges at the remote MeshNode. See [Security](security.md)<br/>
+`.password` - <br/>
 
 ##### Short Form
-
-Assuming all nodes using default authtoken and secret.
 
 ```javascript
   ...
