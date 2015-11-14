@@ -44,26 +44,26 @@ See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
 The datalayer by default contains an embeded nedb database that does not persist beyond server restarts. This can be extended to have two databases, one embedded memory/fast and one persisting to a specified nedb file. When both are used it is up to the component configuration to declare which data paths are stored in which database by defining `data.routes`See [Component Config](#component-config).
 
-Configuration as follows (__shown with defaults__):
+Configuration as follows  (__shown with defaults__):
 
 ```javascript
   ...
   datalayer: {
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 55000,
     // sessionTokenSecret: shortid.generate(),
 
     persist: false,
     // filename: '/var/data/nodes/abc/data.nedb',
-    // defaultRoute: 'persist', // or 'mem' (default inherits from datalayer.filename)
+    // defaultRoute: 'persist', // or 'mem' (default: inherits according to presense of datalayer.filename)
 
     secure: false,
     // adminPassword: shortid.generate(),
 
-    setOptions: {
-      timeout: 5000,
-      noStore: true
-    }
+    // setOptions: {
+    //  timeout: 5000,
+    //  noStore: true
+    // }
   }
   ...
 ```
@@ -76,7 +76,7 @@ Configuration as follows (__shown with defaults__):
 `defaultRoute` - Where to store data when no match is found in the per component `data.route` masks.<br/>
 `secure` - Set true will enable security. Users in groups with permissions will need to be created. See [Security](security.md)<br/>
 `adminPassword` - If secure is true, this sets a password for the genesis user (_ADMIN).<br/>
-`setOptions` - Default options set by the exchange when calling functions through the datalayer.
+`setOptions` - Default options set by the exchange when calling functions through the datalayer.</br>
 
 
 __NOTE:__ The `config.datalayer` section can be omitted if all defaults are acceptable.
