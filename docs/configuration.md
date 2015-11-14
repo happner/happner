@@ -50,7 +50,7 @@ Configuration as follows  (__shown with defaults__):
   ...
   datalayer: {
     host: '0.0.0.0',
-    port: 55000,
+    port: 55000, // 0 for os assigned port
     // sessionTokenSecret: shortid.generate(),
 
     persist: false,

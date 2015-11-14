@@ -11,7 +11,7 @@
 
 Modules can be packaged with a configuration file (`happner.js`) that is used by the loading MeshNode to default or autoload elements into the mesh.
 
-The `happner.js` file should be placed into the module's root.
+The `happner.js` file should be placed into the module's configured main entry point directory.
 
 eg. (typical node_module with happner.js file)
 
@@ -22,6 +22,8 @@ index.js
 package.json
 happner.js
 ```
+
+NB: If package.json specifies the module's main entrypoint as `lib/something.js` then the `happner.js` file will need to go into `lib/` instead.
 
 ### happner.js file format
 
