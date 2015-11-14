@@ -42,7 +42,7 @@ __BUG:__ Currently the clients do not fully re-establish connections to restarte
 
 See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
-The datalayer by default contains an embeded nedb database that does not persist beyone server restarts. This can be extended to have two databases, one embedded memory/fast and one persisting to a specified nedb file. When both are used it is up to the component configuration to declare which data paths are stored in which database by defining `data.routes`.  
+The datalayer by default contains an embeded nedb database that does not persist beyone server restarts. This can be extended to have two databases, one embedded memory/fast and one persisting to a specified nedb file. When both are used it is up to the component configuration to declare which data paths are stored in which database by defining `data.routes`See [Component Config](#component-config).
 
 Configuration as follows (__shown with defaults__):
 
@@ -67,11 +67,11 @@ Configuration as follows (__shown with defaults__):
 `host` - The host (ip/interface) for __this__ MeshNode to listen on.<br/>
 `port` - The port to listen on.<br/>
 `sessionTokenSecret` - <br/>
-`persist` - Set true will save data to default nedb file in `$HOME/.happn/$MESHNAME.nedb`
-`filename` - Save to specified nedb file.
-`defaultRoute` - Where to store data when no match is found in the per component `data.route` masks. See [Component Config](#component-config).
-`secure` - Set true will enable security. Users in groups with permissions will need to be created. See [Security](security.md)
-`adminPassword` - If secure is true, this sets a password for the genesis user (_ADMIN).
+`persist` - Set true will save data to default nedb file in `$HOME/.happn/$MESHNAME.nedb`<br/>
+`filename` - Save to specified nedb file.<br/>
+`defaultRoute` - Where to store data when no match is found in the per component `data.route` masks.<br/>
+`secure` - Set true will enable security. Users in groups with permissions will need to be created. See [Security](security.md)<br/>
+`adminPassword` - If secure is true, this sets a password for the genesis user (_ADMIN).<br/>
 
 
 __NOTE:__ The `config.datalayer` section can be omitted if all defaults are acceptable.
