@@ -19,7 +19,7 @@ This paves the way for `code re-use by configuration` and `remote runtime initia
 
 [&#9650;](#)
 
-Components are 'mesh aware' encapsulations of the Module they employ. It is the Components which become accessable as units of functionality on the mesh network.
+Components are 'mesh aware' encapsulations of the Module (or module instance) they employ. It is the Components which become accessable as units of functionality on the mesh network.
 
 ### Mesh Awareness (with $happn)
 
@@ -40,7 +40,7 @@ Service injection is used to provide mesh awareness into modules. By declaring `
 
 ##### The ComponentInstance
 
-This refers to the instance of __this__ Module running as a component of the mesh. Multiple components can be configured to use the same module instance. In the example below both `employees` and `clients` are ComponentInstances of `group-of-people`.
+This refers to the instance of __this__ Module running as a component of the mesh. Multiple components can be configured to use the same module. If the module is a class or has a `construct` or `create` instruction in it's configs then separate instances of the module will be created for each component that uses it. In the example below both `employees` and `clients` are ComponentInstances of `group-of-people`.
 
 eg. (config)
 
@@ -61,7 +61,7 @@ eg. (config)
   ...
 ```
 
-The result is that 'employees' and 'clients' are two seprate instances of mesh and web functionality each sharing the same module instance and providing the following functionalities:
+The result is that 'employees' and 'clients' are two seprate instances of mesh and web functionality each sharing the same module definition and providing the following functionalities into each instance of the module:
 
 [Web Routes](webroutes.md)
 
@@ -124,19 +124,24 @@ __In file__ `node_modules/hello/app/index.html`
   <body>
     <script>
         // Connect to the mesh
-        MeshClient(function(error, mesh) {
+        var client = new MeshClient(/* {host:,port:} */);
 
-            // Call the world() function from node_modules/hello/index.js
-            mesh.exchange.hello.world({/*opts*/}, function(error, greeting) {
+        client.login(/* {username:, password:} */)
 
-                alert(greeting);
+        .then(function() {
 
-                // Note: The same function is available on a path that includes
-                //       the MeshNode's name:
-                //
-                // mesh.exchange.myMeshNode.hello.world(...
-                //
-            });
+          // Call the world() function from node_modules/hello/index.js
+          return client.exchange.hello.world({/*opts*/}, function(error, greeting) {
+
+              alert(greeting);
+
+              // Note: The same function is available on a path that includes
+              //       the MeshNode's name:
+              //
+              // mesh.exchange.myMeshNode.hello.world(...
+              //
+          });
+
         });
     </script>
   </body>

@@ -42,7 +42,6 @@ __something.html__
 
       // Credentials for the login method
       var credentials = {
-        secret: 'mesh',
         // username: 'username', // pending
         // password: 'password', // pending
       }
