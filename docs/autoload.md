@@ -190,7 +190,7 @@ This allows for the `happner.js` file to define "defaults" that can "fill in" th
 
 [&#9650;](#)
 
-Mesh components can directly specify a config name (suite) to load.
+Mesh components can directly specify a `$config` name (suite) to load.
 
 eg.
 ```javascript
@@ -199,7 +199,7 @@ meshConfig = {
   autoload: false,
   component: {
     'irrigation-controller': {
-      config: 'spray-mate-v2.0',
+      $config: 'spray-mate-v2.0',
       schema: {
         // schema will not be loaded from 'spray-mate-v2.0'
         // because it's already defined here
@@ -214,7 +214,7 @@ meshConfig = {
 
 The mesh resolves where the 'irrigation-controller' module is defined and then loads the config suite called 'spray-mate-v2.0' from the `happner.js` file contained there.
 
-Alternatively, this uses the autoload config without running the autoload recurse:
+Alternatively, this uses the autoload a config without running the autoload recurse:
 
 ```javascript
 meshConfig = {
@@ -222,7 +222,7 @@ meshConfig = {
   autoload: false,
   components: {
     'componentname': {
-      config: 'autoload'
+      $config: 'autoload'
     }
   }
 }
