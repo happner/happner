@@ -219,13 +219,13 @@ describe('b1-advanced-security.js', function(done) {
 
             testUserClient.login(testUser).then(function(){
 
-             testUserClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e, result){
+            testUserClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e, result){
       
                 if (!e)
                    return done(new Error('this was not meant to happn'));
 
                 expect(e.toString()).to.be('AccessDenied: unauthorized');
-
+                
                 done();
 
               });
