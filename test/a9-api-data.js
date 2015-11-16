@@ -112,6 +112,8 @@ describe('passes data between component APIs, also works with events', function(
 
   });
 
+  /*
+
   it('stores some data on component2, we look at the output from happn', function(done) {
 
      this.mesh.exchange.component2.storeData(test_id, {"testprop2":"testval2"}, {}, function(e, result){
@@ -212,6 +214,8 @@ describe('passes data between component APIs, also works with events', function(
       }
     )
   });
+
+*/
 
 });
 
