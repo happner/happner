@@ -213,23 +213,29 @@ The above mesh resolves where the 'irrigation-controller' module is defined and 
 
 ### Component Specified Config Passthrough Function
 
+[&#9650;](#)
+
 This allows for using a specified config suite with more elaborate or focussed amendments. A `$configure` function can be defined in the component, it will be called with a specific config suite from the module's `happner.js` file injected according to the first argument's name.
 
 eg.
 ```javascript
 meshConfig = {
   components: {
-    'component-with-big-elaborate-config': {
-      $configure: function(configName) {
+    'some-thing-complicated': {
+      kept: 'this remains',
+      $configure: function(suiteName) {
+        // suiteName contains a deep copy of the content of the config called 'suite-name'
+        // from require.resolve('some-thing-complicated')/happner.js[.configs['suite-name']]
 
-        // arg `configName` - injects 'config-name' or 'configName' from module's happner.js
+        // lock down schema
+        suiteName.component.config.schema.exclusive = true;
+        delete suiteName.component.config.schema.methods.undesiredMethod;
 
-        // make desired modifications
-        configName.component.schema.exclusive = true;
-        delete configName.component.schema.methods.dangerousMethod;
-
-        // return modificated suite config to be used by mesh configloader
-        return configName;
+        // swing one of the data-routes to persist
+        suiteName.component.config.data.routes['favourites/*'] = 'presist';
+ 
+        // return is important (also supports promise)
+        return suiteName;
       }
     }
   }
