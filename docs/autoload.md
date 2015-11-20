@@ -7,6 +7,7 @@
 * [Autoloading Alternative Configs](#autoloading-alternative-configs)
 * [Config Loader Semantics](#config-loader-semantics)
 * [Component Specified Configs](#component-specified-configs)
+* [Component Specified Config Passthrough Function](#component-specified-config-passthrough-function)
 
 
 Modules can be packaged with a configuration file (`happner.js`) that is used by the loading MeshNode to default or autoload elements into the mesh.
@@ -179,12 +180,7 @@ module.exports = {
 
 [&#9650;](#)
 
-Configs from the `happner.js` being applied to the mesh config amend modules and components already defined in the mesh config.
-
-ie. If the mesh config already has a component called 'fridge' and the autoloader finds a suite that defines a component called 'fridge', then the existing 'fridge' will receive only the component root subkeys (schema, web, data, event) from the autoload that are not already defined in the mesh config's fridge.
-
-This allows for the `happner.js` file to define "defaults" that can "fill in" the config keys not already defined in the mesh config's components.
-
+Configs from the `happner.js` being applied to the mesh config supplement modules and components already defined in the mesh config. Config keys from the suite are added to the relevant module or component config only if not already present. Keys already present remain unmodified. No deep merge is performed.
 
 ### Component Specified Configs
 
@@ -212,17 +208,29 @@ meshConfig = {
 }
 ```
 
-The mesh resolves where the 'irrigation-controller' module is defined and then loads the config suite called 'spray-mate-v2.0' from the `happner.js` file contained there.
+The above mesh resolves where the 'irrigation-controller' module is defined and then loads the config suite called 'spray-mate-v2.0' from the `happner.js` file contained there.
 
-Alternatively, this can use the autoload config without running the autoload recurse:
 
+### Component Specified Config Passthrough Function
+
+This allows for using a specified config suite with more elaborate or focussed amendments. A `$configure` function can be defined in the component, it will be called with a specific config suite from the module's `happner.js` file injected according to the first argument's name.
+
+eg.
 ```javascript
 meshConfig = {
-  name: 'meshname',
-  autoload: false,
   components: {
-    'componentname': {
-      $config: 'autoload'
+    'component-with-big-elaborate-config': {
+      $configure: function(configName) {
+
+        // arg `configName` - injects 'config-name' or 'configName' from module's happner.js
+
+        // make desired modifications
+        configName.component.schema.exclusive = true;
+        delete configName.component.schema.methods.dangerousMethod;
+
+        // return modificated suite config to be used by mesh configloader
+        return configName;
+      }
     }
   }
 }
