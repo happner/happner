@@ -6,15 +6,16 @@ describe('Using the clientside only', function() {
   var sep = require('path').sep;
   var remote;
   var assert = require('assert');
+  var path = require('path');
+  var sep = path.sep;
+  var libFolder = path.resolve(__dirname, '../' + sep + 'lib');
 
-  var sep = require('path').sep;
-  var libFolder = __dirname + sep + 'lib' + sep;
+  console.log(libFolder);
 
   // Spawn mesh in another process.
   before(function(done) {
-    remote = spawn('node',[libFolder + '4-first-mesh']);
+    remote = spawn('node',[libFolder + sep + '4-first-mesh']);
     remote.stdout.on('data', function(data) {
-      // console.log(data.toString());
       if (!data.toString().match(/READY/)) return;
       done();
     });
@@ -31,11 +32,9 @@ describe('Using the clientside only', function() {
       
       var happn = require('happn');
      
-      var MeshClient = require('../lib/system/api');
+      var MeshClient = require('../../lib/system/api');
 
-      MeshClient('localhost', 3001, 'mesh', function(err, client) {
-
-        console.log('CLIENT', client.exchange);
+      new MeshClient('localhost', 3001, 'mesh', function(err, client) {
 
         if (err) return done(err);
 

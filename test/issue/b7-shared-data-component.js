@@ -1,7 +1,7 @@
 describe('shared data component', function() {
 
   var should = require('chai').should();
-  var Mesh = require('../');
+  var Mesh = require('../../');
   var config;
 
   var TestModule1 = {
