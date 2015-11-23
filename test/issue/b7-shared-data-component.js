@@ -1,21 +1,20 @@
-var should = require('chai').should();
-var Mesh = require('../');
-var config;
-
-var TestModule1 = {
-  setSharedData: function($happn, path, data, callback) {
-    $happn.exchange.data.set(path, data, callback);
-  }
-}
-
-var TestModule2 = {
-  getSharedData: function($happn, path, callback) {
-    $happn.exchange.data.get(path, callback);
-  }
-}
-
-
 describe('shared data component', function() {
+
+  var should = require('chai').should();
+  var Mesh = require('../');
+  var config;
+
+  var TestModule1 = {
+    setSharedData: function($happn, path, data, callback) {
+      $happn.exchange.data.set(path, data, callback);
+    }
+  }
+
+  var TestModule2 = {
+    getSharedData: function($happn, path, callback) {
+      $happn.exchange.data.get(path, callback);
+    }
+  }
 
   before(function(done) {
     var _this = this;

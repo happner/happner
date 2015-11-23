@@ -1,18 +1,15 @@
-// Object.keys(require.cache).forEach(function(key) {
-//   delete require.cache[key]
-// });
-
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
-var maximumPings = 1000;
-var libFolder ;
-var Mesh = require('../');
-var test_id = Date.now() + '_' + require('shortid').generate();
-var should = require('chai').should();
-
 describe('passes data between component APIs, also works with events', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
+
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+  var maximumPings = 1000;
+  var libFolder ;
+  var Mesh = require('../');
+  var test_id = Date.now() + '_' + require('shortid').generate();
+  var should = require('chai').should();
+
 
   this.timeout(5000);
 

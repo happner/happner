@@ -1,20 +1,20 @@
-var expect = require('expect.js');
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
-var maximumPings = 1000;
-
-var Mesh = require('../');
-var test_id = Date.now() + '_' + require('shortid').generate();
-var should = require('chai').should();
-
-var dbFileName = __dirname + sep + 'temp/' + test_id + '.nedb';
-var fs = require('fs-extra');
-
 describe('b1-advanced-security.js', function(done) {
 
   this.timeout(3000);
 
-  var mesh = require('../lib/mesh')();
+  var expect = require('expect.js');
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+  var maximumPings = 1000;
+
+  var Mesh = require('../');
+  var test_id = Date.now() + '_' + require('shortid').generate();
+  var should = require('chai').should();
+
+  var dbFileName = __dirname + sep + 'temp/' + test_id + '.nedb';
+  var fs = require('fs-extra');
+
+  var mesh = new Mesh();
 
   var config = {
     name:"testadvancedSecurity",

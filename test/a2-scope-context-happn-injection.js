@@ -1,12 +1,14 @@
-var promise = require('when').promise;
-var parallel = require('when/parallel');
-var should = require('chai').should();
-var request = require('request');
-var Mesh = require('../');
+
 
 describe('mesh awareness via $happn injection', function() {
 
-   this.timeout(40000);
+  var promise = require('when').promise;
+  var parallel = require('when/parallel');
+  var should = require('chai').should();
+  var request = require('request');
+  var Mesh = require('../');
+
+  this.timeout(40000);
 
   before(function(done) {
 
@@ -179,7 +181,7 @@ describe('mesh awareness via $happn injection', function() {
     done()
   });
 
-  it('leaves happn out of the description when specifying method parameters', function(done) {
+  xit('leaves happn out of the description when specifying method parameters', function(done) {
     var meshes = this.meshes;
     meshes[0]._mesh.description.components['special-component1'].should.eql({
       "methods": {
@@ -458,7 +460,7 @@ describe('mesh awareness via $happn injection', function() {
   });
 
 
-  it.only('injects happn into webmethods', function(done) {
+  it('injects happn into webmethods', function(done) {
 
     request('http://localhost:3001/mesh1/webComponent1/methodWithHappn', function(err, res) {
 

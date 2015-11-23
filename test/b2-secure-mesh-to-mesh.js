@@ -1,75 +1,80 @@
 // cannot do mocha test/4-mesh-to-mesh.js --watch
 // address already in use for 2nd... runs
 
-var spawn = require('child_process').spawn
-  , sep = require('path').sep
-  , remote
-  , assert = require('assert')
-  , mesh
-  , Mesh = require('../')
 
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
 
-config = {
-  name: 'mesh2',
-  dataLayer: {
-    secure:true,
-    port: 3002,
-    authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-    systemSecret: 'mesh',
-    log_level: 'info|error|warning'
-  },
-  endpoints: {
-    theFarawayTree: {  // remote mesh node
-      config: {
-        port: 3001,
-        username: '_ADMIN',
-        password: 'testb2' // TODO This was necessary, did not default
-      }
-    }
-  },
-  modules: {},
-  components: {}
-};
-
-describe('Mesh to Mesh', function() {
+describe('secure mesh to mesh', function() {
  
-  this.timeout(20000);
+  context('secure mesh to mesh', function(){
 
-  before(function(done) {
+    var spawn = require('child_process').spawn
+    , sep = require('path').sep
+    , remote
+    , assert = require('assert')
+    , mesh
+    , Mesh = require('../')
 
-    var _this = this;
+    var sep = require('path').sep;
+    var libFolder = __dirname + sep + 'lib' + sep;
 
-    // spawn remote mesh in another process
-    remote = spawn('node', [libFolder + 'b2-first-mesh']);
+    var config = {
+      name: 'mesh2',
+      dataLayer: {
+        secure:true,
+        port: 51233,
+        authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
+        systemSecret: 'mesh',
+        log_level: 'info|error|warning'
+      },
+      endpoints: {
+        theFarawayTree: {  // remote mesh node
+          config: {
+            port: 51234,
+            username: '_ADMIN',
+            password: 'testb2' // TODO This was necessary, did not default
+          }
+        }
+      },
+      modules: {},
+      components: {}
+    };
 
-    remote.stdout.on('data', function(data) {
+    this.timeout(20000);
 
-      // console.log(data.toString());
+    before(function(done) {
 
-      if (data.toString().match(/READY/)){
-      
+      var _this = this;
 
-        mesh = new Mesh();
+      // spawn remote mesh in another process
+      remote = spawn('node', [libFolder + 'b2-first-mesh']);
 
-        // console.log('starting this one', mesh, config);
-        // mesh.initialize(config, function(err) {
-        mesh.initialize(config, function(e){
-          done(e);
-        });
-      }
+      remote.stdout.on('data', function(data) {
 
+        // console.log(data.toString());
+        if (data.toString().match(/READY/)){
+        
+          console.log('remote ready:::', remote.pid);
+
+          mesh = new Mesh();
+
+          // console.log('starting this one', mesh, config);
+          // mesh.initialize(config, function(err) {
+          mesh.initialize(config, function(e){
+            done(e);
+          });
+        }
+
+      });
     });
-  });
 
 
-  after(function(done) {
-    remote.kill(); 
-    mesh.stop(done);
-  });
-
-  context('the faraway tree', function() {
+    after(function(done) {
+      remote.kill(); 
+      mesh.stop(function(e){
+        console.log('killed ok:::', remote.pid);
+        done();
+      });
+    });
 
     it("we can ride moonface's slippery slip",function(done) {
       mesh.exchange.theFarawayTree.moonface.rideTheSlipperySlip(

@@ -1,14 +1,14 @@
-var promise = require('when').promise;
-var parallel = require('when/parallel');
-var spawn = require('child_process').spawn;
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
-var should = require('chai').should();
-var Mesh = require('../');
-
-var bunchOfRemoteNodes = [1, 2, 3];
-
 describe('attach to multiple meshes (meshs?)', function() {
+
+  var promise = require('when').promise;
+  var parallel = require('when/parallel');
+  var spawn = require('child_process').spawn;
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+  var should = require('chai').should();
+  var Mesh = require('../');
+
+  var bunchOfRemoteNodes = [1, 2, 3];
 
   this.timeout(20000);
 
@@ -31,7 +31,7 @@ describe('attach to multiple meshes (meshs?)', function() {
                 var kid;
                                                           // argv[2]
                 kids.push(kid = spawn(                   // i in kid as (3000 + i) port
-                  'node', [libFolder + '10-remote-mesh', i]
+                  'node', [libFolder + 'a1-remote-mesh', i]
                 ));
 
                 kid.stdout.on('data', function(data) {
@@ -72,6 +72,7 @@ describe('attach to multiple meshes (meshs?)', function() {
 
   after(function(done) {
     this.kids.forEach(function(kid) {
+      console.log('killing kid', kid);
       kid.kill();
     });
     this.mesh.stop(done);

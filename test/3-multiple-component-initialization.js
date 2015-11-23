@@ -7,7 +7,7 @@ describe('Multiple component initialization', function() {
   this.timeout(10000);
 
   before(function(done) {
-    config = {
+    var config = {
       name: 'meshName',
       dataLayer: {
         port: 4001,
@@ -121,10 +121,10 @@ describe('Multiple component initialization', function() {
       done();
     });
 
-    after(function(done){
-       mesh.stop(done);
-    });
+  });
 
+  after(function(done){
+       mesh.stop(done);
   });
 
 

@@ -12,7 +12,7 @@ var config = {
   },
   modules: {
     'module': {
-      path: __dirname + '/10-module'
+      path: __dirname + '/a1-module'
     }
   },
   components: {

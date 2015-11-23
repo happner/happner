@@ -1,9 +1,9 @@
-var should = require('chai').should();
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
-var Mesh = require('../');
-
 describe('Consumes an external module', function() {
+
+  var should = require('chai').should();
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+  var Mesh = require('../');
 
   var config = {
     name:"testMesh",

@@ -1,59 +1,61 @@
-var should = require('chai').should();
-var path = require('path');
-Mesh = require('../')
+describe('start meshes', function () {
 
-var ownPath = path.join(__dirname, '../index.js');
+  var should = require('chai').should();
+  var path = require('path');
+  
+  Mesh = require('../')
 
-var SERVER_HOST = "localhost";
-var SERVER_PORT = 8092;
-var CLIENT_PORT = 8093;
+  var ownPath = path.join(__dirname, '../index.js');
 
-var SERVER_COMPONENT_NAME = "server";
-var SERVER_MESH_NAME = "server_mesh";
+  var SERVER_HOST = "localhost";
+  var SERVER_PORT = 8092;
+  var CLIENT_PORT = 8093;
 
-var clientConfig = {
-  name: 'client',
-  dataLayer: {
-    port: CLIENT_PORT
-  },
-  modules: {},
-  components: {}
-};
+  var SERVER_COMPONENT_NAME = "server";
+  var SERVER_MESH_NAME = "server_mesh";
 
-
-var serverConfig = {
-  name: SERVER_MESH_NAME,
-  dataLayer: {
-    secure: true,
-    adminPassword: 'password',
-    port: SERVER_PORT
-  },
-  modules: {},
-  components: {}
-};
-
-
-function getTestAdminGroup() {
-  var testMethodPath = "/" + SERVER_MESH_NAME + "/" + SERVER_COMPONENT_NAME + "/testMethod";
-
-  var testAdminGroup = {
-    name: "Test Admin",
-    permissions: {
-      methods: {}
-    }
+  var clientConfig = {
+    name: 'client',
+    dataLayer: {
+      port: CLIENT_PORT
+    },
+    modules: {},
+    components: {}
   };
 
-  testAdminGroup.permissions.methods[testMethodPath] = {authorized: true};
 
-  return testAdminGroup;
-}
+  var serverConfig = {
+    name: SERVER_MESH_NAME,
+    dataLayer: {
+      secure: true,
+      adminPassword: 'password',
+      port: SERVER_PORT
+    },
+    modules: {},
+    components: {}
+  };
 
-var TestUser = {
-  username: 'user@oem.com',
-  password: 'TEST PWD'
-};
 
-describe.only('start meshes', function () {
+  function getTestAdminGroup() {
+    var testMethodPath = "/" + SERVER_MESH_NAME + "/" + SERVER_COMPONENT_NAME + "/testMethod";
+
+    var testAdminGroup = {
+      name: "Test Admin",
+      permissions: {
+        methods: {}
+      }
+    };
+
+    testAdminGroup.permissions.methods[testMethodPath] = {authorized: true};
+
+    return testAdminGroup;
+  }
+
+  var TestUser = {
+    username: 'user@oem.com',
+    password: 'TEST PWD'
+  };
+
   var clientMesh;
   var serverMesh;
 
