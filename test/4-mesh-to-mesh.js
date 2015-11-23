@@ -23,8 +23,9 @@ config = {
     theFarawayTree: {  // remote mesh node
       config: {
         port: 3001,
-        secret: 'mesh',
-        host: 'localhost' // TODO This was necessary, did not default
+        host: 'localhost', // TODO This was necessary, did not default
+        username: '_ADMIN',
+        password: 'guessme'
       }
     }
   },
@@ -33,7 +34,7 @@ config = {
 };
 
 describe('Mesh to Mesh', function() {
- 
+
   this.timeout(20000);
 
   before(function(done) {
@@ -48,7 +49,7 @@ describe('Mesh to Mesh', function() {
       // console.log(data.toString());
 
       if (data.toString().match(/READY/)){
-      
+
 
         mesh = new Mesh();
 
@@ -64,17 +65,25 @@ describe('Mesh to Mesh', function() {
 
 
   after(function(done) {
-    remote.kill(); 
+    remote.kill();
     mesh.stop(done);
   });
 
   context('the faraway tree', function() {
 
     it("we can ride moonface's slippery slip",function(done) {
+
+      var eventFired = false;
+
+      mesh.event.theFarawayTree.moonface.on('*', function(data, meta){
+        if (data.value == 'whoa') eventFired = true;
+      });
+
       mesh.exchange.theFarawayTree.moonface.rideTheSlipperySlip(
         'one!', 'two!', 'three!', function(err, res) {
 
           assert(res == 'one! two! three!, wheeeeeeeeeeeeheeee!');
+          assert(eventFired);
           done()
 
       });
