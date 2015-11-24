@@ -1,7 +1,8 @@
 describe('shared data component', function() {
 
   var should = require('chai').should();
-  var Mesh = require('../../');
+  var Mesh = require('../');
+  var meshInstance;
   var config;
 
   var TestModule1 = {
@@ -19,7 +20,7 @@ describe('shared data component', function() {
   before(function(done) {
     var _this = this;
     Mesh.create(config = {
-
+      port:9898,
       modules: {
         'module1': {
           instance: TestModule1
@@ -37,23 +38,22 @@ describe('shared data component', function() {
 
 
     }).then(function(mesh) {
-      _this.mesh = mesh;
-      _this.data = mesh.exchange.data;
+      meshInstance = mesh;
+      dataComponent = mesh.exchange.data;
       done();
     }).catch(done);
   });
 
   after(function(done) {
-    this.mesh.stop(done);
+    meshInstance.stop(done);
   });
 
   context('direct use', function() {
 
     it('can set and get with opts', function(done) {
-      var data = this.data;
-      data.set('some/path/one', {key: 'value'}, {}, function(e, result) {
+      dataComponent.set('some/path/one', {key: 'value'}, {}, function(e, result) {
         if (e) return done(e);
-        data.get('some/path/one', {}, function(e, result) {
+        dataComponent.get('some/path/one', {}, function(e, result) {
           if (e) return done(e);
           result.key.should.equal('value');
           done();
@@ -63,10 +63,9 @@ describe('shared data component', function() {
 
 
     it('can set and get without opts', function(done) {
-      var data = this.data;
-      data.set('some/path/two', {key: 'value'}, function(e, result) {
+      dataComponent.set('some/path/two', {key: 'value'}, function(e, result) {
         if (e) return done(e);
-        data.get('some/path/two', function(e, result) {
+        dataComponent.get('some/path/two', function(e, result) {
           if (e) return done(e);
           result.key.should.equal('value');
           done();
@@ -75,17 +74,13 @@ describe('shared data component', function() {
     });
 
 
-    it.only('can subscribe with opts', function(done) {
-      var data = this.data;
-      data.on('/some/path/three', {}, function(data, meta) {
-        console.log('did on:::');
+    it('can subscribe with opts', function(done) {
+      dataComponent.on('/some/path/three', {}, function(data, meta) {
         data.should.eql({key: 'VAL'});
         done();
       }, function(e) {
-         console.log('did on set?:::', e);
         if (e) return done(e);
-        data.set('/some/path/three', {key: 'VAL'}, {}, function(e) {
-           console.log('did on set:::');
+        dataComponent.set('/some/path/three', {key: 'VAL'}, {}, function(e) {
           if (e) return done(e);
         })
       });
@@ -93,13 +88,12 @@ describe('shared data component', function() {
 
 
     it('can subscribe without opts', function(done) {
-      var data = this.data;
-      data.on('/some/path/four', function(data, meta) {
+      dataComponent.on('/some/path/four', function(data, meta) {
         data.should.eql({key: 'VALUE'});
         done();
       }, function(e) {
         if (e) return done(e);
-        data.set('/some/path/four', {key: 'VALUE'}, function(e) {
+        dataComponent.set('/some/path/four', {key: 'VALUE'}, function(e) {
           if (e) return done(e);
         })
       });
@@ -107,20 +101,19 @@ describe('shared data component', function() {
 
     it('can unsubscribe', function(done) {
       var received = [];
-      var data = this.data;
-      data.on('/some/path/five', function(data, meta) {
+      dataComponent.on('/some/path/five', function(data, meta) {
         received.push(data);
       }, function(e) {
         if (e) return done(e);
-        data.set('/some/path/five', {key: 1}) // <--------------- 1
+        dataComponent.set('/some/path/five', {key: 1}) // <--------------- 1
         .then(function() {
-          return data.set('/some/path/five', {key: 1}) // <------ 2
+          return dataComponent.set('/some/path/five', {key: 1}) // <------ 2
         })
         .then(function() {
-          return data.off('/some/path/five') // <------------- unsub
+          return dataComponent.off('/some/path/five') // <------------- unsub
         })
         .then(function() {
-          return data.set('/some/path/five', {key: 1}) // <------- 3
+          return dataComponent.set('/some/path/five', {key: 1}) // <------- 3
         })
         .then(function() {
           received.length.should.equal(2);
@@ -131,17 +124,16 @@ describe('shared data component', function() {
     })
 
     it('can delete', function(done) {
-      var data = this.data;
-      data.set('some/path/six', 6)
+      dataComponent.set('some/path/six', 6)
       .then(function() {
-        return data.get('some/path/six');
+        return dataComponent.get('some/path/six');
       })
       .then(function(six) {
         six.value.should.equal(6);
-        return data.remove('some/path/six')
+        return dataComponent.remove('some/path/six')
       })
       .then(function(res) {
-        return data.get('some/path/six');
+        return dataComponent.get('some/path/six');
       })
       .then(function(res) {
         should.not.exist(res);
@@ -151,14 +143,13 @@ describe('shared data component', function() {
     });
 
     it('can get paths', function(done) {
-      var data = this.data;
       require('bluebird').all([
-        data.set('this/one', 1),
-        data.set('this/two', 2),
-        data.set('this/three', 3),
+        dataComponent.set('this/one', 1),
+        dataComponent.set('this/two', 2),
+        dataComponent.set('this/three', 3),
       ])
       .then(function() {
-        return data.getPaths('this/*')
+        return dataComponent.getPaths('this/*')
       })
       .then(function(paths) {
         paths.length.should.equal(3);
@@ -173,10 +164,9 @@ describe('shared data component', function() {
   context('shared use', function() {
 
     it('can set from one component and getted from another', function(done) {
-      var _this = this;
-      this.mesh.exchange.module1.setSharedData('/my/thing', {'y':'x'})
+      meshInstance.exchange.module1.setSharedData('/my/thing', {'y':'x'})
       .then(function() {
-        return _this.mesh.exchange.module2.getSharedData('/my/thing')
+        return meshInstance.exchange.module2.getSharedData('/my/thing')
       })
       .then(function(d) {
         d.y.should.equal('x');
