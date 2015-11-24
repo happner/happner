@@ -54,9 +54,6 @@ describe('Mesh to Mesh', function() {
           // console.log('starting this one', mesh, config);
           // mesh.initialize(config, function(err) {
           mesh.initialize(config, function(e){
-
-              console.log('in slip slip init:::', mesh.exchange);
-
             done(e);
           });
         }
@@ -70,9 +67,6 @@ describe('Mesh to Mesh', function() {
     });
 
     it("we can ride moonface's slippery slip",function(done) {
-
-      console.log('in slip slip:::', mesh.exchange);
-
       mesh.exchange.theFarawayTree.moonface.rideTheSlipperySlip(
         'one!', 'two!', 'three!', function(err, res) {
 

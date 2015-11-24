@@ -75,14 +75,17 @@ describe('shared data component', function() {
     });
 
 
-    it('can subscribe with opts', function(done) {
+    it.only('can subscribe with opts', function(done) {
       var data = this.data;
-      data.on('some/path/three', {}, function(data, meta) {
+      data.on('/some/path/three', {}, function(data, meta) {
+        console.log('did on:::');
         data.should.eql({key: 'VAL'});
         done();
       }, function(e) {
+         console.log('did on set?:::', e);
         if (e) return done(e);
         data.set('/some/path/three', {key: 'VAL'}, {}, function(e) {
+           console.log('did on set:::');
           if (e) return done(e);
         })
       });
@@ -91,7 +94,7 @@ describe('shared data component', function() {
 
     it('can subscribe without opts', function(done) {
       var data = this.data;
-      data.on('some/path/four', function(data, meta) {
+      data.on('/some/path/four', function(data, meta) {
         data.should.eql({key: 'VALUE'});
         done();
       }, function(e) {
@@ -105,7 +108,7 @@ describe('shared data component', function() {
     it('can unsubscribe', function(done) {
       var received = [];
       var data = this.data;
-      data.on('some/path/five', function(data, meta) {
+      data.on('/some/path/five', function(data, meta) {
         received.push(data);
       }, function(e) {
         if (e) return done(e);
