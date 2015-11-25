@@ -55,6 +55,7 @@ describe('tests that we can add middleware before a static', function (done) {
     this.timeout(defaultTimeout);
     this.mesh = new Mesh();
     this.mesh.initialize(config, function (err) {
+      if (err) return done(err);
       done();
     });
   });
