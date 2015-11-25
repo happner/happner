@@ -1,9 +1,9 @@
-var should = require('chai').should();
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
-var Mesh = require('../');
-
 describe('Consumes an external module', function() {
+
+  var should = require('chai').should();
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+  var Mesh = require('../');
 
   var config = {
     name:"testMesh",
@@ -159,6 +159,7 @@ describe('Consumes an external module', function() {
     });
   });
 
+  /*
   it('should expose a data layer that is a happn client, local to the mesh', function (done) {
 
     var _this = this;
@@ -176,5 +177,6 @@ describe('Consumes an external module', function() {
       });
     });
   });
+*/
 
 });

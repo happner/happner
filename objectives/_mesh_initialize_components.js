@@ -85,10 +85,9 @@ module.exports = function() {
 
     it('all components are available from a client', function(done, Mesh, expect) {
 
-      Mesh.MeshClient(12345)
+      var client = new Mesh.MeshClient(12345)
 
-      .then(function(c) {
-        client = c;
+      client.login().then(function() {
         return client.exchange.as_class.c_goodExchangeMethod({opts:1})
       })
 
@@ -249,10 +248,9 @@ module.exports = function() {
 
     it('all components are available from a client', function(done, Mesh, expect, Promise) {
 
-      Mesh.MeshClient(12347)
+      var client = new Mesh.MeshClient(12347)
 
-      .then(function(c) {
-        client = c;
+      client.login().then(function(c) {
         return Promise.all([
           client.exchange.as_class_1         .c_goodExchangeMethod({opts: 1}),
           client.exchange.as_class_2         .c_goodExchangeMethod({opts: 2}),

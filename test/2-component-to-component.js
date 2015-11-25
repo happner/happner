@@ -1,18 +1,14 @@
-// Object.keys(require.cache).forEach(function(key) {
-//   delete require.cache[key]
-// });
-
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
-var maximumPings = 1000;
-var libFolder ;
-var Mesh = require('../');
-
 describe('Bounces a message between two components, demonstrates how the events layer works', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
-  var mesh = require('../lib/mesh')();
+  var sep = require('path').sep;
+  var libFolder = __dirname + sep + 'lib' + sep;
+  var maximumPings = 1000;
+  var libFolder ;
+  var Mesh = require('../');
+
+  var mesh = new Mesh();
 
   var config = {
     name:"testComponent2Component",

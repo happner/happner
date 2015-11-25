@@ -24,7 +24,7 @@ describe('does some benchmarks on api calls, data events and events', function (
     modules: {
       "module1": {
         path: __dirname + "/lib/8-module1",
-        constructor: {
+        create: {
           type: "sync",
           parameters: [
             {value: {maximumPings: maximumPings}}
@@ -33,7 +33,7 @@ describe('does some benchmarks on api calls, data events and events', function (
       },
       "module2": {
         path: __dirname + "/lib/8-module2",
-        constructor: {
+        create: {
           type: "sync",
           parameters: [
             {value: {maximumPings: maximumPings}}
@@ -44,6 +44,7 @@ describe('does some benchmarks on api calls, data events and events', function (
     components: {
       "component1": {
         moduleName: "module1",
+        accessLevel:"mesh",
         // scope: "component",//either component(mesh aware) or module - default is module
         startMethod: "start",
         schema: {
@@ -60,6 +61,7 @@ describe('does some benchmarks on api calls, data events and events', function (
       },
       "component2": {
         moduleName: "module2",
+        accessLevel:"mesh",
         // scope: "component",
         schema: {
           "exclusive": false,
@@ -128,6 +130,7 @@ describe('does some benchmarks on api calls, data events and events', function (
 
       mesh.api.event.component2.on('data-test-complete', function (message) {
         message.m.should.contain('Hooray');
+        console.log(message);
         done();
       }, function () {
       });

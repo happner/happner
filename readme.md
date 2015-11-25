@@ -37,6 +37,7 @@ happner
 [&#9654;](https://github.com/happner/happner/blob/master/docs/configuration.md) Configuation<br/>
 [&#9654;](https://github.com/happner/happner/blob/master/docs/datalayer.md) DataLayer<br/>
 [&#9654;](https://github.com/happner/happner/blob/master/docs/modules.md) Modules and Components<br/>
+[&#9654;](https://github.com/happner/happner/blob/master/docs/autoload.md) Autoloading and Defaulting<br/>
 
 [&#9654;](https://github.com/happner/happner/blob/master/docs/event.md) Event Api<br/>
 [&#9654;](https://github.com/happner/happner/blob/master/docs/exchange.md) Exchange Api<br/>

@@ -15,8 +15,9 @@
 # 
 # Going manual: 
 
-ls test/*.js | grep -v ^test/a | while read FILE; do
+ls test/*.js | while read FILE; do
 
+    echo $FILE
     mocha $FILE
 
     if [ $? -ne 0 ]; then

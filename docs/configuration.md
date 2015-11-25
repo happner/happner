@@ -5,12 +5,12 @@
 Mesh configuration contains several sections.
 
 * [Mesh Name](#mesh-name)
-* [Utilities](#utilities)
-* [Repl](#repl)
 * [DataLayer Config](#datalayer-config)
 * [Endpoint Config](#endpoint-config)
 * [Module Config](#module-config)
 * [Component Config](#component-config)
+* [Utilities](#utilities)
+* [Repl](#repl)
 
 These are arranged as a set of key/value pairs on the config object:
 
@@ -36,210 +36,48 @@ If the name is unspecified a random name will be used.
 
 __BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name. It is strongly recommended that you provide the name.
 
-### Utilities
-
-[&#9650;](#)
-
-#### Configuring the Logger
-
-The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger.
-
-There are configuration opportunities as follows:
-
-```javascript
-  // defaults
-```
-
-Or.
-
-```javascript
-  ...
-  util: {
-    logLevel: 'info',
-    logFile: '/absolute/path/to/file.log',
-    logDateFormat: 'yyyy-MM-dd hh:mm:ss',
-    logLayout: '%d{yyyy-MM-dd hh:mm:ss} - %m',
-    // logger: {}, // will silence all logging
-    logStackTraces: false,
-    logComponents: ['component', 'names'],
-    logTimeDelta: true,
-    logMessageDelimiter: '\t',
-  }
-  ...
-```
-
-###### logLevel
-Default 'info', LOG_LEVEL environment variable overrides<br/>
-Options include: __all__ __trace__ __debug__ __info__ __warn__ __error__ __fatal__ __off__.
-
-```javascript
-LOG_LEVEL=debug bin/my.mesh
-```
-
-###### logFile
-Must be absolute path.<br/>
-__If not present only the console will receive the log stream.__
-
-###### logDateFormat
-To override the date format in log messages.
-
-###### logLayout
-Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).
-
-###### logger
-Provide your own log4js config.<br/>
-
-###### logStackTraces
-Prints the error stack. Default false.
-
-###### logComponents
-Prints __debug__ and __trace__ messages for only the listed Names.
-Setting LOG_COMPONENTS environment variable will override config.
-
-```javascript
-LOG_LEVEL=trace LOG_COMPONENTS=Api,PubSub,MyComponent bin/my.mesh
-```
-
-###### logTimeDelta
-Includes 'milliseconds since last log message' in log message. The default is true.
-
-###### logMessageDelimiter
-Delimits between timeDelta and 'componentName message' in log lines.
-
-
-#### Using the Logger
-
-##### Method 1
-
-Modules and components can use the global `UTILITIES.createLogger(Name, obj)`
-
-* It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
-* It uses logLevel guards to minimise the impact of liberal trace and debug usage.
-* If `obj` is provided, log methods will be created on `obj`
-
-eg.
-
-```javascript
-module.exports = MyMeshModule;
-
-function MyMeshModule() {
-  this.log = UTILITIES.createLogger('MyMeshModule');
-  // this.log.$$TRACE('', {});
-  // this.log.$$DEBUG('', {});
-  // this.log.info('', {});
-  // this.log.warn('', {});
-  // this.log.errror('..', err);
-  // this.log.fatal('..', err);
-
-  //// UTILITIES.createLogger('MyMeshModule', this);
-  //// this.info('') // it will stomp existing functions on 'this'
-}
-MyMeshModule.prototype.m = function() {
-  this.log.$$TRACE('m()');
-}
-```
-
-##### Method 2
-
-Components can access their own logger in `$happn` (as injected by the mesh, see [Mesh Awareness](modules.md#mesh-awareness-with-happn))
-
-eg.
-
-```javascript
-module.exports = MyMeshModule;
-function MyMeshModule() {}
-MyMeshModule.prototype.m = function($happn) {
-  $happn.log.$$TRACE('m()');
-}
-```
-
-The `$$TRACE()` and `$$DEBUG()` are so named to enable optionally __FULLY__ productionizing with the following deployment step:
-
-##### Remove all calls to DEBUG and TRACE
-
-This is not paticularly recommended. Debugging can be usefull in production too. See `config.util.logComponents` option.
-
-```bash
-find node_modules/*/lib -type f -regex '.*\.js' \
-  | grep -v components/resources/lib \
-  | xargs sed -e s/[a-zA-Z\._-]*\$\$DEBUG\(.*\)\;//g -i .ORIGINAL
-
-# do the same with \$\$TRACE
-```
-
-##### Validate the Substitutions
-
-```bash
-find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
-  | while read FILE; do echo; echo ${FILE%.ORIGINAL}; diff ${FILE%.ORIGINAL} $FILE; done
-```
-
-### Repl
-
-[&#9650;](#)
-
-The MeshNode can be set to share a console repl on a socket file.
-
-```javascript
-  ...
-  repl: {
-    socket: '/tmp/somefilename',
-    ignoreUndefined: false,
-    useColors: true,
-  }
-  ...
-```
-* The repl __is only started if the config is present__.
-* The mesh instance is in the variable `meshNode`
-* ^d is the best exit.
-
-__Important!__ The repl is insecure. Anyone with readwrite on the socket file has __full access to the meshNode instance__.
-
-##### Using the repl.
-
-```bash
-sudo npm install repl-client --global
-
-rc /tmp/somefilename
-
-mesh-name> 
-mesh-name> meshNode.description()
-...
-mesh-name> ^d
-
-rc /tmp/somefilename < script.js > result.txt
-```
-
-
 ### DataLayer Config
 
 [&#9650;](#)
 
 See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
 
-The `config.datalayer` section can contain the following items (shown with defaults):
+The datalayer by default contains an embeded nedb database that does not persist beyond server restarts. This can be extended to have two databases, one embedded memory/fast and one persisting to a specified nedb file. When both are used it is up to the component configuration to declare which data paths are stored in which database by defining `data.routes` See [Component Config](#component-config).
+
+Configuration as follows  (__shown with defaults__):
 
 ```javascript
   ...
   datalayer: {
-    host: 'localhost',
-    port: 55000,
-    secret: 'mesh',
-    authTokenSecret: 'mesh',
-    setOptions: {
-      noStore: true,
-      timeout: 10000
-    },
+    host: '0.0.0.0',
+    port: 55000, // 0 for os assigned port
+    // sessionTokenSecret: shortid.generate(),
+
+    persist: false,
+    // filename: '/var/data/nodes/abc/data.nedb',
+    // defaultRoute: 'persist', // or 'mem' (default: inherits according to presense of datalayer.filename)
+
+    secure: false,
+    // adminPassword: shortid.generate(),
+
+    // setOptions: {
+    //  timeout: 5000,
+    //  noStore: true
+    // }
   }
   ...
 ```
 
 `host` - The host (ip/interface) for __this__ MeshNode to listen on.<br/>
 `port` - The port to listen on.<br/>
-`secret` - Simple authentication. Other MeshNodes and browser clients use this secret to authenticate.</br>
-`authTokenSecret` - Used to encrypt the session webtoken. <br/>
-`setOptions.noStore` - Flag to enable/disable storage of messages and calls between MeshNodes.<br/>
-`setOptions.timeout` - Timeout for remote messaging and method calls.<br/>
+`sessionTokenSecret` - <br/>
+`persist` - Set true will save data to default nedb file in `$HOME/.happn/data/$MESHNAME.nedb`<br/>
+`filename` - Save to specified nedb file.<br/>
+`defaultRoute` - Where to store data when no match is found in the per component `data.route` masks.<br/>
+`secure` - Set true will enable security. Users in groups with permissions will need to be created. See [Security](security.md)<br/>
+`adminPassword` - If secure is true, this sets a password for the genesis user (_ADMIN).<br/>
+`setOptions` - Default options set by the exchange when calling functions through the datalayer.</br>
+
 
 __NOTE:__ The `config.datalayer` section can be omitted if all defaults are acceptable.
 
@@ -258,14 +96,16 @@ The `config.endpoints` section should list all remote MeshNodes to which __this_
       config: {
         host: 'crane1.berth1.quay1.harbour.com',
         port: 919,
-        secret: 'ƒ¡ƒ†¥'
+
+        //security enabled?
+        username: '',
+        password: '',
       }
     },
     'quay1-berth2-crane1': {
       config: {
         host: 'crane1.berth2.quay1.harbour.com',
         port: 919,
-        secret: 'ƒ¡ƒ†¥'
       }
     },
   }
@@ -277,11 +117,10 @@ The above attaches __this__ MeshNode to two remote MeshNodes.
 `quay1-berth1-crane1` - The remote MeshNode's name (as configured in the remote's `config.name`)<br/>
 `.host` - The remote MeshNode ip/hostname (as configured in the remote's `config.datalayer.host`)<br/>
 `.port` - The remote MeshNode post (as configured in the remote's `config.datalayer.port`)<br/>
-`.secret` - The remote MeshNode secret (as configured in the remote's `config.datalayer.secret`)<br/>
+`.username` - Username with the required priviledges at the remote MeshNode. See [Security](security.md)<br/>
+`.password` - <br/>
 
 ##### Short Form
-
-Assuming all nodes using default authtoken and secret.
 
 ```javascript
   ...
@@ -555,10 +394,10 @@ The `config.components` section should list components to be loaded into the mes
         'event/with/wildcard/*': {},
       },
       data: {
-        'friends/*': {},
-        'lovers/monday/*': {},
-        'lovers/wednesday/*': {},
-        'lovers/friday/*': {}
+        routes: {
+          'friends/*': 'persist',
+          'lovers/*': 'mem',
+        }
       }
     }
   }
@@ -611,9 +450,184 @@ __(optional)__
 
 List the events that this component generates. See [Events](events.md)
 
-###### data
+###### data.routes
 __(optional)__
 
-List the data paths where this component stores, retrieves or subscribes. See [Data](data.md)
+List the data paths where this component stores, retrieves or subscribes. 'mem' refers to storage that will be routed to the memory only, and 'persist' is routed to the configured `datalayer.filename` or defaulted database. See [Data](data.md)
+
+
+### Utilities
+
+[&#9650;](#)
+
+#### Configuring the Logger
+
+The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger.
+
+There are configuration opportunities as follows:
+
+```javascript
+  // defaults
+```
+
+Or.
+
+```javascript
+  ...
+  util: {
+    logLevel: 'info',
+    logFile: '/absolute/path/to/file.log',
+    logDateFormat: 'yyyy-MM-dd hh:mm:ss',
+    logLayout: '%d{yyyy-MM-dd hh:mm:ss} - %m',
+    // logger: {}, // will silence all logging
+    logStackTraces: false,
+    logComponents: ['component', 'names'],
+    logTimeDelta: true,
+    logMessageDelimiter: '\t',
+  }
+  ...
+```
+
+###### logLevel
+Default 'info', LOG_LEVEL environment variable overrides<br/>
+Options include: __all__ __trace__ __debug__ __info__ __warn__ __error__ __fatal__ __off__.
+
+```javascript
+LOG_LEVEL=debug bin/my.mesh
+```
+
+###### logFile
+Must be absolute path.<br/>
+__If not present only the console will receive the log stream.__
+
+###### logDateFormat
+To override the date format in log messages.
+
+###### logLayout
+Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).
+
+###### logger
+Provide your own log4js config.<br/>
+
+###### logStackTraces
+Prints the error stack. Default false.
+
+###### logComponents
+Prints __debug__ and __trace__ messages for only the listed Names.
+Setting LOG_COMPONENTS environment variable will override config.
+
+```javascript
+LOG_LEVEL=trace LOG_COMPONENTS=Api,PubSub,MyComponent bin/my.mesh
+```
+
+###### logTimeDelta
+Includes 'milliseconds since last log message' in log message. The default is true.
+
+###### logMessageDelimiter
+Delimits between timeDelta and 'componentName message' in log lines.
+
+
+#### Using the Logger
+
+##### Method 1
+
+Modules and components can use the global `UTILITIES.createLogger(Name, obj)`
+
+* It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
+* It uses logLevel guards to minimise the impact of liberal trace and debug usage.
+* If `obj` is provided, log methods will be created on `obj`
+
+eg.
+
+```javascript
+module.exports = MyMeshModule;
+
+function MyMeshModule() {
+  this.log = UTILITIES.createLogger('MyMeshModule');
+  // this.log.$$TRACE('', {});
+  // this.log.$$DEBUG('', {});
+  // this.log.info('', {});
+  // this.log.warn('', {});
+  // this.log.errror('..', err);
+  // this.log.fatal('..', err);
+
+  //// UTILITIES.createLogger('MyMeshModule', this);
+  //// this.info('') // it will stomp existing functions on 'this'
+}
+MyMeshModule.prototype.m = function() {
+  this.log.$$TRACE('m()');
+}
+```
+
+##### Method 2
+
+Components can access their own logger in `$happn` (as injected by the mesh, see [Mesh Awareness](modules.md#mesh-awareness-with-happn))
+
+eg.
+
+```javascript
+module.exports = MyMeshModule;
+function MyMeshModule() {}
+MyMeshModule.prototype.m = function($happn) {
+  $happn.log.$$TRACE('m()');
+}
+```
+
+The `$$TRACE()` and `$$DEBUG()` are so named to enable optionally __FULLY__ productionizing with the following deployment step:
+
+##### Remove all calls to DEBUG and TRACE
+
+This is not paticularly recommended. Debugging can be usefull in production too. See `config.util.logComponents` option.
+
+```bash
+find node_modules/*/lib -type f -regex '.*\.js' \
+  | grep -v components/resources/lib \
+  | xargs sed -e s/[a-zA-Z\._-]*\$\$DEBUG\(.*\)\;//g -i .ORIGINAL
+
+# do the same with \$\$TRACE
+```
+
+##### Validate the Substitutions
+
+```bash
+find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
+  | while read FILE; do echo; echo ${FILE%.ORIGINAL}; diff ${FILE%.ORIGINAL} $FILE; done
+```
+
+### Repl
+
+[&#9650;](#)
+
+The MeshNode can be set to share a console repl on a socket file.
+
+```javascript
+  ...
+  repl: {
+    socket: '/tmp/somefilename',
+    ignoreUndefined: false,
+    useColors: true,
+  }
+  ...
+```
+* The repl __is only started if the config is present__.
+* The mesh instance is in the variable `meshNode`
+* ^d is the best exit.
+
+__Important!__ The repl is insecure. Anyone with readwrite on the socket file has __full access to the meshNode instance__.
+
+##### Using the repl.
+
+```bash
+sudo npm install repl-client --global
+
+rc /tmp/somefilename
+
+mesh-name> 
+mesh-name> meshNode.description()
+...
+mesh-name> ^d
+
+rc /tmp/somefilename < script.js > result.txt
+```
 
 

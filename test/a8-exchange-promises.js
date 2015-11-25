@@ -31,12 +31,12 @@ SeeAbove.prototype.$happner = {
 if (global.TESTING_18) return; // When 'requiring' the module above,
                               // don't run the tests below
                              //.............
-
 var should = require('chai').should();
-var mesh;
-var Mesh = require('../');
 
 describe('exchange supports promises', function() {
+
+  var Mesh = require('../');
+  var mesh;
 
   this.timeout(20000);
 
