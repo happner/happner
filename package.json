@@ -23,6 +23,7 @@
   "devDependencies": {
     "chai": "^2.2.0",
     "expect.js": "^0.3.1",
+    "fxt": "^1.0.2",
     "happner-test-modules": "0.0.3",
     "mocha": "^2.2.4",
     "objective": "0.0.40",
@@ -34,20 +35,21 @@
   "dependencies": {
     "async": "0.9.2",
     "bluebird": "2.10.2",
+    "change-case": "2.3.0",
     "commander": "2.9.0",
     "diskspace": "0.1.7",
     "fs-extra": "0.24.0",
     "glob": "5.0.15",
+    "happn": "1.0.2",
+    "happner-terminal": "0.0.6",
     "log4js": "0.6.28",
     "md5": "2.0.0",
     "merge": "1.2.0",
     "moment": "2.10.6",
+    "uglify-js": "2.6.1",
     "proc-stats": "0.0.4",
     "serve-static": "1.10.0",
     "shortid": "2.2.4",
-    "sillyname": "0.0.3",
-    "uglify-js": "2.6.1",
-    "happn": "1.0.2",
-    "happner-terminal": "0.0.6"
+    "sillyname": "0.0.3"
   }
 }
