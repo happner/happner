@@ -45,17 +45,13 @@ if (global.TESTING_7) return; // When 'requiring' the module above,
                               // don't run the tests below
                              //............. 
 
-// var sep = require('path').sep;
-// var libFolder = __dirname + sep + 'lib' + sep;
-// var maximumPings = 1000;
-// var libFolder ;
-var Mesh = require('../');
-var test_id = Date.now() + '_' + require('shortid').generate();
-var should = require('chai').should();
-var fs = require('fs-extra');
-var dbFileName = './temp/' + test_id + '.nedb';
-
 describe('test persisted config, check memory and persisted data stores', function() {
+
+  var Mesh = require('../');
+  var test_id = Date.now() + '_' + require('shortid').generate();
+  var should = require('chai').should();
+  var fs = require('fs-extra');
+  var dbFileName = './temp/' + test_id + '.nedb';
 
   global.TESTING_7 = true;
   this.timeout(3000);
@@ -64,7 +60,7 @@ describe('test persisted config, check memory and persisted data stores', functi
     name:"testPersistedData",
     datalayer: {
       persist:true,
-      defaultRoute:"mem", //mem anyhow
+      defaultRoute:"persist", //mem anyhow
       filename:dbFileName,
       log_level: 'info'
     },
@@ -85,6 +81,14 @@ describe('test persisted config, check memory and persisted data stores', functi
         schema: {
           exclusive: false,
           methods: {}
+        }
+      },
+      'data': {
+        data:{
+          routes:{
+            "things/*":"persist",
+            "stuff/*":"mem"
+          }
         }
       }
     }
@@ -162,6 +166,80 @@ describe('test persisted config, check memory and persisted data stores', functi
 
         try {
           response._meta.path.should.equal('/_data/DataComponent7/things/with/roman');
+          called.should.equal(true);
+        } catch(e) {
+          return done(e);
+        }finally {
+          _this.datastores.persist.update = originalFn;
+        }
+
+        done();
+
+      });
+
+    }catch(e){
+      done(e);
+    } finally {
+      this.datastores.persist.update = originalFn;
+    }
+
+  })
+
+  it('tests storing data routed to mem, in the data component', function(done) {
+
+    var _this = this;
+    var called = false;
+    var originalFn = this.datastores.mem.db.update;
+    this.datastores.mem.db.update = function() {
+      called = true;
+      originalFn.apply(this, arguments);
+    }
+
+    try{
+
+      this.mesh.exchange.data.set('stuff/this/thing', {'test':'data'}, function(e, response){
+
+        if (e) return done(e);
+
+        try {
+          response._meta.path.should.equal('/_data/data/stuff/this/thing');
+          called.should.equal(true);
+        } catch(e) {
+          return done(e);
+        }finally {
+          _this.datastores.mem.update = originalFn;
+        }
+
+        done();
+
+      });
+
+    }catch(e){
+      done(e);
+    } finally {
+      this.datastores.mem.update = originalFn;
+    }
+    
+  });
+
+  it('tests storing data routed to persist, in the data component', function(done) {
+
+    var _this = this;
+    var called = false;
+    var originalFn = this.datastores.persist.db.update;
+    this.datastores.persist.db.update = function() {
+      called = true;
+      originalFn.apply(this, arguments);
+    }
+
+    try{
+
+      this.mesh.exchange.data.set('things/with/roman', {'test':'xata'}, function(e, response){
+
+        if (e) return done(e);
+
+        try {
+          response._meta.path.should.equal('/_data/data/things/with/roman');
           called.should.equal(true);
         } catch(e) {
           return done(e);
