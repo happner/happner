@@ -3,13 +3,6 @@ npm-debug.log
 coverage
 lib/system/activity.log*
 lib/system/data/*.nedb
+temp/*
 .DS_Store
-resources_temp/*
-test
-objectives
-.selection
-mocha
-objective.*
-selector
-.a-*
 .travis.yml
