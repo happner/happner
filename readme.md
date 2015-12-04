@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner)(master), 
-[![Build Status](https://travis-ci.org/happner/happner.svg?branch=develop)](https://travis-ci.org/happner/happner)(develop)<br/>
+[![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner)
 
 # happner
 
