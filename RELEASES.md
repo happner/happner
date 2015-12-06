@@ -4,3 +4,9 @@
 - mesh obtains unique name from happn, if one isnt specified
 - fix for data routes, tested in 7-persisted-data
 - modified test script in package.json
+
+1.1.2 2015-12-06
+----------------
+
+- moved logger out into own module [happn-logger](https://github.com/happner/happn-logger)
+- added deprecation warnings on use of UTILITIES global and the old logger
