@@ -29,9 +29,7 @@ var Server = function(){
   };
 
   this.doSomethingSpecial = function(data, callback, $happn){
-    console.log('doing something special');
     $happn.emit('special', data);
-
     callback(null, 'success');
   }
 };
@@ -92,6 +90,7 @@ function addNewUser(group, device, mesh, callback) {
     if (err) return callback(err);
 
     if (user === null) {
+
       mesh.exchange.security.addUser(newDeviceUser, function (err, user) {
         if (err)return callback(err);
 
@@ -101,6 +100,7 @@ function addNewUser(group, device, mesh, callback) {
       });
     }
     else {
+
       mesh.exchange.security.updateUser(newDeviceUser, function (err, user) {
         if (err)return callback(err);
 

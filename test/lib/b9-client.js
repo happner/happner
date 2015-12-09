@@ -2,7 +2,7 @@
  * Created by cc on 2015/12/08.
  */
 
-var Mesh = require('../../../../lib/mesh.js');
+var Mesh = require('../../lib/mesh.js');
 
 module.exports = function(){
   return new Client();
@@ -34,8 +34,6 @@ var Client = function () {
 
   this.login = function (credentials, callback) {
     _meshClient.login(credentials).then(function () {
-      console.log('logged in as ', credentials.username);
-
       callback();
     }).catch(function (err) {
       console.log("login error");
@@ -49,6 +47,9 @@ var Client = function () {
 
 
   this.registerDevice = function (credentials, deviceDetails, callback, $happn) {
+
+    console.log('loggin in with creds:::', credentials);
+
     _this_module.login(credentials, afterLogin);
 
     function afterLogin(err) {

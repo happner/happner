@@ -1,13 +1,15 @@
 var should = require('chai').should();
 var path = require('path');
 
-var meshpath = path.join(__dirname, '../../lib/mesh')
+var meshpath = path.join(__dirname, '../lib/mesh')
 
 var happner = require(meshpath);
 
 
-var clientPath = path.join(__dirname, '../lib/test-issue/bug-56/client.js');
-var serverPath = path.join(__dirname, '../lib/test-issue/bug-56/server.js');
+var clientPath = path.join(__dirname, 'lib/b9-client.js');
+var serverPath = path.join(__dirname, 'lib/b9-server.js');
+
+var Mesh = require(meshpath);
 
 //var ownPath = path.join(__dirname, '../index.js');
 
@@ -150,6 +152,86 @@ describe('cc-mesh-client-security-login', function() {
     }
   });
 
+  // it('a - client should register a device on the server', function (done) {
+  //   this.timeout(5000);
+
+  //   var device = {
+  //     device_info: "someInfo"
+  //   };
+
+  //   clientMesh.exchange.client.registerDevice(OemUser, device, function(err){
+  //     if(err) console.log(err);
+  //     should.not.exist(err);
+
+  //     console.log('device registered:::');
+
+  //     clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
+  //       if(err) console.log(err);
+
+  //       should.not.exist(err);
+  //       data.should.eql('success');
+
+  //       console.log('requestSomethingSpecial ok:::');
+
+  //       device = {
+  //         device_info: "some New Info"
+  //       };
+
+  //       clientMesh.exchange.client.registerDevice(OemUser, device, function(err){
+  //         if(err) console.log(err);
+  //         should.not.exist(err);
+
+  //         console.log('device registered again:::');
+
+
+
+  //         clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
+  //           if(err) console.log(err);
+  //           should.not.exist(err);
+  //           data.should.eql('success');
+
+  //           done();
+  //         });
+
+
+  //       });
+  //     });
+  //   });
+  // });
+
+  //  it('a - client should register a device on the server', function (done) {
+  //   this.timeout(5000);
+
+  //   var device = {
+  //     device_info: "someInfo"
+  //   };
+
+  //   clientMesh.exchange.client.registerDevice(OemUser, device, function(err){
+  //     if(err) console.log(err);
+  //     should.not.exist(err);
+
+  //     console.log('device registered:::');
+
+  //     clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
+  //       if(err) console.log(err);
+
+  //       should.not.exist(err);
+  //       data.should.eql('success');
+
+  //       console.log('requestSomethingSpecial ok:::');
+
+  //       clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
+
+  //           if(err) console.log(err);
+  //           should.not.exist(err);
+  //           data.should.eql('success');
+
+  //           done();
+  //         });
+  //       });
+  //   });
+  // });
+
   it('a - client should register a device on the server', function (done) {
     this.timeout(5000);
 
@@ -161,10 +243,15 @@ describe('cc-mesh-client-security-login', function() {
       if(err) console.log(err);
       should.not.exist(err);
 
+      console.log('device registered:::');
+
       clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
         if(err) console.log(err);
+
         should.not.exist(err);
         data.should.eql('success');
+
+        console.log('requestSomethingSpecial ok:::');
 
         device = {
           device_info: "some New Info"
@@ -174,7 +261,12 @@ describe('cc-mesh-client-security-login', function() {
           if(err) console.log(err);
           should.not.exist(err);
 
+          console.log('device registered again:::');
+
           clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
+
+            console.log('final request:::', arguments);
+
             if(err) console.log(err);
             should.not.exist(err);
             data.should.eql('success');
@@ -186,7 +278,71 @@ describe('cc-mesh-client-security-login', function() {
     });
   });
 
-});
+  });
+
+//   it('a - client should register a device on the server', function (done) {
+//     this.timeout(5000);
+
+//     var device = {
+//       device_info: "someInfo"
+//     };
+
+//     clientMesh.exchange.client.registerDevice(OemUser, device, function(err){
+//       if(err) console.log(err);
+//       should.not.exist(err);
+
+//       console.log('device registered:::');
+
+//       clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
+//         if(err) console.log(err);
+
+//         should.not.exist(err);
+//         data.should.eql('success');
+
+//         console.log('requestSomethingSpecial ok:::');
+
+//         device = {
+//           device_info: "some New Info"
+//         };
+
+//         clientMesh.exchange.client.registerDevice(OemUser, device, function(err){
+//           if(err) console.log(err);
+//           should.not.exist(err);
+
+//           console.log('device registered again:::');
+
+//           var _testClient = new Mesh.MeshClient({
+//             secure: true,
+//             port: SERVER_PORT,
+//             hostname: '127.0.0.1'
+//           });
+
+//           _testClient.login({username:'user', password:'password'}).then(function () {
+//             console.log('logged in as _testClient:::');
+
+//             _testClient.exchange.server_mesh_2.server.doSomethingSpecial("some_data", function(err, data){
+
+//               console.log('final request:::', arguments);
+
+//               if(err) console.log(err);
+//               should.not.exist(err);
+//               data.should.eql('success');
+
+//               done();
+//             });
+            
+//           }).catch(function (err) {
+//             console.log("login error");
+//             done(err);
+//           });
+
+          
+//         });
+//       });
+//     });
+//   });
+
+// });
 
 
 function getOemAdminGroup() {
