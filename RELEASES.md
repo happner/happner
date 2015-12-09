@@ -10,3 +10,8 @@
 
 - moved logger out into own module [happn-logger](https://github.com/happner/happn-logger)
 - added deprecation warnings on use of UTILITIES global and the old logger
+
+1.2.3 2015-12-07
+----------------
+
+- fixed bug in MeshClient not configuring log in standalone case
