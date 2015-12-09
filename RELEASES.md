@@ -15,3 +15,11 @@
 ----------------
 
 - fixed bug in MeshClient not configuring log in standalone case
+
+1.2.4 2015-12-08
+----------------
+
+- fixed issue with users and groups being updated, and passed directly up to the client in happn - was causing a scope issue, proved in test b9-mesh-security-updateuser-re-accessresource
+
+
+
