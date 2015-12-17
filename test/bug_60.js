@@ -47,6 +47,7 @@ describe('bug #60 - security layer should be initialized before user components 
       mesh.start(function(err){
         if(err) console.log(err);
         should.not.exist(err);
+        done();
       });
     });
   });
