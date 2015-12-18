@@ -21,5 +21,8 @@
 
 - fixed issue with users and groups being updated, and passed directly up to the client in happn - was causing a scope issue, proved in test b9-mesh-security-updateuser-re-accessresource
 
+1.2.7 2015-12-18
+----------------
 
+- fixed issue where system components were being started after user-land components, using latest version of happn 1.1.5
 
