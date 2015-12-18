@@ -5,7 +5,7 @@ var meshpath = path.join(__dirname, '../lib/mesh');
 
 var happner = require(meshpath);
 
-var testComponentPath = path.join(__dirname, 'lib/bug_60_component.js');
+var testComponentPath = path.join(__dirname, 'lib/c1-system-component-initialization.js');
 
 
 var config = {
@@ -36,7 +36,7 @@ var config = {
 };
 
 
-describe('bug #60 - security layer should be initialized before user components are started', function(){
+describe('c1-system-component-initialization - security layer should be initialized before user components are started', function(){
 
   it('should start a user component that expects the security layer to be initialized', function(done){
     var mesh = new happner();
