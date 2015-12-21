@@ -7,6 +7,7 @@ var happner = require(meshpath);
 
 var testComponentPath = path.join(__dirname, 'lib/c1-system-component-initialization.js');
 
+var mesh = new happner();
 
 var config = {
   dataLayer: {
@@ -38,8 +39,11 @@ var config = {
 
 describe('c1-system-component-initialization - security layer should be initialized before user components are started', function(){
 
+  after('should stop the happn server', function(done){
+    mesh.stop(done);
+  });
+
   it('should start a user component that expects the security layer to be initialized', function(done){
-    var mesh = new happner();
     mesh.initialize(config, function(err){
       if(err) console.log(err);
       should.not.exist(err);
@@ -51,5 +55,7 @@ describe('c1-system-component-initialization - security layer should be initiali
       });
     });
   });
+
+  
 
 });

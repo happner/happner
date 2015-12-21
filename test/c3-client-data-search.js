@@ -118,6 +118,8 @@ describe('c3-client-data-search', function() {
 
     it('can get the latest record', function(done) {
 
+      this.timeout(5000);
+
       var indexes = [0,1,2,3,4,5,6,7,8,9];
 
       async.eachSeries(indexes, function(index, eachCallback){
