@@ -6,6 +6,8 @@ describe('c3-client-data-search', function() {
   var meshClientInstance;
   var dataEvents;
   var config;
+  var expect = require('expect.js');
+  var async = require('async');
 
   var TestModule1 = {
     setSharedData: function($happn, path, data, callback) {
@@ -21,6 +23,7 @@ describe('c3-client-data-search', function() {
 
   before(function(done) {
     var _this = this;
+
     Mesh.create(config = {
       modules: {
         'module1': {
@@ -43,6 +46,7 @@ describe('c3-client-data-search', function() {
       meshClientInstance = new Mesh.MeshClient();
       meshClientInstance.login().then(done);
     }).catch(done);
+
   });
 
   after(function(done) {
@@ -59,9 +63,7 @@ describe('c3-client-data-search', function() {
         if (e) return done(e);
 
         var options = {
-          fields: {"data.name": 1},
-          sort: {"data.name": 1},
-          limit: 1
+          sort: {"data.name": 1}
         }
 
         var criteria = {
@@ -72,10 +74,111 @@ describe('c3-client-data-search', function() {
         function(e, result){
           if(e) return done(e);
          
-          console.log('crimson:::', result);
-
           result.length.should.eql(1);
           done();
+
+        });
+
+      });
+
+    });
+
+    //DOESNT WORK USING NEDB PLUGIN
+    xit('can get using criteria, limit to fields', function(done) {
+
+      meshInstance.exchange.data.set('movie/war/ww2',{name : 'crimson tide', genre : 'ww2'},
+      function(e, result){
+
+        if (e) return done(e);
+
+        var options = {
+          fields: {"data.name": 1}
+        }
+
+        var criteria = {
+          "data.genre" : "ww2"
+        }
+
+        meshInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
+        function(e, result){
+
+          if(e) return done(e);
+
+          expect(result[0].genre).to.be(undefined);
+          result[0].name.should.eql('crimson tide');
+          result.length.should.eql(1);
+
+          done();
+
+        });
+
+      });
+
+    });
+
+    it('can get the latest record', function(done) {
+
+      var indexes = [0,1,2,3,4,5,6,7,8,9];
+
+      async.eachSeries(indexes, function(index, eachCallback){
+
+        meshInstance.exchange.data.set('movie/family/' + index,
+        {name : 'the black stallion', genre : 'family'},
+        eachCallback);
+
+      }, function(e){
+
+        if (e) return callback(e);
+
+        var options = {
+          sort: {"_meta.created": -1},
+          limit: 1
+        }
+
+        var criteria = {
+          "data.genre" : "family"
+        }
+
+        var latestResult;
+
+        meshInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
+        function(e, result){
+
+          if(e) return done(e);
+         
+          result.length.should.eql(1);
+
+          latestResult = result[0];
+
+          console.log('latestResult:::', latestResult);
+
+          expect(latestResult._meta.created).to.not.be(null);
+          expect(latestResult._meta.created).to.not.be(undefined);
+
+          meshInstance.exchange.data.get('movie/family/*',
+          function(e, result){
+
+            if (e) return callback(e);
+
+            for (var resultItemIndex in result){
+
+              //if (resultItemIndex == '_meta') continue;
+
+              var resultItem = result[resultItemIndex];
+
+              console.log('resultItem:::', resultItem, resultItemIndex);
+
+              expect(resultItem._meta.created).to.not.be(null);
+              expect(resultItem._meta.created).to.not.be(undefined);
+
+              if ((resultItem._meta.path != latestResult._meta.path) && resultItem._meta.created > latestResult._meta.created)
+                return done(new Error('the latest result is not the latest result...'));
+
+            }
+
+            done();
+
+          });
 
         });
 
@@ -95,9 +198,7 @@ describe('c3-client-data-search', function() {
         if (e) return done(e);
 
         var options = {
-          //fields: {"data.name": 1},
-          sort: {"data.name": 1},
-          limit: 1
+          sort: {"_meta.created": 1}
         }
 
         var criteria = {
@@ -131,9 +232,7 @@ describe('c3-client-data-search', function() {
         if (e) return done(e);
 
         var options = {
-          fields: {"data.name":1},
-          sort: {"data.name": 1},
-          limit: 1
+          sort: {"data.name": 1}
         }
 
         var criteria = {
@@ -144,8 +243,6 @@ describe('c3-client-data-search', function() {
         function(e, result){
           if(e) return done(e);
          
-          console.log('comedy result:::', result);
-
           result.length.should.eql(1);
           result[0].name.should.eql('nkandla2');
 
