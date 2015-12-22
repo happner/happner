@@ -116,7 +116,7 @@ describe('c3-client-data-search', function() {
 
     });
 
-    it('can get the latest record', function(done) {
+    xit('can get the latest record, without _meta', function(done) {
 
       this.timeout(5000);
 
@@ -165,6 +165,78 @@ describe('c3-client-data-search', function() {
             for (var resultItemIndex in result){
 
               //if (resultItemIndex == '_meta') continue;
+
+              var resultItem = result[resultItemIndex];
+
+              console.log('resultItem:::', resultItem, resultItemIndex);
+
+              expect(resultItem._meta.created).to.not.be(null);
+              expect(resultItem._meta.created).to.not.be(undefined);
+
+              if ((resultItem._meta.path != latestResult._meta.path) && resultItem._meta.created > latestResult._meta.created)
+                return done(new Error('the latest result is not the latest result...'));
+
+            }
+
+            done();
+
+          });
+
+        });
+
+      });
+
+    });
+
+    it('can get the latest record', function(done) {
+
+      this.timeout(5000);
+
+      var indexes = [0,1,2,3,4,5,6,7,8,9];
+
+      async.eachSeries(indexes, function(index, eachCallback){
+
+        meshInstance.exchange.data.set('movie/family/' + index,
+        {name : 'the black stallion', genre : 'family'},
+        eachCallback);
+
+      }, function(e){
+
+        if (e) return callback(e);
+
+        var options = {
+          sort: {"_meta.created": -1},
+          limit: 1
+        }
+
+        var criteria = {
+          "data.genre" : "family"
+        }
+
+        var latestResult;
+
+        meshInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
+        function(e, result){
+
+          if(e) return done(e);
+         
+          result.length.should.eql(1);
+
+          latestResult = result[0];
+
+          console.log('latestResult:::', latestResult);
+
+          expect(latestResult._meta.created).to.not.be(null);
+          expect(latestResult._meta.created).to.not.be(undefined);
+
+          meshInstance.exchange.data.get('movie/family/*',
+          function(e, result){
+
+            if (e) return callback(e);
+
+            for (var resultItemIndex in result){
+
+              if (resultItemIndex == '_meta') continue;
 
               var resultItem = result[resultItemIndex];
 
