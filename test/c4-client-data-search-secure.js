@@ -1,4 +1,4 @@
-describe('c3-client-data-search', function() {
+describe('c4-client-data-search-secure', function() {
 
   var should = require('chai').should();
   var Mesh = require('../');
@@ -8,6 +8,7 @@ describe('c3-client-data-search', function() {
   var config;
   var expect = require('expect.js');
   var async = require('async');
+  var test_id = Date.now() + '_' + require('shortid').generate();
 
   var TestModule1 = {
     setSharedData: function($happn, path, data, callback) {
@@ -25,6 +26,14 @@ describe('c3-client-data-search', function() {
     var _this = this;
 
     Mesh.create(config = {
+
+      datalayer: {
+        persist:true,
+        secure:true,
+        adminPassword: test_id,
+        log_level: 'error'
+      },
+
       modules: {
         'module1': {
           instance: TestModule1
@@ -44,7 +53,10 @@ describe('c3-client-data-search', function() {
     }).then(function(mesh) {
       meshInstance = mesh;
       meshClientInstance = new Mesh.MeshClient();
-      meshClientInstance.login().then(done);
+      meshClientInstance.login({
+        username:'_ADMIN',
+        password:test_id
+      }).then(done);
     }).catch(done);
 
   });
