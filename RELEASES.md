@@ -26,3 +26,9 @@
 
 - fixed issue where system components were being started after user-land components, using latest version of happn 1.1.5
 
+1.3.7 2015-12-23
+----------------
+
+- using the latest version of happn 1.2.6
+- created search tests
+
