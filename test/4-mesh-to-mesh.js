@@ -13,11 +13,8 @@ var libFolder = __dirname + sep + 'lib' + sep;
 
 config = {
   name: 'mesh2',
-  dataLayer: {
-    port: 3002,
-    authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-    systemSecret: 'mesh',
-    log_level: 'info|error|warning'
+  datalayer: {
+    port: 3002
   },
   endpoints: {
     theFarawayTree: {  // remote mesh node

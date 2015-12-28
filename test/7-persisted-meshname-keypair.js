@@ -13,9 +13,8 @@ describe('start and stop a persisted mesh', function() {
   var config = {
     secure:true,
     datalayer: {
-      persist:true,
-      filename:dbFileName,
-      log_level: 'info'
+      persist: true,
+      filename: dbFileName
     },
     components: {
       'data': {}

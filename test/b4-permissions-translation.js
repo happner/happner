@@ -52,14 +52,10 @@ describe('component start and validation -', function() {
 
     mesh.initialize({
       name:'b4_permissions_translation',
-      util: {
-        // logLevel: ['error']
-      },
       datalayer: {
-        persist:true,
-        secure:true,
+        persist: true,
+        secure: true,
         adminPassword: test_id,
-        log_level: 'error'
       },
       modules: {
         'SecuredComponent': {

@@ -14,13 +14,6 @@ describe('does some benchmarks on api calls, data events and events', function (
 
   var config = {
     name: "testBenchmark",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-      log_level: 'error'
-      //setOptions:{}
-    },
-    endpoints: {},
     modules: {
       "module1": {
         path: __dirname + "/lib/8-module1",

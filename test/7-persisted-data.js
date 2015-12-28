@@ -59,10 +59,9 @@ describe('test persisted config, check memory and persisted data stores', functi
   var config = {
     name:"testPersistedData",
     datalayer: {
-      persist:true,
-      defaultRoute:"persist", //mem anyhow
-      filename:dbFileName,
-      log_level: 'info'
+      persist: true,
+      defaultRoute: "persist", //mem anyhow
+      filename: dbFileName,
     },
     modules: {
       'DataComponent7': {

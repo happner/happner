@@ -129,9 +129,8 @@ describe('component start and validation -', function() {
       util: {
         logger: {}
       },
-      dataLayer: {
+      datalayer: {
         port: 8002,
-        log_level: 'error'
       },
       modules: {
         'expliCit': {

@@ -28,10 +28,9 @@ describe('c4-client-data-search-secure', function() {
     Mesh.create(config = {
 
       datalayer: {
-        persist:true,
-        secure:true,
+        persist: true,
+        secure: true,
         adminPassword: test_id,
-        log_level: 'error'
       },
 
       modules: {

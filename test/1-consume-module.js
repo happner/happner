@@ -7,11 +7,6 @@ describe('Consumes an external module', function() {
 
   var config = {
     name:"testMesh",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-    },
-    endpoints: {},
     modules: {
       "happnClient":{
         path:"happn.client",

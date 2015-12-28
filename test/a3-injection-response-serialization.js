@@ -15,13 +15,6 @@ describe('Bounces a message between two components, demonstrates how the events 
 
   var config = {
     name:"testInjectionResponse",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-      log_level: 'info|error|warning',
-      //setOptions:{}
-    },
-    endpoints: {},
     modules: {
       "module1":{
         path:libFolder + "12-module1",

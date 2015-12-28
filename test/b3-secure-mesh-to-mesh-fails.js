@@ -15,11 +15,8 @@ describe('secure mesh to mesh fails', function() {
     var config = {
       name: 'mesh2',
       dataLayer: {
-        secure:true,
-        port: 51233,
-        authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-        systemSecret: 'mesh',
-        log_level: 'info|error|warning'
+        secure: true,
+        port: 51233
       },
       endpoints: {
         theFarawayTree: {  // remote mesh node
