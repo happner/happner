@@ -2,7 +2,7 @@ describe('shared data component', function() {
 
   var should = require('chai').should();
   var Mesh = require('../');
-  var  meshInstance;
+  var meshInstance;
   var dataEvents;
   var config;
 
@@ -161,11 +161,14 @@ describe('shared data component', function() {
     })
     
     it('can subscribe to data change with events', function(done) {
+
       dataEvents.on('/some/path/five', function(data) {
+
         data.should.property('key','VALUE');
         dataEvents.off('/some/path/five', function(data, meta) {
           done();
         });
+
       }, function(e) {
         if (e) return done(e);
         dataComponent.set('/some/path/five', {key: 'VALUE'}, function(e) {
