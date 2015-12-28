@@ -30,20 +30,20 @@ happner
 
 ## demonstration
 
-[&#9654;](https://github.com/happner/happner/blob/master/docs/quickstart.md) Quick Start<br/>
+* [Quick Start](https://github.com/happner/happner/blob/master/docs/quickstart.md)
 
 ## documentation
 
-[&#9654;](https://github.com/happner/happner/blob/master/docs/configuration.md) Configuation<br/>
-[&#9654;](https://github.com/happner/happner/blob/master/docs/datalayer.md) DataLayer<br/>
-[&#9654;](https://github.com/happner/happner/blob/master/docs/modules.md) Modules and Components<br/>
-[&#9654;](https://github.com/happner/happner/blob/master/docs/autoload.md) Autoloading and Defaulting<br/>
+* [Configuation](https://github.com/happner/happner/blob/master/docs/configuration.md)
+* [DataLayer](https://github.com/happner/happner/blob/master/docs/datalayer.md)
+* [Modules and Components](https://github.com/happner/happner/blob/master/docs/modules.md)
+* [Autoloading and Defaulting](https://github.com/happner/happner/blob/master/docs/autoload.md)
 
-[&#9654;](https://github.com/happner/happner/blob/master/docs/event.md) Event Api<br/>
-[&#9654;](https://github.com/happner/happner/blob/master/docs/exchange.md) Exchange Api<br/>
-[&#9654;](https://github.com/happner/happner/blob/master/docs/data.md) Data Api<br/>
-[&#9654;](https://github.com/happner/happner/blob/master/docs/webroutes.md) Web Routes<br/>
+* [Event Api](https://github.com/happner/happner/blob/master/docs/event.md)
+* [Exchange Api](https://github.com/happner/happner/blob/master/docs/exchange.md)
+* [Data Api](https://github.com/happner/happner/blob/master/docs/data.md)
+* [Web Routes](https://github.com/happner/happner/blob/master/docs/webroutes.md)
 
-[&#9654;](https://github.com/happner/happner/blob/master/docs/starting.md) Starting a Mesh Node<br/>
-[&#9654;](https://github.com/happner/happner/blob/master/docs/system.md) System Components<br/>
-[&#9654;](https://github.com/happner/happner/blob/master/docs/client.md) Using the Client<br/>
+* [Starting a Mesh Node](https://github.com/happner/happner/blob/master/docs/starting.md)
+* [System Components](https://github.com/happner/happner/blob/master/docs/system.md)
+* [Using the Client](https://github.com/happner/happner/blob/master/docs/client.md)
