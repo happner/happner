@@ -1,4 +1,4 @@
-describe('secure mesh to mesh fails', function() {
+describe('b3 - secure mesh to mesh fails', function() {
  
   context('secure mesh to mesh fails', function(){
 

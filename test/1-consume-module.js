@@ -1,4 +1,4 @@
-describe('Consumes an external module', function() {
+describe('1 - Consumes an external module', function() {
 
   var should = require('chai').should();
   var sep = require('path').sep;

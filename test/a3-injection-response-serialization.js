@@ -8,7 +8,7 @@ var maximumPings = 1000;
 var libFolder ;
 var Mesh = require('../');
 
-describe('Bounces a message between two components, demonstrates how the events layer works', function(done) {
+describe('a3 - Bounces a message between two components, demonstrates how the events layer works', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 

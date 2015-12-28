@@ -1,4 +1,4 @@
-describe('passes data between component APIs, also works with events', function(done) {
+describe('a9 - passes data between component APIs, also works with events', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
@@ -84,7 +84,7 @@ describe('passes data between component APIs, also works with events', function(
 
       result._meta.path.should.equal('/_data/component1/' + 'test/a9-api-data');
 
-      setTimeout( done, 2000);//so the on picks something up?
+      setTimeout(done, 200); //so the on picks something up?
      
     });
 

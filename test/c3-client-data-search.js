@@ -1,4 +1,4 @@
-describe('c3-client-data-search', function() {
+describe('c3 - client data search', function() {
 
   var should = require('chai').should();
   var Mesh = require('../');

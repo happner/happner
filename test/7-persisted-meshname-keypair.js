@@ -1,4 +1,4 @@
-describe('start and stop a persisted mesh', function() {
+describe('7 - start and stop a persisted mesh', function() {
 
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();

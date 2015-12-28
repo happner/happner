@@ -30,7 +30,7 @@ if (global.TESTING_C5) return; // When 'requiring' the module above,
 var expect = require('expect.js');
 var Happner = require('../');
 
-describe('c5-multiple-exchange-calls', function() {
+describe('c5 - multiple exchange calls', function() {
 
   /*
    * Note: also tests that args arrive in the called sequence.

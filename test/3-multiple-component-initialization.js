@@ -1,7 +1,7 @@
 var should = require('chai').should();
 var Mesh = require('../');
 
-describe('Multiple component initialization', function() {
+describe('3 - Multiple component initialization', function() {
   var mesh;
 
   this.timeout(10000);

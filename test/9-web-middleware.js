@@ -8,7 +8,7 @@ var Mesh = require('../');
 var http = require('http');
 
 
-describe('tests that we can add middleware before a static', function (done) {
+describe('9 - tests that we can add middleware before a static', function (done) {
 
   this.timeout(20000);
 

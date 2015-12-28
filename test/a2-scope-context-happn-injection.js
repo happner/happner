@@ -1,6 +1,6 @@
 
 
-describe('mesh awareness via $happn injection', function() {
+describe('a2 - mesh awareness via $happn injection', function() {
 
   var promise = require('when').promise;
   var parallel = require('when/parallel');

@@ -106,7 +106,7 @@ var serverConfig = {
   }
 };
 
-describe('cc-mesh-client-security-login', function() {
+describe('b9 - mesh client security login', function() {
 
 
   var clientMesh;

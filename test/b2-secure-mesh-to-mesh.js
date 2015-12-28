@@ -3,7 +3,7 @@
 
 
 
-describe('secure mesh to mesh', function() {
+describe('b2 - secure mesh to mesh', function() {
  
   context('secure mesh to mesh', function(){
 

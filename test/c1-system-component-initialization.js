@@ -37,7 +37,7 @@ var config = {
 };
 
 
-describe('c1-system-component-initialization - security layer should be initialized before user components are started', function(){
+describe('c1 - security layer should be initialized before user components are started', function(){
 
   after('should stop the happn server', function(done){
     mesh.stop(done);

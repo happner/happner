@@ -1,4 +1,4 @@
-describe('c4-client-data-search-secure', function() {
+describe('c4 - client data search secure', function() {
 
   var should = require('chai').should();
   var Mesh = require('../');

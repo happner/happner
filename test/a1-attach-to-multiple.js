@@ -1,4 +1,4 @@
-describe('attach to multiple meshes (meshs?)', function() {
+describe('a1 - attach to multiple meshes (meshs?)', function() {
 
   var promise = require('when').promise;
   var parallel = require('when/parallel');

@@ -1,4 +1,4 @@
-describe('6-websocket-client', function(done) {
+describe('6 - websocket client', function(done) {
 
   this.timeout(3000);
 

@@ -43,7 +43,7 @@ var request = require('request');
 var mesh;
 var Mesh = require('../');
 
-describe('default component configs', function() {
+describe('a5 - default component configs', function() {
 
    this.timeout(20000);
 

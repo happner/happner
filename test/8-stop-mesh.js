@@ -3,7 +3,7 @@ var should = require('chai').should();
 var Mesh = require('../');
 
 
-describe('does some benchmarks on api calls, data events and events', function (done) {
+describe('8 - does some benchmarks on api calls, data events and events', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 

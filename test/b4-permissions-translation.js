@@ -40,7 +40,7 @@ var adminClient = new Mesh.MeshClient({secure:true});
 var test_id = Date.now() + '_' + require('shortid').generate();
 var async = require('async');
 
-describe('component start and validation -', function() {
+describe('b4 - component start and validation -', function() {
 
   this.timeout(5000);
 

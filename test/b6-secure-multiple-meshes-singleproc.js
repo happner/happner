@@ -1,4 +1,4 @@
-describe('start meshes', function () {
+describe('b6 - start meshes', function () {
 
   var should = require('chai').should();
   var path = require('path');

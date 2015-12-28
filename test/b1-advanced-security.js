@@ -1,4 +1,4 @@
-describe('b1-advanced-security.js', function(done) {
+describe('b1 - advanced security', function(done) {
 
   this.timeout(3000);
 
