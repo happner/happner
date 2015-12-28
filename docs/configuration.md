@@ -467,99 +467,29 @@ The MeshNode provides a [log4js](https://www.npmjs.com/package/log4js) logger.
 There are configuration opportunities as follows:
 
 ```javascript
-  // defaults
-```
-
-Or.
-
-```javascript
-  ...
+meshConfig: {
+  name: 'Name', // mesh name is used as logger context
   util: {
+    logCacheSize: 50,
     logLevel: 'info',
-    logFile: '/absolute/path/to/file.log',
-    logDateFormat: 'yyyy-MM-dd hh:mm:ss',
-    logLayout: '%d{yyyy-MM-dd hh:mm:ss} - %m',
-    // logger: {}, // will silence all logging
-    logStackTraces: false,
-    logComponents: ['component', 'names'],
     logTimeDelta: true,
+    logStackTraces: true, // if last arg to logger is instanceof Error
+    logComponents: [],
     logMessageDelimiter: '\t',
+    logDateFormat: null,
+    logLayout: null,
+    logFile: null,
+    logFileMaxSize: 20480,
+    logFileBackups: 10,
+    logFileNameAbsolute: true,
+    logger: null
   }
-  ...
+}
 ```
 
-###### logLevel
-Default 'info', LOG_LEVEL environment variable overrides<br/>
-Options include: __all__ __trace__ __debug__ __info__ __warn__ __error__ __fatal__ __off__.
-
-```javascript
-LOG_LEVEL=debug bin/my.mesh
-```
-
-###### logFile
-Must be absolute path.<br/>
-__If not present only the console will receive the log stream.__
-
-###### logDateFormat
-To override the date format in log messages.
-
-###### logLayout
-Define your own message [layout](https://github.com/nomiddlename/log4js-node/wiki/Layouts).
-
-###### logger
-Provide your own log4js config.<br/>
-
-###### logStackTraces
-Prints the error stack. Default false.
-
-###### logComponents
-Prints __debug__ and __trace__ messages for only the listed Names.
-Setting LOG_COMPONENTS environment variable will override config.
-
-```javascript
-LOG_LEVEL=trace LOG_COMPONENTS=Api,PubSub,MyComponent bin/my.mesh
-```
-
-###### logTimeDelta
-Includes 'milliseconds since last log message' in log message. The default is true.
-
-###### logMessageDelimiter
-Delimits between timeDelta and 'componentName message' in log lines.
-
+See: [happn-logger/configuration](https://github.com/happner/happn-logger#configuration) for more information
 
 #### Using the Logger
-
-##### Method 1
-
-Modules and components can use the global `UTILITIES.createLogger(Name, obj)`
-
-* It does not create a new logger. It creates wrapper functions to call the existing logger more effeciently.
-* It uses logLevel guards to minimise the impact of liberal trace and debug usage.
-* If `obj` is provided, log methods will be created on `obj`
-
-eg.
-
-```javascript
-module.exports = MyMeshModule;
-
-function MyMeshModule() {
-  this.log = UTILITIES.createLogger('MyMeshModule');
-  // this.log.$$TRACE('', {});
-  // this.log.$$DEBUG('', {});
-  // this.log.info('', {});
-  // this.log.warn('', {});
-  // this.log.errror('..', err);
-  // this.log.fatal('..', err);
-
-  //// UTILITIES.createLogger('MyMeshModule', this);
-  //// this.info('') // it will stomp existing functions on 'this'
-}
-MyMeshModule.prototype.m = function() {
-  this.log.$$TRACE('m()');
-}
-```
-
-##### Method 2
 
 Components can access their own logger in `$happn` (as injected by the mesh, see [Mesh Awareness](modules.md#mesh-awareness-with-happn))
 
@@ -568,30 +498,21 @@ eg.
 ```javascript
 module.exports = MyMeshModule;
 function MyMeshModule() {}
-MyMeshModule.prototype.m = function($happn) {
-  $happn.log.$$TRACE('m()');
+
+MyMeshModule.prototype.method = function($happn) {
+
+  $happn.log.info('string: %s, number: %d, json: %j', string, number, object);
+
+  // $happn.log.fatal()
+  // $happn.log.error()
+  // $happn.log.warn()
+  // $happn.log.info()
+  // $happn.log.debug()
+  // $happn.log.trace()
+  // $happn.log.$$DEBUG() // same as debug
+  // $happn.log.$$TRACE() // same as trace
+  // 
 }
-```
-
-The `$$TRACE()` and `$$DEBUG()` are so named to enable optionally __FULLY__ productionizing with the following deployment step:
-
-##### Remove all calls to DEBUG and TRACE
-
-This is not paticularly recommended. Debugging can be usefull in production too. See `config.util.logComponents` option.
-
-```bash
-find node_modules/*/lib -type f -regex '.*\.js' \
-  | grep -v components/resources/lib \
-  | xargs sed -e s/[a-zA-Z\._-]*\$\$DEBUG\(.*\)\;//g -i .ORIGINAL
-
-# do the same with \$\$TRACE
-```
-
-##### Validate the Substitutions
-
-```bash
-find node_modules/*/lib -type f -regex '.*\.js.ORIGINAL' \
-  | while read FILE; do echo; echo ${FILE%.ORIGINAL}; diff ${FILE%.ORIGINAL} $FILE; done
 ```
 
 ### Repl
