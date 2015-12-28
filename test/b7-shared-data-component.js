@@ -3,6 +3,7 @@ describe('shared data component', function() {
   var should = require('chai').should();
   var Mesh = require('../');
   var meshInstance;
+  var dataEvents;
   var config;
 
   var TestModule1 = {
@@ -40,6 +41,7 @@ describe('shared data component', function() {
     }).then(function(mesh) {
       meshInstance = mesh;
       dataComponent = mesh.exchange.data;
+      dataEvents = mesh.event.data;
       done();
     }).catch(done);
   });
@@ -156,6 +158,23 @@ describe('shared data component', function() {
         done();
       })
       .catch(done);
+    })
+    
+    it('can subscribe to data change with events', function(done) {
+
+      dataEvents.on('/some/path/five', function(data) {
+
+        data.should.property('key','VALUE');
+        dataEvents.off('/some/path/five', function(data, meta) {
+          done();
+        });
+
+      }, function(e) {
+        if (e) return done(e);
+        dataComponent.set('/some/path/five', {key: 'VALUE'}, function(e) {
+          if (e) return done(e);
+        })
+      });
     })
 
   });
