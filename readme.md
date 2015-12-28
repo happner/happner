@@ -2,9 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/happner/happner-website/master/images/HAPPNER%20Logo.png" width="300"></img>
 
-Happner is a cloud application framework ideal for integrating multiple micro services into a unified offering. It enables the creation of an interconnected mesh of components capable of interacting both locally and remotely. The mesh components can easily call upon each other's methods or listen to each other's events in a manner uncomplicated by remoteness.
-
-Happner also provides a set of built in components to facilitate building a user interface. This includes the an api client enabling browsers to connect natively to the mesh.
+Happner is a cloud application framework ideal for integrating multiple micro services into a unified offering. It enables the creation of an interconnected mesh of local and remote components. The mesh components can easily call upon each other's methods or listen to each other's events in a manner uncomplicated by remoteness.
 
 ## installation
 
