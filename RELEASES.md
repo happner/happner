@@ -42,4 +42,3 @@
 
 - fixed logger flag in bin/happner
 - silence security waring by explicitly setting secure to false
-
