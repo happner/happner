@@ -16,29 +16,14 @@ eg.
 <script type='text/javascript' src='/api/client'></script>
 ```
 
-### Resources
-
-Serves the static contents of `node_modules/happner/resources/...`. This includes a bower directory, already present in the bower directory are the jquery and async libraries required for the /api/client script to work out of the box.
-
-A bower.json file exists with a fuller listing of usefull modules and can be installed as follows: 
-
-```bash
-# sudo install bower -g
-cd node_modules/happner/resources
-bower install
-```
-
-http://localhost:55000/resources/...
-
-eg.
-
-```html
-<script type='text/javascript' src='/resources/bower/async/lib/async.js'></script>
-```
+### Data
 
 
-### Dashboard
+### Proxy
 
 
+### Security
 
-pending
+
+### System
+
