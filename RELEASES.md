@@ -36,3 +36,10 @@
 ----------------
 
 - fixed exchange function argument padding bug/#62
+
+1.3.9 2015-12-28
+----------------
+
+- fixed logger flag in bin/happner
+- silence security waring by explicitly setting secure to false
+
