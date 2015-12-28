@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner)
 
-# happner
+<img src="https://raw.githubusercontent.com/happner/happner-website/master/images/HAPPNER%20Logo.png" width="300"></img>
 
 Happner is a cloud application framework ideal for integrating multiple micro services into a unified offering. It enables the creation of an interconnected mesh of components capable of interacting both locally and remotely. The mesh components can easily call upon each other's methods or listen to each other's events in a manner uncomplicated by remoteness.
 

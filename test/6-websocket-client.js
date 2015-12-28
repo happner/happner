@@ -39,13 +39,9 @@ describe('6-websocket-client', function(done) {
  
   it('does a set on the datalayer component', function(done) {
 
-    console.log('test cli:::', testClient)
-
      testClient.exchange.test_6.data.set('/6-websocket-client/set', {"val":"set"}, function(e, result){
 
       if (e) return done(e);
-
-      console.log('set happened:::', result);
 
       expect(result.val).to.be("set");
 

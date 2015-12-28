@@ -102,9 +102,17 @@ describe('start meshes', function () {
 
 
   after(function (done) {
-    if (clientMesh) clientMesh.stop();
-    if (serverMesh) clientMesh.stop();
-    done();
+
+    var stopServerMesh = function(){
+      if (serverMesh) return serverMesh.stop(done);
+      done();
+    }
+
+    if (clientMesh) clientMesh.stop(function(e){
+      if (e) return done(e);
+      stopServerMesh();
+    });
+    
   });
 
   it('should add a user to the first mesh (serverConfig)', function (done) {
