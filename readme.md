@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner)[![npm](https://img.shields.io/npm/v/happner.svg)]()
+[![npm](https://img.shields.io/npm/v/happner.svg)]() [![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner)
 
 <img src="https://raw.githubusercontent.com/happner/happner-website/master/images/HAPPNER%20Logo.png" width="300"></img>
 
