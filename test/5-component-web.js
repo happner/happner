@@ -64,12 +64,9 @@ describe('Demonstrates the middleware functionality', function (done) {
 
     mesh = new Mesh();
 
-    console.log('DOING BEFORE');
-
     mesh.initialize(config, function (err) {
       if (err) return done(err);
 
-      console.log('INITIALIZED!!');
       done();
 
     });

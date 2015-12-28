@@ -6,19 +6,19 @@ function SecuredComponent() {}
 
 SecuredComponent.prototype.method1 = function($happn, options, callback) {
   options.methodName = 'method1';
-   console.log('ran method1...');
+   // console.log('ran method1...');
   callback(null, options);
 }
 
 SecuredComponent.prototype.method2 = function($happn, options, callback) {
   options.methodName = 'method2';
-  console.log('ran method2...');
+  // console.log('ran method2...');
   callback(null, options);
 }
 
 SecuredComponent.prototype.method3 = function($happn, options, callback) {
   options.methodName = 'method3';
-   console.log('ran method3...');
+   // console.log('ran method3...');
   callback(null, options);
 }
 
@@ -81,8 +81,7 @@ describe('component start and validation -', function() {
 
         mesh.start(function(err) {
           if (err) {
-            console.log(err.stack);
-            //process.exit(err.errno || 1);
+            // console.log(err.stack);
             return done(err);
           }
 

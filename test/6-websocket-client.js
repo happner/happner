@@ -63,7 +63,7 @@ describe('6-websocket-client', function(done) {
 
         if (e) return done(e);
 
-        console.log('get happened:::', getresult);
+        // console.log('get happened:::', getresult);
 
         expect(getresult.val).to.be("get");
         done();
@@ -94,7 +94,7 @@ describe('6-websocket-client', function(done) {
 
           if (e) return done(e);
           
-          console.log('delete happened:::', removeresult);
+          // console.log('delete happened:::', removeresult);
 
           testClient.exchange.test_6.data.get('/6-websocket-client/delete', {}, function(e, getremovedresult){
 

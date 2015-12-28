@@ -60,7 +60,7 @@ describe('start and stop a persisted mesh', function() {
         unpersistedMeshName = unpersistedMesh._mesh.config.name;
         unpersistedMeshPublicKey = unpersistedMesh._mesh.datalayer.server.services.security._keyPair.publicKey;
         
-        console.log('names:::', meshName, unpersistedMeshName);
+        // console.log('names:::', meshName, unpersistedMeshName);
 
         done();
       }).catch(done);

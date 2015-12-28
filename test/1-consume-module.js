@@ -10,7 +10,6 @@ describe('Consumes an external module', function() {
     dataLayer: {
       authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
       systemSecret: 'mesh',
-      log_level: 'info|error|warning'
     },
     endpoints: {},
     modules: {
@@ -102,8 +101,8 @@ describe('Consumes an external module', function() {
     mesh.initialize(config, function(err) {
 
       if (err) {
-        console.log('failure in init')
-        console.log(err.stack)
+        // console.log('failure in init')
+        // console.log(err.stack)
       };
 
       done(err);
@@ -120,7 +119,7 @@ describe('Consumes an external module', function() {
     require('happn').client.create({config:{"host":"localhost", "secret":"mesh"}}, function(e, client){
       
       if (e) {
-        console.log('real client init failure');
+        // console.log('real client init failure');
         done(e);
       }
 

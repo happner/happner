@@ -36,7 +36,7 @@ var Client = function () {
     _meshClient.login(credentials).then(function () {
       callback();
     }).catch(function (err) {
-      console.log("login error");
+      // console.log("login error");
       callback(err);
     });
   };
@@ -48,7 +48,7 @@ var Client = function () {
 
   this.registerDevice = function (credentials, deviceDetails, callback, $happn) {
 
-    console.log('loggin in with creds:::', credentials);
+    // console.log('loggin in with creds:::', credentials);
 
     _this_module.login(credentials, afterLogin);
 

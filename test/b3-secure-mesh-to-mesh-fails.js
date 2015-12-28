@@ -37,7 +37,7 @@ describe('secure mesh to mesh fails', function() {
     after(function(done) {
       remote.kill(); 
       mesh.stop(function(e){
-        console.log('killed ok 1:::', remote.pid);
+        // console.log('killed ok 1:::', remote.pid);
         done();
       });
     });
@@ -57,7 +57,7 @@ describe('secure mesh to mesh fails', function() {
 
         if (data.toString().match(/READY/)){
         
-          console.log('remote ready 1:::', remote.pid);
+          // console.log('remote ready 1:::', remote.pid);
 
           mesh = new Mesh();
 
