@@ -92,7 +92,7 @@ describe('attach to multiple meshes (meshs?)', function() {
           return function() {
             return promise(
               function(resolve, reject) {
-                mesh.api.exchange['mesh'+i].component.getPid(function(err, pid){
+                mesh.exchange['mesh'+i].component.getPid(function(err, pid){
                   if (err) return reject(err);
                   resolve([i, pid]);
                 });

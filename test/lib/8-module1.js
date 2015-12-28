@@ -28,7 +28,7 @@ function Component1(options) {
 
       //_this.scope.api.events.component2.exposedMethod(function(e, response)
       if (message.pingCount < options.maximumPings)
-        $happn.mesh.exchange.component2.exposedMethod(message, function (e, response) {
+        $happn.exchange.component2.exposedMethod(message, function (e, response) {
 
         });
       else {
@@ -53,7 +53,7 @@ function Component1(options) {
     if (!$happn)
       throw new Error('This module needs component level scope');
 
-    $happn.mesh.exchange.component2.exposedMethod({
+    $happn.exchange.component2.exposedMethod({
       message: "Component1",
       "timestamp": moment.utc(),
       "pingCount": 0

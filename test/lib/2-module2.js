@@ -28,7 +28,7 @@ function Component2(options) {
 
       message.message = "Component2";
      
-      $happn.mesh.exchange.component1.exposedMethod(message, function(e, response){
+      $happn.exchange.component1.exposedMethod(message, function(e, response){
         
       });
 

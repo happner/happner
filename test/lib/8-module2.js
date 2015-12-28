@@ -23,7 +23,7 @@ function Component2(options) {
 
       message.message = "Component2";
 
-      $happn.mesh.exchange.component1.exposedMethod(message, function (e, response) {
+      $happn.exchange.component1.exposedMethod(message, function (e, response) {
 
       });
 
@@ -71,6 +71,7 @@ function Component2(options) {
     });
   };
 
+  // huh?
   this.stop = function ($happn) {
     $happn.mesh.api.date.off('/module1/testDataCount');
   }

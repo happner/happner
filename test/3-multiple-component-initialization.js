@@ -126,7 +126,7 @@ describe('Multiple component initialization', function() {
 
 
   it('loads the class ok', function(done) {
-    mesh.api.exchange.one_class.method(function(err, res) {
+    mesh.exchange.one_class.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
@@ -134,7 +134,7 @@ describe('Multiple component initialization', function() {
   });
 
   it('loads the class with parameters ok', function(done) {
-    mesh.api.exchange.one_class_with_params.method(function(err, res) {
+    mesh.exchange.one_class_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
@@ -142,28 +142,28 @@ describe('Multiple component initialization', function() {
   });
 
   it('loads the returned from sync ok', function(done) {
-    mesh.api.exchange.two_sync.method(function(err, res) {
+    mesh.exchange.two_sync.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
   it('loads the returned from sync with params ok', function(done) {
-    mesh.api.exchange.two_sync_with_params.method(function(err, res) {
+    mesh.exchange.two_sync_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
   });
 
   it('loads the async ok', function(done) {
-    mesh.api.exchange.three_async.method(function(err, res) {
+    mesh.exchange.three_async.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
   it('loads the async with params ok', function(done) {
-    mesh.api.exchange.three_async_with_params.method(function(err, res) {
+    mesh.exchange.three_async_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
@@ -171,7 +171,7 @@ describe('Multiple component initialization', function() {
 
 
   it('loads the object ok', function(done) {
-    mesh.api.exchange.four_object.method(function(err, res) {
+    mesh.exchange.four_object.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
@@ -180,14 +180,14 @@ describe('Multiple component initialization', function() {
 
 
   it('loads the hidden class ok', function(done) {
-    mesh.api.exchange.five_hidden_class.method(function(err, res) {
+    mesh.exchange.five_hidden_class.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
   it('loads the class with parameters ok', function(done) {
-    mesh.api.exchange.five_hidden_class_with_params.method(function(err, res) {
+    mesh.exchange.five_hidden_class_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });
@@ -195,14 +195,14 @@ describe('Multiple component initialization', function() {
 
 
   it('loads the nested class ok', function(done) {
-    mesh.api.exchange.six_nested_class.method(function(err, res) {
+    mesh.exchange.six_nested_class.method(function(err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
   it('loads the nested class with parameters ok', function(done) {
-    mesh.api.exchange.six_nested_class_with_params.method(function(err, res) {
+    mesh.exchange.six_nested_class_with_params.method(function(err, res) {
       res.should.equal('1 2')
       done();
     });

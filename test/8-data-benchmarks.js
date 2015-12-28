@@ -86,11 +86,11 @@ describe('does some benchmarks on api calls, data events and events', function (
 
     var onEventRef;
 
-    mesh.api.event.component1.on('maximum-pings-reached', function (message) {
+    mesh.event.component1.on('maximum-pings-reached', function (message) {
 
       console.log(message);
 
-      mesh.api.event.component1.off(onEventRef, function (err) {
+      mesh.event.component1.off(onEventRef, function (err) {
         // if (err)
         //   console.log('Couldnt detach from event maximum-pings-reached');
 
@@ -121,26 +121,18 @@ describe('does some benchmarks on api calls, data events and events', function (
   it('listens for an event in module 2 that module 1 set 1000 data points', function (done) {
     this.timeout(defaultTimeout);
 
-    mesh.api.exchange.component2.startData(function () {
+    mesh.exchange.component2.startData(function () {
 
-      mesh.api.event.component2.on('data-test-complete', function (message) {
+      mesh.event.component2.on('data-test-complete', function (message) {
         message.m.should.contain('Hooray');
         console.log(message);
         done();
       }, function () {
       });
 
-      mesh.api.exchange.component1.startData();
+      mesh.exchange.component1.startData();
     });
 
   });
 });
-
-
-
-
-
-
-
-
 
