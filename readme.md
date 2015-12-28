@@ -8,23 +8,7 @@ Happner also provides a set of built in components to facilitate building a user
 
 ## installation
 
-__To use in your project:__
-
 `npm install happner --save`
-
-__To hack at the console of your 'home' mesh node:__
-
-```
-sudo npm install happner --global
-happner
-[ INFO] - 0ms   home (Mesh) happner v0.0.29
-[ INFO] - 4ms   home (Mesh) config v0.0.1
-[ INFO] - 2ms   home (Mesh) localnode 'home' at pid 16623
-[ INFO] - 3ms   home (DataLayer) persisting /Users/.../.happn/data/home.nedb
-...
-[ INFO] - 1ms   home (Mesh) started!
-
-► play...
 
 ```
 
@@ -39,10 +23,14 @@ happner
 * [Modules and Components](https://github.com/happner/happner/blob/master/docs/modules.md)
 * [Autoloading and Defaulting](https://github.com/happner/happner/blob/master/docs/autoload.md)
 
+##
+
 * [Event Api](https://github.com/happner/happner/blob/master/docs/event.md)
 * [Exchange Api](https://github.com/happner/happner/blob/master/docs/exchange.md)
 * [Data Api](https://github.com/happner/happner/blob/master/docs/data.md)
 * [Web Routes](https://github.com/happner/happner/blob/master/docs/webroutes.md)
+
+## 
 
 * [Starting a Mesh Node](https://github.com/happner/happner/blob/master/docs/starting.md)
 * [System Components](https://github.com/happner/happner/blob/master/docs/system.md)
