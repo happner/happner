@@ -32,3 +32,7 @@
 - using the latest version of happn 1.2.6
 - created search tests
 
+1.3.8 2015-12-28
+----------------
+
+- fixed exchange function argument padding bug/#62
