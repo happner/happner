@@ -193,7 +193,7 @@ require('dotenv').load();
 
 ```
 
-**Important: Both `bin/master` and `bin/agent` expect to find `.env` file in the current diretctory, so don't cd into bin to run them.**
+**Important: Both `bin/master` and `bin/agent` expect to find `.env` file in the current diretctory, so don't cd into `bin/` to run them.**
 
 ***
 
