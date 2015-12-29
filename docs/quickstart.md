@@ -17,7 +17,13 @@ This demonstration creates a simple monitoring service.
 ###
 
 * [Create the Agent node module](#create-the-agent-node-module)
-* [Create the Agent mesh runner and config](create-the-agent-mesh-runner-and-config)
+* [Create the Agent mesh runner and config](#create-the-agent-mesh-runner-and-config)
+
+###
+
+* [Create Start and Stop methods on Master and Agent components](#create-start-and-stop-methods-on-master-and-agent-components)
+
+
 
 ### Create a demo project
 
@@ -33,7 +39,7 @@ npm install happner --save
 
 This creates the mesh module that will run as the monitoring service's master node.
 
-Note: Master is it's own node_module! This simplifies the configurations.
+**Note: Master is it's own node_module! This simplifies the configurations.**
 
 ```bash
 mkdir node_modules/master
@@ -181,7 +187,7 @@ require('dotenv').load();
 
 This agent is installed into a mesh node running at each host to be monitored. It connects an `endpoint` to the master to report metrics.
 
-Note: Agent is it's own node_module! This simplifies the configurations.
+**Note: Agent is it's own node_module! This simplifies the configurations.**
 
 
 ```bash
@@ -209,7 +215,7 @@ function Agent() {
   console.log('new agent');
 }
 
-```
+`
 
 
 ### Create the Agent mesh runner and config
@@ -280,4 +286,75 @@ Happner.create(Config)
 });
 
 ```
+
+Remember to make agent executable:
+
+```bash
+chmod +x bin/agent
+```
+
+**At this point is should be possible to start both `bin/master` and `bin/agent`.**
+
+
+### Create Start and Stop methods on Master and Agent components
+
+Start and Stop methods are used to assemble and tear down component runtime.
+
+Update ./node_modules/master/index.js
+
+```javascript
+
+// Add these functions after constructor
+
+/*
+ * Start method (called at mesh start(), if configured)
+ *
+ * @api public
+ * @params {ComponentInstance} $happn - injected by mesh when calling function
+ * @params {Function} callback
+ *
+ */
+
+Master.prototype.start = function($happn, callback) {
+//Agent.proto...
+  $happn.log.info('starting master component');
+  callback();
+}
+
+
+/*
+ * Stop method (called at mesh stop(), if configured)
+ *
+ * @api public
+ * @params {ComponentInstance} $happn
+ * @params {Function} callback
+ *
+ */
+
+Master.prototype.stop = function($happn, callback) {
+//Agent.proto...
+  $happn.log.info('stopping master component');
+  callback();
+}
+
+```
+
+Update ./config/master.js
+
+```javascript
+
+// Modify component declaration to include start and stop methods
+
+  ...
+  components: {
+    'master': {
+      startMethod: 'start',
+      stopMethod: 'stop',
+    }
+  }
+  ...
+```
+
+**ALSO** Do the same for `./node_modules/master/index.js` and `./config/agent.js`
+
 
