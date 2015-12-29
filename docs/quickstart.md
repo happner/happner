@@ -9,7 +9,15 @@ This demonstration creates a simple monitoring service.
 * [Create the Master node module](#create-the-master-node-module)
 * [Create config for the Master node](#create-config-for-the-master-node)
 * [Create bin runner for the Master node](#create-bin-runner-for-the-master-node)
+
+###
+
 * [Use env file for stage config](#use-env-file-for-stage-config)
+
+###
+
+* [Create the Agent node module](#create-the-agent-node-module)
+* [Create the Agent mesh runner and config](create-the-agent-mesh-runner-and-config)
 
 ### Create a demo project
 
@@ -32,7 +40,7 @@ mkdir node_modules/master
 cd node_modules/master/
 npm init    # keep index.js as entry point
 
-vi index.js # see below
+vi index.js # see content below
 cd ../../   # cd -
 ```
 
@@ -169,4 +177,107 @@ require('dotenv').load();
 
 ```
 
+### Create the Agent node module
+
+This agent is installed into a mesh node running at each host to be monitored. It connects an `endpoint` to the master to report metrics.
+
+Note: Agent is it's own node_module! This simplifies the configurations.
+
+
+```bash
+mkdir node_modules/agent
+cd node_modules/agent/
+npm init    # keep index.js as entry point
+
+vi index.js # see content below
+cd -        # cd ../../
+```
+
+Content of ./node_modules/agent/index.js
+```javascript
+module.exports = Agent;
+
+/*
+ * Agent class (runs as mesh component)
+ *
+ * @api public
+ * @constructor
+ *
+ */
+
+function Agent() {
+  console.log('new agent');
+}
+
+```
+
+
+### Create the Agent mesh runner and config
+
+Same as Master, create config and bin files for Agent.
+
+**Note: Agent config includes an endpoint connecting to the Master**
+
+Content of ./config/agent.js
+
+```javascript
+require('dotenv').load();
+
+module.exports = {
+
+  // Allow default name
+  // name: 'agent',
+
+  datalayer: {
+    port: 0,         // Listen at random port (allows more than one agent instance per host)
+    persist: false,  // No storage
+    secure: false,   // Secure? (later)
+  },
+
+  // Connect endpoint to MasterNode
+
+  endpoints: {
+    'MasterNode': {
+      config: {
+        host: process.env.MASTER_IP,
+        port: process.env.MASTER_PORT,
+        // // Secure? (later)
+        // username: '',
+        // password: '',
+      }
+    }
+  },
+
+  // Include agent as component
+
+  components: {
+    'agent': {
+    }
+  }
+
+}
+```
+
+Content of ./bin/agent
+
+```javascript
+#!/usr/bin/env node
+
+var Happner = require('happner');
+var Config  = require('../config/agent');
+
+// Call create() factory which returns the promise of a mesh or error
+
+Happner.create(Config)
+
+.then(function(mesh) {
+  // got running mesh
+})
+
+.catch(function(error) {
+  console.error(error.stack || error.toString())
+  process.exit(1);
+});
+
+```
 
