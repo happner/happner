@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-* [Create a Demo Project]
+* [Create a Demo Project](create-a-demo-project)
 
 ### Create a Demo Project
 
