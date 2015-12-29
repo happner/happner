@@ -23,13 +23,14 @@ This demonstration creates a simple monitoring service.
 
 * [Create Start and Stop methods on Master and Agent components](#create-start-and-stop-methods-on-master-and-agent-components)
 * [Create report function on Master](#create-report-function-on-master)
-* [Call report function from Agent](#create-report-function-on-master)
+* [Call report function from Agent](#call-report-function-from-agent)
 * [Add configurable list of inspectors for Agent](#add-configurable-list-of-inspectors-for-agent)
 * [Update Master to emit event with each received metric](#update-master-to-emit-event-with-each-received-metric)
 
 ###
 
 * [Serve browser content from Master](#serve-browser-content-from-master)
+* [Connect browser mesh client to Master](#connect-browser-mesh-client-to-master)
 
 
 ### Create a demo project
@@ -684,4 +685,100 @@ LOG_COMPONENTS=master,another LOG_LEVEL=debug bin/master
 ***
 
 ### Serve browser content from Master
+
+Create a directory for static content containing index.html
+
+```bash
+mkdir node_modules/master/widget
+touch node_modules/master/widget/index.html
+```
+
+Add web route to static content in Master component config.
+
+Update `./configs/master.js`
+
+```javascript
+  ..
+  components: {
+    'master': {
+      startMethod: 'start',
+      stopMethod: 'stop',
+
+      web: {
+        routes: {
+          // serves static content in node_modules/master/widget at http://.../master/widget
+          'widget': 'static'
+        }
+      }
+    }
+  }
+  ..
+```
+
+### Connect browser mesh client to Master
+
+Content of `./node_modules/master/widget/index.html`
+
+```html
+<html>
+  <head>
+    <!-- get built-in api client script from mesh -->
+    <script type="text/javascript" src="/api/client"></script>
+
+    <!-- connect and subscribe to metric events -->
+    <script type="text/javascript">
+
+    // defaults to page address
+    var options = {
+      // host: '',
+      // port: 80
+    }
+
+    // unnecessary: secure not set true in mesh/datalayer config
+    var credentials = {
+      // username: '',
+      // password: '',
+    }
+
+    var client = new MeshClient(options)
+
+    client.login(credentials); // .then(...
+
+    client.on('login/deny', function(error) {
+      console.error(error);
+      alert(error.toString()) 
+    });
+
+    client.on('login/error', function(error) {
+      console.error(error);
+      alert(error.toString()) 
+    });
+
+
+    client.on('login/allow', function() {
+      
+      // subscribe to all metrics/* events emitted by Master component
+      client.event.master.on('metrics/*', function(data, meta) {
+
+        // display event in html body
+        if (document.body.innerHTML.length > 5000) document.body.innerHTML = "";
+        var metric = "<pre>" + meta.path + "\n" + JSON.stringify(data, null, 2) + "</pre>";
+        document.body.innerHTML = metric + document.body.innerHTML;
+
+      });
+    });
+
+    </script>
+  </head>
+
+  <body>
+  </body>
+
+</html>
+
+```
+
+Start `bin/master` and `bin/agent`.
+
+And connect to [http://MASTER_IP:MASTER_PORT/master/widget](http://127.0.0.1:50505/master/widget)
 
