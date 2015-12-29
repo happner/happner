@@ -9,6 +9,7 @@ This demonstration creates a simple monitoring service.
 * [Create the Master node module](#create-the-master-node-module)
 * [Create config for the Master node](#create-config-for-the-master-node)
 * [Create bin runner for the Master node](#create-bin-runner-for-the-master-node)
+* [Use env file for stage config](#use-env-file-for-stage-config)
 
 ### Create a demo project
 
@@ -23,6 +24,8 @@ npm install happner --save
 ### Create the Master node module
 
 This creates the mesh module that will run as the monitoring service's master node.
+
+Note: Master is it's own node_module! This simplifies the configurations.
 
 ```bash
 mkdir node_modules/master
@@ -86,6 +89,7 @@ module.exports = {
   // },
 
   // Include master as component
+  // It assumes that 'master' is an installed node_module which exports 1 class
   components: {
     'master': {
     }
@@ -131,5 +135,38 @@ Happner.create(Config)
 **At this point it should be possible to start the `bin/master` process and `^c` to stop it**
 
 
+### Use env file for stage config
+
+Install env file loader and create env file
+
+```
+npm install dotenv --save
+vi .env
+```
+
+Content of ./.env
+```env
+# change to ip accessable from remote
+MASTER_IP=0.0.0.0
+MASTER_PORT=50505
+```
+
+Update ./config/master.js
+```javascript
+
+// insert at start of file
+require('dotenv').load();
+
+// and modify datalayer in config
+  ...
+  datalayer: {
+    host: process.env.MASTER_IP,
+    port: process.env.MASTER_PORT,
+    persist: true,     // Store data in default nedb file
+    secure: false,     // Secure? (later)
+  },
+  ...
+
+```
 
 
