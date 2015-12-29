@@ -128,7 +128,7 @@ Happner.create(Config)
 
 ```
 
-At this point is should be possible to start the `bin/master` process and `^c` to stop it.
+**At this point it should be possible to start the `bin/master` process and `^c` to stop it**
 
 
 
