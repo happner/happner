@@ -50,7 +50,8 @@ vi index.js # see content below
 cd ../../   # cd -
 ```
 
-Content of ./node_modules/master/index.js
+Content of `./node_modules/master/index.js`
+
 ```javascript
 module.exports = Master;
 
@@ -77,7 +78,7 @@ mkdir config
 vi config/master.js
 ```
 
-Content of ./config/master.js
+Content of `./config/master.js`
 
 ```javascript
 module.exports = {
@@ -123,7 +124,7 @@ chmod +x bin/master
 vi bin/master
 ```
 
-Content of ./bin/master
+Content of `./bin/master`
 
 ```javascript
 #!/usr/bin/env node
@@ -158,14 +159,14 @@ npm install dotenv --save
 vi .env
 ```
 
-Content of ./.env
+Content of `./.env`
 ```env
 # change to ip accessable from remote
 MASTER_IP=0.0.0.0
 MASTER_PORT=50505
 ```
 
-Update ./config/master.js
+Update `./config/master.js`
 ```javascript
 
 // insert at start of file
@@ -199,7 +200,7 @@ vi index.js # see content below
 cd -        # cd ../../
 ```
 
-Content of ./node_modules/agent/index.js
+Content of `./node_modules/agent/index.js`
 ```javascript
 module.exports = Agent;
 
@@ -224,7 +225,7 @@ Same as Master, create config and bin files for Agent.
 
 **Note: Agent config includes an endpoint connecting to the Master**
 
-Content of ./config/agent.js
+Content of `./config/agent.js`
 
 ```javascript
 require('dotenv').load();
@@ -264,7 +265,7 @@ module.exports = {
 }
 ```
 
-Content of ./bin/agent
+Content of `./bin/agent`
 
 ```javascript
 #!/usr/bin/env node
@@ -298,9 +299,9 @@ chmod +x bin/agent
 
 ### Create Start and Stop methods on Master and Agent components
 
-Start and Stop methods are used to assemble and tear down component runtime.
+Start and Stop methods are used to assemble and tear down the component runtime. Additionally the `$happn` service can optionally be injected to perform any necessary interactions with the mesh.
 
-Update ./node_modules/master/index.js
+Update `./node_modules/master/index.js`
 
 ```javascript
 
@@ -310,7 +311,7 @@ Update ./node_modules/master/index.js
  * Start method (called at mesh start(), if configured)
  *
  * @api public
- * @params {ComponentInstance} $happn - injected by mesh when calling function
+ * @params {ComponentInstance} $happn - injected by the mesh when it calls this function
  * @params {Function} callback
  *
  */
@@ -326,7 +327,7 @@ Master.prototype.start = function($happn, callback) {
  * Stop method (called at mesh stop(), if configured)
  *
  * @api public
- * @params {ComponentInstance} $happn
+ * @params {ComponentInstance} $happn - injected by the mesh when it calls this function
  * @params {Function} callback
  *
  */
@@ -339,7 +340,7 @@ Master.prototype.stop = function($happn, callback) {
 
 ```
 
-Update ./config/master.js
+Update `./config/master.js`
 
 ```javascript
 
@@ -355,6 +356,7 @@ Update ./config/master.js
   ...
 ```
 
-**ALSO** Do the same for `./node_modules/master/index.js` and `./config/agent.js`
+**ALSO** Do the same for `./node_modules/agent/index.js` and `./config/agent.js`
+
 
 
