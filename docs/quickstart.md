@@ -77,8 +77,8 @@ module.exports = {
   },
 
 
-  // modules only necessary upon deviation from default
-  // https://github.com/happner/happner/blob/master/docs/configuration.md#module-config
+  // // modules only necessary upon deviation from default
+  // // https://github.com/happner/happner/blob/master/docs/configuration.md#module-config
   // modules: {
   //   'master': {
   //     path: 'to/alternative/location'
@@ -92,7 +92,6 @@ module.exports = {
   }
 
 }
-
 ```
 
 ### Create bin runner for the Master node
