@@ -22,7 +22,8 @@ This demonstration creates a simple monitoring service.
 ###
 
 * [Create Start and Stop methods on Master and Agent components](#create-start-and-stop-methods-on-master-and-agent-components)
-
+* [Create report function on Master](#create-report-function-on-master)
+* [Call report function from Agent](#create-report-function-on-master)
 
 
 ### Create a demo project
