@@ -42,3 +42,10 @@
 
 - fixed logger flag in bin/happner
 - silence security waring by explicitly setting secure to false
+
+
+
+next ...
+--------
+
+- added istanbul and coveralls for coverage tests
