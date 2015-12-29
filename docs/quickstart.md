@@ -315,8 +315,8 @@ Update `./node_modules/master/index.js`
  * Start method (called at mesh start(), if configured)
  *
  * @api public
- * @params {ComponentInstance} $happn - injected by the mesh when it calls this function
- * @params {Function} callback
+ * @param {ComponentInstance} $happn - injected by the mesh when it calls this function
+ * @param {Function} callback
  *
  */
 
@@ -331,8 +331,8 @@ Master.prototype.start = function($happn, callback) {
  * Stop method (called at mesh stop(), if configured)
  *
  * @api public
- * @params {ComponentInstance} $happn - injected by the mesh when it calls this function
- * @params {Function} callback
+ * @param {ComponentInstance} $happn - injected by the mesh when it calls this function
+ * @param {Function} callback
  *
  */
 
@@ -363,4 +363,123 @@ Update `./config/master.js`
 **ALSO** Do the same for `./node_modules/agent/index.js` and `./config/agent.js`
 
 
+### Create report function on Master
 
+This is a function defined on the master that will be repetatively called by the agent to report metrics.
+
+** Note: A more elegant design might be for the agent to emit metrics and the master to be subscribed. But this would require an endpoint connection from master pointing to eveny agent. ie. The existing endpoint from agent to master is not bi-directional **
+
+
+Update `./node_modules/master/index.js`
+
+```javascript
+
+// Add after start and stop functions
+
+/**
+ * Metric object
+ *
+ * @typedef Metric
+ * @type {object}
+ * @property {Number} timestamp - utc
+ * @property {String} key
+ * @property {Number} values
+ *
+ */
+
+/*
+ * Report metric method (called by remote agents across the exchange)
+ *
+ * @api public
+ * @param {ComponentInstance} $happn - injected by the mesh when it calls this function
+ * @param {String} hostname - of the agent
+ * @param {Metric} metric
+ * @param {Function} callback
+ *
+ */
+
+Master.prototype.reportMetric = function($happn, hostname, metric, callback) {
+
+  $happn.log.info("metric from '%s': %j", hostname, metric);
+
+  callback(null, {thanks: 1});
+}
+
+
+```
+
+### Call report function from Agent
+
+Functions on the master (being an endpoint) become available on the Agent via the exchange.
+
+Reminder: `./configs/agent.js` specifies **startMethod** and **stopMethod** in `components/agent/`.
+
+Using the Agent's start method, set up an interval that calls `reportMetric()` on the Master
+
+Update `./node_modules/agent/index.js`
+
+```javascript
+
+// up top
+var os = require('os');
+
+// update start and stop methods:
+
+
+/*
+ * Start method (called at mesh start(), if configured)
+ *
+ * @api public
+ * @param {ComponentInstance} $happn - injected by the mesh when it calls this function
+ * @param {Function} callback
+ *
+ */
+
+Agent.prototype.start = function($happn, callback) {
+  $happn.log.info('starting agent component');
+
+  this.interval = setInterval(function() {
+
+    var hostname = os.hostname();
+    var metric = {
+      ts: Date.now(),
+      key: 'test/metric',
+      value: 1,
+    }
+
+    // call remote function exchange.<endpoint>.<component>.<method>
+
+    $happn.exchange.MasterNode.master.reportMetric(hostname, metric, function(err, res) {
+      // callback as called by master.reportMetric
+      if (err) return $happn.log.error('from reportMetric', err);
+      $happn.log.info('result from reportMetric: %j', res);
+    });
+
+  }, 1000);
+
+  callback();
+}
+
+
+/*
+ * Stop method (called at mesh stop(), if configured)
+ *
+ * @api public
+ * @param {ComponentInstance} $happn - injected by the mesh when it calls this function
+ * @param {Function} callback
+ *
+ */
+
+Agent.prototype.stop = function($happn, callback) {
+  $happn.log.info('stopping agent component');
+
+  // stop the interval running when component is stopped
+  clearInterval(this.interval);
+
+  callback();
+}
+
+
+```
+
+**Note: The stop method explicitly undoes what the start method did (clearInterval) - this allows for components to be dynamically added and removed from the mesh without leaving things behind.**
