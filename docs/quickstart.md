@@ -25,6 +25,11 @@ This demonstration creates a simple monitoring service.
 * [Create report function on Master](#create-report-function-on-master)
 * [Call report function from Agent](#create-report-function-on-master)
 * [Add configurable list of inspectors for Agent](#add-configurable-list-of-inspectors-for-agent)
+* [Update Master to emit event with each received metric](#update-master-to-emit-event-with-each-received-metric)
+
+###
+
+* [Serve browser content from Master](#serve-browser-content-from-master)
 
 
 ### Create a demo project
@@ -636,4 +641,46 @@ Agent.prototype.stop = function($happn, callback) {
 
 ```
 
+### Update Master to emit event with each received metric
+
+A browser in the client will be subscribing to these events
+
+Update reportMetric() in `./node_modules/master/index.js`
+
+```javascript
+/*
+ * Report metric method (called by remote agents across the exchange)
+ *
+ * @api public
+ * @param {ComponentInstance} $happn - injected by the mesh when it calls this function
+ * @param {String} hostname - of the agent
+ * @param {Metric} metric
+ * @param {Function} callback
+ *
+ */
+
+Master.prototype.reportMetric = function($happn, hostname, metric, callback) {
+
+  $happn.log.debug("metric from '%s': %j", hostname, metric);
+
+  var eventKey = 'metrics/' + hostname + '/' + metric.key;
+  var eventData = metric;
+
+  $happn.emit(eventKey, eventData);
+
+  callback();
+}
+```
+
+**Note: The debug log message will not be seen unless util.logLevel is set to 'debug' or the process is started LOG_LEVEL environment variable**
+
+eg.
+
+```bash
+LOG_LEVEL=debug bin/master
+LOG_COMPONENTS=master,another LOG_LEVEL=debug bin/master
+
+***
+
+### Serve browser content from Master
 
