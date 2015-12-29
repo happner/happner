@@ -149,6 +149,7 @@ Happner.create(Config)
 
 **At this point it should be possible to start the `bin/master` process and `^c` to stop it**
 
+***
 
 ### Use env file for stage config
 
@@ -183,6 +184,8 @@ require('dotenv').load();
   ...
 
 ```
+
+***
 
 ### Create the Agent node module
 
@@ -296,6 +299,7 @@ chmod +x bin/agent
 
 **At this point is should be possible to start both `bin/master` and `bin/agent`.**
 
+***
 
 ### Create Start and Stop methods on Master and Agent components
 
