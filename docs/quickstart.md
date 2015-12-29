@@ -193,6 +193,8 @@ require('dotenv').load();
 
 ```
 
+**Important: Both `bin/master` and `bin/agent` expect to find `.env` file in the current diretctory, so don't cd into bin to run them.**
+
 ***
 
 ### Create the Agent node module
@@ -728,45 +730,45 @@ Content of `./node_modules/master/widget/index.html`
     <!-- connect and subscribe to metric events -->
     <script type="text/javascript">
 
-    // defaults to page address
-    var options = {
-      // host: '',
-      // port: 80
-    }
+      // defaults to page address
+      var options = {
+        // host: '',
+        // port: 80
+      }
 
-    // unnecessary: secure not set true in mesh/datalayer config
-    var credentials = {
-      // username: '',
-      // password: '',
-    }
+      // unnecessary: secure not set true in mesh/datalayer config
+      var credentials = {
+        // username: '',
+        // password: '',
+      }
 
-    var client = new MeshClient(options)
+      var client = new MeshClient(options)
 
-    client.login(credentials); // .then(...
+      client.login(credentials); // .then(...
 
-    client.on('login/deny', function(error) {
-      console.error(error);
-      alert(error.toString()) 
-    });
-
-    client.on('login/error', function(error) {
-      console.error(error);
-      alert(error.toString()) 
-    });
-
-
-    client.on('login/allow', function() {
-      
-      // subscribe to all metrics/* events emitted by Master component
-      client.event.master.on('metrics/*', function(data, meta) {
-
-        // display event in html body
-        if (document.body.innerHTML.length > 5000) document.body.innerHTML = "";
-        var metric = "<pre>" + meta.path + "\n" + JSON.stringify(data, null, 2) + "</pre>";
-        document.body.innerHTML = metric + document.body.innerHTML;
-
+      client.on('login/deny', function(error) {
+        console.error(error);
+        alert(error.toString()) 
       });
-    });
+
+      client.on('login/error', function(error) {
+        console.error(error);
+        alert(error.toString()) 
+      });
+
+
+      client.on('login/allow', function() {
+        
+        // subscribe to all metrics/* events emitted by Master component
+        client.event.master.on('metrics/*', function(data, meta) {
+
+          // display event in html body
+          if (document.body.innerHTML.length > 5000) document.body.innerHTML = "";
+          var metric = "<pre>" + meta.path + "\n" + JSON.stringify(data, null, 2) + "</pre>";
+          document.body.innerHTML = metric + document.body.innerHTML;
+
+        });
+      });
 
     </script>
   </head>
