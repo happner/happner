@@ -49,3 +49,5 @@ next ...
 --------
 
 - added istanbul and coveralls for coverage tests
+- MeshClient options supports host and hostname option
+- prevent unhandled rejection errors when using 'login/deny' and 'login/error' events instead of promise in MeshClient
