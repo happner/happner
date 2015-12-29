@@ -382,9 +382,9 @@ Update `./node_modules/master/index.js`
  *
  * @typedef Metric
  * @type {object}
- * @property {Number} timestamp - utc
+ * @property {Number} ts - utc timestamp
  * @property {String} key
- * @property {Number} values
+ * @property {Number} val
  *
  */
 
@@ -445,7 +445,7 @@ Agent.prototype.start = function($happn, callback) {
     var metric = {
       ts: Date.now(),
       key: 'test/metric',
-      value: 1,
+      val: 1,
     }
 
     // call remote function exchange.<endpoint>.<component>.<method>
