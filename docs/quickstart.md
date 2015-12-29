@@ -559,8 +559,6 @@ Update `./node_modules/agent/index.js`
 
 ```javascript
 
-////// Modified start function
-
 /*
  * Start method (called at mesh start(), if configured)
  *
@@ -613,9 +611,6 @@ Agent.prototype.start = function($happn, callback) {
 
   callback();
 }
-
-
-////// Modified stop function
 
 
 /*
