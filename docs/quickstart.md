@@ -439,9 +439,10 @@ var os = require('os');
 Agent.prototype.start = function($happn, callback) {
   $happn.log.info('starting agent component');
 
+  var hostname = os.hostname();
+
   this.interval = setInterval(function() {
 
-    var hostname = os.hostname();
     var metric = {
       ts: Date.now(),
       key: 'test/metric',
@@ -484,3 +485,64 @@ Agent.prototype.stop = function($happn, callback) {
 ```
 
 **Note: The stop method explicitly undoes what the start method did (clearInterval) - this allows for components to be dynamically added and removed from the mesh without leaving things behind.**
+
+
+### Add configurable list of inspectors for Agent
+
+Because the config is a javascript file it is possible to pass functions as config.
+
+Add custom item onto component config for agent inspector functions (keyed on metric name)
+
+Update `./configs/agent.js`
+
+```javascript
+
+// modify component config to include list of inspectors
+  ...
+  components: {
+    'agent': {
+      startMethod: 'start',
+      stopMethod: 'stop',
+      inspectors: {
+
+        // keeping these inspectors as selfcontained "lambdas" 
+        // means they could conceivably be configured on the
+        // master, and dynamically propagated to all agents
+        // (with eval on the agent (unfortunately?)) 
+
+        'load/avg1': function(callback) {
+          var os = require('os');
+          callback(null, os.loadavg()[0]);
+        },
+        'load/avg5': function(callback) {
+          var os = require('os');
+          callback(null, os.loadavg()[1]);
+        },
+        'load/avg15': function(callback) {
+          var os = require('os');
+          callback(null, os.loadavg()[2]);
+        },
+        'mem/total': function(callback) {
+          var os = require('os');
+          callback(null, os.totalmem());
+        },
+        'mem/free': function(callback) {
+          var os = require('os');
+          callback(null, os.freemem());
+        }
+      }
+    }
+  }
+  ...
+
+```
+
+And update the Agent module to use this new config.
+
+Update `./node_modules/agent/index.js`
+
+```javascript
+
+```
+
+
