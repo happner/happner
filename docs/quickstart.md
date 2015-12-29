@@ -107,7 +107,7 @@ vi bin/master
 
 Content of ./bin/master
 
-```javscript
+```javascript
 #!/usr/bin/env node
 
 var Happner = require('happner');
