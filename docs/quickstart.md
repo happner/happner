@@ -661,10 +661,10 @@ Update reportMetric() in `./node_modules/master/index.js`
 
 Master.prototype.reportMetric = function($happn, hostname, metric, callback) {
 
-  $happn.log.debug("metric from '%s': %j", hostname, metric);
-
   var eventKey = 'metrics/' + hostname + '/' + metric.key;
   var eventData = metric;
+
+  $happn.log.debug("emitting '%s': '%j'", eventKey, eventData);
 
   $happn.emit(eventKey, eventData);
 
@@ -679,6 +679,7 @@ eg.
 ```bash
 LOG_LEVEL=debug bin/master
 LOG_COMPONENTS=master,another LOG_LEVEL=debug bin/master
+```
 
 ***
 
