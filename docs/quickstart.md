@@ -7,6 +7,8 @@ This demonstration creates a simple monitoring service.
 
 * [Create a demo project](#create-a-demo-project)
 * [Create the Master node module](#create-the-master-node-module)
+* [Create config for the Master node](#create-config-for-the-master-node)
+* [Create bin runner for the Master node](#create-bin-runner-for-the-master-node)
 
 ### Create a demo project
 
@@ -48,3 +50,87 @@ function Master() {
 }
 
 ```
+
+### Create config for the Master node
+
+The config is `module.export`ed from a javascript file.
+
+```bash
+mkdir config
+vi config/master.js
+```
+
+Content of ./config/master.js
+
+```javascript
+module.exports = {
+
+  // This name will be used when attaching other nodes to this one.
+  name: 'MasterNode',
+
+  // Datalayer and network layer are the same thing.
+  datalayer: {
+    // host: '0.0.0.0',
+    port: 50505,   // Listening port
+    persist: true, // Store data in default nedb file
+    secure: false, // Secure? (later)
+  },
+
+
+  // modules only necessary upon deviation from default
+  // https://github.com/happner/happner/blob/master/docs/configuration.md#module-config
+  // modules: {
+  //   'master': {
+  //     path: 'to/alternative/location'
+  //   }
+  // },
+
+  // Include master as component
+  components: {
+    'master': {
+    }
+  }
+
+}
+
+```
+
+### Create bin runner for the Master node
+
+This is the "executable" that runs the Master node.
+
+```bash
+mkdir bin
+touch bin/master
+chmod +x bin/master
+vi bin/master
+```
+
+Content of ./bin/master
+
+```javscript
+#!/usr/bin/env node
+
+var Happner = require('happner');
+var Config  = require('../config/master');
+
+// Call create() factory which returns the promise of a mesh or error
+
+Happner.create(Config)
+
+.then(function(mesh) {
+  // got running mesh
+})
+
+.catch(function(error) {
+  console.error(error.stack || error.toString())
+  process.exit(1);
+});
+
+```
+
+At this point is should be possible to start the `bin/master` process and `^c` to stop it.
+
+
+
+
