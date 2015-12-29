@@ -508,28 +508,43 @@ Update `./configs/agent.js`
 
         // keeping these inspectors as selfcontained "lambdas" 
         // means they could conceivably be configured on the
-        // master, and dynamically propagated to all agents
-        // (with eval on the agent (unfortunately?)) 
+        // master, and dynamically propagated on change to 
+        // all agents (with eval on the agent (unfortunately?)) 
 
-        'load/avg1': function(callback) {
-          var os = require('os');
-          callback(null, os.loadavg()[0]);
+        'load/avg1': {
+          interval: 1000,
+          fn: function(callback) {
+            var os = require('os');
+            callback(null, os.loadavg()[0]);
+          }
         },
-        'load/avg5': function(callback) {
-          var os = require('os');
-          callback(null, os.loadavg()[1]);
+        'load/avg5': {
+          interval: 1000,
+          fn: function(callback) {
+            var os = require('os');
+            callback(null, os.loadavg()[1]);
+          }
         },
-        'load/avg15': function(callback) {
-          var os = require('os');
-          callback(null, os.loadavg()[2]);
+        'load/avg15': {
+          interval: 1000,
+          fn: function(callback) {
+            var os = require('os');
+            callback(null, os.loadavg()[2]);
+          }
         },
-        'mem/total': function(callback) {
-          var os = require('os');
-          callback(null, os.totalmem());
+        'mem/total': {
+          interval: 1000,
+          fn: function(callback) {
+            var os = require('os');
+            callback(null, os.totalmem());
+          }
         },
-        'mem/free': function(callback) {
-          var os = require('os');
-          callback(null, os.freemem());
+        'mem/free': {
+          interval: 1000,
+          fn: function(callback) {
+            var os = require('os');
+            callback(null, os.freemem());
+          }
         }
       }
     }
@@ -538,11 +553,91 @@ Update `./configs/agent.js`
 
 ```
 
-And update the Agent module to use this new config.
+And update the Agent module (`start()` and `stop()` functions) to use this new config.
 
 Update `./node_modules/agent/index.js`
 
 ```javascript
+
+////// Modified start function
+
+/*
+ * Start method (called at mesh start(), if configured)
+ *
+ * @api public
+ * @param {ComponentInstance} $happn - injected by the mesh when it calls this function
+ * @param {Function} callback
+ *
+ */
+
+Agent.prototype.start = function($happn, callback) {
+  $happn.log.info('starting agent component');
+
+  var hostname = os.hostname();
+  var inspectors = $happn.config.inspectors;
+
+  Object.keys(inspectors).forEach(function(key) {
+
+    var interval = inspectors[key].interval || 10000;
+    var inspect = inspectors[key].fn;
+
+    // run multiple inspectors each in separate interval
+
+    inspectors[key].runner = setInterval(function() {
+
+      // TODO: properly deal with inspector taking longer than interval
+      
+      inspect(function(error, result) {
+
+        if (error) return $happn.log.error("inspector at key: '%s' failed", key, error);
+
+        // submit inspect result to master
+
+        var metric = {
+          ts: Date.now(),
+          key: key,
+          val: result
+        }
+
+        $happn.exchange.MasterNode.master.reportMetric(hostname, metric, function(error, result) {
+          // callback as called by master.reportMetric
+          if (error) return $happn.log.error('from reportMetric', error);
+          // $happn.log.info('result from reportMetric: %j', result);
+        });
+
+      });
+
+    }, interval);
+
+  });
+
+  callback();
+}
+
+
+////// Modified stop function
+
+
+/*
+ * Stop method (called at mesh stop(), if configured)
+ *
+ * @api public
+ * @param {ComponentInstance} $happn - injected by the mesh when it calls this function
+ * @param {Function} callback
+ *
+ */
+
+Agent.prototype.stop = function($happn, callback) {
+  $happn.log.info('stopping agent component');
+
+  // stop all inspector intervals
+  var inspectors = $happn.config.inspectors;
+  Object.keys(inspectors).forEach(function(key) {
+    clearInterval(inspectors[key].runner);
+  });
+  
+  callback();
+}
 
 ```
 
