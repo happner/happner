@@ -9,8 +9,7 @@
   },
   "scripts": {
     "test": "mocha silence.js test",
-    "test-cover": "istanbul cover _mocha -- silence.js test",
-    "post-cover": "cat coverage/lcov.info | coveralls"
+    "test-cover": "istanbul cover _mocha -- silence.js test"
   },
   "repository": {
     "type": "git",
