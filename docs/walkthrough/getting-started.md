@@ -945,6 +945,7 @@ Content of `./node_modules/master/app/client.css`
 body {
     background-color: black;
 }
+
 .host {
     border: 1px solid grey;
     width: 520px;
