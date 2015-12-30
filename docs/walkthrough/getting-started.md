@@ -38,6 +38,8 @@ This demonstration creates a simple monitoring service.
 
 ### Create a demo project
 
+[&#9650;](#)
+
 ```bash
 mkdir happner-demo
 cd happner-demo
@@ -47,6 +49,8 @@ npm install happner --save
 ```
 
 ### Create the Master node module
+
+[&#9650;](#)
 
 This creates the mesh module that will run as the monitoring service's master node.
 
