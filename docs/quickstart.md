@@ -365,6 +365,7 @@ Update `./config/master.js`
 
   ...
   components: {
+    // 'agent': {
     'master': {
       startMethod: 'start',
       stopMethod: 'stop',
