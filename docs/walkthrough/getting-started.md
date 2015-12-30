@@ -416,7 +416,7 @@ Master.prototype.reportMetric = function($happn, hostname, metric, callback) {
 
   $happn.log.info("metric from '%s': %j", hostname, metric);
 
-  callback(null, {thanks: 1});
+  callback(null, {thank: 'u'});
 }
 
 

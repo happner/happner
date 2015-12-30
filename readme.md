@@ -8,9 +8,9 @@ Happner is a cloud application framework ideal for integrating multiple micro se
 
 `npm install happner --save`
 
-## demonstration
+## walkthrough
 
-* [Quick Start](https://github.com/happner/happner/blob/master/docs/quickstart.md)
+* [Getting Started](https://github.com/happner/happner/blob/master/docs/walkthrough/getting-started.md)
 
 ## documentation
 
