@@ -30,9 +30,9 @@ This demonstration creates a simple monitoring service.
 
 * [Serve browser content from Master](#serve-browser-content-from-master)
 * [Create login script](#create-login-script)
-* [Create client script](#create-client-script)
+* [Create client script and style](#create-client-script-and-style)
+* [Install smoothie charts](#install-smoothie-charts)
 * [Load scripts into browser](#load-scripts-into-browser)
-* [Install and use smoothie charts](#install-and-use-smoothie-charts)
 
 ***
 
@@ -542,39 +542,35 @@ Update `./configs/agent.js`
         // master, and dynamically propagated on change to 
         // all agents (with eval on the agent (unfortunately?)) 
 
-        'load/avg1': {
+        'load/average-1': {
           interval: 1000,
           fn: function(callback) {
             var os = require('os');
             callback(null, os.loadavg()[0]);
           }
         },
-        'load/avg5': {
+        // 'load/average-5': {
+        //   interval: 1000,
+        //   fn: function(callback) {
+        //     var os = require('os');
+        //     callback(null, os.loadavg()[1]);
+        //   }
+        // },
+        // 'load/average-15': {
+        //   interval: 1000,
+        //   fn: function(callback) {
+        //     var os = require('os');
+        //     callback(null, os.loadavg()[2]);
+        //   }
+        // },
+        'memory/percent-free': {
           interval: 1000,
           fn: function(callback) {
             var os = require('os');
-            callback(null, os.loadavg()[1]);
-          }
-        },
-        'load/avg15': {
-          interval: 1000,
-          fn: function(callback) {
-            var os = require('os');
-            callback(null, os.loadavg()[2]);
-          }
-        },
-        'mem/total': {
-          interval: 1000,
-          fn: function(callback) {
-            var os = require('os');
-            callback(null, os.totalmem());
-          }
-        },
-        'mem/free': {
-          interval: 1000,
-          fn: function(callback) {
-            var os = require('os');
-            callback(null, os.freemem());
+            var total = os.totalmem();
+            var free = os.freemem();
+            var percent = Math.round(free / total * 100 * 1000) / 1000; // to 3 decimal places
+            callback(null, percent);
           }
         }
       }
@@ -791,11 +787,11 @@ Content of `./node_modules/master/app/login.js`
 ```
 
 
-### Create client script
+### Create client script and style
 
 [&#9650;](#)
 
-This script is called after successfult login with the connected client.
+This script is called after successfull login with the connected client. It subscribes to `metrics/*` and accordingly buildg graphs into the browser.
 
 Content of `./node_modules/master/app/client.js`
 
@@ -803,22 +799,196 @@ Content of `./node_modules/master/app/client.js`
 (function(context) {
   context.runClient = function(client) {
 
-    // subscribe to all metrics/* events emitted by Master component
+    var hosts = {};
 
     client.event.master.on('metrics/*', function(data, meta) {
 
-      // lazy: display events in html body
+      // extract hostname/chart/item from event path
+      var pathPart = meta.path.match(/metrics\/(.*)$/)[1];
+      var keys = pathPart.split('/');
+      var hostname  = keys.shift();
+      var chartname = keys.shift();
+      var itemname  = keys.join('/');
 
-      if (document.body.innerHTML.length > 5000) document.body.innerHTML = "";
-      var metric = "<pre>" + meta.path + "\n" + JSON.stringify(data, null, 2) + "</pre>";
-      document.body.innerHTML = metric + document.body.innerHTML;
+      var metric = data;
 
+      updateMetric(hostname, chartname, itemname, metric);
     });
+
+
+    var updateMetric = function(hostname, chartname, itemname, metric) {
+      ensureHost(hostname);
+      ensureHostChart(hostname, chartname);
+      ensureHostChartItem(hostname, chartname, itemname);
+
+      updateHostChartItem(hostname, chartname, itemname, metric);
+    }
+
+
+    // ensure host element in document
+    var ensureHost = function(hostname) {
+      if (typeof hosts[hostname] !== 'undefined') return;
+
+      var host = document.createElement("div");
+      host.id = 'host-' + hostname;
+      host.className = 'host';
+
+      var heading = document.createElement("div");
+      heading.className = 'host-heading';
+      heading.innerHTML = hostname;
+      host.appendChild(heading);
+
+      var content = document.createElement("div");
+      content.className = 'host-content';
+      host.appendChild(content);
+      
+      document.body.appendChild(host);
+
+      hosts[hostname] = {
+        root: host,
+        content: content,
+        charts: {},
+        lastWrite: Date.now()
+      }
+    }
+
+
+    // ensure chart element in host element in document
+    var ensureHostChart = function(hostname, chartname) {
+      if (typeof hosts[hostname].charts[chartname] !== 'undefined') return;
+
+      var container = document.createElement("div");
+      container.className = 'chart';
+
+      var heading = document.createElement("div");
+      heading.className = 'chart-heading';
+      heading.innerHTML = chartname;
+      container.appendChild(heading);
+
+      var canvas = document.createElement("canvas");
+      canvas.id = 'canvas-' + hostname + '-' + chartname;
+      canvas.className = 'chart-canvas';
+      canvas.width = 500;
+      canvas.height = 100;
+      container.appendChild(canvas);
+
+      var host = hosts[hostname];
+      host.content.appendChild(container);
+
+      var options = {
+        maxValueScale: 1.02,
+        minValueScale: 1.02,
+        labels: {
+          fillStyle: '#aaaaaa'
+        }
+      };
+      var chart = new SmoothieChart(options);
+      chart.streamTo(canvas);
+
+      host.charts[chartname] = {
+        // canvas: canvas,
+        heading: heading,
+        chart: chart,
+        items: {}
+      }
+    }
+
+
+    // ensure item (line) in host/chart
+    var ensureHostChartItem = function(hostname, chartname, itemname) {
+      if (typeof hosts[hostname].charts[chartname].items[itemname] !== 'undefined') return;
+      var host = hosts[hostname];
+      var chart = host.charts[chartname];
+
+      var series = new TimeSeries();
+      var options = {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 2};
+      chart.chart.addTimeSeries(series, options);
+
+      chart.items[itemname] = {
+        series: series
+      }
+
+      var heading = chartname + " (" + Object.keys(chart.items).join(', ') + ")";
+      chart.heading.innerHTML = heading;
+    }
+
+    // update item
+    var updateHostChartItem = function(hostname, chartname, itemname, metric) {
+      var host = hosts[hostname];
+      var chart = host.charts[chartname];
+      var item = chart.items[itemname];
+
+      item.series.append(metric.ts, metric.val);
+      host.lastWrite = Date.now();
+    }
+
+
+    // watch for hosts being removed
+    setInterval(function() {
+      var now = Date.now();
+      Object.keys(hosts).forEach(function(hostname) {
+        var host = hosts[hostname];
+        if (now - host.lastWrite < 7000) return;
+        
+        document.body.removeChild(host.root);
+        delete hosts[hostname];
+      });
+    }, 1000);
 
   }
 })(this);
 ```
 
+Content of `./node_modules/master/app/client.css`
+
+```css
+body {
+    background-color: black;
+}
+.host {
+    border: 1px solid grey;
+    width: 520px;
+    padding-bottom: 20px;
+    margin-bottom: 4px;
+}
+
+.host-heading {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.5em;
+    font-family: courier;
+    text-align: center;
+}
+
+.chart-heading {
+    padding-top: 7px;
+    color: rgba(255, 255, 255, 0.4);
+    width: 500px;
+    font-family: courier;
+    font-size: 1em;
+    text-align: center;
+}
+
+.chart {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-left: -250px;
+}
+```
+
+### Install smoothie charts
+
+[&#9650;](#)
+
+Using smoothie charts to graph streaming data.
+
+Install into master app directory
+
+```bash
+cd node_modules/master/app
+wget http://github.com/joewalnes/smoothie/raw/master/smoothie.js
+cd - # cd ../../../
+```
 
 ### Load scripts into browser
 
@@ -834,12 +1004,14 @@ Content of `./node_modules/master/app/index.html`
       this defines MeshClient class
     -->
     <script type="text/javascript" src="/api/client"></script>
+    <script type="text/javascript" src="/master/app/smoothie.js"></script>
 
     <!--
       load app client
       this defines window.runClient()
     -->
     <script type="text/javascript" src="/master/app/client.js"></script>
+    <link rel='stylesheet' href='/master/app/client.css'></link>
 
     <!--
       connect to mesh
@@ -848,26 +1020,10 @@ Content of `./node_modules/master/app/index.html`
     <script type="text/javascript" src="/master/app/login.js"></script>
   </head>
 </html>
+
 ```
 
 Start `bin/master` and `bin/agent`.
 
 And connect to [http://MASTER_IP:MASTER_PORT/master/app](http://127.0.0.1:50505/master/app)
-
-***
-
-### Install and use smoothie charts
-
-[&#9650;](#)
-
-Using smoothie charts to graph streaming data.
-
-Install into master app directory
-
-```bash
-cd node_modules/master/app
-wget http://github.com/joewalnes/smoothie/raw/master/smoothie.js
-cd - # cd ../../../
-```
-
 
