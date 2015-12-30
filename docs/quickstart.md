@@ -30,7 +30,10 @@ This demonstration creates a simple monitoring service.
 ###
 
 * [Serve browser content from Master](#serve-browser-content-from-master)
-* [Connect browser mesh client to Master](#connect-browser-mesh-client-to-master)
+* [Create login script](#create-login-script)
+* [Create client script](#create-client-script)
+* [Load scripts into browser](#load-scripts-into-browser)
+* [Install and use smoothie charts](#install-and-use-smoothie-charts)
 
 
 ### Create a demo project
@@ -691,8 +694,8 @@ LOG_COMPONENTS=master,another LOG_LEVEL=debug bin/master
 Create a directory for static content containing index.html
 
 ```bash
-mkdir node_modules/master/widget
-touch node_modules/master/widget/index.html
+mkdir node_modules/master/app
+touch node_modules/master/app/index.html
 ```
 
 Add web route to static content in Master component config.
@@ -708,8 +711,8 @@ Update `./configs/master.js`
 
       web: {
         routes: {
-          // serves static content in node_modules/master/widget at http://.../master/widget
-          'widget': 'static'
+          // serves static content in node_modules/master/app at http://.../master/app
+          'app': 'static'
         }
       }
     }
@@ -717,67 +720,123 @@ Update `./configs/master.js`
   ..
 ```
 
-### Connect browser mesh client to Master
+### Create login script
 
-Content of `./node_modules/master/widget/index.html`
+This script is used to connect to the mesh.
+
+Content of `./node_modules/master/app/login.js`
+
+```javascript
+(function(context) {
+
+  // defaults to page address
+  var options = {
+    // host: '',
+    // port: 80
+  }
+
+  // unnecessary: secure not set true in mesh/datalayer config
+  var credentials = {
+    // username: '',
+    // password: '',
+  }
+
+  var client = new MeshClient(options);
+
+  client.login(credentials); // .then(...
+
+  client.on('login/deny', function(error) {
+    console.error(error);
+    alert(error.toString()) 
+  });
+
+  client.on('login/error', function(error) {
+    console.error(error);
+    alert(error.toString()) 
+  });
+
+  // run client on login success
+
+  client.on('login/allow', function() {
+    context.runClient(client);
+  });
+
+})(this);
+```
+
+
+### Create client script
+
+This script is called after successfult login with the connected client.
+
+Content of `./node_modules/master/app/client.js`
+
+```javascript
+(function(context) {
+  context.runClient = function(client) {
+
+    // subscribe to all metrics/* events emitted by Master component
+
+    client.event.master.on('metrics/*', function(data, meta) {
+
+      // lazy: display events in html body
+
+      if (document.body.innerHTML.length > 5000) document.body.innerHTML = "";
+      var metric = "<pre>" + meta.path + "\n" + JSON.stringify(data, null, 2) + "</pre>";
+      document.body.innerHTML = metric + document.body.innerHTML;
+
+    });
+
+  }
+})(this);
+```
+
+
+### Load scripts into browser
+
+
+Content of `./node_modules/master/app/index.html`
 
 ```html
 <html>
   <head>
-    <!-- get built-in api client script from mesh -->
+    <!--
+      get built-in api client script from mesh 
+      this defines MeshClient class
+    -->
     <script type="text/javascript" src="/api/client"></script>
 
-    <!-- connect and subscribe to metric events -->
-    <script type="text/javascript">
+    <!--
+      load app client
+      this defines window.runClient()
+    -->
+    <script type="text/javascript" src="/master/app/client.js"></script>
 
-      // defaults to page address
-      var options = {
-        // host: '',
-        // port: 80
-      }
-  
-      // unnecessary: secure not set true in mesh/datalayer config
-      var credentials = {
-        // username: '',
-        // password: '',
-      }
-  
-      var client = new MeshClient(options)
-  
-      client.login(credentials); // .then(...
-  
-      client.on('login/deny', function(error) {
-        console.error(error);
-        alert(error.toString()) 
-      });
-  
-      client.on('login/error', function(error) {
-        console.error(error);
-        alert(error.toString()) 
-      });
-  
-      client.on('login/allow', function() {      
-        // subscribe to all metrics/* events emitted by Master component
-        client.event.master.on('metrics/*', function(data, meta) {
-  
-          // lazy display event in html body
-          if (document.body.innerHTML.length > 5000) document.body.innerHTML = "";
-          var metric = "<pre>" + meta.path + "\n" + JSON.stringify(data, null, 2) + "</pre>";
-          document.body.innerHTML = metric + document.body.innerHTML;
-  
-        });
-      });
-
-    </script>
+    <!--
+      connect to mesh
+      this calls window.runClient() with the connected client instance
+    -->
+    <script type="text/javascript" src="/master/app/login.js"></script>
   </head>
-
-  <body>
-  </body>
-
 </html>
 ```
 
 Start `bin/master` and `bin/agent`.
 
-And connect to [http://MASTER_IP:MASTER_PORT/master/widget](http://127.0.0.1:50505/master/widget)
+And connect to [http://MASTER_IP:MASTER_PORT/master/app](http://127.0.0.1:50505/master/app)
+
+***
+
+### Install and use smoothie charts
+
+Using smoothie charts to graph streaming data.
+
+Install into master app directory
+
+```bash
+cd node_modules/master/app
+wget http://github.com/joewalnes/smoothie/raw/master/smoothie.js
+cd - # cd ../../../
+```
+
 
