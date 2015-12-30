@@ -34,6 +34,7 @@ This demonstration creates a simple monitoring service.
 * [Load scripts into browser](#load-scripts-into-browser)
 * [Install and use smoothie charts](#install-and-use-smoothie-charts)
 
+***
 
 ### Create a demo project
 
@@ -81,6 +82,8 @@ function Master() {
 
 ### Create config for the Master node
 
+[&#9650;](#)
+
 The config is `module.export`ed from a javascript file.
 
 ```bash
@@ -125,6 +128,8 @@ module.exports = {
 
 ### Create bin runner for the Master node
 
+[&#9650;](#)
+
 This is the "executable" that runs the Master node.
 
 ```bash
@@ -162,6 +167,8 @@ Happner.create(Config)
 ***
 
 ### Use env file for stage config
+
+[&#9650;](#)
 
 Install env file loader and create env file
 
@@ -201,6 +208,8 @@ require('dotenv').load();
 
 ### Create the Agent node module
 
+[&#9650;](#)
+
 This agent is installed into a mesh node running at each host to be monitored. It connects an `endpoint` to the master to report metrics.
 
 **Note: Agent is it's own node_module! This simplifies the configurations.**
@@ -235,6 +244,8 @@ function Agent() {
 
 
 ### Create the Agent mesh runner and config
+
+[&#9650;](#)
 
 Same as Master, create config and bin files for Agent.
 
@@ -315,6 +326,8 @@ chmod +x bin/agent
 
 ### Create Start and Stop methods on Master and Agent components
 
+[&#9650;](#)
+
 Start and Stop methods are used to assemble and tear down the component runtime. Additionally the `$happn` service can optionally be injected to perform any necessary interactions with the mesh.
 
 Update `./node_modules/master/index.js`
@@ -375,8 +388,9 @@ Update `./config/master.js`
 
 **ALSO** Do the same for `./node_modules/agent/index.js` and `./config/agent.js`
 
-
 ### Create report function on Master
+
+[&#9650;](#)
 
 This is a function defined on the master that will be repetatively called by the agents to report their metrics.
 
@@ -417,11 +431,11 @@ Master.prototype.reportMetric = function($happn, hostname, metric, callback) {
 
   callback(null, {thank: 'u'});
 }
-
-
 ```
 
 ### Call report function from Agent
+
+[&#9650;](#)
 
 Functions on the master (being an endpoint) become available on the Agent via the exchange.
 
@@ -500,6 +514,8 @@ Agent.prototype.stop = function($happn, callback) {
 
 
 ### Add configurable list of inspectors for Agent
+
+[&#9650;](#)
 
 Because the config is a javascript file it is possible to pass functions as config.
 
@@ -649,6 +665,8 @@ Agent.prototype.stop = function($happn, callback) {
 
 ### Update Master to emit event with each received metric
 
+[&#9650;](#)
+
 A browser in the client will be subscribing to these events
 
 Update reportMetric() in `./node_modules/master/index.js`
@@ -722,6 +740,8 @@ Update `./configs/master.js`
 
 ### Create login script
 
+[&#9650;](#)
+
 This script is used to connect to the mesh.
 
 Content of `./node_modules/master/app/login.js`
@@ -767,6 +787,8 @@ Content of `./node_modules/master/app/login.js`
 
 ### Create client script
 
+[&#9650;](#)
+
 This script is called after successfult login with the connected client.
 
 Content of `./node_modules/master/app/client.js`
@@ -794,6 +816,7 @@ Content of `./node_modules/master/app/client.js`
 
 ### Load scripts into browser
 
+[&#9650;](#)
 
 Content of `./node_modules/master/app/index.html`
 
@@ -828,6 +851,8 @@ And connect to [http://MASTER_IP:MASTER_PORT/master/app](http://127.0.0.1:50505/
 ***
 
 ### Install and use smoothie charts
+
+[&#9650;](#)
 
 Using smoothie charts to graph streaming data.
 
