@@ -713,6 +713,8 @@ LOG_COMPONENTS=master,another LOG_LEVEL=debug bin/master
 
 ### Serve browser content from Master
 
+[&#9650;](#)
+
 Create a directory for static content containing index.html
 
 ```bash
