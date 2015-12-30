@@ -1,7 +1,6 @@
 [&#9664;](https://github.com/happner/happner#documentation) contents
 
-
-## Quick Start
+## Getting Started
 
 This demonstration creates a simple monitoring service.
 
