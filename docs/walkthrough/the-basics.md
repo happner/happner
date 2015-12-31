@@ -1,8 +1,17 @@
 [&#9664;](https://github.com/happner/happner#documentation) contents
 
-## Getting Started
+## The Basics
 
-This demonstration creates a simple monitoring service.
+This includes:
+
+* Creating mesh nodes with basic configuration.
+* Creating modules to run as components in the mesh.
+* Creating endpoint connecting one mesh node to another.
+* Calling a component method on the remote node.
+* Emitting events from a component.
+* Using browser client and subscribing to component events.
+
+Here is the [happner-demo repo with branch] as it stands at the end of this walkthrough.
 
 * [Create a demo project](#create-a-demo-project)
 * [Create the Master node module](#create-the-master-node-module)
