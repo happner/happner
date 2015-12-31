@@ -410,7 +410,7 @@ Update `./config/master.js`
 
 This is a function defined on the master that will be repetatively called by the agents to report their metrics.
 
-**Note: A more elegant design might be for the agent to emit metrics and the master to be subscribed. But this would require an endpoint connection from master pointing to eveny agent. ie. The existing endpoint from agent to master is not bi-directional**
+**Note: A more elegant design might be for the agent to emit metrics and the master to be subscribed. But this would require an endpoint connection from master pointing to every agent. ie. The existing endpoint from agent to master is not bi-directional**
 
 
 Update `./node_modules/master/index.js`
