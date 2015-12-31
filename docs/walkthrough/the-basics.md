@@ -11,7 +11,7 @@ This includes:
 * Emitting events from a component.
 * Using browser client and subscribing to component events.
 
-**Here is the result of this walkthrough [happner-demo#01-the-basics](https://github.com/happner/happner-demo/tree/01-the-basics).**
+**Here is the result of this walkthrough: [happner-demo#01-the-basics](https://github.com/happner/happner-demo/tree/01-the-basics).**
 
 ### Contents
 
