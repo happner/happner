@@ -13,7 +13,7 @@ Happner is a cloud application framework ideal for integrating multiple micro se
 These walkthroughs use *happner* to create a rudimentary monitoring service.
 
 * [The Basics](https://github.com/happner/happner/blob/master/docs/walkthrough/the-basics.md)
-* more pending...
+* 
 
 ## documentation
 
