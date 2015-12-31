@@ -106,9 +106,9 @@ module.exports = {
   // Datalayer and network layer are the same thing.
   datalayer: {
     // host: '0.0.0.0',
-    port: 50505,   // Listening port
-    persist: true, // Store data in default nedb file
-    secure: false, // Secure? (later)
+    port: 50505,    // Listening port
+    persist: false, // Persist data across restarts? (later)
+    secure: false,  // Secure? (later)
   },
 
 
@@ -199,8 +199,8 @@ require('dotenv').load();
   datalayer: {
     host: process.env.MASTER_IP,
     port: process.env.MASTER_PORT,
-    persist: true,     // Store data in default nedb file
-    secure: false,     // Secure? (later)
+    persist: false, // Persist data across restarts? (later)
+    secure: false,  // Secure? (later)
   },
   ...
 
@@ -791,7 +791,7 @@ Content of `./node_modules/master/app/login.js`
 
 [&#9650;](#)
 
-This script is called after successfull login with the connected client. It subscribes to `metrics/*` and accordingly buildg graphs into the browser.
+This script is called after successfull login with the connected client. It subscribes to `metrics/*` and accordingly builds graphs into the browser.
 
 Content of `./node_modules/master/app/client.js`
 
@@ -901,7 +901,7 @@ Content of `./node_modules/master/app/client.js`
       var chart = host.charts[chartname];
 
       var series = new TimeSeries();
-      var options = {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 2};
+      var options = {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.15)', lineWidth: 1};
       chart.chart.addTimeSeries(series, options);
 
       chart.items[itemname] = {
@@ -955,7 +955,7 @@ body {
 
 .host-heading {
     color: rgba(255, 255, 255, 0.8);
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-family: courier;
     text-align: center;
 }
@@ -975,6 +975,7 @@ body {
   left: 50%;
   margin-left: -250px;
 }
+
 ```
 
 ### Install smoothie charts
