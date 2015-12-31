@@ -43,11 +43,18 @@
 - fixed logger flag in bin/happner
 - silence security waring by explicitly setting secure to false
 
-
-
-next ...
---------
+1.3.10 2015-12-31
+-----------------
 
 - added istanbul and coveralls for coverage tests
 - MeshClient options supports host and hostname option
 - prevent unhandled rejection errors when using 'login/deny' and 'login/error' events instead of promise in MeshClient
+- divide api.js into multiple parts in system/shared/...
+
+
+
+
+next
+----
+
+-
