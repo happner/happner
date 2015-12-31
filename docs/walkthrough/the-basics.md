@@ -6,10 +6,11 @@ This includes:
 
 * Creating mesh nodes with basic configuration.
 * Creating modules to run as components in the mesh.
-* Creating endpoint connecting one mesh node to another.
-* Calling a component method on the remote node.
-* Emitting events from a component.
-* Using browser client and subscribing to component events.
+* Creating an endpoint connecting one mesh node to another.
+* Calling a method on a remote node.
+* Emitting events.
+* Subscribing to events with browser client.
+* Sundry other stuff to make charts in browser.
 
 **Here is the result of this walkthrough: [happner-demo#01-the-basics](https://github.com/happner/happner-demo/tree/01-the-basics).**
 
