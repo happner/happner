@@ -11,7 +11,7 @@ This includes:
 * Emitting events from a component.
 * Using browser client and subscribing to component events.
 
-Here is the [happner-demo repo with branch] as it stands at the end of this walkthrough.
+Here is the [happner-demo repo with branch](https://github.com/happner/happner-demo/tree/01-the-basics) as at the end of this walkthrough.
 
 * [Create a demo project](#create-a-demo-project)
 * [Create the Master node module](#create-the-master-node-module)
