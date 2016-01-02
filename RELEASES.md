@@ -51,7 +51,10 @@
 - prevent unhandled rejection errors when using 'login/deny' and 'login/error' events instead of promise in MeshClient
 - divide api.js into multiple parts in system/shared/...
 
+1.3.11 2016-01-02
+-----------------
 
+- using latest version of happn 2.1.6
 
 
 next
