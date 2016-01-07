@@ -56,6 +56,10 @@
 
 - using latest version of happn 2.1.7
 
+1.4.0 2016-01-07
+----------------
+
+- added https functinality, using happn 2.2.1
 
 next
 ----
