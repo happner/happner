@@ -7,7 +7,7 @@ var should = require('chai').should();
 var Mesh = require('../');
 var http = require('http');
 var test_id = require('shortid').generate();
-
+var expect = require('expect.js');
 
 describe('c7-permissions-web', function (done) {
 
@@ -23,7 +23,7 @@ describe('c7-permissions-web', function (done) {
     datalayer: {
       secure:true,
       port:10000,
-      adminPassword: test_id
+      adminPassword:test_id
     },
     modules: {
       "middlewareTest": {
@@ -51,28 +51,49 @@ describe('c7-permissions-web', function (done) {
 
   before(function (done) {
     this.timeout(defaultTimeout);
-    this.mesh = new Mesh();
-    this.mesh.initialize(config, function (err) {
+    mesh = new Mesh();
+    mesh.initialize(config, function (err) {
       if (err) return done(err);
-      done();
+      mesh.start(done);
     });
   });
 
   after(function (done) {
-    this.mesh.stop(done);
+    mesh.stop(done);
   })
+
+  var http = require('http');
+
+  function doRequest(path, token, callback){
+
+    var http_request_options = {
+      host: '127.0.0.1',
+      port:10000
+    };
+
+    http_request_options.path = path;
+
+    http_request_options.headers = {'Cookie': ['happn_token=' + token]}
+
+    http.request(http_request_options, callback).end();
+  }
+
 
   it('fails to access a file, missing the token', function (done) {
     this.timeout(defaultTimeout);
-    http.get('http://localhost:10000/index.html', function(resp) {
-      resp.statusCode.should.eql(403);
+
+    doRequest('/index.html', null, function(response){
+
+      expect(response.statusCode).to.equal(403);
       done();
-    })
+
+    });
+
   });
 
   var adminClient = new Mesh.MeshClient({secure:true, port:10000});
 
-  it('logs in wth the admin user, we have a token', function (done) {
+  it('logs in wth the admin user, we have a token - we can access the file', function (done) {
     
     var credentials = {
       username: '_ADMIN', // pending
@@ -81,11 +102,80 @@ describe('c7-permissions-web', function (done) {
 
     adminClient.login(credentials).then(function(){
       
-
       console.log('session token is:::', adminClient.token);
 
+      doRequest('/index.html', adminClient.token, function(response){
 
+        expect(response.statusCode).to.equal(200);
+        done();
+
+      });
+     
     }).catch(done);
+
+  });
+
+  it('creates a test user, fails to log in, add group with web permission and log in ok', function(done) {
+    
+    var testGroup = {
+      name:'TESTUSER_' + test_id,
+      
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
+
+      permissions:{
+        methods:{}
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+    
+      var testUser = {
+        username:'TEST_USER' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true, port:10000});
+
+            testUserClient.login(testUser).then(function(){
+
+              doRequest('/index.html', testUserClient.token, function(response){
+
+                expect(response.statusCode).to.equal(403);
+                  
+
+              });
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+
+      });
+    });
 
   });
 
