@@ -102,8 +102,6 @@ describe('c7-permissions-web', function (done) {
 
     adminClient.login(credentials).then(function(){
       
-      console.log('session token is:::', adminClient.token);
-
       doRequest('/index.html', adminClient.token, function(response){
 
         expect(response.statusCode).to.equal(200);
@@ -126,7 +124,7 @@ describe('c7-permissions-web', function (done) {
       },
 
       permissions:{
-        methods:{}
+        web:{}
       }
     }
 
@@ -164,7 +162,24 @@ describe('c7-permissions-web', function (done) {
               doRequest('/index.html', testUserClient.token, function(response){
 
                 expect(response.statusCode).to.equal(403);
-                  
+                
+                testGroupSaved.permissions.web = {
+                  'index*':{actions:['get', 'put', 'post'], description:'a test web permission'}
+                };
+
+                adminClient.exchange.security.updateGroup(testGroupSaved, function(e, updated){
+
+                  if (e) return done(e);
+
+                   doRequest('/index.html', testUserClient.token, function(response){
+
+                    expect(response.statusCode).to.equal(200);
+                    done();
+
+                   });
+
+                });
+
 
               });
 
