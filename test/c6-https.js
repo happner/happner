@@ -66,7 +66,7 @@ describe('c6 - https', function(done) {
        done(new Error('this was not meant to happen'));
       }).catch(function(e){
         expect(e.toString()).to.equal('Error: socket hang up');
-        done();
+        if (nodeProc != '0.10') done();
       });
 
   });
