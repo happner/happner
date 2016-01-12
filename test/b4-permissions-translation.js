@@ -57,7 +57,7 @@ var async = require('async');
 
 describe('b4 - component start and validation -', function() {
 
-  this.timeout(5000);
+  this.timeout(20000);
 
   before(function(done) {
 
@@ -647,23 +647,27 @@ it('we add a test user that belongs to a group that has permissions to access al
 
 var http = require('http');
 
-  function doRequest(path, token, method, callback){
+function doRequest(path, token, method, callback){
 
-    var http_request_options = {
-      host: '127.0.0.1',
-      port:55000,
-      method:method.toUpperCase()
-    };
+  console.log('doing request:::', path);
 
-    http_request_options.path = path;
+  var http_request_options = {
+    host: '127.0.0.1',
+    port:55000,
+    method:method.toUpperCase()
+  };
 
-    http_request_options.headers = {'Cookie': ['happn_token=' + token]}
+  http_request_options.path = path;
 
-    http.request(http_request_options, callback).end();
-  }
+  http_request_options.headers = {'Cookie': ['happn_token=' + token]}
+
+  http.request(http_request_options, callback).end();
+}
 
 it('we add a test user that belongs to a group that has permissions to access a protected web route, we test that this works', function(done) {
      
+   this.timeout(20000);
+
      var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_WEB_' + test_id,
       
@@ -731,6 +735,10 @@ it('we add a test user that belongs to a group that has permissions to access a 
                     doRequest('/b4_permissions_translation/SecuredComponent/Web', testUserClient.token, 'POST', function(response){
 
                       expect(response.statusCode).to.be(200);
+
+                      var nodeProc = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
+
+                      if (nodeProc == '0.10') return done();
 
                       doRequest('/b4_permissions_translation/SecuredComponent/Web', testUserClient.token, 'DELETE', function(response){
 

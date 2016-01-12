@@ -50,6 +50,17 @@ describe('c6 - https', function(done) {
  
   it('fails to connect, wrong transport on client', function(done) {
 
+    this.timeout(4000);
+
+     var nodeProc = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
+     var timeout;
+
+     if (nodeProc == '0.10') {
+      timeout = setTimeout(function(){
+        done();
+      }, 3000);
+     }
+
      var badClient = new Mesh.MeshClient({port:3111});
       badClient.login().then(function(e){
        done(new Error('this was not meant to happen'));
