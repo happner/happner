@@ -25,6 +25,8 @@ describe('c4 - client data search secure', function() {
   before(function(done) {
     var _this = this;
 
+    this.timeout(15000);
+
     Mesh.create(config = {
 
       datalayer: {
