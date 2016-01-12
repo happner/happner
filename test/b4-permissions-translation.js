@@ -662,7 +662,7 @@ var http = require('http');
     http.request(http_request_options, callback).end();
   }
 
-it.only('we add a test user that belongs to a group that has permissions to access a protected web route, we test that this works', function(done) {
+it('we add a test user that belongs to a group that has permissions to access a protected web route, we test that this works', function(done) {
      
      var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_WEB_' + test_id,

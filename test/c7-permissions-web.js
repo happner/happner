@@ -132,65 +132,74 @@ describe('c7-permissions-web', function (done) {
     var testUserSaved;
     var testUserClient;
 
-    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: test_id
+    }
 
-      if (e) return done(e);
+    adminClient.login(credentials).then(function(){
+      
+      adminClient.exchange.security.addGroup(testGroup, function(e, result){
 
-      testGroupSaved = result;
-    
-      var testUser = {
-        username:'TEST_USER' + test_id,
-        password:'TEST PWD',
-        custom_data:{
-          something: 'useful'
+        if (e) return done(e);
+
+        testGroupSaved = result;
+      
+        var testUser = {
+          username:'TEST_USER' + test_id,
+          password:'TEST PWD',
+          custom_data:{
+            something: 'useful'
+          }
         }
-      }
 
-      adminClient.exchange.security.addUser(testUser, function(e, result){
+        adminClient.exchange.security.addUser(testUser, function(e, result){
 
-          if (e) return done(e);
-          testUserSaved = result;
-
-          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
-            //we'll need to fetch user groups, do that later
             if (e) return done(e);
+            testUserSaved = result;
 
-            testUserClient = new Mesh.MeshClient({secure:true, port:10000});
+            adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+              //we'll need to fetch user groups, do that later
+              if (e) return done(e);
 
-            testUserClient.login(testUser).then(function(){
+              testUserClient = new Mesh.MeshClient({secure:true, port:10000});
 
-              doRequest('/index.html', testUserClient.token, function(response){
+              testUserClient.login(testUser).then(function(){
 
-                expect(response.statusCode).to.equal(403);
-                
-                testGroupSaved.permissions.web = {
-                  'index*':{actions:['get', 'put', 'post'], description:'a test web permission'}
-                };
+                doRequest('/index.html', testUserClient.token, function(response){
 
-                adminClient.exchange.security.updateGroup(testGroupSaved, function(e, updated){
+                  expect(response.statusCode).to.equal(403);
+                  
+                  testGroupSaved.permissions.web = {
+                    '/index.html':{actions:['get', 'put', 'post'], description:'a test web permission'}
+                  };
 
-                  if (e) return done(e);
+                  adminClient.exchange.security.updateGroup(testGroupSaved, function(e, updated){
 
-                   doRequest('/index.html', testUserClient.token, function(response){
+                    if (e) return done(e);
 
-                    expect(response.statusCode).to.equal(200);
-                    done();
+                     doRequest('/index.html', testUserClient.token, function(response){
 
-                   });
+                      expect(response.statusCode).to.equal(200);
+                      done();
+
+                     });
+
+                  });
+
 
                 });
 
-
+              }).catch(function(e){
+                done(e);
               });
 
-            }).catch(function(e){
-              done(e);
             });
 
-          });
-
+        });
       });
-    });
+     
+    }).catch(done);
 
   });
 
