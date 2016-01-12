@@ -21,6 +21,7 @@ These walkthroughs use *happner* to create a rudimentary monitoring service.
 * [Datalayer](https://github.com/happner/happner/blob/master/docs/datalayer.md)
 * [Modules and Components](https://github.com/happner/happner/blob/master/docs/modules.md)
 * [Autoloading and Defaulting](https://github.com/happner/happner/blob/master/docs/autoload.md)
+* [Security](https://github.com/happner/happner/blob/master/docs/security.md)
 
 ###
 

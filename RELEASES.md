@@ -59,7 +59,13 @@
 1.4.0 2016-01-07
 ----------------
 
-- added https functinality, using happn 2.2.1
+- added https functionality, using happn 2.2.1
+
+1.5.0 2016-01-12
+----------------
+
+- added the web token security functionality
+- fixed issue where upserted user is being passed back with the password hash
 
 next
 ----
