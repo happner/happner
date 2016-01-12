@@ -63,7 +63,7 @@ describe('b6 - start meshes', function () {
     var savedUser = null;
     var savedGroup = null;
 
-    this.timeout(10000);
+    this.timeout(20000);
 
     Mesh.create(serverConfig)
         .then(addGroup)
