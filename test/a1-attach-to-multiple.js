@@ -1,4 +1,4 @@
-describe('attach to multiple meshes (meshs?)', function() {
+describe('a1 - attach to multiple meshes (meshs?)', function() {
 
   var promise = require('when').promise;
   var parallel = require('when/parallel');
@@ -35,7 +35,7 @@ describe('attach to multiple meshes (meshs?)', function() {
                 ));
 
                 kid.stdout.on('data', function(data) {
-                  console._stdout.write('remote' +i+ ' ' + data.toString());
+                  // console._stdout.write('remote' +i+ ' ' + data.toString());
                   if (data.toString().match(/READY/)) resolve();
                 });
 
@@ -61,7 +61,7 @@ describe('attach to multiple meshes (meshs?)', function() {
       )
     ).then(function() {
 
-      console.log(config);
+      // console.log(config);
 
       // local mesh init
       mesh.initialize(config, done);
@@ -72,7 +72,7 @@ describe('attach to multiple meshes (meshs?)', function() {
 
   after(function(done) {
     this.kids.forEach(function(kid) {
-      console.log('killing kid', kid);
+      // console.log('killing kid', kid);
       kid.kill();
     });
     this.mesh.stop(done);
@@ -92,7 +92,7 @@ describe('attach to multiple meshes (meshs?)', function() {
           return function() {
             return promise(
               function(resolve, reject) {
-                mesh.api.exchange['mesh'+i].component.getPid(function(err, pid){
+                mesh.exchange['mesh'+i].component.getPid(function(err, pid){
                   if (err) return reject(err);
                   resolve([i, pid]);
                 });

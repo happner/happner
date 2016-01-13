@@ -1,4 +1,4 @@
-// describe('c2-mesh-events', function() {
+// describe('c2 - mesh events', function() {
 
 //   var should = require('chai').should();
 //   var Mesh = require('../');

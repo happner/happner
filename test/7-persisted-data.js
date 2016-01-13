@@ -45,7 +45,7 @@ if (global.TESTING_7) return; // When 'requiring' the module above,
                               // don't run the tests below
                              //............. 
 
-describe('test persisted config, check memory and persisted data stores', function() {
+describe('7 - test persisted config, check memory and persisted data stores', function() {
 
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();
@@ -59,10 +59,9 @@ describe('test persisted config, check memory and persisted data stores', functi
   var config = {
     name:"testPersistedData",
     datalayer: {
-      persist:true,
-      defaultRoute:"persist", //mem anyhow
-      filename:dbFileName,
-      log_level: 'info'
+      persist: true,
+      defaultRoute: "persist", //mem anyhow
+      filename: dbFileName,
     },
     modules: {
       'DataComponent7': {

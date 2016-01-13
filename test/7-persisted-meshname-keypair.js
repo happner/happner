@@ -1,4 +1,4 @@
-describe('start and stop a persisted mesh', function() {
+describe('7 - start and stop a persisted mesh', function() {
 
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();
@@ -13,9 +13,8 @@ describe('start and stop a persisted mesh', function() {
   var config = {
     secure:true,
     datalayer: {
-      persist:true,
-      filename:dbFileName,
-      log_level: 'info'
+      persist: true,
+      filename: dbFileName
     },
     components: {
       'data': {}
@@ -60,7 +59,7 @@ describe('start and stop a persisted mesh', function() {
         unpersistedMeshName = unpersistedMesh._mesh.config.name;
         unpersistedMeshPublicKey = unpersistedMesh._mesh.datalayer.server.services.security._keyPair.publicKey;
         
-        console.log('names:::', meshName, unpersistedMeshName);
+        // console.log('names:::', meshName, unpersistedMeshName);
 
         done();
       }).catch(done);

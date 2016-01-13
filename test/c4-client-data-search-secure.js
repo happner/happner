@@ -1,4 +1,4 @@
-describe('c4-client-data-search-secure', function() {
+describe('c4 - client data search secure', function() {
 
   var should = require('chai').should();
   var Mesh = require('../');
@@ -25,13 +25,14 @@ describe('c4-client-data-search-secure', function() {
   before(function(done) {
     var _this = this;
 
+    this.timeout(15000);
+
     Mesh.create(config = {
 
       datalayer: {
-        persist:true,
-        secure:true,
+        persist: true,
+        secure: true,
         adminPassword: test_id,
-        log_level: 'error'
       },
 
       modules: {

@@ -3,7 +3,7 @@
 
 
 
-describe('secure mesh to mesh', function() {
+describe('b2 - secure mesh to mesh', function() {
  
   context('secure mesh to mesh', function(){
 
@@ -20,11 +20,8 @@ describe('secure mesh to mesh', function() {
     var config = {
       name: 'mesh2',
       dataLayer: {
-        secure:true,
+        secure: true,
         port: 51233,
-        authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-        systemSecret: 'mesh',
-        log_level: 'info|error|warning'
       },
       endpoints: {
         theFarawayTree: {  // remote mesh node
@@ -53,7 +50,7 @@ describe('secure mesh to mesh', function() {
         // console.log(data.toString());
         if (data.toString().match(/READY/)){
         
-          console.log('remote ready:::', remote.pid);
+          // console.log('remote ready:::', remote.pid);
 
           mesh = new Mesh();
 
@@ -71,7 +68,7 @@ describe('secure mesh to mesh', function() {
     after(function(done) {
       remote.kill(); 
       mesh.stop(function(e){
-        console.log('killed ok:::', remote.pid);
+        // console.log('killed ok:::', remote.pid);
         done();
       });
     });

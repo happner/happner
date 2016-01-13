@@ -1,4 +1,4 @@
-describe('secure mesh to mesh fails', function() {
+describe('b3 - secure mesh to mesh fails', function() {
  
   context('secure mesh to mesh fails', function(){
 
@@ -15,11 +15,8 @@ describe('secure mesh to mesh fails', function() {
     var config = {
       name: 'mesh2',
       dataLayer: {
-        secure:true,
-        port: 51233,
-        authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-        systemSecret: 'mesh',
-        log_level: 'info|error|warning'
+        secure: true,
+        port: 51233
       },
       endpoints: {
         theFarawayTree: {  // remote mesh node
@@ -37,7 +34,7 @@ describe('secure mesh to mesh fails', function() {
     after(function(done) {
       remote.kill(); 
       mesh.stop(function(e){
-        console.log('killed ok 1:::', remote.pid);
+        // console.log('killed ok 1:::', remote.pid);
         done();
       });
     });
@@ -57,7 +54,7 @@ describe('secure mesh to mesh fails', function() {
 
         if (data.toString().match(/READY/)){
         
-          console.log('remote ready 1:::', remote.pid);
+          // console.log('remote ready 1:::', remote.pid);
 
           mesh = new Mesh();
 

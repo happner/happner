@@ -15,7 +15,7 @@ function Component1(options) {
 
     try{
 
-     console.log('setting:::', path);
+     // console.log('setting:::', path);
      $happn.data.set(path, data, parameters, callback);
 
     }catch(e){
@@ -35,12 +35,12 @@ function Component1(options) {
 
     //path, parameters, handler, done
     $happn.data.on('*', {}, function(result){
-      console.log('on happned:::');
+      // console.log('on happned:::');
       _this.onCount++;
     }, 
     function(e){
       if (e) return callback(e);
-      console.log('on ok:::');
+      // console.log('on ok:::');
       callback();
     });
 

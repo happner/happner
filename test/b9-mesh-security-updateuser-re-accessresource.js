@@ -106,7 +106,7 @@ var serverConfig = {
   }
 };
 
-describe('cc-mesh-client-security-login', function() {
+describe('b9 - mesh client security login', function() {
 
 
   var clientMesh;
@@ -240,10 +240,10 @@ describe('cc-mesh-client-security-login', function() {
     };
 
     clientMesh.exchange.client.registerDevice(OemUser, device, function(err){
-      if(err) console.log(err);
+      // if(err) console.log(err);
       should.not.exist(err);
 
-      console.log('device registered:::');
+      // console.log('device registered:::');
 
       clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
         if(err) console.log(err);
@@ -251,7 +251,7 @@ describe('cc-mesh-client-security-login', function() {
         should.not.exist(err);
         data.should.eql('success');
 
-        console.log('requestSomethingSpecial ok:::');
+        // console.log('requestSomethingSpecial ok:::');
 
         device = {
           device_info: "some New Info"
@@ -261,11 +261,11 @@ describe('cc-mesh-client-security-login', function() {
           if(err) console.log(err);
           should.not.exist(err);
 
-          console.log('device registered again:::');
+          // console.log('device registered again:::');
 
           clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
 
-            console.log('final request:::', arguments);
+            // console.log('final request:::', arguments);
 
             if(err) console.log(err);
             should.not.exist(err);

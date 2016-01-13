@@ -18,7 +18,7 @@ function Component1(options) {
     options.maximumPings = 100;
 
   this.moduleMethod = function(){
-    console.log('ran the module method from the component level scope');
+    // console.log('ran the module method from the component level scope');
   }
 
   this.exposedMethod = function($happn, message, callback){

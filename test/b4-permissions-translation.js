@@ -6,19 +6,19 @@ function SecuredComponent() {}
 
 SecuredComponent.prototype.method1 = function($happn, options, callback) {
   options.methodName = 'method1';
-   console.log('ran method1...');
+   // console.log('ran method1...');
   callback(null, options);
 }
 
 SecuredComponent.prototype.method2 = function($happn, options, callback) {
   options.methodName = 'method2';
-  console.log('ran method2...');
+  // console.log('ran method2...');
   callback(null, options);
 }
 
 SecuredComponent.prototype.method3 = function($happn, options, callback) {
   options.methodName = 'method3';
-   console.log('ran method3...');
+   // console.log('ran method3...');
   callback(null, options);
 }
 
@@ -26,6 +26,21 @@ SecuredComponent.prototype.fireEvent = function($happn, eventName, callback) {
   $happn.emit(eventName, eventName);
   callback(null, eventName + ' emitted');
 }
+
+SecuredComponent.prototype.webGetPutPost = function(req, res, next) {
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({"method":req.method}));
+};
+
+SecuredComponent.prototype.webDelete = function(req, res, next) {
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({"method":req.method}));
+};
+
+SecuredComponent.prototype.webAny = function(req, res, next) {
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({"method":req.method}));
+};
 
 if (global.TESTING_B4) return; // When 'requiring' the module above,
                               // don't run the tests below
@@ -40,9 +55,9 @@ var adminClient = new Mesh.MeshClient({secure:true});
 var test_id = Date.now() + '_' + require('shortid').generate();
 var async = require('async');
 
-describe('component start and validation -', function() {
+describe('b4 - component start and validation -', function() {
 
-  this.timeout(5000);
+  this.timeout(20000);
 
   before(function(done) {
 
@@ -52,14 +67,10 @@ describe('component start and validation -', function() {
 
     mesh.initialize({
       name:'b4_permissions_translation',
-      util: {
-        // logLevel: ['error']
-      },
       datalayer: {
-        persist:true,
-        secure:true,
+        persist: true,
+        secure: true,
         adminPassword: test_id,
-        log_level: 'error'
       },
       modules: {
         'SecuredComponent': {
@@ -72,6 +83,13 @@ describe('component start and validation -', function() {
           schema: {
             exclusive: false,
             methods: {}
+          },
+          web: {
+            routes: {
+              "Web":["webGetPutPost"],
+              "WebDelete":["webDelete"],
+              "WebAny":["webAny"],
+            }
           }
         }
       }
@@ -79,24 +97,23 @@ describe('component start and validation -', function() {
     }, function(err) {
       if (err) return done(err);
 
-        mesh.start(function(err) {
-          if (err) {
-            console.log(err.stack);
-            //process.exit(err.errno || 1);
-            return done(err);
-          }
+      mesh.start(function(err) {
+        if (err) {
+          // console.log(err.stack);
+          return done(err);
+        }
 
-          // Credentials for the login method
-          var credentials = {
-            username: '_ADMIN', // pending
-            password: test_id
-          }
+        // Credentials for the login method
+        var credentials = {
+          username: '_ADMIN', // pending
+          password: test_id
+        }
 
-          adminClient.login(credentials).then(function(){
-            done();
-          }).catch(done);
+        adminClient.login(credentials).then(function(){
+          done();
+        }).catch(done);
 
-        });
+      });
     });
   });
 
@@ -627,4 +644,138 @@ it('we add a test user that belongs to a group that has permissions to access al
       });
     });
  });
+
+var http = require('http');
+
+function doRequest(path, token, method, callback){
+
+  console.log('doing request:::', path);
+
+  var http_request_options = {
+    host: '127.0.0.1',
+    port:55000,
+    method:method.toUpperCase()
+  };
+
+  http_request_options.path = path;
+
+  http_request_options.headers = {'Cookie': ['happn_token=' + token]}
+
+  http.request(http_request_options, callback).end();
+}
+
+it('we add a test user that belongs to a group that has permissions to access a protected web route, we test that this works', function(done) {
+     
+   this.timeout(20000);
+
+     var testGroup = {
+      name:'B4_TESTGROUP_EVENT_ALLOWED_WEB_' + test_id,
+      
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
+
+      permissions:{
+        methods:{},
+        events:{},
+        web:{
+          '/b4_permissions_translation/SecuredComponent/Web':{actions:['get', 'put', 'post'], description:'a test web permission'},
+          '/b4_permissions_translation/SecuredComponent/WebDelete':{actions:['delete'], description:'allow only deletes'},
+          '/b4_permissions_translation/SecuredComponent/WebAny':{actions:['*'], description:'allow any'}
+        }
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+    
+      var testUser = {
+        username:'B4_TESTGROUP_EVENT_ALLOWED_WEB_' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+
+          expect(result.username).to.be(testUser.username);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true});
+
+            testUserClient.login(testUser).then(function(){
+
+              doRequest('/b4_permissions_translation/SecuredComponent/Web', null, 'GET', function(response){
+
+                expect(response.statusCode).to.be(403);
+
+                doRequest('/b4_permissions_translation/SecuredComponent/Web', testUserClient.token, 'GET', function(response){
+
+                  expect(response.statusCode).to.be(200);
+
+                  doRequest('/b4_permissions_translation/SecuredComponent/Web', testUserClient.token, 'PUT', function(response){
+
+                    expect(response.statusCode).to.be(200);
+
+                    doRequest('/b4_permissions_translation/SecuredComponent/Web', testUserClient.token, 'POST', function(response){
+
+                      expect(response.statusCode).to.be(200);
+
+                      var nodeProc = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
+
+                      if (nodeProc == '0.10') return done();
+
+                      doRequest('/b4_permissions_translation/SecuredComponent/Web', testUserClient.token, 'DELETE', function(response){
+
+                        expect(response.statusCode).to.be(403);
+
+                        doRequest('/b4_permissions_translation/SecuredComponent/WebDelete', testUserClient.token, 'DELETE', function(response){
+
+                          expect(response.statusCode).to.be(200);
+
+                          doRequest('/b4_permissions_translation/SecuredComponent/WebAny', testUserClient.token, 'POST', function(response){
+
+                            expect(response.statusCode).to.be(200);
+
+                            done();
+                          
+                          });
+                        
+                        });
+                      
+                      });
+                    
+                    });
+
+                  });
+                  
+
+                });
+
+              });
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+      });
+    });
+ });
+
 });

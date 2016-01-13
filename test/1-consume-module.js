@@ -1,4 +1,4 @@
-describe('Consumes an external module', function() {
+describe('1 - Consumes an external module', function() {
 
   var should = require('chai').should();
   var sep = require('path').sep;
@@ -7,12 +7,6 @@ describe('Consumes an external module', function() {
 
   var config = {
     name:"testMesh",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-      log_level: 'info|error|warning'
-    },
-    endpoints: {},
     modules: {
       "happnClient":{
         path:"happn.client",
@@ -102,8 +96,8 @@ describe('Consumes an external module', function() {
     mesh.initialize(config, function(err) {
 
       if (err) {
-        console.log('failure in init')
-        console.log(err.stack)
+        // console.log('failure in init')
+        // console.log(err.stack)
       };
 
       done(err);
@@ -120,13 +114,13 @@ describe('Consumes an external module', function() {
     require('happn').client.create({config:{"host":"localhost", "secret":"mesh"}}, function(e, client){
       
       if (e) {
-        console.log('real client init failure');
+        // console.log('real client init failure');
         done(e);
       }
 
       client.set('/mytest/678687', {"test":"test1"}, {}, function(e, directClientResponse){
         //calling a local component
-        mesh.api.exchange.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
+        mesh.exchange.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
          
           response.test.should.eql(directClientResponse.test);
 
@@ -134,19 +128,19 @@ describe('Consumes an external module', function() {
             return done(e);
 
          //calling a local component as if it was on another mesh
-         mesh.api.exchange.testMesh.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
+         mesh.exchange.testMesh.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
            
             response.test.should.eql(directClientResponse.test);
 
             if (e) return done(e);
 
             //doing the same call using a post to the api
-            mesh.api.post('/happnClient/set', '/mytest/678687', {"test":"test1"}, {}, function(e, response){
+            mesh.post('/happnClient/set', '/mytest/678687', {"test":"test1"}, {}, function(e, response){
               
               response.test.should.eql(directClientResponse.test);
               //console.log({response: response});
               //test aliases
-              mesh.api.exchange.testMesh.happnClient.PUT('/mytest/678687', {"test":"test1"}, {}, function(e, response){
+              mesh.exchange.testMesh.happnClient.PUT('/mytest/678687', {"test":"test1"}, {}, function(e, response){
 
                 response.test.should.eql(directClientResponse.test);
 

@@ -1,4 +1,4 @@
-describe('passes data between component APIs, also works with events', function(done) {
+describe('a9 - passes data between component APIs, also works with events', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
@@ -17,13 +17,6 @@ describe('passes data between component APIs, also works with events', function(
 
   var config = {
     name:"testProtectedDataAPI",
-    // dataLayer: {
-    //   authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-    //   systemSecret: 'mesh',
-    //   log_level: 'info|error|warning',
-    //   //setOptions:{}
-    // },
-    // endpoints: {},
     modules: {
       "module1":{
         path:libFolder + "a9-module1",
@@ -91,7 +84,7 @@ describe('passes data between component APIs, also works with events', function(
 
       result._meta.path.should.equal('/_data/component1/' + 'test/a9-api-data');
 
-      setTimeout( done, 2000);//so the on picks something up?
+      setTimeout(done, 200); //so the on picks something up?
      
     });
 

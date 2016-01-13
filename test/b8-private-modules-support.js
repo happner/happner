@@ -1,7 +1,7 @@
 var should = require('chai').should();
 var Mesh = require('../');
 
-describe('private module support', function() {
+describe('b8 - private module support', function() {
 
   // beforeEach('restore stubbed functions',  function() {
   //   delete require.cache[require.resolve('../')];

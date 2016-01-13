@@ -3,7 +3,7 @@ var should = require('chai').should();
 var Mesh = require('../');
 
 
-describe('does some benchmarks on api calls, data events and events', function (done) {
+describe('8 - does some benchmarks on api calls, data events and events', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
@@ -20,13 +20,6 @@ describe('does some benchmarks on api calls, data events and events', function (
 
   var config = {
     name: "stopMesh",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-      log_level: 'error'
-      //setOptions:{}
-    },
-    endpoints: {},
     modules: {
       "stopMeshModule1": {
         path: libFolder + "9-stop-mesh-module"

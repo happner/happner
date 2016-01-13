@@ -8,7 +8,7 @@ var Mesh = require('../');
 var http = require('http');
 
 
-describe('tests that we can add middleware before a static', function (done) {
+describe('9 - tests that we can add middleware before a static', function (done) {
 
   this.timeout(20000);
 
@@ -19,14 +19,10 @@ describe('tests that we can add middleware before a static', function (done) {
 
   var config = {
     name: "middlewareMesh",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-      log_level: 'error',
+    datalayer: {
       port:10000
       //setOptions:{}
     },
-    endpoints: {},
     modules: {
       "middlewareTest": {
         path: libFolder + "10-middleware"

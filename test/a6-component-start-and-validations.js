@@ -37,7 +37,7 @@ var should = require('chai').should();
 var mesh;
 var Mesh = require('../');
 
-describe('component start and validation -', function() {
+describe('a6 - component start and validation -', function() {
 
   this.timeout(20000);
 
@@ -129,9 +129,8 @@ describe('component start and validation -', function() {
       util: {
         logger: {}
       },
-      dataLayer: {
+      datalayer: {
         port: 8002,
-        log_level: 'error'
       },
       modules: {
         'expliCit': {

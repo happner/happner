@@ -59,6 +59,7 @@ process.env.PRIMUS_SCRIPT = happnHome + '/js/browser_primus.js';
 var config = {
   name: 'home', // <------- your localnode
   version: '0.0.1',
+  util: {},
   datalayer: {
     persist: true
   },
@@ -118,9 +119,9 @@ commander
 .option('')
 .parse(process.argv);
 
-if (commander.warn)  process.env.LOG_LEVEL = 'warn';
-if (commander.debug) process.env.LOG_LEVEL = 'debug';
-if (commander.trace) process.env.LOG_LEVEL = 'trace';
+if (commander.warn)  config.util.logLevel = 'warn';
+if (commander.debug) config.util.logLevel = 'debug';
+if (commander.trace) config.util.logLevel = 'trace';
 
 if (commander.conf) {
   try {

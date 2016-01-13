@@ -1,4 +1,4 @@
-describe('start meshes', function () {
+describe('b6 - start meshes', function () {
 
   var should = require('chai').should();
   var path = require('path');
@@ -63,7 +63,7 @@ describe('start meshes', function () {
     var savedUser = null;
     var savedGroup = null;
 
-    this.timeout(10000);
+    this.timeout(20000);
 
     Mesh.create(serverConfig)
         .then(addGroup)

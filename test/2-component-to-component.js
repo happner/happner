@@ -1,4 +1,4 @@
-describe('Bounces a message between two components, demonstrates how the events layer works', function(done) {
+describe('2 - Bounces a message between two components, demonstrates how the events layer works', function(done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
@@ -12,13 +12,6 @@ describe('Bounces a message between two components, demonstrates how the events 
 
   var config = {
     name:"testComponent2Component",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-      log_level: 'info|error|warning',
-      //setOptions:{}
-    },
-    endpoints: {},
     modules: {
       "module1":{
         path:libFolder + "2-module1",
@@ -78,7 +71,7 @@ describe('Bounces a message between two components, demonstrates how the events 
     mesh.initialize(config, function(err) {
 
       if (err) {
-        console.log(err.stack);
+        // console.log(err.stack);
         done(err);
       }else{
 
@@ -88,26 +81,26 @@ describe('Bounces a message between two components, demonstrates how the events 
 
           //console.log(mesh.api.event.component1.off.toString());
           mesh.event.component1.off(onEventRef, function(err){
-            if (err)
-             console.log('Couldnt detach from event maximum-pings-reached');
+            // if (err)
+            //  console.log('Couldnt detach from event maximum-pings-reached');
 
-            console.log('Detaching from maximum-pings-reached');
+            // console.log('Detaching from maximum-pings-reached');
             //console.log(done);
             done(err);
           });
 
         }, function(err, ref){
           if (err){
-             console.log('Couldnt attach to event maximum-pings-reached');
+             // console.log('Couldnt attach to event maximum-pings-reached');
              done(err);
           }else{
             //we have attached our events, now we start the mesh
-            console.log('attached on ok, ref: ' + ref);
+            // console.log('attached on ok, ref: ' + ref);
             onEventRef = ref;
             //console.log(mesh.api.data.events);
             mesh.start(function(err) {
                if (err) {
-                console.log('Failed to start mesh');
+                // console.log('Failed to start mesh');
                 done(err);
               }
             });

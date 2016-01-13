@@ -32,3 +32,46 @@
 - using the latest version of happn 1.2.6
 - created search tests
 
+1.3.8 2015-12-28
+----------------
+
+- fixed exchange function argument padding bug/#62
+
+1.3.9 2015-12-28
+----------------
+
+- fixed logger flag in bin/happner
+- silence security waring by explicitly setting secure to false
+
+1.3.10 2015-12-31
+-----------------
+
+- added istanbul and coveralls for coverage tests
+- MeshClient options supports host and hostname option
+- prevent unhandled rejection errors when using 'login/deny' and 'login/error' events instead of promise in MeshClient
+- divide api.js into multiple parts in system/shared/...
+
+1.3.12 2016-01-02
+-----------------
+
+- using latest version of happn 2.1.7
+
+1.4.0 2016-01-07
+----------------
+
+- added https functionality, using happn 2.2.1
+
+1.5.0 2016-01-12
+----------------
+
+- added the web token security functionality
+- fixed issue where upserted user is being passed back with the password hash
+
+1.5.1 2016-01-13
+----------------
+
+- removed global.UTILITIES
+- moved responseHandlerCache onto messenger instance instead of prototype
+
+next
+----

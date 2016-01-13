@@ -6,7 +6,7 @@ var Mesh = require('../');
 var mesh;
 
 
-describe('Demonstrates the middleware functionality', function (done) {
+describe('5 - Demonstrates the middleware functionality', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
@@ -14,10 +14,7 @@ describe('Demonstrates the middleware functionality', function (done) {
 
   var config = {
     name: "testMiddleware",
-    dataLayer: {
-      authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-      systemSecret: 'mesh',
-      log_level: 'info|error|warning',
+    datalayer: {
       port: testport
     },
     modules: {
@@ -64,12 +61,9 @@ describe('Demonstrates the middleware functionality', function (done) {
 
     mesh = new Mesh();
 
-    console.log('DOING BEFORE');
-
     mesh.initialize(config, function (err) {
       if (err) return done(err);
 
-      console.log('INITIALIZED!!');
       done();
 
     });

@@ -1,10 +1,10 @@
 [&#9664;](configuration.md) configuration | modules and components [&#9654;](modules.md)
 
-## DataLayer
+## Datalayer
 
-### What is the DataLayer?
+### What is the Datalayer?
 
-The DataLayer is the underlying messaging and storage infrastructure in the mesh. It uses [happn](https://github.com/happner/happn)'s evented storage and pubsub websocket stack.
+The Datalayer is the underlying messaging and storage infrastructure in the mesh. It uses [happn](https://github.com/happner/happn)'s evented storage and pubsub websocket stack.
 
 Configured in the datalayer is the host and port upon which __this__ MeshNode listens for connections from other MeshNodes or clients.
 

@@ -5,7 +5,7 @@
 Mesh configuration contains several sections.
 
 * [Mesh Name](#mesh-name)
-* [DataLayer Config](#datalayer-config)
+* [Datalayer Config](#datalayer-config)
 * [Endpoint Config](#endpoint-config)
 * [Module Config](#module-config)
 * [Component Config](#component-config)
@@ -36,11 +36,11 @@ If the name is unspecified a random name will be used.
 
 __BUG:__ Currently the clients do not fully re-establish connections to restarted nodes with a new random name. It is strongly recommended that you provide the name.
 
-### DataLayer Config
+### Datalayer Config
 
 [&#9650;](#)
 
-See also: [What is the DataLayer?](datalayer.md#what-is-the-datalayer)
+See also: [What is the Datalayer?](datalayer.md#what-is-the-datalayer)
 
 The datalayer by default contains an embeded nedb database that does not persist beyond server restarts. This can be extended to have two databases, one embedded memory/fast and one persisting to a specified nedb file. When both are used it is up to the component configuration to declare which data paths are stored in which database by defining `data.routes` See [Component Config](#component-config).
 

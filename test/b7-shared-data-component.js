@@ -1,4 +1,4 @@
-describe('shared data component', function() {
+describe('b7 - shared data component', function() {
 
   var should = require('chai').should();
   var Mesh = require('../');

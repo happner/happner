@@ -1,6 +1,6 @@
 
 
-describe('mesh awareness via $happn injection', function() {
+describe('a2 - mesh awareness via $happn injection', function() {
 
   var promise = require('when').promise;
   var parallel = require('when/parallel');
@@ -135,7 +135,6 @@ describe('mesh awareness via $happn injection', function() {
                     port: 3000 + i,
                     authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
                     systemSecret: 'mesh',
-                    log_level: 'info|error|warning'
                   },
                   // endpoints: getEndpoints(i),
                   modules: {

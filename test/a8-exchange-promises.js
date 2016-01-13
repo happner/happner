@@ -33,7 +33,7 @@ if (global.TESTING_18) return; // When 'requiring' the module above,
                              //.............
 var should = require('chai').should();
 
-describe('exchange supports promises', function() {
+describe('a8 - exchange supports promises', function() {
 
   var Mesh = require('../');
   var mesh;
