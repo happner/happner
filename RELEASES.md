@@ -67,8 +67,11 @@
 - added the web token security functionality
 - fixed issue where upserted user is being passed back with the password hash
 
-next
-----
+1.5.1 2016-01-13
+----------------
 
 - removed global.UTILITIES
 - moved responseHandlerCache onto messenger instance instead of prototype
+
+next
+----
