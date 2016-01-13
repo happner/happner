@@ -71,4 +71,4 @@ next
 ----
 
 - removed global.UTILITIES
-- 
+- moved responseHandlerCache onto messenger instance instead of prototype
