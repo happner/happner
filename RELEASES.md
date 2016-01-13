@@ -73,5 +73,11 @@
 - removed global.UTILITIES
 - moved responseHandlerCache onto messenger instance instead of prototype
 
+1.5.2 2016-01-13
+----------------
+
+- added exclusions functionality for secure web paths
+- bumped version of happn
+
 next
 ----
