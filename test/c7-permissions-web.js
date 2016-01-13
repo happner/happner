@@ -23,7 +23,15 @@ describe('c7-permissions-web', function (done) {
     datalayer: {
       secure:true,
       port:10000,
-      adminPassword:test_id
+      adminPassword:test_id,
+      middleware:{
+        security:{
+          exclusions:[
+            '/webmethodtest/test/excluded/specific',
+            '/webmethodtest/test/excluded/wildcard/*',
+          ]
+        }
+      }
     },
     modules: {
       "middlewareTest": {
@@ -31,6 +39,20 @@ describe('c7-permissions-web', function (done) {
       }
     },
     components: {
+      "webmethodtest":{
+        moduleName: "middlewareTest",
+        // scope: "component",//either component(mesh aware) or module - default is module
+        schema: {
+          "exclusive": false,//means we dont dynamically share anything else
+          "methods": {}
+        },
+        web: {
+          routes: {
+            "test/excluded/specific": ["excludedSpecific"],
+            "test/excluded/wildcard/blah": ["excludedWildcard"],
+          }
+        }
+      },
       "www": { // <------------------- because of www, routes.static goes /
         moduleName: "middlewareTest",
         // scope: "component",//either component(mesh aware) or module - default is module
@@ -66,16 +88,16 @@ describe('c7-permissions-web', function (done) {
 
   function doRequest(path, token, callback){
 
-    var http_request_options = {
-      host: '127.0.0.1',
-      port:10000
+    var request = require('request');
+
+    var options = {
+      url: 'http://127.0.0.1:10000' + path + '?happn_token=' + token,
     };
 
-    http_request_options.path = path;
+    request(options, function(error, response, body){
+      callback(response);
+    });
 
-    http_request_options.headers = {'Cookie': ['happn_token=' + token]}
-
-    http.request(http_request_options, callback).end();
   }
 
 
@@ -110,6 +132,28 @@ describe('c7-permissions-web', function (done) {
       });
      
     }).catch(done);
+
+  });
+
+  it('it tests the specific exclusion', function (done) {
+    
+    doRequest('/webmethodtest/test/excluded/specific', null, function(response){
+
+      expect(response.statusCode).to.equal(200);
+      done();
+
+    });
+
+  });
+
+  it('it tests the wildcard exclusion', function (done) {
+    
+    doRequest('/webmethodtest/test/excluded/wildcard/blah', null, function(response){
+
+      expect(response.statusCode).to.equal(200);
+      done();
+
+    });
 
   });
 
