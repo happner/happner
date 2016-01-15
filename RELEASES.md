@@ -81,3 +81,5 @@
 
 next
 ----
+
+- added .datalayer.middleware.security.cookieDomain and .datalayer.middleware.security.cookieName configurables to control happn security token
