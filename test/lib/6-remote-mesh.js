@@ -4,7 +4,6 @@ var config = {
   name: 'test_6',
   dataLayer: {
     port: 3111,
-    log_level: 'info|error|warning'
   },
   endpoints: {},
   components: {

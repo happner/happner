@@ -7,7 +7,6 @@ var config = {
       mode:'https'
     },
     port: 3111,
-    log_level: 'info|error|warning'
   },
   endpoints: {},
   components: {

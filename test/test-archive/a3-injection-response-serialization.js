@@ -18,7 +18,6 @@ describe('Bounces a message between two components, demonstrates how the events 
     dataLayer: {
       authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
       systemSecret: 'mesh',
-      log_level: 'info|error|warning',
       //setOptions:{}
     },
     endpoints: {},
