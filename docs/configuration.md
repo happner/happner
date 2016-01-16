@@ -60,6 +60,26 @@ Configuration as follows  (__shown with defaults__):
     secure: false,
     // adminPassword: shortid.generate(),
 
+    // transport: {
+    //   mode: 'https',
+    //   key: '-----BEGIN CERTIFICATE...',
+    //   cert: '-----BEGIN CERTIFICATE...',
+    //   # keyPath: 'path/to/key.pem',
+    //   # certPath: 'math/to/cert.pem',
+    // },
+
+    // middleware: {
+    //   security: {
+    //     // exclusions for certain parts of the site requiring access before login
+    //     exclusions: [
+    //       '/',
+    //       '/component-name/method-name'
+    //     ],
+    //     // cookieName: 'alternative_token_name',
+    //     // cookieDomain: '.example.com',
+    //   }
+    // },
+
     // setOptions: {
     //  timeout: 5000,
     //  noStore: true
@@ -75,6 +95,8 @@ Configuration as follows  (__shown with defaults__):
 `filename` - Save to specified nedb file.<br/>
 `defaultRoute` - Where to store data when no match is found in the per component `data.route` masks.<br/>
 `secure` - Set true will enable security. Users in groups with permissions will need to be created. See [Security](security.md)<br/>
+`transport` - Set to configure server to use https.
+`middleware` - Configure middleware details for use when security is enabled. 
 `adminPassword` - If secure is true, this sets a password for the genesis user (_ADMIN).<br/>
 `setOptions` - Default options set by the exchange when calling functions through the datalayer.</br>
 
@@ -96,10 +118,6 @@ The `config.endpoints` section should list all remote MeshNodes to which __this_
       config: {
         host: 'crane1.berth1.quay1.harbour.com',
         port: 919,
-
-        //security enabled?
-        username: '',
-        password: '',
       }
     },
     'quay1-berth2-crane1': {
@@ -127,6 +145,25 @@ The above attaches __this__ MeshNode to two remote MeshNodes.
   endpoints: {
     'quay1-berth1-crane1': 919, // localhost
     'quay1-berth2-crane1': 'crane1.berth2.quay1.harbour.com:919'
+  }
+  ...
+```
+
+###### Security Enabled
+
+When the remote MeshNode has securty enabled and is using https.
+
+```javascript
+  ...
+  endpoints: {
+    'endpointname': {
+      config: {
+        allowSelfSignedCerts: true,
+        url: 'https://mesh.example.com', // :port
+        username: 'user',
+        password: 'xxxx',
+      }
+    }
   }
   ...
 ```
