@@ -39,7 +39,7 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
     
     mesh = new Mesh();
 
-    this.timeout(6000);
+    this.timeout(20000);
 
     var onEventRef;
 

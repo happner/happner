@@ -30,7 +30,6 @@ describe('c6 - https', function(done) {
     //     mode:'https'
     //   },
     //   port: 3111,
-    //   log_level: 'info|error|warning'
     // },
 
     remote.stdout.on('data', function(data) {
