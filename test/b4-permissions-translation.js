@@ -68,7 +68,6 @@ describe('b4 - component start and validation -', function() {
     mesh.initialize({
       name:'b4_permissions_translation',
       datalayer: {
-        persist: true,
         secure: true,
         adminPassword: test_id,
       },
@@ -96,6 +95,8 @@ describe('b4 - component start and validation -', function() {
 
     }, function(err) {
       if (err) return done(err);
+
+      console.log('have mesh:::');
 
       mesh.start(function(err) {
         if (err) {

@@ -76,54 +76,54 @@ describe('b7 - shared data component', function() {
     });
 
 
-    it('can subscribe with opts', function(done) {
-      dataComponent.on('/some/path/three', {}, function(data, meta) {
-        data.should.eql({key: 'VAL'});
-        done();
-      }, function(e) {
-        if (e) return done(e);
-        dataComponent.set('/some/path/three', {key: 'VAL'}, {}, function(e) {
-          if (e) return done(e);
-        })
-      });
-    });
+    // it('can subscribe with opts', function(done) {
+    //   dataComponent.on('/some/path/three', {}, function(data, meta) {
+    //     data.should.eql({key: 'VAL'});
+    //     done();
+    //   }, function(e) {
+    //     if (e) return done(e);
+    //     dataComponent.set('/some/path/three', {key: 'VAL'}, {}, function(e) {
+    //       if (e) return done(e);
+    //     })
+    //   });
+    // });
 
 
-    it('can subscribe without opts', function(done) {
-      dataComponent.on('/some/path/four', function(data, meta) {
-        data.should.eql({key: 'VALUE'});
-        done();
-      }, function(e) {
-        if (e) return done(e);
-        dataComponent.set('/some/path/four', {key: 'VALUE'}, function(e) {
-          if (e) return done(e);
-        })
-      });
-    });
+    // it('can subscribe without opts', function(done) {
+    //   dataComponent.on('/some/path/four', function(data, meta) {
+    //     data.should.eql({key: 'VALUE'});
+    //     done();
+    //   }, function(e) {
+    //     if (e) return done(e);
+    //     dataComponent.set('/some/path/four', {key: 'VALUE'}, function(e) {
+    //       if (e) return done(e);
+    //     })
+    //   });
+    // });
 
-    it('can unsubscribe', function(done) {
-      var received = [];
-      dataComponent.on('/some/path/five', function(data, meta) {
-        received.push(data);
-      }, function(e) {
-        if (e) return done(e);
-        dataComponent.set('/some/path/five', {key: 1}) // <--------------- 1
-        .then(function() {
-          return dataComponent.set('/some/path/five', {key: 1}) // <------ 2
-        })
-        .then(function() {
-          return dataComponent.off('/some/path/five') // <------------- unsub
-        })
-        .then(function() {
-          return dataComponent.set('/some/path/five', {key: 1}) // <------- 3
-        })
-        .then(function() {
-          received.length.should.equal(2);
-          done();
-        })
-        .catch(done)
-      });
-    })
+    // it('can unsubscribe', function(done) {
+    //   var received = [];
+    //   dataComponent.on('/some/path/five', function(data, meta) {
+    //     received.push(data);
+    //   }, function(e) {
+    //     if (e) return done(e);
+    //     dataComponent.set('/some/path/five', {key: 1}) // <--------------- 1
+    //     .then(function() {
+    //       return dataComponent.set('/some/path/five', {key: 1}) // <------ 2
+    //     })
+    //     .then(function() {
+    //       return dataComponent.off('/some/path/five') // <------------- unsub
+    //     })
+    //     .then(function() {
+    //       return dataComponent.set('/some/path/five', {key: 1}) // <------- 3
+    //     })
+    //     .then(function() {
+    //       received.length.should.equal(2);
+    //       done();
+    //     })
+    //     .catch(done)
+    //   });
+    // })
 
     it('can delete', function(done) {
       dataComponent.set('some/path/six', 6)

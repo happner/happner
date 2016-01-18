@@ -28,7 +28,7 @@ var clientConfig = {
   name: 'client',
   dataLayer: {
     port: CLIENT_PORT,
-    persist: true,
+    persist: false,
     defaultRoute: "mem"
   },
   modules: {
