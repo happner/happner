@@ -10,7 +10,7 @@ var spawn = require('child_process').spawn
 
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
-var Crypto = require('consent-util-crypto');
+var Crypto = require('happn-util-crypto');
 var crypto = new Crypto();
 
 
@@ -27,8 +27,7 @@ config = {
         port: 3001,
         host: 'localhost',
         username: '_ADMIN',
-        password: 'guessme',
-        keyPair: crypto //TODO - we need to use the keypair of the mesh in here
+        password: 'guessme'
       }
     }
   },
@@ -69,9 +68,8 @@ describe('c8-payload-encryption', function() {
     });
   });
 
-
   after(function(done) {
-    remote.kill();
+    //remote.kill();
     mesh.stop(done);
   });
 
