@@ -14,17 +14,17 @@ var Crypto = require('happn-util-crypto');
 var crypto = new Crypto();
 
 
-config = {
+var config = {
   name: 'mesh2',
   datalayer: {
-    port: 3002,
+    port: 4002,
     secure:true,
     encryptPayloads:true
   },
   endpoints: {
     theFarawayTree: {  // remote mesh node
       config: {
-        port: 3001,
+        port: 4001,
         host: 'localhost',
         username: '_ADMIN',
         password: 'guessme'
@@ -48,19 +48,11 @@ describe('c8-payload-encryption', function() {
 
     remote.stdout.on('data', function(data) {
 
-      console.log(data.toString() + 'ON THIS SIDE');
-
       if (data.toString().match(/READY/)){
 
-
         mesh = new Mesh();
-
-        console.log('starting this one:::', mesh, config);
         // mesh.initialize(config, function(err) {
         mesh.initialize(config, function(e){
-
-          console.log('started this one:::?', e);
-
           done(e);
         });
       }

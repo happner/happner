@@ -79,5 +79,11 @@
 - added exclusions functionality for secure web paths
 - bumped version of happn
 
+1.5.3 2016-01-13
+----------------
+
+- tested payload encryption
+- bumped version of happn
+
 next
 ----
