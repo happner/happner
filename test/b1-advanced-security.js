@@ -21,7 +21,6 @@ describe('b1 - advanced security', function(done) {
     datalayer: {
       secure:true,
       adminPassword: test_id,
-      log_level: 'info|error|warning',
       filename:dbFileName
     }
   };

@@ -8,7 +8,6 @@ var config = {
     systemSecret: 'mesh',
     secure:true,
     adminPassword:'guessme',
-    log_level: 'info|error|warning'
   },
   endpoints: {},
   modules: {

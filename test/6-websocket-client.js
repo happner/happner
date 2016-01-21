@@ -74,7 +74,10 @@ describe('6 - websocket client', function(done) {
 
   });
 
-  
+  it('contains the mesh name and version', function (){
+    expect(testClient.info.version).to.be('1.0.0');
+    expect(testClient.info.name).to.be('test_6');
+  });
 
   it('does a delete on the datalayer component', function(done) {
 

@@ -79,11 +79,17 @@
 - added exclusions functionality for secure web paths
 - bumped version of happn
 
-1.5.3 2016-01-13
+
+1.5.3 2016-01-18
+----------------
+
+- added .datalayer.middleware.security.cookieDomain and .datalayer.middleware.security.cookieName configurables to control happn security token
+- added default /api/client and /primus/* to webroute security exceptions
+- added config version and name to `client.info`
+
+
+1.5.4 2016-01-21
 ----------------
 
 - tested payload encryption
 - bumped version of happn
-
-next
-----

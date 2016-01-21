@@ -49,11 +49,10 @@ describe('a6 - component start and validation -', function() {
 
     mesh.initialize({
       util: {
-        // logLevel: ['error']
+        // logLevel: 'error'
       },
       dataLayer: {
         port: 8001,
-        log_level: 'error'
       },
       modules: {
         'expliCit': {
