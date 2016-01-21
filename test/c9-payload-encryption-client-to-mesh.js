@@ -81,6 +81,11 @@ describe('c9-payload-encryption-client-to-mesh', function() {
     this.mesh.stop(done);
   });
 
+  var encryptedRequestsCount = 0;
+  var unencryptedRequestsCount = 0;
+
+  
+
   it('server can call more than one method in sequence (callback)', function(done) {
     var mesh = this.mesh;
     mesh.exchange.test.method1(function(e, result) {
