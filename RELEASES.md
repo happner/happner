@@ -93,3 +93,9 @@
 
 - tested payload encryption
 - bumped version of happn
+
+1.5.5 2016-01-23
+----------------
+
+- first browser test passing
+- updated happn version 2.4.3

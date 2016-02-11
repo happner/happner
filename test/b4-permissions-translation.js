@@ -44,7 +44,7 @@ SecuredComponent.prototype.webAny = function(req, res, next) {
 
 if (global.TESTING_B4) return; // When 'requiring' the module above,
                               // don't run the tests below
-                             //............. 
+                             //.............
 
 var expect = require('expect.js');
 var should = require('chai').should();
@@ -119,7 +119,7 @@ describe('b4 - component start and validation -', function() {
   });
 
   after(function(done) {
-    delete global.TESTING_16; //.............
+    delete global.TESTING_B4; //.............
     mesh.stop(done);
   })
 
@@ -127,7 +127,7 @@ describe('b4 - component start and validation -', function() {
  it('we examine the output of the mesh permissions and ensure that they reflect our module', function(done) {
 
     adminClient.exchange.security.getSystemPermissions({nocache:true}, function(e, permissions){
-      
+
       if (e) return done(e);
 
       //console.log(permissions);
@@ -150,10 +150,10 @@ describe('b4 - component start and validation -', function() {
  });
 
  it('we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent methods, we test that this works', function(done) {
-    
+
     var testGroup = {
       name:'B4_TESTGROUP_ALLOWED_NONE_' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -173,7 +173,7 @@ describe('b4 - component start and validation -', function() {
       if (e) return done(e);
 
       testGroupSaved = result;
-    
+
       var testUser = {
         username:'B4_TEST_USER_ALLOWED_NONE_' + test_id,
         password:'TEST PWD',
@@ -228,7 +228,7 @@ it('we add a test user that belongs to a group that has permissions to access al
 
     var testGroup = {
       name:'B4_TESTGROUP_ALLOWED_ALL_' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -250,7 +250,7 @@ it('we add a test user that belongs to a group that has permissions to access al
       if (e) return done(e);
 
       testGroupSaved = result;
-    
+
       var testUser = {
         username:'B4_TEST_USER_ALLOWED_ALL_' + test_id,
         password:'TEST PWD',
@@ -304,10 +304,10 @@ it('we add a test user that belongs to a group that has permissions to access al
  });
 
  it('we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent methods, we test that this works', function(done) {
-      
+
     var testGroup = {
       name:'B4_TESTGROUP_ALLOWED_ONE_' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -331,7 +331,7 @@ it('we add a test user that belongs to a group that has permissions to access al
       if (e) return done(e);
 
       testGroupSaved = result;
-    
+
       var testUser = {
         username:'B4_TEST_USER_ALLOWED_ONE_' + test_id,
         password:'TEST PWD',
@@ -389,10 +389,10 @@ it('we add a test user that belongs to a group that has permissions to access al
  });
 
  it('we add a test user that belongs to a group that has permissions to access all of the ProtectedComponent events, we test that this works', function(done) {
-   
+
    var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_ALL_' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -416,7 +416,7 @@ it('we add a test user that belongs to a group that has permissions to access al
       if (e) return done(e);
 
       testGroupSaved = result;
-    
+
       var testUser = {
         username:'B4_TESTGROUP_EVENT_ALLOWED_ALL_' + test_id,
         password:'TEST PWD',
@@ -454,7 +454,7 @@ it('we add a test user that belongs to a group that has permissions to access al
                     expect(message.value).to.be(eventName);
                     methodCB();
                   }
-                  
+
                 },
                 function(e){
                   adminClient.exchange.b4_permissions_translation.SecuredComponent.fireEvent(eventName, function(e, result){
@@ -478,7 +478,7 @@ it('we add a test user that belongs to a group that has permissions to access al
  it('we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent events, we test that this works', function(done) {
      var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_NONE_' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -499,7 +499,7 @@ it('we add a test user that belongs to a group that has permissions to access al
       if (e) return done(e);
 
       testGroupSaved = result;
-    
+
       var testUser = {
         username:'B4_TESTGROUP_EVENT_ALLOWED_NONE_' + test_id,
         password:'TEST PWD',
@@ -534,7 +534,7 @@ it('we add a test user that belongs to a group that has permissions to access al
                   methodCB(new Error('this shouldn\'t have happened'));
                 },
                 function(e){
-                  
+
                   if (!e)  return methodCB(new Error('this shouldn\'t have happened'));
                   expect(e.toString()).to.be('AccessDenied: unauthorized');
 
@@ -554,10 +554,10 @@ it('we add a test user that belongs to a group that has permissions to access al
  });
 
  it('we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent events, we test that this works', function(done) {
-     
+
      var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_ONE_' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -580,7 +580,7 @@ it('we add a test user that belongs to a group that has permissions to access al
       if (e) return done(e);
 
       testGroupSaved = result;
-    
+
       var testUser = {
         username:'B4_TESTGROUP_EVENT_ALLOWED_ONE_' + test_id,
         password:'TEST PWD',
@@ -617,7 +617,7 @@ it('we add a test user that belongs to a group that has permissions to access al
 
                 },
                 function(e){
-                  
+
                   if (eventName == 'event-3a'){
 
                     if (e) return methodCB(e);
@@ -632,7 +632,7 @@ it('we add a test user that belongs to a group that has permissions to access al
                     methodCB();
 
                   }
-                 
+
                 });
 
               }, done);
@@ -666,12 +666,12 @@ function doRequest(path, token, method, callback){
 }
 
 it('we add a test user that belongs to a group that has permissions to access a protected web route, we test that this works', function(done) {
-     
+
    this.timeout(20000);
 
      var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_WEB_' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -697,7 +697,7 @@ it('we add a test user that belongs to a group that has permissions to access a 
       if (e) return done(e);
 
       testGroupSaved = result;
-    
+
       var testUser = {
         username:'B4_TESTGROUP_EVENT_ALLOWED_WEB_' + test_id,
         password:'TEST PWD',
@@ -754,17 +754,17 @@ it('we add a test user that belongs to a group that has permissions to access a 
                             expect(response.statusCode).to.be(200);
 
                             done();
-                          
+
                           });
-                        
+
                         });
-                      
+
                       });
-                    
+
                     });
 
                   });
-                  
+
 
                 });
 

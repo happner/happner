@@ -27,16 +27,18 @@ if (global.TESTING_C5) return; // When 'requiring' the module above,
                               // don't run the tests below
                              //.............
 
-var expect = require('expect.js');
-var Happner = require('../');
+
 
 describe('c5 - multiple exchange calls', function() {
+
+  var expect = require('expect.js');
+  var Happner = require('../');
 
   /*
    * Note: also tests that args arrive in the called sequence.
    *
    * eg. When calling function(arg1, callback) with only the callback os the only arg
-   *     then the resulting call actoss the exchange has arg1 as the callback 
+   *     then the resulting call actoss the exchange has arg1 as the callback
    *     and callback as undefined)
    *
    */

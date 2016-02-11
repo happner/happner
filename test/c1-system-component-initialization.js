@@ -1,43 +1,42 @@
-var should = require('chai').should();
-var path = require('path');
+describe('c1 - security layer should be initialized before user components are started', function(){
 
-var meshpath = path.join(__dirname, '../lib/mesh');
+  var should = require('chai').should();
+  var path = require('path');
 
-var happner = require(meshpath);
+  var meshpath = path.join(__dirname, '../lib/mesh');
 
-var testComponentPath = path.join(__dirname, 'lib/c1-system-component-initialization.js');
+  var happner = require(meshpath);
 
-var mesh = new happner();
+  var testComponentPath = path.join(__dirname, 'lib/c1-system-component-initialization.js');
 
-var config = {
-  dataLayer: {
-    secure: true
-  },
+  var mesh = new happner();
 
-  modules:{
-    testComponent:{
-      path:testComponentPath
-    }
-  },
-  components:{
-    testComponent:{
-      name:'testComponent',
-      moduleName: 'testComponent',
-      startMethod: "start",
-      schema: {
-        "exclusive": false,
-        "methods": {
-          "start": {
-            type: "async"
+  var config = {
+    dataLayer: {
+      secure: true
+    },
+
+    modules:{
+      testComponent:{
+        path:testComponentPath
+      }
+    },
+    components:{
+      testComponent:{
+        name:'testComponent',
+        moduleName: 'testComponent',
+        startMethod: "start",
+        schema: {
+          "exclusive": false,
+          "methods": {
+            "start": {
+              type: "async"
+            }
           }
         }
       }
     }
-  }
-};
-
-
-describe('c1 - security layer should be initialized before user components are started', function(){
+  };
 
   after('should stop the happn server', function(done){
     mesh.stop(done);
@@ -56,6 +55,6 @@ describe('c1 - security layer should be initialized before user components are s
     });
   });
 
-  
+
 
 });
