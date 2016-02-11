@@ -12,19 +12,19 @@ if (global.TESTING_D1 || global.TESTING_D1_1) return; // When 'requiring' the mo
                               // don't run the tests below
                              //.............
 
-var expect = require('expect.js');
-var should = require('chai').should();
-var secureMesh;
-var unsecureMesh;
-var Mesh = require('../');
-
-var secureClient = new Mesh.MeshClient({secure:true,port:8000});
-var unsecureClient = new Mesh.MeshClient({port:8001});
-
-var test_id = Date.now() + '_' + require('shortid').generate();
-var async = require('async');
-
 describe('d1 - session injection', function() {
+
+  var expect = require('expect.js');
+  var should = require('chai').should();
+  var secureMesh;
+  var unsecureMesh;
+  var Mesh = require('../');
+
+  var secureClient = new Mesh.MeshClient({secure:true,port:8000});
+  var unsecureClient = new Mesh.MeshClient({port:8001});
+
+  var test_id = Date.now() + '_' + require('shortid').generate();
+  var async = require('async');
 
   this.timeout(20000);
 

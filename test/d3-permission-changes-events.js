@@ -10,25 +10,25 @@ TestMesh.prototype.method1 = function($happn, options, callback) {
   callback(null, options);
 }
 
-if (global.TESTING_D2) return; // When 'requiring' the module above,
+if (global.TESTING_D3) return; // When 'requiring' the module above,
                               // don't run the tests below
                              //.............
-var expect = require('expect.js');
-var should = require('chai').should();
-var mesh;
-var Mesh = require('../');
-
-var adminClient = new Mesh.MeshClient({secure:true});
-var test_id = Date.now() + '_' + require('shortid').generate();
-var async = require('async');
-
 describe('d2-update-own-user', function() {
+
+  var expect = require('expect.js');
+  var should = require('chai').should();
+  var mesh;
+  var Mesh = require('../');
+
+  var adminClient = new Mesh.MeshClient({secure:true});
+  var test_id = Date.now() + '_' + require('shortid').generate();
+  var async = require('async');
 
   this.timeout(20000);
 
   before(function(done) {
 
-    global.TESTING_D2 = true; //.............
+    global.TESTING_D3 = true; //.............
 
     mesh = this.mesh = new Mesh();
 
@@ -76,7 +76,7 @@ describe('d2-update-own-user', function() {
   });
 
   after(function(done) {
-    delete global.TESTING_16; //.............
+    delete global.TESTING_D3; //.............
     mesh.stop(done);
   })
 
