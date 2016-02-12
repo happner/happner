@@ -99,3 +99,13 @@
 
 - first browser test passing
 - updated happn version 2.4.3
+
+1.5.6 2016-02-12
+-----------------
+
+- added $origin special argument
+- fixed bug with updateUser
+- added updateOwnUser
+- allowed for connection to security data change events
+
+
