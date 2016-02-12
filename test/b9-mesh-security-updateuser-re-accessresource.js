@@ -152,6 +152,12 @@ describe('b9 - mesh client security login', function() {
     }
   });
 
+  after('close server mesh', function(done){
+
+    serverMesh.stop(done);
+
+  });
+
   // it('a - client should register a device on the server', function (done) {
   //   this.timeout(5000);
 
@@ -330,13 +336,13 @@ describe('b9 - mesh client security login', function() {
 
 //               done();
 //             });
-            
+
 //           }).catch(function (err) {
 //             console.log("login error");
 //             done(err);
 //           });
 
-          
+
 //         });
 //       });
 //     });
