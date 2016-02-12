@@ -1,6 +1,6 @@
 describe('c6 - https', function(done) {
 
-  this.timeout(3000);
+  this.timeout(20000);
 
   var Mesh = require('../')
 
@@ -48,8 +48,6 @@ describe('c6 - https', function(done) {
   });
 
   it('fails to connect, wrong transport on client', function(done) {
-
-    this.timeout(4000);
 
      var nodeProc = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
      var timeout;
