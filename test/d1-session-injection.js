@@ -12,13 +12,14 @@ if (global.TESTING_D1 || global.TESTING_D1_1) return; // When 'requiring' the mo
                               // don't run the tests below
                              //.............
 
-describe('d1 - session injection', function() {
+describe('d1-session-injection', function() {
 
   var expect = require('expect.js');
   var should = require('chai').should();
-  var secureMesh;
+
   var unsecureMesh;
   var Mesh = require('../');
+  var secureMesh = new Mesh();
 
   var secureClient = new Mesh.MeshClient({secure:true,port:8000});
   var unsecureClient = new Mesh.MeshClient({port:8001});
@@ -31,8 +32,6 @@ describe('d1 - session injection', function() {
   before('starts a secure mesh', function(done) {
 
     global.TESTING_D1 = true; //.............
-
-    secureMesh = this.mesh = new Mesh();
 
     secureMesh.initialize({
       name:'d1-session-injection-secure',
@@ -67,8 +66,7 @@ describe('d1 - session injection', function() {
         // Credentials for the login method
         var credentials = {
           username: '_ADMIN', // pending
-          password: test_id,
-          port:8000
+          password: test_id
         }
 
         secureClient.login(credentials).then(function(){

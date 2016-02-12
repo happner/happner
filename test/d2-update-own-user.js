@@ -20,7 +20,7 @@ describe('d2-update-own-user', function() {
   var mesh;
   var Mesh = require('../');
 
-  var adminClient = new Mesh.MeshClient({secure:true});
+  var adminClient = new Mesh.MeshClient({secure:true, port:8003});
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
 
@@ -37,6 +37,7 @@ describe('d2-update-own-user', function() {
       datalayer: {
         secure: true,
         adminPassword: test_id,
+        port:8003
       },
       modules: {
         'TestMesh': {
@@ -68,6 +69,7 @@ describe('d2-update-own-user', function() {
         }
 
         adminClient.login(credentials).then(function(){
+          console.log('ok d2 started:::');
           done();
         }).catch(done);
 
@@ -131,7 +133,7 @@ describe('d2-update-own-user', function() {
 
             if (e) return done(e);
 
-            testUserClient = new Mesh.MeshClient({secure:true});
+            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
             return testUserClient.login(testUser).then(done).catch(done);
 
           });
@@ -186,7 +188,7 @@ describe('d2-update-own-user', function() {
             //we'll need to fetch user groups, do that later
             if (e) return done(e);
 
-            testUserClient = new Mesh.MeshClient({secure:true});
+            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
 
             testUserClient.login(testUser).then(function(){
 
@@ -257,7 +259,7 @@ describe('d2-update-own-user', function() {
             //we'll need to fetch user groups, do that later
             if (e) return done(e);
 
-            testUserClient = new Mesh.MeshClient({secure:true});
+            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
 
             testUserClient.login(testUser).then(function(){
 
