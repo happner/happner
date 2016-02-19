@@ -108,4 +108,10 @@
 - added updateOwnUser
 - allowed for connection to security data change events
 
+1.6.0 2016-02-19
+-----------------
+
+- we now have the connect and disconnect events being emitted by the security component
+
+
 

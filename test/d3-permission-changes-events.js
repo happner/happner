@@ -36,7 +36,6 @@ describe('d3-permission-changes', function() {
         }
 
         adminClient.login(credentials).then(function(){
-          console.log('d3 logged in ok:::');
           done();
         }).catch(done);
 
