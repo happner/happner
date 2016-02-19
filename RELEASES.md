@@ -112,6 +112,6 @@
 -----------------
 
 - we now have the connect and disconnect events being emitted by the security component
-
+- we now added a disconnect method to the apiClient
 
 
