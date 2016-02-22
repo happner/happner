@@ -192,6 +192,7 @@ describe('d2-update-own-user', function() {
 
             testUserClient.login(testUser).then(function(){
 
+              testUser.oldPassword = 'TEST PWD';
               testUser.password = 'NEW PWD';
               testUser.custom_data = {changedCustom:'changedCustom'};
 
@@ -215,7 +216,7 @@ describe('d2-update-own-user', function() {
 
   });
 
-  it('adds a test user, logs in with the test user - fails to modify the user using updateUser', function(done) {
+  it('adds a test user, logs in with the test user - fails to modify the user using updateUser on another user', function(done) {
 
      var testGroup = {
       name:'TESTGROUP3' + test_id,
@@ -263,6 +264,7 @@ describe('d2-update-own-user', function() {
 
             testUserClient.login(testUser).then(function(){
 
+              testUser.oldPassword = 'TEST PWD';
               testUser.password = 'NEW PWD';
               testUser.custom_data = {changedCustom:'changedCustom'};
 
@@ -270,6 +272,223 @@ describe('d2-update-own-user', function() {
 
                expect(e.toString()).to.be('AccessDenied: unauthorized');
                done();
+
+              });
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+
+      });
+
+    });
+
+  });
+
+  it('adds a test user, logs in with the test user - fails to modify the password, as old password was not included', function(done) {
+
+     var testGroup = {
+      name:'TESTGROUP4' + test_id,
+
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
+
+      permissions:{
+        methods:{}
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+
+      var testUser = {
+        username:'TESTUSER4' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+
+          expect(result.username).to.be(testUser.username);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+
+            testUserClient.login(testUser).then(function(){
+
+              testUser.password = 'NEW PWD';
+              testUser.custom_data = {changedCustom:'changedCustom'};
+
+              testUserClient.exchange.security.updateOwnUser(testUser, function(e, result){
+
+                expect(e.toString()).to.be('Error: missing oldPassword parameter');
+                done();
+
+              });
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+
+      });
+
+    });
+
+  });
+
+  it('adds a test user, logs in with the test user - fails to modify the password, as old password does not match the current one', function(done) {
+
+     var testGroup = {
+      name:'TESTGROUP5' + test_id,
+
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
+
+      permissions:{
+        methods:{}
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+
+      var testUser = {
+        username:'TESTUSER5' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+
+          expect(result.username).to.be(testUser.username);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+
+            testUserClient.login(testUser).then(function(){
+
+              testUser.oldPassword = 'NEW PWD';
+              testUser.password = 'NEW PWD';
+              testUser.custom_data = {changedCustom:'changedCustom'};
+
+              testUserClient.exchange.security.updateOwnUser(testUser, function(e, result){
+
+                expect(e.toString()).to.be('Error: old password incorrect');
+                done();
+
+              });
+
+            }).catch(function(e){
+              done(e);
+            });
+
+          });
+
+      });
+
+    });
+
+  });
+
+  it('adds a test user, logs in with the test user - modifies the user details without the users password changing', function(done) {
+
+     var testGroup = {
+      name:'TESTGROUP6' + test_id,
+
+      custom_data:{
+        customString:'custom1',
+        customNumber:0
+      },
+
+      permissions:{
+        methods:{}
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+
+      if (e) return done(e);
+
+      testGroupSaved = result;
+
+      var testUser = {
+        username:'TESTUSER6' + test_id,
+        password:'TEST PWD',
+        custom_data:{
+          something: 'useful'
+        }
+      }
+
+      adminClient.exchange.security.addUser(testUser, function(e, result){
+
+          if (e) return done(e);
+
+          expect(result.username).to.be(testUser.username);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+
+            testUserClient.login(testUser).then(function(){
+
+              delete testUser.password;
+              testUser.custom_data = {changedCustom:'changedCustom'};
+
+              //NB - we are using testUserSaved - so there is some _meta data - otherwise this wont work
+
+              testUserClient.exchange.security.updateOwnUser(testUser, function(e, result){
+
+                if (e) return done(e);
+
+                console.log('updateOwn result:::', result)
+                expect(result.custom_data.changedCustom).to.be('changedCustom');
+
+                testUserClient.login({username:testUser.username, password:'TEST PWD'}).then(done).catch(done);
 
               });
 

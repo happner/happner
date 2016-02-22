@@ -114,4 +114,11 @@
 - we now have the connect and disconnect events being emitted by the security component
 - we now added a disconnect method to the apiClient
 
+1.6.1 2016-02-22
+----------------
+
+- we now have the connection events being emitted by the happner client 'reconnect-scheduled', 'reconnect-successful', 'connection-ended'
+- updateOwnUser now checks if the password is being changed, and if so expects the previous password
+- updated to use happn 2.5.4
+
 
