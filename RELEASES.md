@@ -121,4 +121,10 @@
 - updateOwnUser now checks if the password is being changed, and if so expects the previous password
 - updated to use happn 2.5.4
 
+1.6.2 2016-02-22
+----------------
+
+- updated to use happn 2.5.7
+
+
 
