@@ -126,5 +126,11 @@
 
 - updated to use happn 2.5.7
 
+1.6.3 2016-03-02
+----------------
+
+- updated to use happn 2.5.8
+
+
 
 
