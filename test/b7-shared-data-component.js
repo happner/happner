@@ -6,6 +6,8 @@ describe('b7 - shared data component', function() {
   var dataEvents;
   var config;
 
+  this.timeout(60000)
+
   var TestModule1 = {
     setSharedData: function($happn, path, data, callback) {
       $happn.exchange.data.set(path, data, callback);
@@ -159,7 +161,7 @@ describe('b7 - shared data component', function() {
       })
       .catch(done);
     })
-    
+
     it('can subscribe to data change with events', function(done) {
 
       dataEvents.on('/some/path/five', function(data) {
