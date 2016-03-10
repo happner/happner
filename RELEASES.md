@@ -137,6 +137,12 @@
 - updated to use happn 2.5.9
 - updates to the datalayer to allow for plugins (ie. mongo)
 
+1.6.5 2016-03-09
+----------------
+
+- updated to use happn 2.5.12
+
+
 
 
 
