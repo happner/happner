@@ -173,7 +173,7 @@ describe('b1 - advanced security', function(done) {
     
      var testGroup = {
       name:'B1USER_NONADMIN' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -289,6 +289,33 @@ describe('b1 - advanced security', function(done) {
 
     });
 
+  });
+
+  it('should be able to link another group to a user', function(done) {
+
+    var testGroup2 = {
+      name:'TEST GROUP 2 ' + test_id,
+      permissions:{
+        methods:{},
+        events:{}
+      }
+    };
+
+    adminClient.exchange.security.addGroup(testGroup2, function(e, group2){
+      if (e) return done(e);
+      adminClient.exchange.security.getUser(testUserSaved.username, function(e, user){
+        if (e) return done(e);
+        adminClient.exchange.security.linkGroup(group2, user, function(e){
+          if (e) return done(e);
+          adminClient.exchange.security.getUser(testUserSaved.username, function(e, user_new){
+            if (e) return done(e);
+            expect(user_new.groups[testGroupSaved.name] != undefined).to.be(true);
+            expect(user_new.groups[testGroup2.name] != undefined).to.be(true);
+            done();
+          });
+        });
+      });
+    });
   });
 
 
