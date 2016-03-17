@@ -3,7 +3,7 @@ var Mesh = require('../../lib/mesh');
 var config = {
   name: 'theFarawayTree',
   dataLayer: {
-    port: 4001,
+    port: 55001,
     secure:true,
     adminPassword:'guessme',
     encryptPayloads:true
@@ -63,6 +63,6 @@ mesh.initialize(config, function(err) {
 
     console.log('READY');
   });
-  
+
 
 });

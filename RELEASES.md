@@ -142,6 +142,18 @@
 
 - updated to use happn 2.5.12
 
+1.6.6-1.6.7 2016-03-12
+----------------------
+
+- crypto component fixes
+
+1.6.8 2016-03-17
+-----------------
+
+- fixed issue with caching in happn, upgraded happn to version 2.5.15
+
+
+
 
 
 

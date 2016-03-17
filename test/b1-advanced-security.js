@@ -9,12 +9,15 @@ describe('b1 - advanced security', function(done) {
 
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();
+
   var should = require('chai').should();
 
   var dbFileName = __dirname + sep + 'temp/' + test_id + '.nedb';
   var fs = require('fs-extra');
 
   var mesh = new Mesh();
+
+  var DELETEFILE = false;
 
   var config = {
     name:"testadvancedSecurity",
@@ -26,10 +29,13 @@ describe('b1 - advanced security', function(done) {
   };
 
   after(function(done){
+    if (DELETEFILE)
     fs.unlink(dbFileName, function(e){
       if (e) return done(e);
       mesh.stop(done);
     });
+    else
+      mesh.stop(done);
   });
 
   before(function(done){
@@ -67,7 +73,7 @@ describe('b1 - advanced security', function(done) {
 
   var testGroup = {
     name:'TEST GROUP' + test_id,
-    
+
     custom_data:{
       customString:'custom1',
       customNumber:0
@@ -96,7 +102,7 @@ describe('b1 - advanced security', function(done) {
       expect(result.name == testGroup.name).to.be(true);
       expect(result.custom_data.customString == testGroup.custom_data.customString).to.be(true);
       expect(result.custom_data.customNumber == testGroup.custom_data.customNumber).to.be(true);
-      
+
       testGroupSaved = result;
       done();
 
@@ -113,7 +119,7 @@ describe('b1 - advanced security', function(done) {
   }
 
   var testUserSaved;
-  
+
   it('creates a test user', function(done) {
      adminClient.exchange.security.addUser(testUser, function(e, result){
 
@@ -138,7 +144,7 @@ describe('b1 - advanced security', function(done) {
   });
 
   it('logs in with the test user', function(done) {
-    
+
     testUserClient.login(testUser).then(function(){
 
       //do some stuff with the security manager here
@@ -153,7 +159,7 @@ describe('b1 - advanced security', function(done) {
   });
 
   it('changes the password and custom data for the test user, then logs in with the new password', function(done) {
-    
+
     var updatedPassword = 'PWD-UPD';
 
     testUserSaved.password = updatedPassword;
@@ -170,7 +176,7 @@ describe('b1 - advanced security', function(done) {
   });
 
   it('fails to modify permissions using a non-admin user', function(done) {
-    
+
      var testGroup = {
       name:'B1USER_NONADMIN' + test_id,
 
@@ -194,7 +200,7 @@ describe('b1 - advanced security', function(done) {
       if (e) return done(e);
 
       testGroupSaved = result;
-    
+
       var testUser = {
         username:'B1USER_NONADMIN' + test_id,
         password:'TEST PWD',
@@ -211,7 +217,7 @@ describe('b1 - advanced security', function(done) {
           testUserSaved = result;
 
           adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
-  
+
             if (e) return done(e);
 
             testUserClient = new Mesh.MeshClient({secure:true});
@@ -219,12 +225,12 @@ describe('b1 - advanced security', function(done) {
             testUserClient.login(testUser).then(function(){
 
             testUserClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e, result){
-      
+
                 if (!e)
                    return done(new Error('this was not meant to happn'));
 
                 expect(e.toString()).to.be('AccessDenied: unauthorized');
-                
+
                 done();
 
               });
@@ -254,7 +260,7 @@ describe('b1 - advanced security', function(done) {
   it('should list all groups', function(done) {
 
     adminClient.exchange.security.listGroups('*', function(e, groups){
-      
+
       if (e) return done(e);
 
       expect(groups.length).to.be(5);
@@ -268,7 +274,7 @@ describe('b1 - advanced security', function(done) {
   it('should list all users', function(done) {
 
     adminClient.exchange.security.listUsers('*', function(e, users){
-      
+
       if (e) return done(e);
 
       expect(users.length).to.be(3);
@@ -281,7 +287,7 @@ describe('b1 - advanced security', function(done) {
   it('should get a specific user, with rolled up group data', function(done) {
 
     adminClient.exchange.security.getUser(testUserSaved.username, function(e, user){
-      
+
       if (e) return done(e);
 
       expect(user.groups[testGroupSaved.name] != undefined).to.be(true);
@@ -322,7 +328,7 @@ describe('b1 - advanced security', function(done) {
   it('delete a user, fail to access the system with the deleted user', function(done) {
 
     adminClient.exchange.security.deleteUser(testUserSaved, function(e, result){
-      
+
       if (e) return done(e);
 
       testUserClient.login({username:testUserSaved.username, password:'PWD-UPD'}).then(function(){

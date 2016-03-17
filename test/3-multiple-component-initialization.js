@@ -9,9 +9,6 @@ describe('3 - Multiple component initialization', function() {
   before(function(done) {
     var config = {
       name: 'meshName',
-      datalayer: {
-        port: 4001,
-      },
       modules: {
         one_class: {
           path: __dirname + '/lib/3-one_class-module.js',
@@ -130,7 +127,7 @@ describe('3 - Multiple component initialization', function() {
       res.should.equal('RESULT');
       done();
     });
-    
+
   });
 
   it('loads the class with parameters ok', function(done) {
@@ -138,7 +135,7 @@ describe('3 - Multiple component initialization', function() {
       res.should.equal('1 2')
       done();
     });
-    
+
   });
 
   it('loads the returned from sync ok', function(done) {

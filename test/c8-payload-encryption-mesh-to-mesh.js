@@ -17,14 +17,14 @@ var crypto = new Crypto();
 var config = {
   name: 'mesh2',
   datalayer: {
-    port: 4002,
+    port: 55002,
     secure:true,
     encryptPayloads:true
   },
   endpoints: {
     theFarawayTree: {  // remote mesh node
       config: {
-        port: 4001,
+        port: 55001,
         host: 'localhost',
         username: '_ADMIN',
         password: 'guessme'
