@@ -61,7 +61,7 @@ describe('c8-payload-encryption', function() {
   });
 
   after(function(done) {
-    //remote.kill();
+    remote.kill();
     mesh.stop(done);
   });
 
