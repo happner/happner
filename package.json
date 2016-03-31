@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "mocha --expose-gc silence.js test",
-    "test-cover": "istanbul cover _mocha -- silence.js test"
+    "test-cover": "node --expose-gc ./node_modules/istanbul/lib/cli.js cover _mocha -- silence.js test"
   },
   "repository": {
     "type": "git",
