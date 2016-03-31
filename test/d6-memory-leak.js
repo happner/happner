@@ -59,7 +59,7 @@ config = {
   }
 };
 
-describe('4 - Mesh to Mesh', function () {
+describe('d6 memory leak', function () {
 
   this.timeout(20000);
 
