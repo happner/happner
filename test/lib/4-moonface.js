@@ -15,5 +15,9 @@ function Moonface() {
         e.name = 'SlipFailure',
         e
     )
+  };
+
+  this.slowlySlides = function(object,callback) {
+    callback(null,'All good');
   }
 }
