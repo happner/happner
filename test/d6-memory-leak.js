@@ -21,7 +21,7 @@ var libFolder = __dirname + sep + 'lib' + sep;
 config = {
   name: 'mesh2',
   datalayer: {
-    port: 3002
+    port: 8004
   },
   endpoints: {},
   modules: {
