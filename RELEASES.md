@@ -152,10 +152,7 @@
 
 - fixed issue with caching in happn, upgraded happn to version 2.5.15
 
+1.6.9 2016-04-01
+----------------
 
-
-
-
-
-
-
+- Fixed memory leak and noPublish issue in happn
