@@ -38,6 +38,12 @@ var config = {
             parameters: [
               {name:'callback', type:'callback', required:true}
             ]
+          },
+          "slowlySlides": {
+            parameters: [
+              {name:'object',required:true},
+              {name:'callback', type:'callback', required:true}
+            ]
           }
         }
       }

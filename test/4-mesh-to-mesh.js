@@ -7,6 +7,7 @@ var spawn = require('child_process').spawn
   , assert = require('assert')
   , mesh
   , Mesh = require('../')
+  , should = require('chai').should();
 
 var sep = require('path').sep;
 var libFolder = __dirname + sep + 'lib' + sep;
@@ -39,11 +40,11 @@ describe('4 - Mesh to Mesh', function() {
     var _this = this;
 
     // spawn remote mesh in another process
-    remote = spawn('node', [libFolder + '4-first-mesh']);
+    remote = spawn('/home/johan/.nvm/v0.10.40/bin/node', [libFolder + '4-first-mesh']);
 
     remote.stdout.on('data', function(data) {
 
-      // console.log(data.toString());
+      //console.log(data.toString());
 
       if (data.toString().match(/READY/)){
 
@@ -94,6 +95,60 @@ describe('4 - Mesh to Mesh', function() {
         done();
 
       });
+
+    });
+
+    it("should not leak on exchange calls", function (done) {
+      this.timeout(100000);
+      global.gc();
+      var memoryUsage = [];
+
+      var total = 200;
+      var callsDone = 0;
+
+      //do a 1000 calls to fill up the cache
+      for (var n = 0; n < 1000; n++) {
+        var object = {};
+        mesh.exchange.theFarawayTree.moonface.slowlySlides(object, function (err, result) {
+        });
+      }
+      global.gc();
+      global.gc();
+      global.gc();
+      global.gc();
+
+      console.log('SNAPSHOT');
+      setTimeout(doTest, 10000);
+
+      function doTest() {
+        doExchange(callsDone);
+      }
+
+      function doExchange(n) {
+        global.gc();
+        memoryUsage[n] = process.memoryUsage().heapUsed;
+        var object = {};
+        for (var i = 0; i < 10000; i++) {
+          object[i] = Math.random();
+        }
+        mesh.exchange.theFarawayTree.moonface.slowlySlides(object, function slowlySlidesCallback(err, result) {
+          //result.should.eql("All good");
+          callsDone++;
+          if (callsDone == total) {
+            global.gc();
+            console.log('SNAPSHOT');
+            return setTimeout(complete, 10000);
+          }
+          setImmediate(doExchange, callsDone);
+        });
+      }
+
+      function complete() {
+        console.log(memoryUsage);
+        console.log(process.memoryUsage().heapUsed);
+        (memoryUsage[memoryUsage.length - 1] - memoryUsage[memoryUsage.length - 2]).should.be.lt(10000);
+        done();
+      }
 
     });
 
