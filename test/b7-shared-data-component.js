@@ -1,5 +1,8 @@
 describe('b7 - shared data component', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var should = require('chai').should();
   var Mesh = require('../');
   var meshInstance;
@@ -197,6 +200,8 @@ describe('b7 - shared data component', function() {
     });
 
   });
+
+  require('benchmarket').stop();
 
 });
 

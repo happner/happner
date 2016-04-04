@@ -45,7 +45,10 @@ var Mesh = require('../');
 
 describe('a5 - default component configs', function() {
 
-   this.timeout(20000);
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
+  this.timeout(20000);
 
   before(function(done) {
 
@@ -101,5 +104,7 @@ describe('a5 - default component configs', function() {
     })
 
   });
+
+  require('benchmarket').stop();
 
 })

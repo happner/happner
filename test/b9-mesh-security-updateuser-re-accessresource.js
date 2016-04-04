@@ -108,6 +108,8 @@ var serverConfig = {
 
 describe('b9 - mesh client security login', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
 
   var clientMesh;
   var serverMesh;
@@ -284,7 +286,10 @@ describe('b9 - mesh client security login', function() {
     });
   });
 
-  });
+
+  require('benchmarket').stop();
+
+});
 
 //   it('a - client should register a device on the server', function (done) {
 //     this.timeout(5000);

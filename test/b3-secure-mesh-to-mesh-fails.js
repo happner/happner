@@ -1,5 +1,8 @@
 describe('b3 - secure mesh to mesh fails', function() {
- 
+
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   context('secure mesh to mesh fails', function(){
 
     var spawn = require('child_process').spawn
@@ -32,7 +35,7 @@ describe('b3 - secure mesh to mesh fails', function() {
     };
 
     after(function(done) {
-      remote.kill(); 
+      remote.kill();
       mesh.stop(function(e){
         // console.log('killed ok 1:::', remote.pid);
         done();
@@ -53,7 +56,7 @@ describe('b3 - secure mesh to mesh fails', function() {
         // console.log(data.toString());
 
         if (data.toString().match(/READY/)){
-        
+
           // console.log('remote ready 1:::', remote.pid);
 
           mesh = new Mesh();
@@ -75,5 +78,7 @@ describe('b3 - secure mesh to mesh fails', function() {
     });
 
   });
+
+  require('benchmarket').stop();
 
 });

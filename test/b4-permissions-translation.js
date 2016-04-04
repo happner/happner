@@ -57,6 +57,9 @@ var async = require('async');
 
 describe('b4 - component start and validation -', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(20000);
 
   before(function(done) {
@@ -778,5 +781,7 @@ it('we add a test user that belongs to a group that has permissions to access a 
       });
     });
  });
+
+  require('benchmarket').stop();
 
 });

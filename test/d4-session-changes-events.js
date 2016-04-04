@@ -1,5 +1,8 @@
 describe('d3-permission-changes', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var expect = require('expect.js');
   var should = require('chai').should();
 
@@ -108,5 +111,7 @@ describe('d3-permission-changes', function() {
     });
 
   });
+
+  require('benchmarket').stop();
 
 });

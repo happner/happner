@@ -4,7 +4,10 @@
 
 
 describe('b2 - secure mesh to mesh', function() {
- 
+
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   context('secure mesh to mesh', function(){
 
     var spawn = require('child_process').spawn
@@ -49,7 +52,7 @@ describe('b2 - secure mesh to mesh', function() {
 
         // console.log(data.toString());
         if (data.toString().match(/READY/)){
-        
+
           // console.log('remote ready:::', remote.pid);
 
           mesh = new Mesh();
@@ -66,7 +69,7 @@ describe('b2 - secure mesh to mesh', function() {
 
 
     after(function(done) {
-      remote.kill(); 
+      remote.kill();
       mesh.stop(function(e){
         // console.log('killed ok:::', remote.pid);
         done();
@@ -95,5 +98,7 @@ describe('b2 - secure mesh to mesh', function() {
     });
 
   });
+
+  require('benchmarket').stop();
 
 });

@@ -15,6 +15,9 @@ if (global.TESTING_D2) return; // When 'requiring' the module above,
                              //.............
 describe('d2-update-own-user', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var expect = require('expect.js');
   var should = require('chai').should();
   var mesh;
@@ -504,6 +507,6 @@ describe('d2-update-own-user', function() {
 
   });
 
-
+  require('benchmarket').stop();
 
 });

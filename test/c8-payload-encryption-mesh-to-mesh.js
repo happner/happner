@@ -37,6 +37,9 @@ var config = {
 
 describe('c8-payload-encryption', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(20000);
 
   before(function(done) {
@@ -98,4 +101,5 @@ describe('c8-payload-encryption', function() {
 
   });
 
+  require('benchmarket').stop();
 });

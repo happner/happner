@@ -1,8 +1,11 @@
 describe('b6 - start meshes', function () {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var should = require('chai').should();
   var path = require('path');
-  
+
   Mesh = require('../')
 
   var ownPath = path.join(__dirname, '../index.js');
@@ -112,7 +115,7 @@ describe('b6 - start meshes', function () {
       if (e) return done(e);
       stopServerMesh();
     });
-    
+
   });
 
   it('should add a user to the first mesh (serverConfig)', function (done) {
@@ -134,7 +137,7 @@ describe('b6 - start meshes', function () {
     };
 
     serverMesh.exchange.security.addUser(TestUser1, function (err){
-      
+
       if (err) console.log(err);
       should.not.exist(err);
 
@@ -143,5 +146,7 @@ describe('b6 - start meshes', function () {
     });
 
   });
+
+  require('benchmarket').stop();
 
 });

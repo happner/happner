@@ -1,5 +1,8 @@
 describe('7 - start and stop a persisted mesh', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();
   var should = require('chai').should();
@@ -58,7 +61,7 @@ describe('7 - start and stop a persisted mesh', function() {
         _this.unpersistedMesh = unpersistedMesh;
         unpersistedMeshName = unpersistedMesh._mesh.config.name;
         unpersistedMeshPublicKey = unpersistedMesh._mesh.datalayer.server.services.security._keyPair.publicKey;
-        
+
         // console.log('names:::', meshName, unpersistedMeshName);
 
         done();
@@ -91,7 +94,7 @@ describe('7 - start and stop a persisted mesh', function() {
 
 
      });
-    
+
   });
 
   it('restarts the unpersisted mesh, ensures the keypair is different', function(done) {
@@ -122,7 +125,7 @@ describe('7 - start and stop a persisted mesh', function() {
 
 
      });
-    
+
   });
 
   it('restarts the mesh, ensures the name', function(done) {
@@ -153,7 +156,7 @@ describe('7 - start and stop a persisted mesh', function() {
 
 
      });
-    
+
   });
 
   it('restarts the unpersisted mesh, ensures the name is different', function(done) {
@@ -186,8 +189,9 @@ describe('7 - start and stop a persisted mesh', function() {
 
 
      });
-    
+
   });
 
+  require('benchmarket').stop();
 
 });

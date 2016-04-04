@@ -7,6 +7,9 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(20000);
 
   var maximumPings = 1000;
@@ -70,7 +73,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
     });
   });
 
-  
+
   it('stops the mesh', function (done) {
     this.timeout(defaultTimeout);
     mesh.stop({}, function(e, log){
@@ -79,6 +82,8 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
 
     });
   });
+
+  require('benchmarket').stop();
 
 });
 

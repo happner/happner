@@ -2,6 +2,9 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
   var maximumPings = 1000;
@@ -40,7 +43,7 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
             "start":{
               type:"sync",
               parameters:[
-               {"required":true, "value":{"message":"this is a start parameter"}}  
+               {"required":true, "value":{"message":"this is a start parameter"}}
               ]
             }
           }
@@ -61,7 +64,7 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
   });
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
-    
+
     mesh = new Mesh();
 
     this.timeout(10000);
@@ -109,6 +112,7 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
       }
     });
   });
+  require('benchmarket').stop();
 });
 
 

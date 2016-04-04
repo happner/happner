@@ -2,6 +2,9 @@
 
 describe('a2 - mesh awareness via $happn injection', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var promise = require('when').promise;
   var parallel = require('when/parallel');
   var should = require('chai').should();
@@ -32,7 +35,7 @@ describe('a2 - mesh awareness via $happn injection', function() {
     // });
 
     // var getEndpoints = function(i) {
-    //   // return all but i, 
+    //   // return all but i,
     //   // for connecting mesh to every OTHER mesh
 
     //   var endpoints = {};
@@ -171,7 +174,7 @@ describe('a2 - mesh awareness via $happn injection', function() {
     });
   });
 
-  
+
   it('leaves happn out of the description when defaulting method parameters', function(done) {
     var meshes = this.meshes;
     meshes[0]._mesh.description.components.component1.methods.getThingFromConfig.should.eql [
@@ -329,7 +332,7 @@ describe('a2 - mesh awareness via $happn injection', function() {
         })
       });
 
-      formatted.should.eql({ 
+      formatted.should.eql({
         'mesh1.component1': [ { mesh: 1, component: 1 }, { mesh: 1, component: 1 } ],
         'mesh1.component2': [ { mesh: 1, component: 2 }, { mesh: 1, component: 2 } ],
         'mesh1.component3': [ { mesh: 1, component: 3 }, { mesh: 1, component: 3 } ],
@@ -410,7 +413,7 @@ describe('a2 - mesh awareness via $happn injection', function() {
         'mesh9.component6': [ { mesh: 9, component: 6 }, { mesh: 9, component: 6 } ],
         'mesh9.component7': [ { mesh: 9, component: 7 }, { mesh: 9, component: 7 } ],
         'mesh9.component8': [ { mesh: 9, component: 8 }, { mesh: 9, component: 8 } ],
-        'mesh9.component9': [ { mesh: 9, component: 9 }, { mesh: 9, component: 9 } ] 
+        'mesh9.component9': [ { mesh: 9, component: 9 }, { mesh: 9, component: 9 } ]
       });
       done();
 
@@ -520,5 +523,8 @@ describe('a2 - mesh awareness via $happn injection', function() {
     })
 
   })
+
+
+  require('benchmarket').stop();
 
 });

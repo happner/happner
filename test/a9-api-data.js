@@ -2,6 +2,9 @@ describe('a9 - passes data between component APIs, also works with events', func
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
   var maximumPings = 1000;
@@ -9,7 +12,6 @@ describe('a9 - passes data between component APIs, also works with events', func
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();
   var should = require('chai').should();
-
 
   this.timeout(5000);
 
@@ -44,7 +46,7 @@ describe('a9 - passes data between component APIs, also works with events', func
             "start":{
               type:"async",
               parameters:[
-               {"required":true, "value":{"message":"this is a start parameter"}}  
+               {"required":true, "value":{"message":"this is a start parameter"}}
               ]
             }
           }
@@ -85,7 +87,7 @@ describe('a9 - passes data between component APIs, also works with events', func
       result._meta.path.should.equal('/_data/component1/' + 'test/a9-api-data');
 
       setTimeout(done, 200); //so the on picks something up?
-     
+
     });
 
   });
@@ -93,7 +95,7 @@ describe('a9 - passes data between component APIs, also works with events', func
   it('checks the on count on component1 must be greater than 0', function(done) {
 
     this.mesh.exchange.component1.getOnCount(function(e, result){
-      
+
       if (!result || result == 0)
         return done(new Error('result should be greater than 0'));
 
@@ -156,7 +158,7 @@ describe('a9 - passes data between component APIs, also works with events', func
         path:'/testSub',
         callback:function(err){
           should.not.exist(err);
-          
+
           _this.mesh.exchange.component2.setData(
             {
               path:'/testSub',
@@ -206,6 +208,9 @@ describe('a9 - passes data between component APIs, also works with events', func
   });
 
 */
+
+
+  require('benchmarket').stop();
 
 });
 

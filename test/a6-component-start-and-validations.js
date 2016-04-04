@@ -29,7 +29,7 @@ Explicit.prototype.methodName1 = function(opts, blob, callback) {
 
 if (global.TESTING_16) return; // When 'requiring' the module above,
                               // don't run the tests below
-                             //............. 
+                             //.............
 
 
 
@@ -38,6 +38,9 @@ var mesh;
 var Mesh = require('../');
 
 describe('a6 - component start and validation -', function() {
+
+  require('benchmarket').start();
+  after(require('benchmarket').store());
 
   this.timeout(20000);
 
@@ -66,7 +69,7 @@ describe('a6 - component start and validation -', function() {
           schema: {
             exclusive: true,
             methods: {
-              
+
               'asyncStart': {
                 type: 'async',
                 parameters: [
@@ -175,5 +178,7 @@ describe('a6 - component start and validation -', function() {
       done();
     });
   });
+
+  require('benchmarket').stop();
 
 });
