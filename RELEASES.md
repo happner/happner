@@ -86,4 +86,10 @@
 - added default /api/client and /primus/* to webroute security exceptions
 - added config version and name to `client.info`
 
+1.5.7 2016-01-18
+----------------
+
+- Pull initialization overlap release (#70)
+- Use v2.3.3 of happn
+
 
