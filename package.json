@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "1.6.10",
+  "version": "1.6.11",
   "description": "distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/happner/happner",
   "devDependencies": {
+    "benchmarket": "0.0.4",
     "chai": "^2.2.0",
     "coveralls": "^2.11.6",
     "expect.js": "^0.3.1",
