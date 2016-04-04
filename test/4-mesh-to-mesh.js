@@ -1,6 +1,3 @@
-// cannot do mocha test/4-mesh-to-mesh.js --watch
-// address already in use for 2nd... runs
-
 var spawn = require('child_process').spawn
   , sep = require('path').sep
   , remote
@@ -17,7 +14,7 @@ config = {
     port: 3002
   },
   endpoints: {
-    theFarawayTree: {  // remote mesh node
+    'remoteMesh': {  // remote mesh node
       config: {
         port: 3001,
         host: 'localhost', // TODO This was necessary, did not default
@@ -69,17 +66,17 @@ describe('4 - Mesh to Mesh', function() {
     mesh.stop(done);
   });
 
-  context('the faraway tree', function() {
+  context('on remote mesh', function() {
 
-    it("we can ride moonface's slippery slip",function(done) {
+    it("can call remote component function and subscribe to event",function(done) {
 
       var eventFired = false;
 
-      mesh.event.theFarawayTree.moonface.on('*', function(data, meta){
+      mesh.event.remoteMesh.remoteComponent.on('*', function(data, meta){
         if (data.value == 'whoa') eventFired = true;
       });
 
-      mesh.exchange.theFarawayTree.moonface.rideTheSlipperySlip(
+      mesh.exchange.remoteMesh.remoteComponent.remoteFunction(
         'one!', 'two!', 'three!', function(err, res) {
 
           assert(res == 'one! two! three!, wheeeeeeeeeeeeheeee!');
@@ -89,11 +86,11 @@ describe('4 - Mesh to Mesh', function() {
       });
     });
 
-    it('we know when there was an accident', function(done) {
+    it('can receive remotely caught error', function(done) {
 
-      mesh.exchange.theFarawayTree.moonface.haveAnAccident(function(err, res) {
+      mesh.exchange.remoteMesh.remoteComponent.causeError(function(err, res) {
 
-        assert(err.toString().match(/SlipFailure: Stray patch of glue./))
+        assert(err.toString().match(/ErrorType: Error string/))
         done();
 
       });

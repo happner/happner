@@ -1,14 +1,9 @@
-// cannot do mocha test/4-mesh-to-mesh.js --watch
-// address already in use for 2nd... runs
-
-
-
 describe('b2 - secure mesh to mesh', function() {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  context('secure mesh to mesh', function(){
+  context('on remote mesh', function(){
 
     var spawn = require('child_process').spawn
     , sep = require('path').sep
@@ -27,7 +22,7 @@ describe('b2 - secure mesh to mesh', function() {
         port: 51233,
       },
       endpoints: {
-        theFarawayTree: {  // remote mesh node
+        remoteMesh: {  // remote mesh node
           config: {
             port: 51234,
             username: '_ADMIN',
@@ -76,8 +71,9 @@ describe('b2 - secure mesh to mesh', function() {
       });
     });
 
-    it("we can ride moonface's slippery slip",function(done) {
-      mesh.exchange.theFarawayTree.moonface.rideTheSlipperySlip(
+    it("can call remote component function",function(done) {
+
+      mesh.exchange.remoteMesh.remoteComponent.remoteFunction(
         'one!', 'two!', 'three!', function(err, res) {
 
           assert(res == 'one! two! three!, wheeeeeeeeeeeeheeee!');
@@ -88,9 +84,9 @@ describe('b2 - secure mesh to mesh', function() {
 
     it('we know when there was an accident', function(done) {
 
-      mesh.exchange.theFarawayTree.moonface.haveAnAccident(function(err, res) {
+      mesh.exchange.remoteMesh.remoteComponent.causeError(function(err, res) {
 
-        assert(err.toString().match(/SlipFailure: Stray patch of glue./))
+        assert(err.toString().match(/ErrorType: Error string/))
         done();
 
       });
