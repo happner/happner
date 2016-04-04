@@ -31,6 +31,9 @@ if (global.TESTING_C5) return; // When 'requiring' the module above,
 
 describe('c5 - multiple exchange calls', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var expect = require('expect.js');
   var Happner = require('../');
 
@@ -159,6 +162,8 @@ describe('c5 - multiple exchange calls', function() {
     });
   });
 
+
+  require('benchmarket').stop();
 
 });
 

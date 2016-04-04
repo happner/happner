@@ -21,7 +21,7 @@ DataComponent7.prototype.storeData = function($happn, path, data, callback){
 // DataComponent7.prototype.method1 = function($happn, options, callback) {
 //   options.methodName = 'method1';
 //    console.log('ran method1...');
-//   callback(null, options); 
+//   callback(null, options);
 // }
 
 // DataComponent7.prototype.method2 = function($happn, options, callback) {
@@ -43,9 +43,12 @@ DataComponent7.prototype.storeData = function($happn, path, data, callback){
 
 if (global.TESTING_7) return; // When 'requiring' the module above,
                               // don't run the tests below
-                             //............. 
+                             //.............
 
 describe('7 - test persisted config, check memory and persisted data stores', function() {
+
+  require('benchmarket').start();
+  after(require('benchmarket').store());
 
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();
@@ -144,7 +147,7 @@ describe('7 - test persisted config, check memory and persisted data stores', fu
     } finally {
       this.datastores.mem.update = originalFn;
     }
-    
+
   });
 
   it('tests storing data routed to persist', function(done) {
@@ -218,7 +221,7 @@ describe('7 - test persisted config, check memory and persisted data stores', fu
     } finally {
       this.datastores.mem.update = originalFn;
     }
-    
+
   });
 
   it('tests storing data routed to persist, in the data component', function(done) {
@@ -257,5 +260,7 @@ describe('7 - test persisted config, check memory and persisted data stores', fu
     }
 
   })
+
+  require('benchmarket').stop();
 
 });

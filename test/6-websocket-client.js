@@ -1,5 +1,8 @@
 describe('6 - websocket client', function(done) {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(3000);
 
   var Mesh = require('../')
@@ -36,7 +39,7 @@ describe('6 - websocket client', function(done) {
     });
 
   });
- 
+
   it('does a set on the datalayer component', function(done) {
 
      testClient.exchange.test_6.data.set('/6-websocket-client/set', {"val":"set"}, function(e, result){
@@ -92,11 +95,11 @@ describe('6 - websocket client', function(done) {
         if (e) return done(e);
 
         expect(getresult.val).to.be("delete");
-        
+
         testClient.exchange.test_6.data.remove('/6-websocket-client/delete', {}, function(e, removeresult){
 
           if (e) return done(e);
-          
+
           // console.log('delete happened:::', removeresult);
 
           testClient.exchange.test_6.data.get('/6-websocket-client/delete', {}, function(e, getremovedresult){
@@ -108,7 +111,7 @@ describe('6 - websocket client', function(done) {
 
           });
 
-          
+
         });
 
       });
@@ -119,22 +122,23 @@ describe('6 - websocket client', function(done) {
 
   xit('does an on, on the datalayer component', function(done) {
 
-     
+
 
   });
 
   xit('runs a method on a component', function(done) {
 
-     
+
 
   });
 
   xit('runs attaches to an event on a component', function(done) {
 
-     
+
 
   });
 
+  require('benchmarket').stop();
 
 });
 

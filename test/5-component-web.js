@@ -10,6 +10,9 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(20000);
 
   var config = {
@@ -91,7 +94,7 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
     });
 
   });
-  
+
   // it('tests that the scope is set to component', function(done) {
   //   request({uri:'http://127.0.0.1:' + testport + '/component5/testScope?scope=ComponentInstance', method:'GET'}, function (e, resp, body) {
   //     resp.statusCode.should.eql(200);
@@ -105,6 +108,9 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
       done(e);
     });
   });
+
+  require('benchmarket').stop();
+
 });
 
 function getBody(url, done) {

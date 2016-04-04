@@ -10,6 +10,9 @@ var http = require('http');
 
 describe('9 - tests that we can add middleware before a static', function (done) {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(20000);
 
   var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
@@ -68,5 +71,7 @@ describe('9 - tests that we can add middleware before a static', function (done)
       done();
     })
   });
+
+  require('benchmarket').stop();
 
 });

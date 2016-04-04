@@ -1,5 +1,8 @@
 describe('c6 - https', function(done) {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(20000);
 
   var Mesh = require('../')
@@ -163,6 +166,7 @@ describe('c6 - https', function(done) {
 
   });
 
+  require('benchmarket').stop();
 
 });
 

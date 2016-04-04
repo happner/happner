@@ -4,6 +4,9 @@ var Mesh = require('../');
 describe('3 - Multiple component initialization', function() {
   var mesh;
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(10000);
 
   before(function(done) {
@@ -205,5 +208,6 @@ describe('3 - Multiple component initialization', function() {
     });
   });
 
+  require('benchmarket').stop();
 
 });

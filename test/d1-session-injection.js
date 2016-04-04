@@ -14,6 +14,9 @@ if (global.TESTING_D1 || global.TESTING_D1_1) return; // When 'requiring' the mo
 
 describe('d1-session-injection', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var expect = require('expect.js');
   var should = require('chai').should();
 
@@ -166,5 +169,7 @@ describe('d1-session-injection', function() {
 
   });
 
+
+  require('benchmarket').stop();
 
 });

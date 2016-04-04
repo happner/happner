@@ -7,6 +7,9 @@
 
 describe('c7-permissions-web', function (done) {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var should = require('chai').should();
   var Mesh = require('../');
   var http = require('http');
@@ -248,5 +251,7 @@ describe('c7-permissions-web', function (done) {
     }).catch(done);
 
   });
+
+  require('benchmarket').stop();
 
 });

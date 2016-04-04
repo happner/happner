@@ -12,6 +12,8 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
 
   var config = {
     name:"testInjectionResponse",
@@ -36,7 +38,7 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
   var mesh;
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
-    
+
     mesh = new Mesh();
 
     this.timeout(20000);
@@ -62,6 +64,8 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
   after(function(done){
      mesh.stop(done);
   });
+
+  require('benchmarket').stop();
 
 });
 

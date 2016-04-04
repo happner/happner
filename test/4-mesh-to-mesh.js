@@ -32,6 +32,9 @@ config = {
 
 describe('4 - Mesh to Mesh', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(20000);
 
   before(function(done) {
@@ -98,5 +101,7 @@ describe('4 - Mesh to Mesh', function() {
     });
 
   });
+
+  require('benchmarket').stop();
 
 });

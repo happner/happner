@@ -41,10 +41,13 @@ describe('c9-payload-encryption-client-to-mesh', function() {
    * Note: also tests that args arrive in the called sequence.
    *
    * eg. When calling function(arg1, callback) with only the callback os the only arg
-   *     then the resulting call actoss the exchange has arg1 as the callback 
+   *     then the resulting call actoss the exchange has arg1 as the callback
    *     and callback as undefined)
    *
    */
+
+  require('benchmarket').start();
+  after(require('benchmarket').store());
 
   before(function() {
     global.TESTING_C5 = true; //.............
@@ -84,7 +87,7 @@ describe('c9-payload-encryption-client-to-mesh', function() {
   var encryptedRequestsCount = 0;
   var unencryptedRequestsCount = 0;
 
-  
+
 
   it('server can call more than one method in sequence (callback)', function(done) {
     var mesh = this.mesh;
@@ -221,6 +224,6 @@ describe('c9-payload-encryption-client-to-mesh', function() {
 
   });
 
-
+  require('benchmarket').stop();
 });
 

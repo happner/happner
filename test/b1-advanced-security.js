@@ -1,5 +1,8 @@
 describe('b1 - advanced security', function(done) {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   this.timeout(3000);
 
   var expect = require('expect.js');
@@ -345,6 +348,8 @@ describe('b1 - advanced security', function(done) {
   });
 
   //deleteUser
+
+  require('benchmarket').stop();
 
 });
 

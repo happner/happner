@@ -1,5 +1,8 @@
 describe('c4 - client data search secure', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var should = require('chai').should();
   var Mesh = require('../');
   var meshInstance;
@@ -86,7 +89,7 @@ describe('c4 - client data search secure', function() {
         meshInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
         function(e, result){
           if(e) return done(e);
-         
+
           result.length.should.eql(1);
           done();
 
@@ -160,7 +163,7 @@ describe('c4 - client data search secure', function() {
         function(e, result){
 
           if(e) return done(e);
-         
+
           result.length.should.eql(1);
 
           latestResult = result[0];
@@ -217,7 +220,7 @@ describe('c4 - client data search secure', function() {
         meshClientInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
         function(e, result){
           if(e) return done(e);
-         
+
           result.length.should.eql(1);
            result[0].name.should.eql('nkandla');
           done();
@@ -251,7 +254,7 @@ describe('c4 - client data search secure', function() {
         meshClientInstance.data.get('movie/*',{criteria: criteria, options: options},
         function(e, result){
           if(e) return done(e);
-         
+
           result.length.should.eql(1);
           result[0].name.should.eql('nkandla2');
 
@@ -264,6 +267,9 @@ describe('c4 - client data search secure', function() {
     });
 
   });
+
+
+  require('benchmarket').stop();
 
 });
 

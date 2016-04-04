@@ -35,6 +35,9 @@ var should = require('chai').should();
 
 describe('a8 - exchange supports promises', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var Mesh = require('../');
   var mesh;
 
@@ -148,6 +151,9 @@ describe('a8 - exchange supports promises', function() {
     });
 
   });
+
+
+  require('benchmarket').stop();
 
 });
 

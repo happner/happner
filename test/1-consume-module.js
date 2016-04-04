@@ -1,5 +1,8 @@
 describe('1 - Consumes an external module', function() {
 
+  require('benchmarket').start();
+  after(require('benchmarket').store());
+
   var should = require('chai').should();
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
@@ -15,7 +18,7 @@ describe('1 - Consumes an external module', function() {
           name:"create",//if blank or null we just do new require
           parameters:[
            {"name":"config", "required":true, "value":{config:{"host":"localhost", "secret":"mesh"}}},
-           {"name":"callback", "parameterType":"callback"},    
+           {"name":"callback", "parameterType":"callback"},
           ],
           callback:{
             parameters:[
@@ -54,7 +57,7 @@ describe('1 - Consumes an external module', function() {
                 {"name":"data", "required":true},
                 {"name":"options"},
                 {"name":"callback", "type":"callback", "required":true}
-                
+
               ],
               "callback":{
                 "parameters":[
@@ -92,7 +95,7 @@ describe('1 - Consumes an external module', function() {
     this.timeout(10000);
 
     mesh = new Mesh();
-   
+
     mesh.initialize(config, function(err) {
 
       if (err) {
@@ -112,7 +115,7 @@ describe('1 - Consumes an external module', function() {
 
     //we require a 'real' happn client
     require('happn').client.create({config:{"host":"localhost", "secret":"mesh"}}, function(e, client){
-      
+
       if (e) {
         // console.log('real client init failure');
         done(e);
@@ -121,22 +124,22 @@ describe('1 - Consumes an external module', function() {
       client.set('/mytest/678687', {"test":"test1"}, {}, function(e, directClientResponse){
         //calling a local component
         mesh.exchange.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
-         
+
           response.test.should.eql(directClientResponse.test);
 
-          if (e) 
+          if (e)
             return done(e);
 
          //calling a local component as if it was on another mesh
          mesh.exchange.testMesh.happnClient.set('/mytest/678687', {"test":"test1"}, {}, function(e, response){
-           
+
             response.test.should.eql(directClientResponse.test);
 
             if (e) return done(e);
 
             //doing the same call using a post to the api
             mesh.post('/happnClient/set', '/mytest/678687', {"test":"test1"}, {}, function(e, response){
-              
+
               response.test.should.eql(directClientResponse.test);
               //console.log({response: response});
               //test aliases
@@ -149,7 +152,7 @@ describe('1 - Consumes an external module', function() {
             });
           });
         });
-      });     
+      });
     });
   });
 
@@ -172,5 +175,7 @@ describe('1 - Consumes an external module', function() {
     });
   });
 */
+
+  require('benchmarket').stop();
 
 });
