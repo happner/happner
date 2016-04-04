@@ -79,6 +79,7 @@
 - added exclusions functionality for secure web paths
 - bumped version of happn
 
+
 1.5.3 2016-01-18
 ----------------
 
@@ -87,3 +88,71 @@
 - added config version and name to `client.info`
 
 
+1.5.4 2016-01-21
+----------------
+
+- tested payload encryption
+- bumped version of happn
+
+1.5.5 2016-01-23
+----------------
+
+- first browser test passing
+- updated happn version 2.4.3
+
+1.5.6 2016-02-12
+-----------------
+
+- added $origin special argument
+- fixed bug with updateUser
+- added updateOwnUser
+- allowed for connection to security data change events
+
+1.6.0 2016-02-19
+-----------------
+
+- we now have the connect and disconnect events being emitted by the security component
+- we now added a disconnect method to the apiClient
+
+1.6.1 2016-02-22
+----------------
+
+- we now have the connection events being emitted by the happner client 'reconnect-scheduled', 'reconnect-successful', 'connection-ended'
+- updateOwnUser now checks if the password is being changed, and if so expects the previous password
+- updated to use happn 2.5.4
+
+1.6.2 2016-02-22
+----------------
+
+- updated to use happn 2.5.7
+
+1.6.3 2016-03-02
+----------------
+
+- updated to use happn 2.5.8
+
+1.6.4 2016-03-02
+----------------
+
+- updated to use happn 2.5.9
+- updates to the datalayer to allow for plugins (ie. mongo)
+
+1.6.5 2016-03-09
+----------------
+
+- updated to use happn 2.5.12
+
+1.6.6-1.6.7 2016-03-12
+----------------------
+
+- crypto component fixes
+
+1.6.8 2016-03-17
+-----------------
+
+- fixed issue with caching in happn, upgraded happn to version 2.5.15
+
+1.6.9 2016-04-01
+----------------
+
+- Fixed memory leak and noPublish issue in happn

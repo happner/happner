@@ -3,17 +3,19 @@
  */
 
 // Uses unit test 2 modules
-var should = require('chai').should();
-var Mesh = require('../');
-var http = require('http');
-var test_id = require('shortid').generate();
-var expect = require('expect.js');
+
 
 describe('c7-permissions-web', function (done) {
 
+  var should = require('chai').should();
+  var Mesh = require('../');
+  var http = require('http');
+  var test_id = require('shortid').generate();
+  var expect = require('expect.js');
+
   this.timeout(20000);
 
-  var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
+  var defaultTimeout = (process.arch == 'arm') ? 50000 : 15000;
 
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
@@ -22,7 +24,7 @@ describe('c7-permissions-web', function (done) {
     name: "middlewareMesh",
     datalayer: {
       secure:true,
-      port:10000,
+      port:15000,
       adminPassword:test_id,
       middleware:{
         security:{
@@ -91,7 +93,7 @@ describe('c7-permissions-web', function (done) {
     var request = require('request');
 
     var options = {
-      url: 'http://127.0.0.1:10000' + path + '?happn_token=' + token,
+      url: 'http://127.0.0.1:15000' + path + '?happn_token=' + token,
     };
 
     request(options, function(error, response, body){
@@ -113,30 +115,30 @@ describe('c7-permissions-web', function (done) {
 
   });
 
-  var adminClient = new Mesh.MeshClient({secure:true, port:10000});
+  var adminClient = new Mesh.MeshClient({secure:true, port:15000});
 
   it('logs in wth the admin user, we have a token - we can access the file', function (done) {
-    
+
     var credentials = {
       username: '_ADMIN', // pending
       password: test_id
     }
 
     adminClient.login(credentials).then(function(){
-      
+
       doRequest('/index.html', adminClient.token, function(response){
 
         expect(response.statusCode).to.equal(200);
         done();
 
       });
-     
+
     }).catch(done);
 
   });
 
   it('it tests the specific exclusion', function (done) {
-    
+
     doRequest('/webmethodtest/test/excluded/specific', null, function(response){
 
       expect(response.statusCode).to.equal(200);
@@ -147,7 +149,7 @@ describe('c7-permissions-web', function (done) {
   });
 
   it('it tests the wildcard exclusion', function (done) {
-    
+
     doRequest('/webmethodtest/test/excluded/wildcard/blah', null, function(response){
 
       expect(response.statusCode).to.equal(200);
@@ -158,10 +160,10 @@ describe('c7-permissions-web', function (done) {
   });
 
   it('creates a test user, fails to log in, add group with web permission and log in ok', function(done) {
-    
+
     var testGroup = {
       name:'TESTUSER_' + test_id,
-      
+
       custom_data:{
         customString:'custom1',
         customNumber:0
@@ -182,13 +184,13 @@ describe('c7-permissions-web', function (done) {
     }
 
     adminClient.login(credentials).then(function(){
-      
+
       adminClient.exchange.security.addGroup(testGroup, function(e, result){
 
         if (e) return done(e);
 
         testGroupSaved = result;
-      
+
         var testUser = {
           username:'TEST_USER' + test_id,
           password:'TEST PWD',
@@ -206,14 +208,14 @@ describe('c7-permissions-web', function (done) {
               //we'll need to fetch user groups, do that later
               if (e) return done(e);
 
-              testUserClient = new Mesh.MeshClient({secure:true, port:10000});
+              testUserClient = new Mesh.MeshClient({secure:true, port:15000});
 
               testUserClient.login(testUser).then(function(){
 
                 doRequest('/index.html', testUserClient.token, function(response){
 
                   expect(response.statusCode).to.equal(403);
-                  
+
                   testGroupSaved.permissions.web = {
                     '/index.html':{actions:['get', 'put', 'post'], description:'a test web permission'}
                   };
@@ -242,7 +244,7 @@ describe('c7-permissions-web', function (done) {
 
         });
       });
-     
+
     }).catch(done);
 
   });

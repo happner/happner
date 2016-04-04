@@ -28,7 +28,7 @@ var clientConfig = {
   name: 'client',
   dataLayer: {
     port: CLIENT_PORT,
-    persist: true,
+    persist: false,
     defaultRoute: "mem"
   },
   modules: {
@@ -150,6 +150,12 @@ describe('b9 - mesh client security login', function() {
       clientMesh = client;
       done();
     }
+  });
+
+  after('close server mesh', function(done){
+
+    serverMesh.stop(done);
+
   });
 
   // it('a - client should register a device on the server', function (done) {
@@ -330,13 +336,13 @@ describe('b9 - mesh client security login', function() {
 
 //               done();
 //             });
-            
+
 //           }).catch(function (err) {
 //             console.log("login error");
 //             done(err);
 //           });
 
-          
+
 //         });
 //       });
 //     });

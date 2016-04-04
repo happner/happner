@@ -1,6 +1,6 @@
 describe('c6 - https', function(done) {
 
-  this.timeout(3000);
+  this.timeout(20000);
 
   var Mesh = require('../')
 
@@ -46,10 +46,8 @@ describe('c6 - https', function(done) {
     });
 
   });
- 
-  it('fails to connect, wrong transport on client', function(done) {
 
-    this.timeout(4000);
+  it('fails to connect, wrong transport on client', function(done) {
 
      var nodeProc = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
      var timeout;
@@ -107,7 +105,7 @@ describe('c6 - https', function(done) {
 
   });
 
-  
+
 
   it('does a delete on the datalayer component', function(done) {
 
@@ -122,11 +120,11 @@ describe('c6 - https', function(done) {
         if (e) return done(e);
 
         expect(getresult.val).to.be("delete");
-        
+
         testClient.exchange.test_c6.data.remove('/c6-https/delete', {}, function(e, removeresult){
 
           if (e) return done(e);
-          
+
           // console.log('delete happened:::', removeresult);
 
           testClient.exchange.test_c6.data.get('/c6-https/delete', {}, function(e, getremovedresult){
@@ -138,7 +136,7 @@ describe('c6 - https', function(done) {
 
           });
 
-          
+
         });
 
       });
@@ -149,19 +147,19 @@ describe('c6 - https', function(done) {
 
   xit('does an on, on the datalayer component', function(done) {
 
-     
+
 
   });
 
   xit('runs a method on a component', function(done) {
 
-     
+
 
   });
 
   xit('runs attaches to an event on a component', function(done) {
 
-     
+
 
   });
 

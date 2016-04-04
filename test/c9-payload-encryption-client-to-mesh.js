@@ -22,23 +22,26 @@ TestComponent.prototype.method2 = function($happn, args, callback) {
   callback(null, 'result2');
 }
 
+TestComponent.prototype.doEmit = function($happn, args, callback) {
+  $happn.emit('test-emmission', args);
+  callback();
+}
+
 
 if (global.TESTING_C5) return; // When 'requiring' the module above,
                               // don't run the tests below
                              //.............
 
+var expect = require('expect.js');
+var Happner = require('../');
 
-
-describe('c5 - multiple exchange calls', function() {
-
-  var expect = require('expect.js');
-  var Happner = require('../');
+describe('c9-payload-encryption-client-to-mesh', function() {
 
   /*
    * Note: also tests that args arrive in the called sequence.
    *
    * eg. When calling function(arg1, callback) with only the callback os the only arg
-   *     then the resulting call actoss the exchange has arg1 as the callback
+   *     then the resulting call actoss the exchange has arg1 as the callback 
    *     and callback as undefined)
    *
    */
@@ -51,6 +54,11 @@ describe('c5 - multiple exchange calls', function() {
     this.timeout(10000);
     var _this = this;
     Happner.create({
+      datalayer:{
+        secure:true,
+        encryptPayloads:true,
+        adminPassword:'happn'
+      },
       port: 54545,
       modules: {
         'test': {
@@ -72,6 +80,11 @@ describe('c5 - multiple exchange calls', function() {
   afterEach(function(done) {
     this.mesh.stop(done);
   });
+
+  var encryptedRequestsCount = 0;
+  var unencryptedRequestsCount = 0;
+
+  
 
   it('server can call more than one method in sequence (callback)', function(done) {
     var mesh = this.mesh;
@@ -110,12 +123,34 @@ describe('c5 - multiple exchange calls', function() {
     .then(done).catch(done);
   });
 
+  it('server can listen for an event - then recieve an event by calling a method', function(done) {
+    var mesh = this.mesh;
+
+    mesh.event.test.on('test-emmission', function(args){
+
+      console.log('args:::', args);
+      done();
+
+    });
+
+    mesh.exchange.test.doEmit({test:"test"})
+
+    .then(function() {
+     console.log('method executed ok:::');
+    })
+
+    .catch(done);
+
+  });
+
 
   it('client can call more than one method in sequence (callback)', function(done) {
     var client = new Happner.MeshClient({
-      port: 54545
+      port: 54545,
+      secure:true
     });
-    client.login().then(function() {
+
+    client.login({username:'_ADMIN', password:'happn'}).then(function() {
 
       client.exchange.test.method1(function(e, result) {
 
@@ -138,9 +173,10 @@ describe('c5 - multiple exchange calls', function() {
 
   it('client can call more than one method in sequence (promise)', function(done) {
     var client = new Happner.MeshClient({
-      port: 54545
+      port: 54545,
+      secure:true
     });
-    client.login().then(function() {
+    client.login({username:'_ADMIN', password:'happn'}).then(function() {
 
       client.exchange.test.method1()
 
@@ -157,6 +193,32 @@ describe('c5 - multiple exchange calls', function() {
       .then(done).catch(done);
 
     });
+  });
+
+  it('client can listen for an event - then recieve an event by calling a method', function(done) {
+
+    var client = new Happner.MeshClient({
+      port: 54545,
+      secure:true
+    });
+
+    client.login({username:'_ADMIN', password:'happn'})
+
+    .then(function() {
+
+      client.event.test.on('test-emmission', function(data){
+        console.log('client on happened ok:::', data);
+        done();
+      })
+
+      client.exchange.test.doEmit({test:"test"}, function(e, result){
+        console.log('emit function went ok:::');
+      })
+
+    })
+
+    .catch(done)
+
   });
 
 
