@@ -63,7 +63,7 @@ Given an already started `mesh` instance. (show with defaults)
 mesh.stop({
   kill: false,    // kill the process once stopped
   wait: 10000,    // wait for callbacks before kill
-  exitCode: 1,    // when kill exist with this integer
+  exitCode: 1,    // when kill, exit with this integer
   reconnect: true // inform attached clients/endpoints to reconnect
 }, function(data) {
   console.log('stopped');
