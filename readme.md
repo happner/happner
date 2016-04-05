@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/happner.svg)](https://www.npmjs.com/package/happner) [![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner) [![Coverage Status](https://coveralls.io/repos/happner/happner/badge.svg?branch=develop&service=github)](https://coveralls.io/github/happner/happner?branch=master) [![David](https://img.shields.io/david/happner/happner.svg)]() 
+[![npm](https://img.shields.io/npm/v/happner.svg)](https://www.npmjs.com/package/happner) [![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner) [![Coverage Status](https://coveralls.io/repos/happner/happner/badge.svg?branch=develop&service=github)](https://coveralls.io/github/happner/happner?branch=master) [![David](https://img.shields.io/david/happner/happner.svg)]()
 
 <img src="https://raw.githubusercontent.com/happner/happner-website/master/images/HAPPNER%20Logo.png" width="300"></img>
 
@@ -13,7 +13,7 @@ Happner is a cloud application framework ideal for integrating multiple micro se
 These walkthroughs use *happner* to create a rudimentary monitoring service.
 
 * [The Basics](https://github.com/happner/happner/blob/master/docs/walkthrough/the-basics.md)
-* 
+*
 
 ## documentation
 
@@ -32,6 +32,6 @@ These walkthroughs use *happner* to create a rudimentary monitoring service.
 
 ###
 
-* [Starting a Mesh Node](https://github.com/happner/happner/blob/master/docs/starting.md)
+* [Starting and Stopping Mesh Node](https://github.com/happner/happner/blob/master/docs/starting.md)
 * [System Components](https://github.com/happner/happner/blob/master/docs/system.md)
 * [Using the Client](https://github.com/happner/happner/blob/master/docs/client.md)
