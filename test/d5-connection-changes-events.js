@@ -88,7 +88,7 @@ describe('d5-connection-changes-events', function() {
       done();
     });
 
-    mesh.stop(function(e){
+    mesh.stop({reconnect: false}, function(e){
 
       if (e) return done(e);
       // console.log('the server stopped:::');
