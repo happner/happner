@@ -55,6 +55,12 @@ Happner.create(config, function(err, mesh) {
 });
 ```
 
+The `create()` also returns a promise
+
+```javascript
+Happner.create(config).then(...
+```
+
 ##### Stop
 
 Given an already started `mesh` instance. (show with defaults)
