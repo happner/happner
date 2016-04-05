@@ -156,3 +156,11 @@
 ----------------
 
 - Fixed memory leak and noPublish issue in happn
+
+
+
+
+feature/endpoints
+-----------------
+
+- Reconnect option can be now be passed into mesh.stop() to inform remotes to reconnect (default true)
