@@ -8,8 +8,8 @@
     "h": "bin/h"
   },
   "scripts": {
-    "test": "mocha silence.js test",
-    "test-cover": "istanbul cover _mocha -- silence.js test"
+    "test": "mocha silence.js test --expose-gc",
+    "test-cover": "istanbul cover _mocha -- silence.js test --expose-gc"
   },
   "repository": {
     "type": "git",
