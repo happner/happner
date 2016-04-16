@@ -50,7 +50,10 @@ describe('c6 - https', function(done) {
 
   });
 
-  it('fails to connect, wrong transport on client', function(done) {
+  it.only('fails to connect, wrong transport on client', function(done) {
+
+
+    console.log(process.env.BENCHMARKET_API_URI);
 
      var nodeProc = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
      var timeout;
