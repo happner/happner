@@ -8,7 +8,7 @@
     "h": "bin/h"
   },
   "scripts": {
-    "test": "mocha silence.js test",
+    "test": "mocha silence.js test --expose-gc",
     "test-cover": "istanbul cover _mocha -- silence.js test"
   },
   "repository": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/happner/happner",
   "devDependencies": {
-    "benchmarket": "0.0.4",
+    "benchmarket": "0.0.9",
     "chai": "^2.2.0",
     "coveralls": "^2.11.6",
     "expect.js": "^0.3.1",
