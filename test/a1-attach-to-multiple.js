@@ -78,7 +78,7 @@ describe('a1 - attach to multiple meshes (meshs?)', function() {
       // console.log('killing kid', kid);
       kid.kill();
     });
-    this.mesh.stop(done);
+    this.mesh.stop({reconnect:false}, done);
   });
 
   it('can call methods on all', function(done) {

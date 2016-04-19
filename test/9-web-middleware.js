@@ -60,7 +60,7 @@ describe('9 - tests that we can add middleware before a static', function (done)
   });
 
   after(function (done) {
-    this.mesh.stop(done);
+    this.mesh.stop({reconnect:false}, done);
   })
 
 

@@ -87,7 +87,7 @@ describe('1 - Consumes an external module', function() {
   };
 
   after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
   it('starts a local mesh', function(done) {

@@ -81,7 +81,7 @@ describe('c9-payload-encryption-client-to-mesh', function() {
   });
 
   afterEach(function(done) {
-    this.mesh.stop(done);
+    this.mesh.stop({reconnect:true}, done);
   });
 
   var encryptedRequestsCount = 0;

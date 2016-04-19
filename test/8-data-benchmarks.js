@@ -80,7 +80,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
   });
 
    after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
   it('listens for the ping pong completed event, that module1 emits', function (done) {

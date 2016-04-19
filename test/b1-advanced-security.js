@@ -35,10 +35,10 @@ describe('b1 - advanced security', function(done) {
     if (DELETEFILE)
     fs.unlink(dbFileName, function(e){
       if (e) return done(e);
-      mesh.stop(done);
+      mesh.stop({reconnect:false}, done);
     });
     else
-      mesh.stop(done);
+      mesh.stop({reconnect:false}, done);
   });
 
   before(function(done){

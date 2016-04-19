@@ -73,7 +73,7 @@ describe('c5 - multiple exchange calls', function() {
   });
 
   afterEach(function(done) {
-    this.mesh.stop(done);
+    this.mesh.stop({reconnect:false}, done);
   });
 
   it('server can call more than one method in sequence (callback)', function(done) {

@@ -62,7 +62,7 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
 
 
   after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
   require('benchmarket').stop();

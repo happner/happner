@@ -60,7 +60,7 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
   };
 
   after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {

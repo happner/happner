@@ -36,9 +36,9 @@ describe('7 - start and stop a persisted mesh', function() {
     var _this = this;
     fs.unlink(dbFileName, function(e){
       if (e) return callback(e);
-      _this.mesh.stop()
+      _this.mesh.stop({reconnect:false})
       .then(function(){
-        _this.unpersistedMesh.stop(done);
+        _this.unpersistedMesh.stop({reconnect:false}, done);
       })
       .catch(done)
     });
@@ -73,7 +73,7 @@ describe('7 - start and stop a persisted mesh', function() {
 
      var _this = this;
 
-     _this.mesh.stop(function(e){
+     _this.mesh.stop({reconnect:false}, function(e){
       if (e) return done(e);
 
        Mesh.create(config)
@@ -101,7 +101,7 @@ describe('7 - start and stop a persisted mesh', function() {
 
      var _this = this;
 
-     _this.unpersistedMesh.stop(function(e){
+     _this.unpersistedMesh.stop({reconnect:false}, function(e){
       if (e) return done(e);
 
        Mesh.create(unpersistedConfig)
@@ -132,7 +132,7 @@ describe('7 - start and stop a persisted mesh', function() {
 
      var _this = this;
 
-     _this.mesh.stop(function(e){
+     _this.mesh.stop({reconnect:false}, function(e){
       if (e) return done(e);
 
       //so we need to check that we are getting the name from the file
@@ -163,7 +163,7 @@ describe('7 - start and stop a persisted mesh', function() {
 
      var _this = this;
 
-     _this.unpersistedMesh.stop(function(e){
+     _this.unpersistedMesh.stop({reconnect:false}, function(e){
       if (e) return done(e);
 
       unpersistedConfig.name = undefined;

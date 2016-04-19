@@ -123,7 +123,7 @@ describe('b4 - component start and validation -', function() {
 
   after(function(done) {
     delete global.TESTING_B4; //.............
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   })
 
 

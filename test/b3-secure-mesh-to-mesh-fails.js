@@ -36,7 +36,7 @@ describe('b3 - secure mesh to mesh fails', function() {
 
     after(function(done) {
       remote.kill();
-      mesh.stop(function(e){
+      mesh.stop({reconnect:false}, function(e){
         // console.log('killed ok 1:::', remote.pid);
         done();
       });

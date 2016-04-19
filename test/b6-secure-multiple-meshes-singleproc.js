@@ -107,11 +107,11 @@ describe('b6 - start meshes', function () {
   after(function (done) {
 
     var stopServerMesh = function(){
-      if (serverMesh) return serverMesh.stop(done);
+      if (serverMesh) return serverMesh.stop({reconnect:false}, done);
       done();
     }
 
-    if (clientMesh) clientMesh.stop(function(e){
+    if (clientMesh) clientMesh.stop({reconnect:false}, function(e){
       if (e) return done(e);
       stopServerMesh();
     });

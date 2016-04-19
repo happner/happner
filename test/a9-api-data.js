@@ -62,7 +62,7 @@ describe('a9 - passes data between component APIs, also works with events', func
   };
 
   after(function(done){
-    this.mesh.stop(done);
+    this.mesh.stop({reconnect:false}, done);
   });
 
   before(function(done){

@@ -42,7 +42,7 @@ describe('c1 - security layer should be initialized before user components are s
   };
 
   after('should stop the happn server', function(done){
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   });
 
   it('should start a user component that expects the security layer to be initialized', function(done){
