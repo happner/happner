@@ -134,11 +134,11 @@ describe('d1-session-injection', function() {
     delete global.TESTING_D1_1;
     delete global.TESTING_D1;
 
-    unsecureMesh.stop(function(e){
+    unsecureMesh.stop({reconnect:false}, function(e){
 
       if (e) return done(e);
 
-      secureMesh.stop(done);
+      secureMesh.stop({reconnect:false}, done);
 
     });
   })

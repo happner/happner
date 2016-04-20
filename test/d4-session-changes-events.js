@@ -48,7 +48,7 @@ describe('d3-permission-changes', function() {
   });
 
   after(function(done) {
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   })
 
   var eventsToFire = {

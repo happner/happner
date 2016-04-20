@@ -70,7 +70,7 @@ describe('b2 - secure mesh to mesh', function() {
 
     after(function(done) {
       remote.kill();
-      mesh.stop(function(e){
+      mesh.stop({reconnect:false}, function(e){
         // console.log('killed ok:::', remote.pid);
         done();
       });

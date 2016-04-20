@@ -82,7 +82,7 @@ describe('d2-update-own-user', function() {
 
   after(function(done) {
     delete global.TESTING_D2; //.............
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   })
 
   it('adds a test user, modifies the users password with the admin user, logs in with the test user', function(done) {

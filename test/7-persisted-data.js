@@ -100,7 +100,7 @@ describe('7 - test persisted config, check memory and persisted data stores', fu
     var _this = this;
     fs.unlink(dbFileName, function(e){
       if (e) return callback(e);
-      _this.mesh.stop(done);
+      _this.mesh.stop({reconnect:false}, done);
     });
   });
 

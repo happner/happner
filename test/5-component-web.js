@@ -73,7 +73,7 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
   });
 
   after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
 

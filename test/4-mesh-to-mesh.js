@@ -66,7 +66,7 @@ describe('4 - Mesh to Mesh', function() {
 
   after(function(done) {
     remote.kill();
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   });
 
   context('the faraway tree', function() {

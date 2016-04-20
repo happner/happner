@@ -53,7 +53,7 @@ describe('c3 - client data search', function() {
   });
 
   after(function(done) {
-    meshInstance.stop(done);
+    meshInstance.stop({reconnect:false}, done);
   });
 
   context('direct use', function() {

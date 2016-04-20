@@ -121,7 +121,7 @@ describe('3 - Multiple component initialization', function() {
   });
 
   after(function(done){
-       mesh.stop(done);
+       mesh.stop({reconnect:false}, done);
   });
 
 

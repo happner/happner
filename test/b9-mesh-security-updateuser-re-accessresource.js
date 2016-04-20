@@ -156,7 +156,7 @@ describe('b9 - mesh client security login', function() {
 
   after('close server mesh', function(done){
 
-    serverMesh.stop(done);
+    serverMesh.stop({reconnect:false}, done);
 
   });
 

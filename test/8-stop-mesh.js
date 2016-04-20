@@ -76,7 +76,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
 
   it('stops the mesh', function (done) {
     this.timeout(defaultTimeout);
-    mesh.stop({}, function(e, log){
+    mesh.stop({reconnect:false}, function(e, log){
 
       done(e);
 

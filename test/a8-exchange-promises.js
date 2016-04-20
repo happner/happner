@@ -69,7 +69,7 @@ describe('a8 - exchange supports promises', function() {
   });
 
   after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
   it('supports non-promises in the exchange', function(done) {
