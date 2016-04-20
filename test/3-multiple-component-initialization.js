@@ -5,9 +5,7 @@ describe('3 - Multiple component initialization', function() {
   var mesh;
 
   require('benchmarket').start();
-  after(require('benchmarket').store());
-
-  this.timeout(10000);
+  this.timeout(60000);
 
   before(function(done) {
     var config = {
@@ -121,8 +119,14 @@ describe('3 - Multiple component initialization', function() {
   });
 
   after(function(done){
-       mesh.stop({reconnect:false}, done);
+
+    this.timeout(10000);
+    console.log('killing:::');
+    mesh.stop({reconnect:false}, done);
+
   });
+
+  after(require('benchmarket').store());
 
 
   it('loads the class ok', function(done) {

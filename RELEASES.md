@@ -156,3 +156,19 @@
 ----------------
 
 - Fixed memory leak and noPublish issue in happn
+
+1.6.10 2016-04-04
+-----------------
+
+- bumped happn version to v 2.5.18
+
+1.6.11 2016-04-04
+-----------------
+
+- added benchmarket v 0.0.4
+
+1.6.12 2016-04-20
+-----------------
+
+- bumped happn version to 2.5.21
+- updated tests to use reconnect:false options when shutting dwn test instances of happner
