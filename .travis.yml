@@ -8,4 +8,4 @@ node_js:
 #script: "npm run-script test"
 script: "npm run-script test-cover"
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
-after_failure: "cat /home/travis/builds/happner/happner/npm-debug.log"
+after_failure: "cat ./npm-debug.log"
