@@ -4,8 +4,9 @@ var Mesh = require('../');
 describe('3 - Multiple component initialization', function() {
   var mesh;
 
+  this.timeout(120000);
+
   require('benchmarket').start();
-  this.timeout(60000);
 
   before(function(done) {
     var config = {
@@ -120,8 +121,6 @@ describe('3 - Multiple component initialization', function() {
 
   after(function(done){
 
-    this.timeout(10000);
-    console.log('killing:::');
     mesh.stop({reconnect:false}, done);
 
   });

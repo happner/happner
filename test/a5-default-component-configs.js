@@ -48,7 +48,7 @@ describe('a5 - default component configs', function() {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   before(function(done) {
 

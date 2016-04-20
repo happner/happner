@@ -1,9 +1,9 @@
 describe('6 - websocket client', function(done) {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
-
-  this.timeout(3000);
 
   var Mesh = require('../')
 

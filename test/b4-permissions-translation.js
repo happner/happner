@@ -60,7 +60,7 @@ describe('b4 - component start and validation -', function() {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   before(function(done) {
 
@@ -669,8 +669,6 @@ function doRequest(path, token, method, callback){
 }
 
 it('we add a test user that belongs to a group that has permissions to access a protected web route, we test that this works', function(done) {
-
-   this.timeout(20000);
 
      var testGroup = {
       name:'B4_TESTGROUP_EVENT_ALLOWED_WEB_' + test_id,

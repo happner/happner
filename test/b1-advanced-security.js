@@ -3,7 +3,7 @@ describe('b1 - advanced security', function(done) {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(3000);
+  this.timeout(120000);
 
   var expect = require('expect.js');
   var sep = require('path').sep;

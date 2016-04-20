@@ -1,5 +1,7 @@
 describe('b6 - start meshes', function () {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -65,8 +67,6 @@ describe('b6 - start meshes', function () {
   before(function (done) {
     var savedUser = null;
     var savedGroup = null;
-
-    this.timeout(20000);
 
     Mesh.create(serverConfig)
         .then(addGroup)

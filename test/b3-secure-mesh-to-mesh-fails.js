@@ -42,7 +42,7 @@ describe('b3 - secure mesh to mesh fails', function() {
       });
     });
 
-    this.timeout(20000);
+    this.timeout(120000);
 
     it("we can't ride moonface's slippery slip", function(done) {
 

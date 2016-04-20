@@ -1,5 +1,7 @@
 describe('7 - start and stop a persisted mesh', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -11,7 +13,6 @@ describe('7 - start and stop a persisted mesh', function() {
    var expect = require('expect.js');
 
   global.TESTING_7 = true;
-  this.timeout(3000);
 
   var config = {
     secure:true,

@@ -1,5 +1,7 @@
 describe('b7 - shared data component', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -8,8 +10,6 @@ describe('b7 - shared data component', function() {
   var meshInstance;
   var dataEvents;
   var config;
-
-  this.timeout(60000)
 
   var TestModule1 = {
     setSharedData: function($happn, path, data, callback) {

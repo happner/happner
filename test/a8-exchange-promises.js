@@ -41,7 +41,7 @@ describe('a8 - exchange supports promises', function() {
   var Mesh = require('../');
   var mesh;
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   before(function(done) {
 

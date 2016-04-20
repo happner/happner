@@ -31,6 +31,8 @@ if (global.TESTING_C5) return; // When 'requiring' the module above,
 
 describe('c5 - multiple exchange calls', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -51,7 +53,6 @@ describe('c5 - multiple exchange calls', function() {
   });
 
   beforeEach(function(done) {
-    this.timeout(10000);
     var _this = this;
     Happner.create({
       port: 54545,

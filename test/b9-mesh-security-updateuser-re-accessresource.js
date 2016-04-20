@@ -108,6 +108,8 @@ var serverConfig = {
 
 describe('b9 - mesh client security login', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -117,7 +119,7 @@ describe('b9 - mesh client security login', function() {
   before(function (done) {
     var savedUser = null;
     var savedGroup = null;
-    this.timeout(100000);
+
 
     happner.create(serverConfig)
         .then(addGroup)

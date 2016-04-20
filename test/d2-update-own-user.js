@@ -15,6 +15,8 @@ if (global.TESTING_D2) return; // When 'requiring' the module above,
                              //.............
 describe('d2-update-own-user', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -26,8 +28,6 @@ describe('d2-update-own-user', function() {
   var adminClient = new Mesh.MeshClient({secure:true, port:8003});
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
-
-  this.timeout(20000);
 
   before(function(done) {
 

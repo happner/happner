@@ -1,5 +1,7 @@
 describe('c1 - security layer should be initialized before user components are started', function(){
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 

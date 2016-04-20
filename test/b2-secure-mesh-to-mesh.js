@@ -39,7 +39,7 @@ describe('b2 - secure mesh to mesh', function() {
       components: {}
     };
 
-    this.timeout(20000);
+    this.timeout(120000);
 
     before(function(done) {
 

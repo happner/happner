@@ -14,6 +14,8 @@ if (global.TESTING_D1 || global.TESTING_D1_1) return; // When 'requiring' the mo
 
 describe('d1-session-injection', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -29,8 +31,6 @@ describe('d1-session-injection', function() {
 
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
-
-  this.timeout(20000);
 
   before('starts a secure mesh', function(done) {
 

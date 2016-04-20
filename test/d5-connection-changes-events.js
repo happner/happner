@@ -1,5 +1,7 @@
 describe('d5-connection-changes-events', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -14,8 +16,6 @@ describe('d5-connection-changes-events', function() {
 
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
-
-  this.timeout(10000);
 
   before(function(done) {
 

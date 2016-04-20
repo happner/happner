@@ -1,5 +1,7 @@
 describe('1 - Consumes an external module', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -91,8 +93,6 @@ describe('1 - Consumes an external module', function() {
   });
 
   it('starts a local mesh', function(done) {
-
-    this.timeout(10000);
 
     mesh = new Mesh();
 

@@ -12,6 +12,8 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -40,9 +42,6 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
 
     mesh = new Mesh();
-
-    this.timeout(20000);
-
     var onEventRef;
 
     mesh.initialize(config, function(err) {

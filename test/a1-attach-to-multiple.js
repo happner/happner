@@ -13,7 +13,7 @@ describe('a1 - attach to multiple meshes (meshs?)', function() {
 
   var bunchOfRemoteNodes = [1, 2, 3];
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   before(function(done) {
 

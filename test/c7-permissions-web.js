@@ -7,6 +7,8 @@
 
 describe('c7-permissions-web', function (done) {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -15,8 +17,6 @@ describe('c7-permissions-web', function (done) {
   var http = require('http');
   var test_id = require('shortid').generate();
   var expect = require('expect.js');
-
-  this.timeout(20000);
 
   var defaultTimeout = (process.arch == 'arm') ? 50000 : 15000;
 
@@ -77,7 +77,6 @@ describe('c7-permissions-web', function (done) {
   var mesh;
 
   before(function (done) {
-    this.timeout(defaultTimeout);
     mesh = new Mesh();
     mesh.initialize(config, function (err) {
       if (err) return done(err);
@@ -107,7 +106,6 @@ describe('c7-permissions-web', function (done) {
 
 
   it('fails to access a file, missing the token', function (done) {
-    this.timeout(defaultTimeout);
 
     doRequest('/index.html', null, function(response){
 

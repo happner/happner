@@ -42,7 +42,7 @@ describe('a6 - component start and validation -', function() {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   before(function(done) {
 
