@@ -171,4 +171,4 @@
 -----------------
 
 - bumped happn version to 2.5.21
-- updated tests to use reconnect:false options when shutting dwn test instances of happner
+- updated tests to use {reconnect:false} options when shutting dwn test instances of happner
