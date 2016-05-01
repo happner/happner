@@ -4,6 +4,7 @@ npm-debug.log
 coverage
 lib/system/activity.log*
 lib/system/data/*.nedb
+test/test-optimize/*.log
 .DS_Store
 test/temp/*
 temp/*
