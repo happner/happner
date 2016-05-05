@@ -1,6 +1,6 @@
 [&#9664;](data.md) data api | system components [&#9654;](system.md)
 
-## Starting a Mesh Node.
+## Starting and Stopping a Mesh Node.
 
 MeshNode startup has been divided into two steps.
 
@@ -32,7 +32,7 @@ mesh.initialize(config, function(err) {
 
   /* MeshNode is up */
 
-  /* Maybe do some things to mesh before "start" */ 
+  /* Maybe do some things to mesh before "start" */
 
   mesh.start(function(err) {
     if (err) ... process.exit(2);
@@ -53,4 +53,26 @@ var config = {};
 Happner.create(config, function(err, mesh) {
   /* _ */
 });
+```
+
+The `create()` also returns a promise
+
+```javascript
+Happner.create(config).then(...
+```
+
+##### Stop
+
+Given an already started `mesh` instance. (show with defaults)
+
+```javascript
+mesh.stop({
+  kill: false,    // kill the process once stopped
+  wait: 10000,    // wait for callbacks before kill
+  exitCode: 1,    // when kill, exit with this integer
+  reconnect: true // inform attached clients/endpoints to reconnect
+}, function(data) {
+  console.log('stopped');
+});
+
 ```

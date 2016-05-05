@@ -1,7 +1,7 @@
 var Mesh = require('../../lib/mesh');
 
 var config = {
-  name: 'theFarawayTree',
+  name: 'remoteMesh',
   dataLayer: {
     port: 3001,
     authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
@@ -11,8 +11,8 @@ var config = {
   },
   endpoints: {},
   modules: {
-    "moonface":{
-      path:__dirname + "/4-moonface",
+    "remoteComponent":{
+      path:__dirname + "/4-remote-component",
       constructor:{
         type:"sync",
         parameters:[]
@@ -20,12 +20,12 @@ var config = {
     }
   },
   components: {
-    "moonface":{
-      moduleName:"moonface",
+    "remoteComponent":{
+      moduleName:"remoteComponent",
       schema:{
         "exclusive":false,
         "methods":{
-          "rideTheSlipperySlip": {
+          "remoteFunction": {
             parameters: [
               {name:'one',required:true},
               {name:'two',required:true},
@@ -34,7 +34,7 @@ var config = {
             ]
           }
           ,
-          "haveAnAccident": {
+          "causeError": {
             parameters: [
               {name:'callback', type:'callback', required:true}
             ]

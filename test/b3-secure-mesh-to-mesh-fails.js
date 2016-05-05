@@ -22,7 +22,7 @@ describe('b3 - secure mesh to mesh fails', function() {
         port: 51233
       },
       endpoints: {
-        theFarawayTree: {  // remote mesh node
+        remoteMesh: {  // remote mesh node
           config: {
             port: 51234,
             username: '_ADMIN',
@@ -44,7 +44,7 @@ describe('b3 - secure mesh to mesh fails', function() {
 
     this.timeout(120000);
 
-    it("we can't ride moonface's slippery slip", function(done) {
+    it("cannot connect endpoint - mesh start fails", function(done) {
 
       var _this = this;
 

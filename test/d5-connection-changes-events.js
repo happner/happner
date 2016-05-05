@@ -48,8 +48,8 @@ describe('d5-connection-changes-events', function() {
   });
 
   var eventsToFire = {
-    'reconnect-scheduled':false,
-    'reconnect-successful':false
+    'reconnect/scheduled':false,
+    'reconnect/successful':false
   }
 
   var eventsFired = false;
@@ -73,40 +73,34 @@ describe('d5-connection-changes-events', function() {
       done();
     }
 
-    adminClient.on('reconnect-scheduled', function(evt, data){
+    adminClient.on('reconnect/scheduled', function(evt, data){
       //TODO some expect code
-      fireEvent('reconnect-scheduled');
+
+      fireEvent('reconnect/scheduled');
     });
 
-    adminClient.on('reconnect-successful', function(evt, data){
+    adminClient.on('reconnect/successful', function(evt, data){
       //TODO some expect code
-      fireEvent('reconnect-successful');
+      fireEvent('reconnect/successful');
     });
 
     for (var key in mesh._mesh.datalayer.server.connections)
         mesh._mesh.datalayer.server.connections[key].destroy();
 
-    console.log('the server connections were killed:::');
-
-    setTimeout(function(){
-
-      console.log('we can now check for reconnections:::');
-
-    }, 2000);
-
   });
 
   it('tests the connection end event', function(done) {
 
-    adminClient.on('connection-ended', function(evt, data){
+    adminClient.on('connection/ended', function(evt, data){
       //TODO some expect stuff
       done();
     });
-
+    
     mesh.stop({reconnect:false}, function(e){
 
+
       if (e) return done(e);
-      console.log('the server stopped:::');
+      // console.log('the server stopped:::');
 
     });
 

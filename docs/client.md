@@ -82,19 +82,37 @@ __something.html__
       // Component notifications to enable the dynamic creation of
       // widgets or menu updates (or similar) into the running app.
 
-      client.on('create/components', function(array) {
+      client.on('components/create', function(array) {
 
-        // First call lists all components.
+        // First emit lists all components.
 
-        // Subsequent calls list only new components
+        // Subsequent emits list only new components
         // inserted into the running mesh node.
         // (see: mesh._createElement())
 
       });
 
-      client.on('destroy/components', function(array) {
+      client.on('components/destroy', function(array) {
 
         // Components being removed from the mesh.
+
+      });
+
+      client.on('connection/ended', function() {
+
+        // server was stopped
+
+      });
+
+      client.on('reconnect/scheduled', function() {
+
+        // client is attempting reconnect after lost connection
+
+      });
+
+      client.on('reconnect/successful', function() {
+
+        // client successfully reconnected
 
       });
 
