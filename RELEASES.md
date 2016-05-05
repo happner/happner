@@ -173,7 +173,7 @@
 - bumped happn version to 2.5.21
 - updated tests to use {reconnect:false} options when shutting dwn test instances of happner
 
-feature/endpoints
+1.7.0 2016-05-05
 -----------------
 
 - Reconnect option can be now be passed into mesh.stop() to inform remotes to reconnect (default true)
