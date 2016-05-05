@@ -36,13 +36,13 @@ describe('b3 - secure mesh to mesh fails', function() {
 
     after(function(done) {
       remote.kill();
-      mesh.stop(function(e){
+      mesh.stop({reconnect:false}, function(e){
         // console.log('killed ok 1:::', remote.pid);
         done();
       });
     });
 
-    this.timeout(20000);
+    this.timeout(120000);
 
     it("cannot connect endpoint - mesh start fails", function(done) {
 

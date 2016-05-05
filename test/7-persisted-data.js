@@ -47,6 +47,8 @@ if (global.TESTING_7) return; // When 'requiring' the module above,
 
 describe('7 - test persisted config, check memory and persisted data stores', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -57,7 +59,6 @@ describe('7 - test persisted config, check memory and persisted data stores', fu
   var dbFileName = './temp/' + test_id + '.nedb';
 
   global.TESTING_7 = true;
-  this.timeout(3000);
 
   var config = {
     name:"testPersistedData",
@@ -100,7 +101,7 @@ describe('7 - test persisted config, check memory and persisted data stores', fu
     var _this = this;
     fs.unlink(dbFileName, function(e){
       if (e) return callback(e);
-      _this.mesh.stop(done);
+      _this.mesh.stop({reconnect:false}, done);
     });
   });
 

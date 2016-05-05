@@ -10,7 +10,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   var maximumPings = 1000;
   var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
@@ -64,7 +64,6 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
   var mesh;
 
   before(function (done) {
-    this.timeout(defaultTimeout);
     console.time('startup');
     mesh = new Mesh();
     mesh.initialize(config, function (err) {
@@ -75,8 +74,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
 
 
   it('stops the mesh', function (done) {
-    this.timeout(defaultTimeout);
-    mesh.stop({}, function(e, log){
+    mesh.stop({reconnect:false}, function(e, log){
 
       done(e);
 

@@ -46,6 +46,8 @@ describe('c9-payload-encryption-client-to-mesh', function() {
    *
    */
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -54,7 +56,6 @@ describe('c9-payload-encryption-client-to-mesh', function() {
   });
 
   beforeEach(function(done) {
-    this.timeout(10000);
     var _this = this;
     Happner.create({
       datalayer:{
@@ -81,7 +82,7 @@ describe('c9-payload-encryption-client-to-mesh', function() {
   });
 
   afterEach(function(done) {
-    this.mesh.stop(done);
+    this.mesh.stop({reconnect:true}, done);
   });
 
   var encryptedRequestsCount = 0;

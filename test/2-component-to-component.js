@@ -1,6 +1,6 @@
 describe('2 - Bounces a message between two components, demonstrates how the events layer works', function(done) {
-///events/testComponent2Component/component1/maximum-pings-reached
-///events/testComponent2Component/component1/maximum-pings-reached
+
+  this.timeout(120000);
 
   require('benchmarket').start();
   after(require('benchmarket').store());
@@ -60,14 +60,12 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
   };
 
   after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
   it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
 
     mesh = new Mesh();
-
-    this.timeout(10000);
 
     var onEventRef;
 

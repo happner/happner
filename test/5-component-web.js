@@ -13,7 +13,7 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   var config = {
     name: "testMiddleware",
@@ -73,7 +73,7 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
   });
 
   after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
 

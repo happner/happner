@@ -48,7 +48,7 @@ describe('a5 - default component configs', function() {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   before(function(done) {
 
@@ -79,7 +79,7 @@ describe('a5 - default component configs', function() {
   });
 
    after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
   it('created the module with the method schema as defaulted', function(done) {

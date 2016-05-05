@@ -3,6 +3,8 @@ var Mesh = require('../');
 
 describe('b8 - private module support', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 

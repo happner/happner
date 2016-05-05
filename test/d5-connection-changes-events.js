@@ -1,5 +1,7 @@
 describe('d5-connection-changes-events', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -14,8 +16,6 @@ describe('d5-connection-changes-events', function() {
 
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
-
-  this.timeout(5000);
 
   before(function(done) {
 
@@ -52,15 +52,23 @@ describe('d5-connection-changes-events', function() {
     'reconnect/successful':false
   }
 
+  var eventsFired = false;
+
   it('tests the reconnection events', function(done) {
 
     var fireEvent = function(key){
+
+      console.log('fireEVent happened:::', key);
+
+      if (eventsFired) return;
 
       eventsToFire[key] = true;
 
       for (var eventKey in eventsToFire)
         if (eventsToFire[eventKey] == false)
           return;
+
+      eventsFired = true;
 
       done();
     }
@@ -87,8 +95,9 @@ describe('d5-connection-changes-events', function() {
       //TODO some expect stuff
       done();
     });
+    
+    mesh.stop({reconnect:false}, function(e){
 
-    mesh.stop({reconnect: false}, function(e){
 
       if (e) return done(e);
       // console.log('the server stopped:::');

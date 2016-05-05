@@ -1,5 +1,7 @@
 describe('d3-permission-changes', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -12,8 +14,6 @@ describe('d3-permission-changes', function() {
   var adminClient = new Mesh.MeshClient({secure:true, port:8004});
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
-
-  this.timeout(20000);
 
   before(function(done) {
 
@@ -47,7 +47,7 @@ describe('d3-permission-changes', function() {
   });
 
   after(function(done) {
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   })
 
   it('tests that all security events are being bubbled back from happn to happner security - and are consumable from an admin client', function(done) {

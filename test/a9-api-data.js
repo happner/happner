@@ -13,7 +13,7 @@ describe('a9 - passes data between component APIs, also works with events', func
   var test_id = Date.now() + '_' + require('shortid').generate();
   var should = require('chai').should();
 
-  this.timeout(5000);
+  this.timeout(120000);
 
   // var mesh = require('../lib/mesh')();
 
@@ -62,7 +62,7 @@ describe('a9 - passes data between component APIs, also works with events', func
   };
 
   after(function(done){
-    this.mesh.stop(done);
+    this.mesh.stop({reconnect:false}, done);
   });
 
   before(function(done){

@@ -1,5 +1,7 @@
 describe('c4 - client data search secure', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -27,8 +29,6 @@ describe('c4 - client data search secure', function() {
 
   before(function(done) {
     var _this = this;
-
-    this.timeout(15000);
 
     Mesh.create(config = {
 
@@ -66,7 +66,7 @@ describe('c4 - client data search secure', function() {
   });
 
   after(function(done) {
-    meshInstance.stop(done);
+    meshInstance.stop({reconnect:false}, done);
   });
 
   context('direct use', function() {
@@ -133,8 +133,6 @@ describe('c4 - client data search secure', function() {
     });
 
     it('can get the latest record', function(done) {
-
-      this.timeout(5000);
 
       var indexes = [0,1,2,3,4,5,6,7,8,9];
 

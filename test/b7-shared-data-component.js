@@ -1,5 +1,7 @@
 describe('b7 - shared data component', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -8,8 +10,6 @@ describe('b7 - shared data component', function() {
   var meshInstance;
   var dataEvents;
   var config;
-
-  this.timeout(60000)
 
   var TestModule1 = {
     setSharedData: function($happn, path, data, callback) {
@@ -52,7 +52,7 @@ describe('b7 - shared data component', function() {
   });
 
   after(function(done) {
-    meshInstance.stop(done);
+    meshInstance.stop({reconnect:false}, done);
   });
 
   context('direct use', function() {
@@ -70,6 +70,7 @@ describe('b7 - shared data component', function() {
 
 
     it('can set and get without opts', function(done) {
+
       dataComponent.set('some/path/two', {key: 'value'}, function(e, result) {
         if (e) return done(e);
         dataComponent.get('some/path/two', function(e, result) {
@@ -80,8 +81,8 @@ describe('b7 - shared data component', function() {
       });
     });
 
-
     it('can subscribe with opts', function(done) {
+
       dataComponent.on('/some/path/three', {}, function(data, meta) {
         data.should.eql({key: 'VAL'});
         done();

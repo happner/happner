@@ -1,9 +1,9 @@
 describe('c6 - https', function(done) {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
-
-  this.timeout(20000);
 
   var Mesh = require('../')
 

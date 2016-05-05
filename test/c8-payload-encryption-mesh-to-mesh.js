@@ -37,10 +37,10 @@ var config = {
 
 describe('c8-payload-encryption', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
-
-  this.timeout(20000);
 
   before(function(done) {
 
@@ -65,7 +65,7 @@ describe('c8-payload-encryption', function() {
 
   after(function(done) {
     remote.kill();
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   });
 
   context('the faraway tree, in the mist...', function() {

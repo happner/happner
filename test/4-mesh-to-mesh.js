@@ -29,10 +29,10 @@ config = {
 
 describe('4 - Mesh to Mesh', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
-
-  this.timeout(20000);
 
   before(function(done) {
 
@@ -63,7 +63,7 @@ describe('4 - Mesh to Mesh', function() {
 
   after(function(done) {
     remote.kill();
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   });
 
   context('on remote mesh', function() {

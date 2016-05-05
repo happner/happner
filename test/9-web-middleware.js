@@ -13,7 +13,7 @@ describe('9 - tests that we can add middleware before a static', function (done)
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
 
@@ -51,7 +51,6 @@ describe('9 - tests that we can add middleware before a static', function (done)
   var mesh;
 
   before(function (done) {
-    this.timeout(defaultTimeout);
     this.mesh = new Mesh();
     this.mesh.initialize(config, function (err) {
       if (err) return done(err);
@@ -60,12 +59,11 @@ describe('9 - tests that we can add middleware before a static', function (done)
   });
 
   after(function (done) {
-    this.mesh.stop(done);
+    this.mesh.stop({reconnect:false}, done);
   })
 
 
   it('can get index.html that middleware renames to index.htm', function (done) {
-    this.timeout(defaultTimeout);
     http.get('http://localhost:10000/index.html', function(resp) {
       resp.statusCode.should.eql(200);
       done();

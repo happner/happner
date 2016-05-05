@@ -1,5 +1,7 @@
 describe('b6 - start meshes', function () {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -66,8 +68,6 @@ describe('b6 - start meshes', function () {
     var savedUser = null;
     var savedGroup = null;
 
-    this.timeout(20000);
-
     Mesh.create(serverConfig)
         .then(addGroup)
         .then(addUser)
@@ -107,11 +107,11 @@ describe('b6 - start meshes', function () {
   after(function (done) {
 
     var stopServerMesh = function(){
-      if (serverMesh) return serverMesh.stop(done);
+      if (serverMesh) return serverMesh.stop({reconnect:false}, done);
       done();
     }
 
-    if (clientMesh) clientMesh.stop(function(e){
+    if (clientMesh) clientMesh.stop({reconnect:false}, function(e){
       if (e) return done(e);
       stopServerMesh();
     });

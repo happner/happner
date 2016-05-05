@@ -11,7 +11,7 @@ describe('a2 - mesh awareness via $happn injection', function() {
   var request = require('request');
   var Mesh = require('../');
 
-  this.timeout(40000);
+  this.timeout(120000);
 
   before(function(done) {
 

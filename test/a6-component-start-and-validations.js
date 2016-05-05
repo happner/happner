@@ -42,7 +42,7 @@ describe('a6 - component start and validation -', function() {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   before(function(done) {
 
@@ -113,7 +113,7 @@ describe('a6 - component start and validation -', function() {
 
   after(function(done) {
     delete global.TESTING_16; //.............
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   })
 
   it('has called and finished the component async start method', function(done) {

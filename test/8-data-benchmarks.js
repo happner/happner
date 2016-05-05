@@ -10,10 +10,9 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(20000);
+  this.timeout(120000);
 
   var maximumPings = 1000;
-  var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
 
   var config = {
     name: "testBenchmark",
@@ -70,7 +69,6 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
   var mesh;
 
   before(function (done) {
-    this.timeout(defaultTimeout);
     console.time('startup');
     mesh = new Mesh();
     mesh.initialize(config, function (err) {
@@ -80,12 +78,10 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
   });
 
    after(function(done){
-     mesh.stop(done);
+     mesh.stop({reconnect:false}, done);
   });
 
   it('listens for the ping pong completed event, that module1 emits', function (done) {
-
-    this.timeout(defaultTimeout);
 
     var onEventRef;
 
@@ -122,7 +118,6 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
   });
 
   it('listens for an event in module 2 that module 1 set 1000 data points', function (done) {
-    this.timeout(defaultTimeout);
 
     mesh.exchange.component2.startData(function () {
 

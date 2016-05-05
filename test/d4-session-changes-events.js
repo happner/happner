@@ -1,5 +1,7 @@
 describe('d3-permission-changes', function() {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -14,8 +16,6 @@ describe('d3-permission-changes', function() {
 
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
-
-  this.timeout(20000);
 
   before(function(done) {
 
@@ -48,7 +48,7 @@ describe('d3-permission-changes', function() {
   });
 
   after(function(done) {
-    mesh.stop(done);
+    mesh.stop({reconnect:false}, done);
   })
 
   var eventsToFire = {
