@@ -1,4 +1,4 @@
-describe('d5-connection-changes-events', function() {
+describe('d6-startup-changes-events', function() {
 
   this.timeout(120000);
 
@@ -95,7 +95,7 @@ describe('d5-connection-changes-events', function() {
       //TODO some expect stuff
       done();
     });
-    
+
     mesh.stop({reconnect:false}, function(e){
 
 
