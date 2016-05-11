@@ -3,28 +3,29 @@ var should = require('chai').should();
 var Mesh = require('../');
 var spawn = require('child_process').spawn;
 var path = require('path');
+var expect = require('expect.js');
 
 describe('d6-startup-proxy', function (done) {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(120000);
+  this.timeout(10000);
 
   var configDefault = {
     name: "startupProxiedDefault",
-    port:55001,
-    startupProxy:{
-      enabled:true
+    port: 55001,
+    startupProxy: {
+      enabled: true
     },
-    modules:{
-      testComponent:{
-        instance:require("./lib/d6_slow_startup_component")
+    modules: {
+      testComponent: {
+        instance: require("./lib/d6_slow_startup_component")
       }
     },
-    components:{
-      testComponent:{
-        name:'testComponent',
+    components: {
+      testComponent: {
+        name: 'testComponent',
         moduleName: 'testComponent',
         startMethod: "init",
         schema: {
@@ -32,8 +33,8 @@ describe('d6-startup-proxy', function (done) {
           "methods": {
             "init": {
               type: "async",
-              parameters:[
-                {name:"delay", value:5000}
+              parameters: [
+                {name: "delay", value: 5000}
               ]
             }
           }
@@ -44,10 +45,10 @@ describe('d6-startup-proxy', function (done) {
 
   var configRedirect = {
     name: "startupProxiedRedirect",
-    port:55002,
-    startupProxy:{
-      enabled:true,
-      redirect:"/ping.html"
+    port: 55002,
+    startupProxy: {
+      enabled: true,
+      redirect: "/ping.html"
     }
   };
 
@@ -79,16 +80,16 @@ describe('d6-startup-proxy', function (done) {
 
   }
 
-  var startProxy = function(done){
+  var startProxy = function (done) {
 
     var proxyPath = path.resolve('./lib/startup/proxy.js');
 
     console.log('PROXY PATH:::', proxyPath);
 
     // spawn remote mesh in another process
-    remote = spawn('node', [proxyPath,'55001']);
+    remote = spawn('node', [proxyPath, '55001']);
 
-    remote.stdout.on('data', function(data) {
+    remote.stdout.on('data', function (data) {
 
       var result = data.toString();
 
@@ -104,13 +105,13 @@ describe('d6-startup-proxy', function (done) {
 
   var __proxy;
 
-  it('starts the proxy server and checks all resources are available', function(done){
+  it('starts the proxy server and checks all resources are available', function (done) {
 
-    startProxy(function(e, proxy){
+    startProxy(function (e, proxy) {
 
       console.log('in start proxy:::', e);
 
-      if (proxy){
+      if (proxy) {
         proxy.kill();
         console.log('KILLED PROXY OK');
       }
@@ -122,25 +123,60 @@ describe('d6-startup-proxy', function (done) {
 
   });
 
-  it('starts a mesh that takes 5 seconds to start', function (done) {
-    console.time('startup');
-    mesh = new Mesh();
-    mesh
-      .initialize(configDefault, function(e){
-        if (e) return done(e);
+  var proxyManager;
 
-        mesh.start(function(e){
-          done(e);
-        })
+  it('starts the proxy server using the proxy manager', function (done) {
+
+    var ProxyManager = require('../lib/startup/proxy_manager');
+    proxyManager = new ProxyManager();
+
+    proxyManager.start({port: 55001}, function (e) {
+
+      if (e) return done(e);
+
+      done();
+
+      // proxyManager.stop({delay: 2000}, function () {
+      //
+      //   done();
+      //
+      // });
+
+    })
+
+  });
+
+  it('fails to start a mesh because the proxy is up', function (done) {
+
+    Mesh
+      .create(configDefault, function (e, created) {
+
+        console.log('mesh start error:::', JSON.stringify(e));
+        expect(e).to.not.be(null);
+        expect(e.code).to.be("EADDRINUSE");
+
+        proxyManager.stop();
+        done();
+
       })
 
+  });
+
+  it('starts a mesh that takes 5 seconds to start', function (done) {
+
+    Mesh
+      .create(configDefault, function (e, created) {
+        if (e) return done(e);
+        mesh = created;
+        done();
+      })
 
   });
 
 
   it('stops the mesh', function (done) {
-    if (mesh){
-      mesh.stop({reconnect:false}, function(e, log){
+    if (mesh) {
+      mesh.stop({reconnect: false}, function (e, log) {
         done(e);
       });
     }
@@ -148,7 +184,7 @@ describe('d6-startup-proxy', function (done) {
 
   require('benchmarket').stop();
 
-  after('kills the proxy and stops the mesh if its running', function(done){
+  after('kills the proxy and stops the mesh if its running', function (done) {
 
     if (__proxy)
       __proxy.kill();
