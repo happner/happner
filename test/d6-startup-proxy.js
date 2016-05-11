@@ -61,7 +61,7 @@ describe('d6-startup-proxy', function (done) {
     if (!port) port = 55000;
 
     if (path[0] != '/')
-      path = '/' + path
+      path = '/' + path;
 
     var options = {
       url: 'http://127.0.0.1:' + port.toString() + path,
@@ -80,48 +80,48 @@ describe('d6-startup-proxy', function (done) {
 
   }
 
-  var startProxy = function (done) {
-
-    var proxyPath = path.resolve('./lib/startup/proxy.js');
-
-    console.log('PROXY PATH:::', proxyPath);
-
-    // spawn remote mesh in another process
-    remote = spawn('node', [proxyPath, '55001']);
-
-    remote.stdout.on('data', function (data) {
-
-      var result = data.toString();
-
-      console.log('FROM PROXY:::', result, result.length);
-
-      if (result.substring(0, 7) == 'STARTED')
-        return done(null, remote);
-
-      return done(new Error(data), remote);
-
-    });
-  }
-
-  var __proxy;
-
-  it('starts the proxy server and checks all resources are available', function (done) {
-
-    startProxy(function (e, proxy) {
-
-      console.log('in start proxy:::', e);
-
-      if (proxy) {
-        proxy.kill();
-        console.log('KILLED PROXY OK');
-      }
-
-      if (e) return done(e);
-
-      done();
-    })
-
-  });
+  // var startProxy = function (done) {
+  //
+  //   var proxyPath = path.resolve('./lib/startup/proxy.js');
+  //
+  //   console.log('PROXY PATH:::', proxyPath);
+  //
+  //   // spawn remote mesh in another process
+  //   remote = spawn('node', [proxyPath, '55001']);
+  //
+  //   remote.stdout.on('data', function (data) {
+  //
+  //     var result = data.toString();
+  //
+  //     console.log('FROM PROXY:::', result, result.length);
+  //
+  //     if (result.substring(0, 7) == 'STARTED')
+  //       return done(null, remote);
+  //
+  //     return done(new Error(data), remote);
+  //
+  //   });
+  // }
+  //
+  // var __proxy;
+  //
+  // it('starts the proxy server and checks all resources are available', function (done) {
+  //
+  //   startProxy(function (e, proxy) {
+  //
+  //     console.log('in start proxy:::', e);
+  //
+  //     if (proxy) {
+  //       proxy.kill();
+  //       console.log('KILLED PROXY OK');
+  //     }
+  //
+  //     if (e) return done(e);
+  //
+  //     done();
+  //   })
+  //
+  // });
 
   var proxyManager;
 
@@ -134,13 +134,21 @@ describe('d6-startup-proxy', function (done) {
 
       if (e) return done(e);
 
-      done();
+      proxyManager.progress('test', 10);
+      proxyManager.progress('test1', 20);
 
-      // proxyManager.stop({delay: 2000}, function () {
-      //
-      //   done();
-      //
-      // });
+      doRequest('/progress', null, null, function(data){
+
+        var prog_data = JSON.parse(data);
+
+        expect(prog_data[0].log).to.be('test');
+        expect(prog_data[0].percentComplete).to.be(10);
+        expect(prog_data[1].log).to.be('test1');
+        expect(prog_data[1].percentComplete).to.be(20);
+
+        done();
+
+      }, 55001);
 
     })
 
@@ -173,25 +181,17 @@ describe('d6-startup-proxy', function (done) {
 
   });
 
+  after('kills the proxy and stops the mesh if its running', function (done) {
 
-  it('stops the mesh', function (done) {
     if (mesh) {
       mesh.stop({reconnect: false}, function (e, log) {
         done(e);
       });
     }
-  });
-
-  require('benchmarket').stop();
-
-  after('kills the proxy and stops the mesh if its running', function (done) {
-
-    if (__proxy)
-      __proxy.kill();
-
-    done();
 
   })
+
+  require('benchmarket').stop();
 
 });
 
