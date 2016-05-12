@@ -4,6 +4,7 @@ var Mesh = require('../');
 var spawn = require('child_process').spawn;
 var path = require('path');
 var expect = require('expect.js');
+var async = require('async');
 
 describe('d6-startup-proxy', function (done) {
 
@@ -14,7 +15,7 @@ describe('d6-startup-proxy', function (done) {
 
   var configDefault = {
     name: "startupProxiedDefault",
-    port: 55001,
+    port: 55000,
     startupProxy: {
       enabled: true
     },
@@ -43,15 +44,16 @@ describe('d6-startup-proxy', function (done) {
     }
   };
 
-  var configRedirect = {
-    name: "startupProxiedRedirect",
-    port: 55002,
+  var configDifferentPort = {
+    name: "startupProxiedDifferentPort",
+    port: 55001,
     startupProxy: {
       enabled: true,
       redirect: "/ping.html"
     }
   };
 
+  var meshes = [];
   var mesh;
 
   function doRequest(path, token, query, callback, port) {
@@ -80,57 +82,16 @@ describe('d6-startup-proxy', function (done) {
 
   }
 
-  // var startProxy = function (done) {
-  //
-  //   var proxyPath = path.resolve('./lib/startup/proxy.js');
-  //
-  //   console.log('PROXY PATH:::', proxyPath);
-  //
-  //   // spawn remote mesh in another process
-  //   remote = spawn('node', [proxyPath, '55001']);
-  //
-  //   remote.stdout.on('data', function (data) {
-  //
-  //     var result = data.toString();
-  //
-  //     console.log('FROM PROXY:::', result, result.length);
-  //
-  //     if (result.substring(0, 7) == 'STARTED')
-  //       return done(null, remote);
-  //
-  //     return done(new Error(data), remote);
-  //
-  //   });
-  // }
-  //
-  // var __proxy;
-  //
-  // it('starts the proxy server and checks all resources are available', function (done) {
-  //
-  //   startProxy(function (e, proxy) {
-  //
-  //     console.log('in start proxy:::', e);
-  //
-  //     if (proxy) {
-  //       proxy.kill();
-  //       console.log('KILLED PROXY OK');
-  //     }
-  //
-  //     if (e) return done(e);
-  //
-  //     done();
-  //   })
-  //
-  // });
-
   var proxyManager;
 
   it('starts the proxy server using the proxy manager', function (done) {
 
+    this.timeout(60000);
+
     var ProxyManager = require('../lib/startup/proxy_manager');
     proxyManager = new ProxyManager();
 
-    proxyManager.start({port: 55001}, function (e) {
+    proxyManager.start({port: 55000}, function (e) {
 
       if (e) return done(e);
 
@@ -146,9 +107,10 @@ describe('d6-startup-proxy', function (done) {
         expect(prog_data[1].log).to.be('test1');
         expect(prog_data[1].percentComplete).to.be(20);
 
-        done();
+        setTimeout(done, 40000);
 
-      }, 55001);
+
+      }, 55000);
 
     })
 
@@ -159,12 +121,11 @@ describe('d6-startup-proxy', function (done) {
     Mesh
       .create(configDefault, function (e, created) {
 
-        console.log('mesh start error:::', JSON.stringify(e));
         expect(e).to.not.be(null);
         expect(e.code).to.be("EADDRINUSE");
 
         proxyManager.stop();
-        done();
+        setTimeout(done, 5000);
 
       })
 
@@ -176,6 +137,21 @@ describe('d6-startup-proxy', function (done) {
       .create(configDefault, function (e, created) {
         if (e) return done(e);
         mesh = created;
+        meshes.push(mesh);
+        done();
+      })
+
+  });
+
+  var otherMesh;
+
+  it('starts a mesh on a different port', function (done) {
+
+    Mesh
+      .create(configDifferentPort, function (e, created) {
+        if (e) return done(e);
+        otherMesh = created;
+        meshes.push(otherMesh);
         done();
       })
 
@@ -183,11 +159,9 @@ describe('d6-startup-proxy', function (done) {
 
   after('kills the proxy and stops the mesh if its running', function (done) {
 
-    if (mesh) {
-      mesh.stop({reconnect: false}, function (e, log) {
-        done(e);
-      });
-    }
+    async.eachSeries(meshes, function(stopMesh, cb){
+      stopMesh.stop({reconnect: false}, cb);
+    }, done);
 
   })
 

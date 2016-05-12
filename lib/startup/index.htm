@@ -7,11 +7,21 @@
   <title>The HTML5 Herald</title>
   <meta name="description" content="happner startup splashscreen">
   <meta name="author" content="happner">
-  <script src="/client"></script>
-
+  <script src="/nanobar"></script>
+  <script src="/promise"></script>
+  <link rel="stylesheet" href="/grid">
 </head>
 
-<body>
+<div class="container" style="font-family:verdana;font-size:11px">
+  <div class="grid-4">  </div>
+  <div class="grid-4">
+    <img src="/logo" style="width:200px"></img>
+    <div style="width:200px"><div id="progress-bar"></div></div>
+    <p id="progress-log"></p>
+  </div>
+  <div class="grid-4">  </div>
+</div>
 
+<script src="/client"></script>
 </body>
 </html>
