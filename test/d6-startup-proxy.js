@@ -48,8 +48,16 @@ describe('d6-startup-proxy', function (done) {
     name: "startupProxiedDifferentPort",
     port: 55001,
     startupProxy: {
+      enabled: true
+    }
+  };
+
+  var configDifferentPortRedirect = {
+    name: "startupProxiedDifferentPort",
+    port: 55002,
+    startupProxy: {
       enabled: true,
-      redirect: "/ping.html"
+      redirect: "/ping"
     }
   };
 
@@ -84,6 +92,8 @@ describe('d6-startup-proxy', function (done) {
 
   var proxyManager;
 
+ // for manually testing the proxy
+
   // it('starts the proxy server using the proxy manager, long running', function (done) {
   //
   //   this.timeout(60000);
@@ -106,6 +116,8 @@ describe('d6-startup-proxy', function (done) {
   //       expect(prog_data[0].percentComplete).to.be(10);
   //       expect(prog_data[1].log).to.be('test1');
   //       expect(prog_data[1].percentComplete).to.be(20);
+  //
+  //
   //
   //       setTimeout(done, 40000);
   //
@@ -183,6 +195,22 @@ describe('d6-startup-proxy', function (done) {
         otherMesh = created;
         meshes.push(otherMesh);
         done();
+      })
+
+  });
+
+  var redirectMesh;
+
+  it('starts a mesh on a different port, with a redirect configured', function (done) {
+
+    Mesh
+      .create(configDifferentPortRedirect, function (e, created) {
+        if (e) return done(e);
+        redirectMesh = created;
+        meshes.push(redirectMesh);
+
+        done();
+
       })
 
   });
