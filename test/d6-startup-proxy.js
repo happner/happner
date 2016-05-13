@@ -94,41 +94,9 @@ describe('d6-startup-proxy', function (done) {
 
  // for manually testing the proxy
 
-  it('starts the proxy server using the proxy manager, long running', function (done) {
-
-    this.timeout(60000);
-
-    var ProxyManager = require('../lib/startup/proxy_manager');
-    proxyManager = new ProxyManager();
-
-    proxyManager.start({port: 55000}, function (e) {
-
-      if (e) return done(e);
-
-      proxyManager.progress('test', 10);
-      proxyManager.progress('test1', 20);
-
-      doRequest('/progress', null, null, function(data){
-
-        var prog_data = JSON.parse(data);
-
-        expect(prog_data[0].log).to.be('test');
-        expect(prog_data[0].percentComplete).to.be(10);
-        expect(prog_data[1].log).to.be('test1');
-        expect(prog_data[1].percentComplete).to.be(20);
-
-
-
-        setTimeout(done, 40000);
-
-
-      }, 55000);
-
-    })
-
-  });
-
-  // it('starts the proxy server using the proxy manager', function (done) {
+  // it('starts the proxy server using the proxy manager, long running', function (done) {
+  //
+  //   this.timeout(60000);
   //
   //   var ProxyManager = require('../lib/startup/proxy_manager');
   //   proxyManager = new ProxyManager();
@@ -149,7 +117,9 @@ describe('d6-startup-proxy', function (done) {
   //       expect(prog_data[1].log).to.be('test1');
   //       expect(prog_data[1].percentComplete).to.be(20);
   //
-  //       done();
+  //
+  //
+  //       setTimeout(done, 40000);
   //
   //
   //     }, 55000);
@@ -157,6 +127,36 @@ describe('d6-startup-proxy', function (done) {
   //   })
   //
   // });
+
+  it('starts the proxy server using the proxy manager', function (done) {
+
+    var ProxyManager = require('../lib/startup/proxy_manager');
+    proxyManager = new ProxyManager();
+
+    proxyManager.start({port: 55000}, function (e) {
+
+      if (e) return done(e);
+
+      proxyManager.progress('test', 10);
+      proxyManager.progress('test1', 20);
+
+      doRequest('/progress', null, null, function(data){
+
+        var prog_data = JSON.parse(data);
+
+        expect(prog_data[0].log).to.be('test');
+        expect(prog_data[0].percentComplete).to.be(10);
+        expect(prog_data[1].log).to.be('test1');
+        expect(prog_data[1].percentComplete).to.be(20);
+
+        done();
+
+
+      }, 55000);
+
+    })
+
+  });
 
   it('fails to start a mesh because the proxy is up', function (done) {
 
