@@ -11,7 +11,7 @@ describe('d6-startup-proxy', function (done) {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(10000);
+  this.timeout(120000);
 
   var configDefault = {
     name: "startupProxiedDefault",
