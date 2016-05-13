@@ -178,3 +178,8 @@
 
 - Reconnect option can be now be passed into mesh.stop() to inform remotes to reconnect (default true)
 
+1.8.0 2016-05-13
+-----------------
+
+- startup optimisations, lazy loading requires
+- startup proxy, see test https://github.com/happner/happner/blob/release/1.8.0/test/d6-startup-proxy.js
