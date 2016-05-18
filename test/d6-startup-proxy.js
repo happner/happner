@@ -16,8 +16,7 @@ describe('d6-startup-proxy', function (done) {
   var configDefault = {
     name: "startupProxiedDefault",
     port: 55000,
-    startupProxy: {
-      enabled: true
+    "happner-loader": {
     },
     modules: {
       testComponent: {
@@ -44,19 +43,18 @@ describe('d6-startup-proxy', function (done) {
     }
   };
 
-  var configDifferentPort = {
+  var configDeferredListen = {
     name: "startupProxiedDifferentPort",
     port: 55001,
-    startupProxy: {
-      enabled: true
-    }
+    "happner-loader": {
+    },
+    deferListen:true
   };
 
   var configDifferentPortRedirect = {
     name: "startupProxiedDifferentPort",
     port: 55002,
-    startupProxy: {
-      enabled: true,
+    "happner-loader": {
       redirect: "/ping"
     }
   };
@@ -64,7 +62,7 @@ describe('d6-startup-proxy', function (done) {
   var meshes = [];
   var mesh;
 
-  function doRequest(path, token, query, callback, port) {
+  function doRequest(path, callback, port) {
 
     var request = require('request');
 
@@ -77,12 +75,7 @@ describe('d6-startup-proxy', function (done) {
       url: 'http://127.0.0.1:' + port.toString() + path,
     };
 
-    if (token) {
-      if (!query)
-        options.headers = {'Cookie': ['happn_token=' + token]}
-      else
-        options.url += '?happn_token=' + token;
-    }
+    console.log('options:::', options);
 
     request(options, function (error, response, body) {
       callback(body);
@@ -128,98 +121,194 @@ describe('d6-startup-proxy', function (done) {
   //
   // });
 
-  it('starts the proxy server using the proxy manager', function (done) {
+  it('starts the loader http server', function (done) {
 
-    var ProxyManager = require('../lib/startup/proxy_manager');
-    proxyManager = new ProxyManager();
+    var LoaderProgress = require('../lib/startup/loader_progress');
+    var loaderProgress = new LoaderProgress({port:55000});
 
-    proxyManager.start({port: 55000}, function (e) {
+    loaderProgress.listen(function(e){
 
       if (e) return done(e);
 
-      proxyManager.progress('test', 10);
-      proxyManager.progress('test1', 20);
+      loaderProgress.progress('test', 10);
+      loaderProgress.progress('test1', 20);
 
-      doRequest('/progress', null, null, function(data){
+      doRequest('/progress', function(data){
+
+        console.log('prog_data:::',data);
 
         var prog_data = JSON.parse(data);
 
         expect(prog_data[0].log).to.be('test');
-        expect(prog_data[0].percentComplete).to.be(10);
+        expect(prog_data[0].progress).to.be(10);
         expect(prog_data[1].log).to.be('test1');
-        expect(prog_data[1].percentComplete).to.be(20);
+        expect(prog_data[1].progress).to.be(20);
+
+        loaderProgress.stop();
 
         done();
-
 
       }, 55000);
 
-    })
+    });
+  });
+
+  it('starts the loader http server, fails to start happn, stops the http server and successfully starts happn', function (done) {
+
+    var LoaderProgress = require('../lib/startup/loader_progress');
+    var loaderProgress = new LoaderProgress({port:55000});
+
+    loaderProgress.listen(function(e){
+
+      if (e) return done(e);
+
+      Mesh
+        .create(configDefault, function (e, created) {
+
+          expect(e).to.not.be(null);
+          expect(e.code).to.be("EADDRINUSE");
+
+          loaderProgress.stop();
+
+          Mesh
+            .create(configDefault, function (e, created) {
+
+              expect(e).to.be(null);
+
+              doRequest('/ping', function(data){
+
+                expect(data).to.be('pong');
+                done();
+
+              }, 55000);
+
+
+            })
+        })
+    });
+  });
+
+  it('starts a mesh with a deferred listen', function (done) {
+
+      Mesh
+        .create(configDeferredListen, function (e, created) {
+
+          doRequest('/ping', function(data){
+
+            expect(data).to.be(undefined);
+
+            created.listen(function(e){
+
+              doRequest('/ping', function(data){
+
+                expect(data).to.be('pong');
+                done();
+
+              }, 55001);
+
+            });
+
+          }, 55001);
+
+        });
 
   });
 
-  it('fails to start a mesh because the proxy is up', function (done) {
-
-    Mesh
-      .create(configDefault, function (e, created) {
-
-        expect(e).to.not.be(null);
-        expect(e.code).to.be("EADDRINUSE");
-
-        proxyManager.stop();
-        setTimeout(done, 5000);
-
-      })
-
-  });
-
-  it('starts a mesh that takes 5 seconds to start', function (done) {
-
-    Mesh
-      .create(configDefault, function (e, created) {
-        if (e) return done(e);
-        mesh = created;
-        meshes.push(mesh);
-        done();
-      })
-
-  });
-
-  var otherMesh;
-
-  it('starts a mesh on a different port', function (done) {
-
-    Mesh
-      .create(configDifferentPort, function (e, created) {
-        if (e) return done(e);
-        otherMesh = created;
-        meshes.push(otherMesh);
-        done();
-      })
-
-  });
-
-  var redirectMesh;
-
-  it('starts a mesh on a different port, with a redirect configured', function (done) {
-
-    Mesh
-      .create(configDifferentPortRedirect, function (e, created) {
-        if (e) return done(e);
-        redirectMesh = created;
-        meshes.push(redirectMesh);
-
-        done();
-
-      })
-
-  });
+  // it('starts the proxy server using the proxy manager', function (done) {
+  //
+  //   var ProxyManager = require('../lib/startup/proxy_manager');
+  //   proxyManager = new ProxyManager();
+  //
+  //   proxyManager.start({port: 55000}, function (e) {
+  //
+  //     if (e) return done(e);
+  //
+  //     proxyManager.progress('test', 10);
+  //     proxyManager.progress('test1', 20);
+  //
+  //     doRequest('/progress', null, null, function(data){
+  //
+  //       var prog_data = JSON.parse(data);
+  //
+  //       expect(prog_data[0].log).to.be('test');
+  //       expect(prog_data[0].percentComplete).to.be(10);
+  //       expect(prog_data[1].log).to.be('test1');
+  //       expect(prog_data[1].percentComplete).to.be(20);
+  //
+  //       done();
+  //
+  //
+  //     }, 55000);
+  //
+  //   })
+  //
+  // });
+  //
+  // it('fails to start a mesh because the proxy is up', function (done) {
+  //
+  //   Mesh
+  //     .create(configDefault, function (e, created) {
+  //
+  //       expect(e).to.not.be(null);
+  //       expect(e.code).to.be("EADDRINUSE");
+  //
+  //       proxyManager.stop();
+  //       setTimeout(done, 5000);
+  //
+  //     })
+  //
+  // });
+  //
+  // it('starts a mesh that takes 5 seconds to start', function (done) {
+  //
+  //   Mesh
+  //     .create(configDefault, function (e, created) {
+  //       if (e) return done(e);
+  //       mesh = created;
+  //       meshes.push(mesh);
+  //       done();
+  //     })
+  //
+  // });
+  //
+  // var otherMesh;
+  //
+  // it('starts a mesh on a different port', function (done) {
+  //
+  //   Mesh
+  //     .create(configDifferentPort, function (e, created) {
+  //       if (e) return done(e);
+  //       otherMesh = created;
+  //       meshes.push(otherMesh);
+  //       done();
+  //     })
+  //
+  // });
+  //
+  // var redirectMesh;
+  //
+  // it('starts a mesh on a different port, with a redirect configured', function (done) {
+  //
+  //   Mesh
+  //     .create(configDifferentPortRedirect, function (e, created) {
+  //       if (e) return done(e);
+  //       redirectMesh = created;
+  //       meshes.push(redirectMesh);
+  //
+  //       done();
+  //
+  //     })
+  //
+  // });
 
   after('kills the proxy and stops the mesh if its running', function (done) {
 
+    if (meshes.length > 0)
     async.eachSeries(meshes, function(stopMesh, cb){
       stopMesh.stop({reconnect: false}, cb);
     }, done);
+    else done();
+
 
   })
 
