@@ -51,6 +51,11 @@ describe('d6-startup-proxy', function (done) {
     deferListen:true
   };
 
+  var configDifferentPortProgressLog = {
+    name: "differentPortProgressLog",
+    port: 55002
+  };
+
   var configDifferentPortRedirect = {
     name: "startupProxiedDifferentPort",
     port: 55002,
@@ -211,6 +216,33 @@ describe('d6-startup-proxy', function (done) {
           }, 55001);
 
         });
+
+  });
+
+  it('starts a mesh and checks we have progress logs', function (done) {
+
+    var progressLogs = [];
+
+    var eventId = Mesh.on('startup-progress', function(data){
+
+      progressLogs.push(data);
+
+      if (data.progress == 100){
+        console.log(progressLogs.length);
+        var offHappened = Mesh.off(eventId);
+        expect(offHappened).to.be(true);
+        expect(progressLogs.length).to.be(15);
+        done();
+      }
+
+    });
+
+    Mesh
+      .create(configDifferentPortProgressLog, function (e, created) {
+
+        if (e) return done(e);
+
+      });
 
   });
 
