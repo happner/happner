@@ -56,6 +56,11 @@ describe('d6-startup-proxy', function (done) {
     port: 55002
   };
 
+  var configDifferentPortMeshLog = {
+    name: "configDifferentPortMeshLog",
+    port: 55003
+  };
+
   var configDifferentPortRedirect = {
     name: "startupProxiedDifferentPort",
     port: 55002,
@@ -79,8 +84,6 @@ describe('d6-startup-proxy', function (done) {
     var options = {
       url: 'http://127.0.0.1:' + port.toString() + path,
     };
-
-    console.log('options:::', options);
 
     request(options, function (error, response, body) {
       callback(body);
@@ -139,8 +142,6 @@ describe('d6-startup-proxy', function (done) {
       loaderProgress.progress('test1', 20);
 
       doRequest('/progress', function(data){
-
-        console.log('prog_data:::',data);
 
         var prog_data = JSON.parse(data);
 
@@ -230,6 +231,7 @@ describe('d6-startup-proxy', function (done) {
       if (data.progress == 100){
         console.log(progressLogs.length);
         var offHappened = Mesh.off(eventId);
+
         expect(offHappened).to.be(true);
         expect(progressLogs.length).to.be(15);
         done();
@@ -239,6 +241,30 @@ describe('d6-startup-proxy', function (done) {
 
     Mesh
       .create(configDifferentPortProgressLog, function (e, created) {
+
+        if (e) return done(e);
+
+      });
+
+  });
+
+  it('starts a mesh and checks we have mesh logs', function (done) {
+
+    var meshLogs = [];
+
+    var eventId = Mesh.on('mesh-log', function(data){
+
+      meshLogs.push(data);
+
+      if (data.stack == 'started!'){
+        expect(meshLogs.length > 16).to.be(true);
+        done();
+      }
+
+    });
+
+    Mesh
+      .create(configDifferentPortMeshLog, function (e, created) {
 
         if (e) return done(e);
 

@@ -46,7 +46,7 @@
     "glob": "5.0.15",
     "gulp": "^3.9.0",
     "happn": "2.6.0",
-    "happn-logger": "0.0.1",
+    "happn-logger": "0.0.2",
     "happner-terminal": "0.0.7",
     "karma": "^0.13.15",
     "karma-chai": "^0.1.0",
