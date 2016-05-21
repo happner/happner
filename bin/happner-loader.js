@@ -75,7 +75,7 @@ loaderProgress.listen(function(e){
     var messageData = null;
 
     if (message.indexOf(":::") > -1)
-      messageData = message.split(":::")[1];
+      messageData = message.split(/:::(.+)?/)[1];
 
     if (code == "mesh-log"){
       messageData = JSON.parse(messageData);

@@ -33,5 +33,6 @@ These walkthroughs use *happner* to create a rudimentary monitoring service.
 ###
 
 * [Starting and Stopping Mesh Node](https://github.com/happner/happner/blob/master/docs/starting.md)
+* [Using the loader to start a mesh](https://github.com/happner/happner/blob/master/docs/loader.md)
 * [System Components](https://github.com/happner/happner/blob/master/docs/system.md)
 * [Using the Client](https://github.com/happner/happner/blob/master/docs/client.md)
