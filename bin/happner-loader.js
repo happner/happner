@@ -5,33 +5,38 @@ var __happnerCommand = "./bin/happner-loader-daemon";
 var __happnerCommandArguments = [];
 var __happnerConfig = {};
 var __loaderConfig = {};
-var conf = false;
-var loglevel = "info";
+var __conf = false;
+var __logLevel = "info";
+var __verbose = false;
 
 for (var argIndex in process.argv){
   var val = process.argv[argIndex];
 
   if (val != "node" && val.indexOf("happner-loader") == -1){
 
-    if (conf){
+    if (__conf){
       __happnerConfig  = require(val);
-      conf = false;
+      __conf = false;
     }else{
 
       if (val == "--conf"){
-        conf = true;
+        __conf = true;
+      }
+
+      if (val == "--loader-verbose"){
+        __verbose = true;
       }
 
       if (val == "--trace"){
-        loglevel = "trace";
+        __logLevel = "trace";
       }
 
       if (val == "--debug"){
-        loglevel = "debug";
+        __logLevel = "debug";
       }
 
       if (val == "--warn"){
-        loglevel = "warn";
+        __logLevel = "warn";
       }
     }
 
@@ -46,14 +51,12 @@ if (__happnerConfig["happner-loader"]){
 if (__happnerConfig["port"])
   __loaderConfig["port"] = __happnerConfig["port"];
 
-console.log('starting progress:::', JSON.stringify(__loaderConfig));
-
 var loaderProgress = new LoaderProgress(__loaderConfig);
 
 loaderProgress.listen(function(e){
 
   Logger = require('happn-logger');
-  Logger.configure({logLevel:loglevel});
+  Logger.configure({logLevel:__logLevel});
 
   var log = Logger.createLogger();
 
@@ -77,8 +80,12 @@ loaderProgress.listen(function(e){
     if (message.indexOf(":::") > -1)
       messageData = message.split(/:::(.+)?/)[1];
 
+    if (__verbose)
+      log.info("message:::", {"message":message, "code":code, "data":messageData});
+
     if (code == "mesh-log"){
       messageData = JSON.parse(messageData);
+      loaderProgress.log(messageData);
       return log[messageData.level](messageData.message);
     }
 
@@ -92,6 +99,15 @@ loaderProgress.listen(function(e){
 
 
     if (code == "strt-rdy"){
+
+      log.info("happner ready to start listening");
+
+      //manual test
+      // setTimeout(function(){
+      //   loaderProgress.stop();
+      //   return __remote.send("listen");
+      // }, 20000);
+
       loaderProgress.stop();
       return __remote.send("listen");
     }

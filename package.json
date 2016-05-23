@@ -45,7 +45,7 @@
     "fs-extra": "0.24.0",
     "glob": "5.0.15",
     "gulp": "^3.9.0",
-    "happn": "2.6.0",
+    "happn": "2.6.1",
     "happn-logger": "0.0.2",
     "happner-terminal": "0.0.7",
     "karma": "^0.13.15",

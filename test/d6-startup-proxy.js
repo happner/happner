@@ -272,6 +272,11 @@ describe('d6-startup-proxy', function (done) {
 
   });
 
+  //node bin/happner-loader --conf ../test/lib/d6_conf_redirect.json
+  //node bin/happner-loader --conf ../test/lib/d6_conf.json
+
+  
+
   // it('starts the proxy server using the proxy manager', function (done) {
   //
   //   var ProxyManager = require('../lib/startup/proxy_manager');
