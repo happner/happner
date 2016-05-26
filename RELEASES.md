@@ -181,5 +181,6 @@
 1.8.0 2016-05-13
 -----------------
 
-- startup optimisations, lazy loading requires
-- startup proxy, see test https://github.com/happner/happner/blob/release/1.8.0/test/d6-startup-proxy.js
+- startup loader
+- bumped happn to 2.6.1
+- bumped happn-logger 0.0.2
