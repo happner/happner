@@ -71,6 +71,8 @@ loaderProgress.listen(function(e){
 
   var __remote = fork(__happnerCommand, __happnerCommandArguments);
 
+  log.info('child process loaded:::', __remote.pid);
+
   __remote.on('message', function(data) {
 
     var message = data.toString();
@@ -85,8 +87,8 @@ loaderProgress.listen(function(e){
 
     if (code == "mesh-log"){
       messageData = JSON.parse(messageData);
-      loaderProgress.log(messageData);
-      return log[messageData.level](messageData.message);
+      return loaderProgress.log(messageData);
+      //return log[messageData.level](messageData.message);
     }
 
     if (code == "strt-prg"){

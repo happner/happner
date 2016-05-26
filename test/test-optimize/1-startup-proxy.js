@@ -1,17 +1,20 @@
-// Uses unit test 2 modules
-var should = require('chai').should();
-var Mesh = require('../');
-var spawn = require('child_process').spawn;
-var path = require('path');
-var expect = require('expect.js');
-var async = require('async');
-
 describe('d6-startup-proxy', function (done) {
+
+  // Uses unit test 2 modules
+  var should = require('chai').should();
+  var Mesh = require('../../');
+  var spawn = require('child_process').spawn;
+  var path = require('path');
+  var expect = require('expect.js');
+  var async = require('async');
+  var exec = require('child_process').exec;
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
   this.timeout(120000);
+
+  var childPIDs = [];
 
   var configDefault = {
     name: "startupProxiedDefault",
@@ -20,7 +23,7 @@ describe('d6-startup-proxy', function (done) {
     },
     modules: {
       testComponent: {
-        instance: require("./lib/d6_slow_startup_component")
+        instance: require("../lib/d6_slow_startup_component")
       }
     },
     components: {
@@ -61,16 +64,23 @@ describe('d6-startup-proxy', function (done) {
     port: 55003
   };
 
-  var configDifferentPortRedirect = {
-    name: "startupProxiedDifferentPort",
-    port: 55002,
-    "happner-loader": {
-      redirect: "/ping"
-    }
-  };
-
   var meshes = [];
   var mesh;
+
+  function killProc(pid, callback, removeFromChildPIDs){
+
+    var killCommand = exec("kill -9 " + pid, function (error, stdout, stderr) {
+
+      if (removeFromChildPIDs)
+      childPIDs.map(function(childPid, ix){
+        if (childPid == pid)
+          childPIDs.splice(ix, 1);
+      });
+
+      callback();
+
+    });
+  }
 
   function doRequest(path, callback, port) {
 
@@ -91,47 +101,9 @@ describe('d6-startup-proxy', function (done) {
 
   }
 
-  var proxyManager;
-
- // for manually testing the proxy
-
-  // it('starts the proxy server using the proxy manager, long running', function (done) {
-  //
-  //   this.timeout(60000);
-  //
-  //   var ProxyManager = require('../lib/startup/proxy_manager');
-  //   proxyManager = new ProxyManager();
-  //
-  //   proxyManager.start({port: 55000}, function (e) {
-  //
-  //     if (e) return done(e);
-  //
-  //     proxyManager.progress('test', 10);
-  //     proxyManager.progress('test1', 20);
-  //
-  //     doRequest('/progress', null, null, function(data){
-  //
-  //       var prog_data = JSON.parse(data);
-  //
-  //       expect(prog_data[0].log).to.be('test');
-  //       expect(prog_data[0].percentComplete).to.be(10);
-  //       expect(prog_data[1].log).to.be('test1');
-  //       expect(prog_data[1].percentComplete).to.be(20);
-  //
-  //
-  //
-  //       setTimeout(done, 40000);
-  //
-  //
-  //     }, 55000);
-  //
-  //   })
-  //
-  // });
-
   it('starts the loader http server', function (done) {
 
-    var LoaderProgress = require('../lib/startup/loader_progress');
+    var LoaderProgress = require('../../lib/startup/loader_progress');
     var loaderProgress = new LoaderProgress({port:55000});
 
     loaderProgress.listen(function(e){
@@ -161,7 +133,7 @@ describe('d6-startup-proxy', function (done) {
 
   it('starts the loader http server, fails to start happn, stops the http server and successfully starts happn', function (done) {
 
-    var LoaderProgress = require('../lib/startup/loader_progress');
+    var LoaderProgress = require('../../lib/startup/loader_progress');
     var loaderProgress = new LoaderProgress({port:55000});
 
     loaderProgress.listen(function(e){
@@ -272,108 +244,109 @@ describe('d6-startup-proxy', function (done) {
 
   });
 
-  //node bin/happner-loader --conf ../test/lib/d6_conf_redirect.json
-  //node bin/happner-loader --conf ../test/lib/d6_conf.json
+  it('starts a loader process, we analyze the loader logs to ensure it is all working', function (done) {
+    var _this = this;
 
-  
+    this.timeout(15000);
 
-  // it('starts the proxy server using the proxy manager', function (done) {
-  //
-  //   var ProxyManager = require('../lib/startup/proxy_manager');
-  //   proxyManager = new ProxyManager();
-  //
-  //   proxyManager.start({port: 55000}, function (e) {
-  //
-  //     if (e) return done(e);
-  //
-  //     proxyManager.progress('test', 10);
-  //     proxyManager.progress('test1', 20);
-  //
-  //     doRequest('/progress', null, null, function(data){
-  //
-  //       var prog_data = JSON.parse(data);
-  //
-  //       expect(prog_data[0].log).to.be('test');
-  //       expect(prog_data[0].percentComplete).to.be(10);
-  //       expect(prog_data[1].log).to.be('test1');
-  //       expect(prog_data[1].percentComplete).to.be(20);
-  //
-  //       done();
-  //
-  //
-  //     }, 55000);
-  //
-  //   })
-  //
-  // });
-  //
-  // it('fails to start a mesh because the proxy is up', function (done) {
-  //
-  //   Mesh
-  //     .create(configDefault, function (e, created) {
-  //
-  //       expect(e).to.not.be(null);
-  //       expect(e.code).to.be("EADDRINUSE");
-  //
-  //       proxyManager.stop();
-  //       setTimeout(done, 5000);
-  //
-  //     })
-  //
-  // });
-  //
-  // it('starts a mesh that takes 5 seconds to start', function (done) {
-  //
-  //   Mesh
-  //     .create(configDefault, function (e, created) {
-  //       if (e) return done(e);
-  //       mesh = created;
-  //       meshes.push(mesh);
-  //       done();
-  //     })
-  //
-  // });
-  //
-  // var otherMesh;
-  //
-  // it('starts a mesh on a different port', function (done) {
-  //
-  //   Mesh
-  //     .create(configDifferentPort, function (e, created) {
-  //       if (e) return done(e);
-  //       otherMesh = created;
-  //       meshes.push(otherMesh);
-  //       done();
-  //     })
-  //
-  // });
-  //
-  // var redirectMesh;
-  //
-  // it('starts a mesh on a different port, with a redirect configured', function (done) {
-  //
-  //   Mesh
-  //     .create(configDifferentPortRedirect, function (e, created) {
-  //       if (e) return done(e);
-  //       redirectMesh = created;
-  //       meshes.push(redirectMesh);
-  //
-  //       done();
-  //
-  //     })
-  //
-  // });
+    var loaderPath = path.resolve('./bin/happner-loader');
+    var confPath = path.resolve('./test/lib/d6_conf_redirect.json');
+
+    // spawn remote mesh in another process
+    var remote = spawn('node', [loaderPath, '--conf', confPath]);
+    var logs = [];
+    var childPID = -1;
+
+    var verifyLogs = function(){
+
+      var logScore = 0;
+
+      for (var logIndex in logs){
+
+        var logMessage = logs[logIndex];
+
+        if (logMessage.indexOf('(mesh) started component \'security\'') >= 0){
+          logScore++;
+        }
+
+        if (logMessage.indexOf('(mesh) started component \'system\'') >= 0){
+          logScore++;
+        }
+
+        if (logMessage.indexOf('happner ready to start listening') >= 0){
+          logScore++;
+        }
+
+        if (logMessage.indexOf('listening at :::55004') >= 0){
+          logScore++;
+        }
+
+        if (logMessage.indexOf('happner process is now listening, killing parent process in 5 seconds') >= 0){
+          logScore++;
+        }
+
+      }
+
+      return logScore;
+    }
+
+    remote.stdout.on('data', function(data) {
+
+      var logMessage = data.toString().toLowerCase();
+
+      logs.push(logMessage);
+
+      if (logMessage.indexOf('child process loaded') >= 0){
+
+        var childPIDLog = logMessage.split(':::');
+        var childPID = parseInt(childPIDLog[childPIDLog.length - 1]);
+
+        childPIDs.push(childPID);
+      }
+
+      if (logMessage.indexOf('happner process is now listening, killing parent process in 5 seconds') >= 0){
+        setTimeout(function(){
+
+          doRequest('/ping', function(data){
+
+            expect(data).to.be('pong');
+            var score = verifyLogs();
+
+            if (score >= 5)
+              killProc(childPID, done, true);
+            else done(new Error('log message score too low:::' + score.toString()));
+
+          }, 55004);
+
+        }, 7000);
+      }
+    });
+
+  });
+
 
   after('kills the proxy and stops the mesh if its running', function (done) {
+
+    var killProcs = function(){
+
+      if (childPIDs.length > 0){
+
+        async.eachSeries(childPIDs, function(pid, cb){
+
+          killProc(pid, cb);
+
+        }, done);
+
+      }else done();
+    }
 
     if (meshes.length > 0)
     async.eachSeries(meshes, function(stopMesh, cb){
       stopMesh.stop({reconnect: false}, cb);
-    }, done);
-    else done();
+    }, killProcs);
+    else killProcs();
 
-
-  })
+  });
 
   require('benchmarket').stop();
 
