@@ -2,8 +2,20 @@
 *the loader command line creates a web server that listens on the hppner port, and displays a progress bar and message that shows how far happner is with loading*
 
 ```bash
-node bin/happner-loader --conf ../test/lib/test_conf.json
+node bin/happner-loader --conf ../test/lib/d6_conf_redirect.json
 ```
+
+lets look at the config:
+```javascript
+{
+  "port":55004,
+  "happner-loader":{
+    "redirect":"/ping"
+  }
+}
+````
+*this is the actual happner config, with a special section caled happner-loader - you can see that a redirect url has been set, this is where the splash page will redirect to when happner has fully loaded and is listening*
+
 
 A lot needs to happn to make this possible, first the loader starts an http server, that servs the splash page, then the loader creates a Logger. 
 Then the happner instance is forked using a call to the happner-loader-daemon, all happner logs are redirected via IPC to the happner-loader Logger, when happner has started and is ready, the loader is messaged, the loader then stops it web server instance and notifies the happner-daemon, which now starts listening on the configured port, the loader is then signalled that this has happened and shuts down after 5 seconds:
