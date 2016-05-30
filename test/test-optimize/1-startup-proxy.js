@@ -1,4 +1,4 @@
-describe('d6-startup-proxy', function (done) {
+describe('1-startup-proxy', function (done) {
 
   // Uses unit test 2 modules
   var should = require('chai').should();
@@ -196,20 +196,19 @@ describe('d6-startup-proxy', function (done) {
 
     var progressLogs = [];
 
-    var eventId = Mesh.on('startup-progress', function(data){
+    var startupProgressHandler = function(data){
 
       progressLogs.push(data);
 
       if (data.progress == 100){
-        console.log(progressLogs.length);
-        var offHappened = Mesh.off(eventId);
-
-        expect(offHappened).to.be(true);
         expect(progressLogs.length).to.be(15);
+        Mesh.off('startup-progress', startupProgressHandler)
         done();
       }
 
-    });
+    };
+
+    var eventId = Mesh.on('startup-progress', startupProgressHandler);
 
     Mesh
       .create(configDifferentPortProgressLog, function (e, created) {
