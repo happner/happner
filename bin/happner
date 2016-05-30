@@ -24,7 +24,7 @@ if (process.env.USE_LOCAL_HAPPNER) {
   // that it was made for.
   //
 
-} 
+}
 else {
   happner = require('../');
 }
@@ -100,24 +100,24 @@ var replaceSearchPath = function(startAt) {
 
 commander
 
-.version(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version)
-.option('')
-.option('--conf [file]',         'Load mesh config from file/module (js)') // ie. module.exports = {/* the config */}
-.option('',                      'use: module.exports.config = {};')
-.option('',                      'or: module.exports = { /* config */ };')
-.option('')
-// .option('--create',              'Create new project happen project.')
-// .option('')
-.option('--port [number]',       'Start localnode listening at port')
-.option('')
-.option('--trace',               'Set LOG_LEVEL=trace')
-.option('--debug',               'Set LOG_LEVEL=debug')
-.option('--warn',                'Set LOG_LEVEL=warn')
-.option('')
-.option('--alt-prompt [\'txt\']','Alternate prompt text')
-.option('--no-help',             'Skip intro help')
-.option('')
-.parse(process.argv);
+  .version(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version)
+  .option('')
+  .option('--conf [file]',         'Load mesh config from file/module (js)') // ie. module.exports = {/* the config */}
+  .option('',                      'use: module.exports.config = {};')
+  .option('',                      'or: module.exports = { /* config */ };')
+  .option('')
+  // .option('--create',              'Create new project happen project.')
+  // .option('')
+  .option('--port [number]',       'Start localnode listening at port')
+  .option('')
+  .option('--trace',               'Set LOG_LEVEL=trace')
+  .option('--debug',               'Set LOG_LEVEL=debug')
+  .option('--warn',                'Set LOG_LEVEL=warn')
+  .option('')
+  .option('--alt-prompt [\'txt\']','Alternate prompt text')
+  .option('--no-help',             'Skip intro help')
+  .option('')
+  .parse(process.argv);
 
 if (commander.warn)  config.util.logLevel = 'warn';
 if (commander.debug) config.util.logLevel = 'debug';
@@ -133,7 +133,7 @@ if (commander.conf) {
         happner = require('happner');                                 // e
       } catch (e) {                                                  // s
         // no happner at home, use this one                         // s
-        happner = require('../');                                  // y 
+        happner = require('../');                                  // y
       }                                                           // !
     } else {                                                     // spend more time here...
       happner = require('../');
@@ -193,6 +193,6 @@ happner.create(config, function(e, mesh) {
     help: typeof commander.help == 'boolean' ? commander.help : true,
   }, function(eee, prompt) {
     // eee is array! of [e,e,e] if errors ocurred
-   // prompt started anyway.
+    // prompt started anyway.
   });
 });
