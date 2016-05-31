@@ -95,7 +95,7 @@ describe('d5-connection-changes-events', function() {
       //TODO some expect stuff
       done();
     });
-    
+
     mesh.stop({reconnect:false}, function(e){
 
 

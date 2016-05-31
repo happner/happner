@@ -178,3 +178,9 @@
 
 - Reconnect option can be now be passed into mesh.stop() to inform remotes to reconnect (default true)
 
+1.8.0 2016-05-13
+-----------------
+
+- startup loader
+- bumped happn to 2.6.1
+- bumped happn-logger 0.0.2

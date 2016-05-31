@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "mocha silence.js test --expose-gc",
+    "test-optimize": "mocha test/test-optimize --expose-gc",
     "test-cover": "istanbul cover _mocha -- silence.js test"
   },
   "repository": {
@@ -45,8 +46,8 @@
     "fs-extra": "0.24.0",
     "glob": "5.0.15",
     "gulp": "^3.9.0",
-    "happn": "2.5.21",
-    "happn-logger": "0.0.1",
+    "happn": "2.6.1",
+    "happn-logger": "0.0.2",
     "happner-terminal": "0.0.7",
     "karma": "^0.13.15",
     "karma-chai": "^0.1.0",
