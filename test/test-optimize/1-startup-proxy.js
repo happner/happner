@@ -265,26 +265,28 @@ describe('1-startup-proxy', function (done) {
         var logMessage = logs[logIndex];
 
         if (logMessage.indexOf('(mesh) started component \'security\'') >= 0){
+          console.log('score 1');
           logScore++;
         }
 
         if (logMessage.indexOf('(mesh) started component \'system\'') >= 0){
+          console.log('score 2');
           logScore++;
         }
 
         if (logMessage.indexOf('happner ready to start listening') >= 0){
-          logScore++;
-        }
-
-        if (logMessage.indexOf('listening at :::55004') >= 0){
+          console.log('score 3');
           logScore++;
         }
 
         if (logMessage.indexOf('happner process is now listening, killing parent process in 5 seconds') >= 0){
+          console.log('score 4');
           logScore++;
         }
 
       }
+
+
 
       return logScore;
     }
@@ -311,9 +313,9 @@ describe('1-startup-proxy', function (done) {
             expect(data).to.be('pong');
             var score = verifyLogs();
 
-            if (score >= 5)
+            if (score == 4)
               killProc(childPID, done, true);
-            else done(new Error('log message score too low:::' + score.toString()));
+            else done(new Error('log message score invalid:::' + score.toString()));
 
           }, 55004);
 
