@@ -8,3 +8,5 @@ lib/system/data/*.nedb
 test/temp/*
 temp/*
 test/Users
+*.log
+
