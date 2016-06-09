@@ -3,7 +3,6 @@
  * Updated by S.Bishop 6/1/2015.
  */
 
-var moment = require('moment');
 
 module.exports = function (options) {
   return new Component1(options);
@@ -32,7 +31,7 @@ function Component1(options) {
 
         });
       else {
-        var timeDiff = moment.utc() - message.timestamp;
+        var timeDiff = Date.now() - message.timestamp;
         var message = 'Hooray, component ping pong test is over!! ' + message.pingCount + ' pings, elapsed time:' + timeDiff + 'ms';
         $happn.emit('maximum-pings-reached', {m: message}, function (e, response) {
 
@@ -55,7 +54,7 @@ function Component1(options) {
 
     $happn.exchange.component2.exposedMethod({
       message: "Component1",
-      "timestamp": moment.utc(),
+      "timestamp": Date.now(),
       "pingCount": 0
     }, function (e, response) {
       if (e) return //console.log('call to component2 broke...' + e);
@@ -68,8 +67,8 @@ function Component1(options) {
   }
 
   this.startData = function ($happn) {
-    
-    $happn._mesh.data.set('/component1/testStartTime', {timestamp: moment.utc()});
+
+    $happn._mesh.data.set('/component1/testStartTime', {timestamp: Date.now()});
     for (var i = 0; i < options.maximumPings; i++) {
       $happn._mesh.data.set('/component1/testDataCount', {count: i});
     }

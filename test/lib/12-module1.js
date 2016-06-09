@@ -3,8 +3,6 @@
  * Updated by S.Bishop 6/1/2015.
  */
 
-var moment = require('moment');
-
 module.exports = function (options) {
   return new Component1(options);
 };
@@ -39,7 +37,7 @@ function Component1(options) {
 
     //console.log('starting module1 component');
 
-    $happn.mesh.exchange.component2.exposedMethod({message:"Component1", "timestamp":moment.utc(), "pingCount":0}, function(e, response){
+    $happn.mesh.exchange.component2.exposedMethod({message:"Component1", "timestamp":Date.now(), "pingCount":0}, function(e, response){
       if (e) return //console.log('call to component2 broke...' + e);
 
     });
