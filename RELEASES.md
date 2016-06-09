@@ -191,3 +191,4 @@
 - fixed issue with metadata not showing created,modified
 - moved dev dependancies (gulp/karma) to devDependancies
 - removed moment dependancies
+- updated happn version 2.6.3
