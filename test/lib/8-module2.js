@@ -3,7 +3,6 @@
  * Updated by S.Bishop 6/2/2025.
  */
 
-var moment = require('moment');
 
 module.exports = function (options) {
   return new Component2(options);
@@ -55,11 +54,11 @@ function Component2(options) {
       }
 
       if (count == options.maximumPings) {
-        var endTime = moment.utc();
+        var endTime = Date.now();
         timeOut = setTimeout(function () {
           $happn._mesh.data.get('/component1/testStartTime', null, function (e, result) {
 
-            var timeDiff = endTime - moment(result.timestamp);
+            var timeDiff = endTime - result.timestamp;
             var message = 'Hooray, data event test is over!! ' + count + ' sets, elapsed time:' + timeDiff + 'ms';
             $happn.emit('data-test-complete', {m: message}, function (e, response) {
             });

@@ -30,7 +30,6 @@ describe('d5-connection-changes-events', function() {
       if (err) return done(err);
       mesh.start(function(err) {
         if (err) {
-          // console.log(err.stack);
           return done(err);
         }
 
@@ -57,8 +56,6 @@ describe('d5-connection-changes-events', function() {
   it('tests the reconnection events', function(done) {
 
     var fireEvent = function(key){
-
-      console.log('fireEVent happened:::', key);
 
       if (eventsFired) return;
 
@@ -97,11 +94,7 @@ describe('d5-connection-changes-events', function() {
     });
 
     mesh.stop({reconnect:false}, function(e){
-
-
       if (e) return done(e);
-      // console.log('the server stopped:::');
-
     });
 
   });

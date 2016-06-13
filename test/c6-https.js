@@ -37,8 +37,6 @@ describe('c6 - https', function(done) {
 
     remote.stdout.on('data', function(data) {
 
-      console.log(data.toString());
-
       if (data.toString().match(/READY/)){
         testClient = new Mesh.MeshClient({port:3111, protocol:'https', allowSelfSignedCerts:true});
         testClient.login().then(function(e){

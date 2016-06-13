@@ -130,18 +130,10 @@ describe('c9-payload-encryption-client-to-mesh', function() {
     var mesh = this.mesh;
 
     mesh.event.test.on('test-emmission', function(args){
-
-      console.log('args:::', args);
       done();
-
     });
 
     mesh.exchange.test.doEmit({test:"test"})
-
-    .then(function() {
-     console.log('method executed ok:::');
-    })
-
     .catch(done);
 
   });
@@ -210,13 +202,10 @@ describe('c9-payload-encryption-client-to-mesh', function() {
     .then(function() {
 
       client.event.test.on('test-emmission', function(data){
-        console.log('client on happened ok:::', data);
         done();
-      })
+      });
 
-      client.exchange.test.doEmit({test:"test"}, function(e, result){
-        console.log('emit function went ok:::');
-      })
+      client.exchange.test.doEmit({test:"test"}, function(e, result){});
 
     })
 

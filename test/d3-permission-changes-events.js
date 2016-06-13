@@ -28,7 +28,6 @@ describe('d3-permission-changes', function() {
       if (err) return done(err);
       mesh.start(function(err) {
         if (err) {
-          // console.log(err.stack);
           return done(err);
         }
 
@@ -89,8 +88,6 @@ describe('d3-permission-changes', function() {
     }
 
     var fireEvent = function(key){
-
-      console.log('event was fired:::', key);
 
       eventsToFire[key] = true;
 
@@ -171,8 +168,6 @@ describe('d3-permission-changes', function() {
                   adminClient.exchange.security.deleteUser(testUser, function(e, result){
 
                     if (e) return done(e);
-
-                    console.log('we made all the updates:::');
 
                   })
 

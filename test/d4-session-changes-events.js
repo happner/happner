@@ -1,4 +1,4 @@
-describe('d3-permission-changes', function() {
+describe('d4-session-changes-events', function() {
 
   this.timeout(120000);
 
@@ -59,8 +59,6 @@ describe('d3-permission-changes', function() {
   it('tests the connect and disconnect events, by logging on and off with the admin client', function(done) {
 
     var fireEvent = function(key){
-
-      console.log('event was fired:::', key);
 
       eventsToFire[key] = true;
 

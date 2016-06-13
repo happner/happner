@@ -184,3 +184,11 @@
 - startup loader
 - bumped happn to 2.6.1
 - bumped happn-logger 0.0.2
+
+1.8.1 2016-06-09
+-----------------
+
+- fixed issue with metadata not showing created,modified
+- moved dev dependancies (gulp/karma) to devDependancies
+- removed moment dependancies
+- updated happn version 2.6.3

@@ -6,19 +6,16 @@ function SecuredComponent() {}
 
 SecuredComponent.prototype.method1 = function($happn, options, callback) {
   options.methodName = 'method1';
-   // console.log('ran method1...');
   callback(null, options);
 }
 
 SecuredComponent.prototype.method2 = function($happn, options, callback) {
   options.methodName = 'method2';
-  // console.log('ran method2...');
   callback(null, options);
 }
 
 SecuredComponent.prototype.method3 = function($happn, options, callback) {
   options.methodName = 'method3';
-   // console.log('ran method3...');
   callback(null, options);
 }
 
@@ -98,8 +95,6 @@ describe('b4 - component start and validation -', function() {
 
     }, function(err) {
       if (err) return done(err);
-
-      console.log('have mesh:::');
 
       mesh.start(function(err) {
         if (err) {
@@ -652,8 +647,6 @@ it('we add a test user that belongs to a group that has permissions to access al
 var http = require('http');
 
 function doRequest(path, token, method, callback){
-
-  console.log('doing request:::', path);
 
   var http_request_options = {
     host: '127.0.0.1',

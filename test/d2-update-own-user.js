@@ -6,7 +6,6 @@ function TestMesh() {}
 
 TestMesh.prototype.method1 = function($happn, options, callback) {
   options.methodName = 'method1';
-   // console.log('ran method1...');
   callback(null, options);
 }
 
@@ -61,7 +60,6 @@ describe('d2-update-own-user', function() {
       if (err) return done(err);
       mesh.start(function(err) {
         if (err) {
-          // console.log(err.stack);
           return done(err);
         }
 
@@ -72,7 +70,6 @@ describe('d2-update-own-user', function() {
         }
 
         adminClient.login(credentials).then(function(){
-          console.log('ok d2 started:::');
           done();
         }).catch(done);
 
@@ -488,7 +485,6 @@ describe('d2-update-own-user', function() {
 
                 if (e) return done(e);
 
-                console.log('updateOwn result:::', result)
                 expect(result.custom_data.changedCustom).to.be('changedCustom');
 
                 testUserClient.login({username:testUser.username, password:'TEST PWD'}).then(done).catch(done);
