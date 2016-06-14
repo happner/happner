@@ -63,7 +63,7 @@ describe.only('Issue #113 - Event of by handle', function () {
 
   it('02 - should subscribe to an event then unsubscribe by handle', function (done) {
     var event_count = 0;
-    var path = "test2aaaaa/path";
+    var path = "test2/path";
     var handle = null;
     mesh.event.data.on(path, event_handler, function (err, _handle) {
       should.not.exist(err);
