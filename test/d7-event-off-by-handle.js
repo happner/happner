@@ -17,14 +17,14 @@ var config = {
   }
 };
 
-describe('d7 - Issue #113 - Event of by handle', function () {
+describe('d7 - Issue #113 - Event off by handle', function () {
   this.timeout(10000);
   var mesh;
   before(function (done) {
     mesh = new Mesh();
-    mesh.initialize(config, function (initRrr) {
+    mesh.initialize(config, function (initErr) {
       mesh.start(function (startErr) {
-        done(initRrr || startErr);
+        done(initErr || startErr);
       });
     });
   });
