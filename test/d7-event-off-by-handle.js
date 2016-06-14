@@ -3,7 +3,7 @@
  */
 
 
-var Mesh = require('../../');
+var Mesh = require('../');
 var should = require('chai').should();
 var path = require('path');
 
@@ -17,7 +17,7 @@ var config = {
   }
 };
 
-describe.only('Issue #113 - Event of by handle', function () {
+describe('d7 - Issue #113 - Event of by handle', function () {
   this.timeout(10000);
   var mesh;
   before(function (done) {
