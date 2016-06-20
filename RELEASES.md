@@ -192,3 +192,8 @@
 - moved dev dependancies (gulp/karma) to devDependancies
 - removed moment dependancies
 - updated happn version 2.6.3
+
+1.8.3 2016-06-09
+----------------
+
+- updated happn version 2.6.4 with a test
