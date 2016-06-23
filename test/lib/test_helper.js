@@ -1,5 +1,6 @@
 var async = require('async');
 var Mesh = require('../../');
+var fs = require('fs');
 
 module.exports = {
   __happnerClients:{},
@@ -10,11 +11,11 @@ module.exports = {
     this.__happnerClients[ctx].push(client);
   },
   __happnerInstances:{},
-  __addHappnerInstance:function(ctx, instance){
+  __addHappnerInstance:function(ctx, instance, config){
     if (!this.__happnerInstances[ctx])
       this.__happnerInstances[ctx] = [];
 
-    this.__happnerInstances[ctx].push(instance);
+    this.__happnerInstances[ctx].push({instance:instance, config:config});
   },
   startHappnerInstance:function(ctx, config, callback) {
 
@@ -31,17 +32,21 @@ module.exports = {
     Mesh.create(config, function (e, instance) {
       if (e) return callback(e);
 
-      _this.__addHappnerInstance(ctx, instance);
+      _this.__addHappnerInstance(ctx, instance, config);
 
-      var client = new Mesh.MeshClient({
+      var client = new Mesh.MeshClient({port:config.datalayer.port?config.datalayer.port:55000});
+      var loginParams = {
+
         username:'_ADMIN',
-        password:config.datalayer.adminPassword?config.datalayer.adminPassword:'happn',
-        port:config.datalayer.port?config.datalayer.port:55000
+        password:config.datalayer.adminPassword?config.datalayer.adminPassword:'happn'
+
+      }
+
+      client.login(loginParams).then(function(e){
+        if (e) return callback(e);
+        _this.__addHappnerClient(ctx, client);
+        callback(null, instance, client);
       });
-
-      _this.__addHappnerClient(ctx, client);
-
-      callback(null, instance, client);
 
     });
   },
@@ -49,15 +54,30 @@ module.exports = {
     var _this = this;
     var index = 0;
 
-    async.eachSeries(_this.__happnerInstances[ctx], function(instance, stopCallback){
-      instance.stop(function(e){
-        _this.__happnerInstances[ctx].splice(index, 1);
-        _this.__happnerClients[ctx].splice(index, 1);
+    async.eachSeries(_this.__happnerInstances[ctx], function(started, stopCallback){
+
+      started.instance.stop(function(e){
+
         if (e) return stopCallback[e];
-        index++;
+        if ((started.config && started.config.datalayer && started.config.datalayer.filename) || (started.config && started.config.data && started.config.data.filename)){
+
+          var dbPath;
+          if (started.config.datalayer)
+            dbPath = started.config.datalayer.filename;
+
+          if (started.config.data)
+            dbPath = started.config.data.filename;
+
+          fs.unlinkSync(dbPath);
+        }
+
         stopCallback();
       });
-    }, callback);
+    }, function(e){
+      if (e) return callback(e);
+      _this.__happnerInstances[ctx] = [];
+      callback();
+    });
   },
   exec:function(ctx, command, callback){
 

@@ -31,8 +31,6 @@ describe(path.basename(__filename), function (done) {
 
     remote.stdout.on('data', function (data) {
 
-      //console.log(data.toString());
-
       if (data.toString().match(/READY/)) {
         testClient = new Mesh.MeshClient({port: 3111});
         testClient.login({
@@ -71,8 +69,6 @@ describe(path.basename(__filename), function (done) {
 
         if (e) return done(e);
 
-        // console.log('get happened:::', getresult);
-
         expect(getresult.val).to.be("get");
         done();
 
@@ -104,8 +100,6 @@ describe(path.basename(__filename), function (done) {
         testClient.exchange.test_6.data.remove('/6-websocket-client/delete', {}, function (e, removeresult) {
 
           if (e) return done(e);
-
-          // console.log('delete happened:::', removeresult);
 
           testClient.exchange.test_6.data.get('/6-websocket-client/delete', {}, function (e, getremovedresult) {
 
