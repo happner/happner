@@ -197,3 +197,10 @@
 ----------------
 
 - updated happn version 2.6.4 with a test
+
+1.8.4 2016-06-24
+----------------
+
+- updated happn version 2.6.5
+- added the db compaction functionality
+

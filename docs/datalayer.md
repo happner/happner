@@ -56,3 +56,53 @@ $happn._mesh.datalayer.events.on('detatch', function(ev) {
 });
 
 ```
+
+### Datalayer Compaction
+
+The datalayer can be set to compact at an interval, or can also be compacted by a call:
+
+*the following code demonstrates an interval compaction configuration:*
+```javascript
+var config = {
+  datalayer: {
+    port: 55007,
+    filename:test_file_interval,
+    compactInterval:10000//compact every 10 seconds
+  },
+  components: {
+    "data": {}
+  }
+};
+
+var Happner = require('happner');
+var config = {};
+
+Happner.create(config, function(err, mesh) {
+  /* _ */
+});
+```
+
+*the following code demonstrates how to kick of a compaction job:*
+
+```javascript
+var config = {
+  datalayer: {
+    port: 55006,
+    filename:test_file_call
+  },
+  components: {
+    "data": {}
+  }
+};
+
+var Happner = require('happner');
+var config = {};
+
+Happner.create(config, function(err, mesh) {
+  mesh.exchange.system.compactDBFile(function(e){
+    //your file was successfully compacted
+  });
+});
+
+
+```
