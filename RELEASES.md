@@ -204,3 +204,13 @@
 - updated happn version 2.6.5
 - added the db compaction functionality
 
+1.8.5 2016-06-27
+----------------
+
+- add happner-loader to CLI
+
+1.8.6 2016-06-27
+----------------
+
+- fix accidental pre-merge publish
+

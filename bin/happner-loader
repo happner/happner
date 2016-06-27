@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var LoaderProgress = require('../lib/startup/loader_progress.js');
 var args = {};
 
