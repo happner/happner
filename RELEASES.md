@@ -209,3 +209,8 @@
 
 - add happner-loader to CLI
 
+1.8.6 2016-06-27
+----------------
+
+- fix accidental pre-merge publish
+
