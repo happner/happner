@@ -48,14 +48,6 @@ try {
   console.log('INFO: created directory ' + happnerHome);
 }
 
-// Primus compiles their script, need write permission
-// Only necessary for global install
-
-// Happn uses this if defined.
-
-process.env.PRIMUS_SCRIPT = happnHome + '/js/browser_primus.js';
-
-
 var config = {
   name: 'home', // <------- your localnode
   version: '0.0.1',

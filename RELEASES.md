@@ -214,3 +214,9 @@
 
 - fix accidental pre-merge publish
 
+
+latest
+------
+
+- fix cli startup missing browser_primus
+- fix cli backward compat for config with `dataLayer` vs. `datalayer`
