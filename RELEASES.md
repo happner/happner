@@ -222,3 +222,8 @@
 - fix cli backward compat for config with `dataLayer` vs. `datalayer`
 - updated happn with previous value on subscribe (sans glue)
 
+1.9.0 2016-06-29
+----------------
+
+- initial value on subscription
+
