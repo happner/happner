@@ -227,3 +227,13 @@
 
 - initial value on subscription
 
+1.9.1 2016-06-29
+----------------
+
+- fixed test c9
+
+1.9.2 2016-06-29
+----------------
+
+- using happn 2.7.1
+
