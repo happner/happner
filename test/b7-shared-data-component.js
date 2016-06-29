@@ -10,7 +10,7 @@ describe('b7 - shared data component', function() {
   var meshInstance;
   var dataEvents;
   var config;
-
+  var expect = require('expect.js');
   var TestModule1 = {
     setSharedData: function($happn, path, data, callback) {
       $happn.exchange.data.set(path, data, callback);
@@ -104,6 +104,95 @@ describe('b7 - shared data component', function() {
         dataComponent.set('/some/path/four', {key: 'VALUE'}, function(e) {
           if (e) return done(e);
         })
+      });
+    });
+
+    it('should subscribe and get an initial value on the callback', function (callback) {
+
+      dataComponent.set('/b7/testsubscribe/data/value_on_callback_test', {"test":"data"}, function(e){
+        if (e) return callback(e);
+
+        dataComponent.on('/b7/testsubscribe/data/value_on_callback_test', {"event_type": "set", "initialCallback":true}, function (message) {
+
+          expect(message.updated).to.be(true);
+          callback();
+
+        }, function(e, reference, response){
+          if (e) return callback(e);
+          try{
+
+            expect(response.length).to.be(1);
+            expect(response[0].test).to.be('data');
+
+            dataComponent.set('/b7/testsubscribe/data/value_on_callback_test', {"test":"data", "updated":true}, function(e){
+              if (e) return callback(e);
+            });
+
+          }catch(e){
+            return callback(e);
+          }
+        });
+
+      });
+
+    });
+
+    it('should subscribe and get initial values on the callback', function (callback) {
+
+      dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/1', {"test":"data"}, function(e){
+        if (e) return callback(e);
+
+        dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/2', {"test":"data1"}, function(e){
+          if (e) return callback(e);
+
+          dataComponent.on('/b7/testsubscribe/data/values_on_callback_test/*', {"event_type": "set", "initialCallback":true}, function (message) {
+
+            expect(message.updated).to.be(true);
+            callback();
+
+          }, function(e, reference, response){
+            if (e) return callback(e);
+            try{
+
+              expect(response.length).to.be(2);
+              expect(response[0].test).to.be('data');
+              expect(response[1].test).to.be('data1');
+
+              dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/1', {"test":"data", "updated":true}, function(e){
+                if (e) return callback(e);
+              });
+
+            }catch(e){
+              return callback(e);
+            }
+          });
+        });
+      });
+    });
+
+    it('should subscribe and get initial values emitted immediately', function (callback) {
+
+      var caughtEmitted = 0;
+
+      dataComponent.set('/b7/testsubscribe/data/values_emitted_test/1', {"test":"data"}, function(e){
+        if (e) return callback(e);
+
+        dataComponent.set('/b7/testsubscribe/data/values_emitted_test/2', {"test":"data1"}, function(e){
+          if (e) return callback(e);
+
+          dataComponent.on('/b7/testsubscribe/data/values_emitted_test/*', {"event_type": "set", "initialEmit":true}, function (message, meta) {
+
+            caughtEmitted++;
+
+            if (caughtEmitted == 2){
+              expect(message.test).to.be("data1");
+              callback();
+            }
+
+          }, function(e){
+            if (e) return callback(e);
+          });
+        });
       });
     });
 
