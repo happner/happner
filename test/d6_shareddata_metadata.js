@@ -138,6 +138,47 @@ describe('d6_shareddata_metadata', function() {
 
   });
 
+  it('tests the meta of an on event', function(done) {
+
+    var onScore = 0;
+    var doneAlready = false;
+
+    meshInstance.event.data.on('/some/test/data/event/to/listen/on',
+      function(data, meta){
+        try{
+
+          if (!data.removed){
+            expect(meta.created).to.not.be(undefined);
+            expect(meta.modified).to.not.be(undefined);
+          }
+          onScore++;
+
+          if (onScore == 3)
+            done();
+
+        }catch(e){
+          if (!doneAlready){
+            doneAlready = true;
+            done(e);
+          }
+        }
+      },
+      function(e){
+        if (e) return done(e);
+
+        meshInstance.exchange.data.set('/some/test/data/event/to/listen/on', {"test":"on"}, function(e, response){
+          if (e) return done(e);
+          meshInstance.exchange.data.set('/some/test/data/event/to/listen/on', {"test":"on-update"}, function(e, response){
+            if (e) return done(e);
+            meshInstance.exchange.data.remove('/some/test/data/event/to/listen/on', function(e, response){
+              if (e) return done(e);
+            });
+          });
+        });
+
+      })
+
+  });
 
   after('it shuts down happner', function(done){
     test_helper.stopHappnerInstances('d6_shareddata_metadata', done);
