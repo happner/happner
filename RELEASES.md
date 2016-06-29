@@ -237,8 +237,8 @@
 
 - using happn 2.7.1
 
-1.10.0 2016-06-29
-----------------
+1.10.0 - 1.10.1 2016-06-29
+--------------------------
 
-- loader: new proxy functionality
+- adding Proxy to happner-loader
 

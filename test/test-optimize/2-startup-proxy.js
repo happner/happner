@@ -10,6 +10,8 @@ describe('2-startup-proxy', function (done) {
   var async = require('async');
   var exec = require('child_process').exec;
   var http = require('http');
+  var spawn = require('child_process').spawn;
+
 
 
   require('benchmarket').start();
@@ -57,19 +59,37 @@ describe('2-startup-proxy', function (done) {
   }
 
   before('Set up Loader with Proxy', function (done) {
-    var LoaderProgress = require('../../lib/startup/loader_progress');
-    var loaderProgress = new LoaderProgress({port: 55009, proxy: "http://127.0.0.1:55019"});
 
-    loaderProgress.listen(function (e) {
+    var loaderPath = path.resolve('./bin/happner-loader');
+    var confPath = path.resolve('./test/lib/d6_conf_w_proxy.json');
 
-      if (e) return done(e);
+    var logs = [] ;
 
-      loaderProgress.progress('test', 10);
+    // spawn remote mesh in another process
+    var remote = spawn('node', [loaderPath, '--conf', confPath]);
 
-      done();
 
+
+    remote.stdout.on('data', function(data) {
+
+      if (childPIDs.length == 0){
+        childPIDs.push(remote.pid);
+      }
+
+      var logMessage = data.toString().toLowerCase();
+
+      logs.push(logMessage);
+
+      if (logMessage.indexOf('child process loaded') >= 0){
+
+        var childPIDLog = logMessage.split(':::');
+        var childPID = parseInt(childPIDLog[childPIDLog.length - 1]);
+        childPIDs.push(childPID);
+        done();
+      }
     });
   });
+
 
   it('Get the content of the loader target', function (done) {
     doRequest('loader.htm', function (response) {
@@ -119,21 +139,14 @@ describe('2-startup-proxy', function (done) {
     var killProcs = function () {
 
       if (childPIDs.length > 0) {
-
         async.eachSeries(childPIDs, function (pid, cb) {
-
           killProc(pid, cb);
-
         }, done);
 
       } else done();
     };
 
-    if (meshes.length > 0)
-      async.eachSeries(meshes, function (stopMesh, cb) {
-        stopMesh.stop({reconnect: false}, cb);
-      }, killProcs);
-    else killProcs();
+    killProcs();
 
   });
 
