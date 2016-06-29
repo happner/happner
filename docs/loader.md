@@ -9,6 +9,7 @@ lets look at the config:
 ```javascript
 {
   "port":55004,
+  "proxy":'http://127.0.0.1:80',  //[optional] While loading, requests are proxied to the url
   "happner-loader":{
     "redirect":"/ping"//you set this proerty to have the redirection occur after handover has happened between the loader and the actual happner instance
   }

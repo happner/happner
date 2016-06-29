@@ -1,4 +1,4 @@
-describe('1-startup-proxy', function (done) {
+describe('1-startup-loader', function (done) {
 
   // Uses unit test 2 modules
   var should = require('chai').should();
