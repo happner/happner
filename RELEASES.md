@@ -227,3 +227,8 @@
 
 - initial value on subscription
 
+1.9.1 2016-06-29
+----------------
+
+- fixed test c9
+

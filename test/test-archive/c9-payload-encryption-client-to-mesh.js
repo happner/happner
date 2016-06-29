@@ -34,7 +34,6 @@ if (global.TESTING_C5) return; // When 'requiring' the module above,
 
 var expect = require('expect.js');
 var Happner = require('../');
-var mesh;
 
 describe('c9-payload-encryption-client-to-mesh', function() {
 
@@ -52,45 +51,46 @@ describe('c9-payload-encryption-client-to-mesh', function() {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  before(function(done) {
+  before(function() {
     global.TESTING_C5 = true; //.............
-
-    Happner.create({
-        datalayer:{
-          secure:true,
-          encryptPayloads:true,
-          adminPassword:'happn'
-        },
-        port: 54545,
-        modules: {
-          'test': {
-            path: __filename
-          }
-        },
-        components: {
-          'test': {
-            module: 'test'
-          }
-        }
-      })
-      .then(function(instance) {
-        mesh = instance;
-      })
-      .then(function(){
-        done();
-      }).catch(done);
-
   });
 
-  after(function(done) {
-    mesh.stop({reconnect:false}, done);
+  beforeEach(function(done) {
+    var _this = this;
+    Happner.create({
+      datalayer:{
+        secure:true,
+        encryptPayloads:true,
+        adminPassword:'happn'
+      },
+      port: 54545,
+      modules: {
+        'test': {
+          path: __filename
+        }
+      },
+      components: {
+        'test': {
+          module: 'test'
+        }
+      }
+    })
+    .then(function(mesh) {
+      _this.mesh = mesh;
+    })
+    .then(done).catch(done);
+  });
+
+  afterEach(function(done) {
+    this.mesh.stop({reconnect:true}, done);
   });
 
   var encryptedRequestsCount = 0;
   var unencryptedRequestsCount = 0;
 
-  it('server can call more than one method in sequence (callback)', function(done) {
 
+  it('server can call more than one method in sequence (callback)', function(done) {
+    var mesh = this.mesh;
     mesh.exchange.test.method1(function(e, result) {
 
       if (e) return done(e);
@@ -106,11 +106,11 @@ describe('c9-payload-encryption-client-to-mesh', function() {
         done();
       });
     });
-
   });
 
 
   it('server can call more than one method in sequence (promise)', function(done) {
+    var mesh = this.mesh;
     mesh.exchange.test.method1()
 
     .then(function(result) {
@@ -126,14 +126,10 @@ describe('c9-payload-encryption-client-to-mesh', function() {
     .then(done).catch(done);
   });
 
-  var doneCalled = false;
-
   it('server can listen for an event - then recieve an event by calling a method', function(done) {
+    var mesh = this.mesh;
+
     mesh.event.test.on('test-emmission', function(args){
-
-      if (doneCalled) return;
-
-      doneCalled = true;
       done();
     });
 
