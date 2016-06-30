@@ -245,4 +245,4 @@
 1.11.0
 --------------------------
 
-- adding Proxy to happner-loader
+- adds ability to configure custom loader page
