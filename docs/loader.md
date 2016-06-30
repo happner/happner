@@ -10,8 +10,10 @@ lets look at the config:
 {
   "port":55004,
   "happner-loader":{
-    "redirect":"/ping"//you set this proerty to have the redirection occur after handover has happened between the loader and the actual happner instance
+    "redirect":"/ping",  //you set this proerty to have the redirection occur after handover has happened between the loader and the actual happner instance
     "proxy":'http://127.0.0.1:80',  // you set this property to proxy incoming requests to a different server, before handover
+    "splash": path.normalize(__dirname + "/../web/loader.htm"),  // Default loader.htm screen, this is bundle with happner by default.
+    "loaderPath": {match: new RegExp('^/web'), path: path.normalize(__dirname + '/../web')}  // For custome loader page sources, this object contains match (a regular expression of the URL) and path (resolves to a path on the filesytem)
   }
 }
 ````

@@ -242,3 +242,7 @@
 
 - adding Proxy to happner-loader
 
+1.11.0
+--------------------------
+
+- adding Proxy to happner-loader
