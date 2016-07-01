@@ -250,4 +250,4 @@
 1.11.1
 --------------------------
 
-- Don't redirect proxy repsonses, just serve splash page
+- Don't redirect proxy responses, just serve splash page
