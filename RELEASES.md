@@ -251,3 +251,8 @@
 --------------------------
 
 - Don't redirect proxy responses, just serve splash page
+
+1.11.2
+--------------------------
+
+- Removing unwanted console.log
