@@ -126,10 +126,11 @@ describe('2-startup-proxy', function (done) {
     }, 55009);
   });
 
-  it('Get the content of a 404 file, should be loader.htm', function (done) {
-    doRequest('bad.htm', function (response ,body) {
+  it('Get the content of a 404 file, should have valid content', function (done) {
+    doRequest('bad/url/location', function (response ,body) {
       body.should.not.eql("Marker"); // We have the loader.htm body
-      response.request.path.should.eql("/loader.htm");
+      response.statusCode.should.eql(200);
+      response.request.path.should.eql("/bad/url/location"); // We do not want to redirect.
       done();
     }, 55009);
   });

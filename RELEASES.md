@@ -246,3 +246,8 @@
 --------------------------
 
 - adds ability to configure custom loader page
+
+1.11.1
+--------------------------
+
+- Don't redirect proxy responses, just serve splash page
