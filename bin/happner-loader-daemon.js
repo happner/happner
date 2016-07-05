@@ -17,6 +17,7 @@ try{
 
   commander
 
+    .allowUnknownOption()//fixes the unknown option error
     .version(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version)
     .option('--conf [file]',         'Load mesh config from file/module (js)') // ie. module.exports = {/* the config */}
     .option('--trace',               'Set LOG_LEVEL=trace')

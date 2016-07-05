@@ -256,3 +256,12 @@
 --------------------------
 
 - Removing unwanted console.log
+
+1.12.0
+--------------------------
+
+- Updated happn version
+- Created client timeout test d9
+- Updated docs to include client timeout parameter
+- Updated bitcore dependancies
+- Fixed happner-loader-daemon commander to accept unknown arguments
