@@ -75,7 +75,6 @@ var config = {
 };
 
 var Happner = require('happner');
-var config = {};
 
 Happner.create(config, function(err, mesh) {
   /* _ */
@@ -96,7 +95,6 @@ var config = {
 };
 
 var Happner = require('happner');
-var config = {};
 
 Happner.create(config, function(err, mesh) {
   mesh.exchange.system.compactDBFile(function(e){
@@ -106,3 +104,46 @@ Happner.create(config, function(err, mesh) {
 
 
 ```
+
+### Exchange method callback timeout
+
+The datalayer can be configured to allow the maximum amount of time any method on the exchange will wait before timing out:
+```javascript
+var config = {
+   name:'d9-client-timeout-timeoutConfig',
+   datalayer: {
+     setOptions:{
+       timeout:15000 //15 SECONDS, THIS IS THE MAXIMUM AMOUNT OF TIME IN 
+                    // MILLISECONDS, ANY METHOD WILL WAIT BEFORE RAISING A TIMEOUT ERROR
+     }
+   },
+   modules: {
+     'TestMesh': {
+       path:'TestMesh'
+     }
+   },
+   components: {
+     'TestMesh': {
+       moduleName: 'TestMesh',
+       schema: {
+         exclusive: false
+       }
+     }
+   }
+ };
+
+var Happner = require('happner');
+
+Happner.create(config, function(err, mesh) {
+  
+   mesh.exchange.TestMesh.method1(function(e, result){
+
+    //e = "Request timed out" if the method took longer than 15 seconds to process
+
+   });
+  
+});
+
+
+```
+
