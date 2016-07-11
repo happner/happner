@@ -257,7 +257,7 @@
 
 - Removing unwanted console.log
 
-1.12.0
+1.12.0 2016-07-08
 --------------------------
 
 - Updated happn version
@@ -265,3 +265,8 @@
 - Updated docs to include client timeout parameter
 - Updated bitcore dependancies
 - Fixed happner-loader-daemon commander to accept unknown arguments
+
+1.13.0 2016-07-11
+---------------------------
+
+- Updated happn version 2.9.4
