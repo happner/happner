@@ -2,49 +2,47 @@ module.exports = Explicit;
 
 var DONE = false;
 
-function Explicit() {}
+function Explicit() {
+}
 
-Explicit.prototype.asyncStart = function($happn, opts, optionalOpts, callback) {
+Explicit.prototype.asyncStart = function ($happn, opts, optionalOpts, callback) {
 
   if (typeof callback == 'undefined') callback = optionalOpts;
 
-  setTimeout(function() {
+  setTimeout(function () {
     DONE = true;
     callback(null)
   }, 200);
 }
 
-Explicit.prototype.asyncStartFails = function(callback) {
+Explicit.prototype.asyncStartFails = function (callback) {
 
   callback(new Error('erm'));
 }
 
-Explicit.prototype.methodName1 = function(opts, blob, callback) {
+Explicit.prototype.methodName1 = function (opts, blob, callback) {
   if (typeof blob == 'function') callback = blob;
   callback(null, {yip: 'eee'});
 }
 
 
-
-
 if (global.TESTING_16) return; // When 'requiring' the module above,
-                              // don't run the tests below
-                             //.............
-
+// don't run the tests below
+//.............
 
 
 var should = require('chai').should();
 var mesh;
 var Mesh = require('../');
 
-describe('a6 - component start and validation -', function() {
+describe('a6 - component start and validation -', function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
   this.timeout(120000);
 
-  before(function(done) {
+  before(function (done) {
 
     global.TESTING_16 = true; //.............
 
@@ -73,7 +71,7 @@ describe('a6 - component start and validation -', function() {
               'asyncStart': {
                 type: 'async',
                 parameters: [
-                  {name: 'opts', required: true, value: {op:'tions'}},
+                  {name: 'opts', required: true, value: {op: 'tions'}},
                   {name: 'optionalOpts', required: false},
                   {type: 'callback', required: true}
                 ],
@@ -87,7 +85,7 @@ describe('a6 - component start and validation -', function() {
               'methodName1': {
                 // alias: 'm1',
                 parameters: [
-                  {name: 'opts', required: true, value: {op:'tions'}},
+                  {name: 'opts', required: true, value: {op: 'tions'}},
                   {name: 'blob', required: false},
                   {type: 'callback', required: true}
                 ]
@@ -97,26 +95,26 @@ describe('a6 - component start and validation -', function() {
         }
       }
 
-    }, function(err) {
+    }, function (err) {
       if (err) return done(err);
 
-        mesh.start(function(err) {
-          if (err) {
-            console.log(err.stack);
-            //process.exit(err.errno || 1);
-            return done(err);
-          }
-          return done();
-        });
+      mesh.start(function (err) {
+        if (err) {
+          console.log(err.stack);
+          //process.exit(err.errno || 1);
+          return done(err);
+        }
+        return done();
+      });
     });
   });
 
-  after(function(done) {
+  after(function (done) {
     delete global.TESTING_16; //.............
-    mesh.stop({reconnect:false}, done);
+    mesh.stop({reconnect: false}, done);
   })
 
-  it('has called and finished the component async start method', function(done) {
+  it('has called and finished the component async start method', function (done) {
 
     DONE.should.eql(true)
     done();
@@ -124,7 +122,7 @@ describe('a6 - component start and validation -', function() {
   });
 
 
-  it('has called back with error into the mesh start callback because the component start failed', function(done) {
+  it('has called back with error into the mesh start callback because the component start failed', function (done) {
 
     var anotherMesh = new Mesh();
     anotherMesh.initialize({
@@ -160,10 +158,10 @@ describe('a6 - component start and validation -', function() {
           }
         }
       }
-    }, function(err) {
+    }, function (err) {
       if (err) return done(err);
 
-      anotherMesh.start(function(err, mesh) {
+      anotherMesh.start(function (err, mesh) {
         // console.log('ERROR', err);
         should.exist(err);
         done();
@@ -171,9 +169,9 @@ describe('a6 - component start and validation -', function() {
     });
   });
 
-  xit('validates methods', function(done) {
+  xit('validates methods', function (done) {
 
-    this.mesh.api.exchange.explicit.methodName1({op: 'tions3'}, function(err, res) {
+    this.mesh.api.exchange.explicit.methodName1({op: 'tions3'}, function (err, res) {
       res.should.be.an.instanceof(Error);
       done();
     });

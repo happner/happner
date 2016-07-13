@@ -4,38 +4,38 @@ var config = {
   name: 'theFarawayTree',
   dataLayer: {
     port: 55001,
-    secure:true,
-    adminPassword:'guessme',
-    encryptPayloads:true
+    secure: true,
+    adminPassword: 'guessme',
+    encryptPayloads: true
   },
   endpoints: {},
   modules: {
-    "moonface":{
-      path:__dirname + "/c8-payload-encryption-component",
-      constructor:{
-        type:"sync",
-        parameters:[]
+    "moonface": {
+      path: __dirname + "/c8-payload-encryption-component",
+      constructor: {
+        type: "sync",
+        parameters: []
       }
     }
   },
   components: {
-    "moonface":{
-      moduleName:"moonface",
-      schema:{
-        "exclusive":false,
-        "methods":{
+    "moonface": {
+      moduleName: "moonface",
+      schema: {
+        "exclusive": false,
+        "methods": {
           "rideTheSlipperySlip": {
             parameters: [
-              {name:'one',required:true},
-              {name:'two',required:true},
-              {name:'three',required:true},
-              {name:'callback', type:'callback', required:true}
+              {name: 'one', required: true},
+              {name: 'two', required: true},
+              {name: 'three', required: true},
+              {name: 'callback', type: 'callback', required: true}
             ]
           }
           ,
           "haveAnAccident": {
             parameters: [
-              {name:'callback', type:'callback', required:true}
+              {name: 'callback', type: 'callback', required: true}
             ]
           }
         }
@@ -46,7 +46,7 @@ var config = {
 
 var mesh = new Mesh();
 
-mesh.initialize(config, function(err) {
+mesh.initialize(config, function (err) {
 
   if (err) {
     console.log(err);
@@ -54,9 +54,9 @@ mesh.initialize(config, function(err) {
     return;
   }
 
-  mesh.start(function(e){
+  mesh.start(function (e) {
 
-    if (e){
+    if (e) {
       console.log(e);
       process.exit(e.code || 1);
     }

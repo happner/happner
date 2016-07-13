@@ -1,15 +1,16 @@
 module.exports = SeeAbove;
 
-function SeeAbove() {}
+function SeeAbove() {
+}
 
-SeeAbove.prototype.methodName1 = function(callback) {
+SeeAbove.prototype.methodName1 = function (callback) {
   callback(null, 'OK-GOOD');
 }
-SeeAbove.prototype.methodName2 = function() {
+SeeAbove.prototype.methodName2 = function () {
   // not exported into mesh. per exclusive in schema
 }
 
-SeeAbove.prototype.webMethod1 = function(req, res) {
+SeeAbove.prototype.webMethod1 = function (req, res) {
   res.end('OK-GOOD');
 }
 
@@ -35,22 +36,22 @@ SeeAbove.prototype.$happner = {
 }
 
 if (global.TESTING_15) return; // When 'requiring' the module above,
-                              // don't run the tests below
-                             //.............
+// don't run the tests below
+//.............
 
 var should = require('chai').should();
 var request = require('request');
 var mesh;
 var Mesh = require('../');
 
-describe('a5 - default component configs', function() {
+describe('a5 - default component configs', function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
   this.timeout(120000);
 
-  before(function(done) {
+  before(function (done) {
 
     global.TESTING_15 = true; //.............
 
@@ -71,33 +72,33 @@ describe('a5 - default component configs', function() {
         'see-above': {}
       }
 
-    }, function(err) {
+    }, function (err) {
       delete global.TESTING_15; //.............
       if (err) return done(err);
       done();
     });
   });
 
-   after(function(done){
-     mesh.stop({reconnect:false}, done);
+  after(function (done) {
+    mesh.stop({reconnect: false}, done);
   });
 
-  it('created the module with the method schema as defaulted', function(done) {
+  it('created the module with the method schema as defaulted', function (done) {
 
     // console.log(this.mesh.exchange);
     should.not.exist(this.mesh.exchange['see-above'].methodName2)
     var _this = this;
-    this.mesh.exchange['see-above'].methodName1(function(err, res) {
-    //   res.should.equal('OK-GOOD');
-    //   _this.mesh.exchange['see-above'].moo(function(err, res) {
-    //     res.should.equal('OK-GOOD');
-        done();
-    //   });
+    this.mesh.exchange['see-above'].methodName1(function (err, res) {
+      //   res.should.equal('OK-GOOD');
+      //   _this.mesh.exchange['see-above'].moo(function(err, res) {
+      //     res.should.equal('OK-GOOD');
+      done();
+      //   });
     });
   });
 
-  it('created the module with the web schema as defaulted', function(done) {
-    request.get('http://localhost:55000/see-above/method', function(err, _, body) {
+  it('created the module with the web schema as defaulted', function (done) {
+    request.get('http://localhost:55000/see-above/method', function (err, _, body) {
       if (err) return done(err);
       body.should.equal('OK-GOOD');
       done();

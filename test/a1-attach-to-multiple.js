@@ -1,4 +1,4 @@
-describe('a1 - attach to multiple meshes (meshs?)', function() {
+describe('a1 - attach to multiple meshes (meshs?)', function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
@@ -15,7 +15,7 @@ describe('a1 - attach to multiple meshes (meshs?)', function() {
 
   this.timeout(120000);
 
-  before(function(done) {
+  before(function (done) {
 
     var kids = this.kids = [];
 
@@ -27,23 +27,23 @@ describe('a1 - attach to multiple meshes (meshs?)', function() {
 
     parallel(
       bunchOfRemoteNodes.map(
-        function(i) {   // for each i, re-map to...
-          return function() {  // ...to an array of functions, ie. parallel([fn,fn,fn])
+        function (i) {   // for each i, re-map to...
+          return function () {  // ...to an array of functions, ie. parallel([fn,fn,fn])
             return promise(  // each function returns a promise
-              function(resolve, reject) { // receive resolve() and reject() from promise()
+              function (resolve, reject) { // receive resolve() and reject() from promise()
                 var kid;
-                                                          // argv[2]
+                // argv[2]
                 kids.push(kid = spawn(                   // i in kid as (3000 + i) port
                   'node', [libFolder + 'a1-remote-mesh', i]
                 ));
 
-                kid.stdout.on('data', function(data) {
+                kid.stdout.on('data', function (data) {
                   // console._stdout.write('remote' +i+ ' ' + data.toString());
                   if (data.toString().match(/READY/)) resolve();
                 });
 
-                kid.on('exit', function() {
-                  reject(new Error('kid ' +i+ ' exited'))
+                kid.on('exit', function () {
+                  reject(new Error('kid ' + i + ' exited'))
                   // this also runs in the after hook, but the rejection will
                   // be ignored because the promise will have already resolved()
                   // (cannot resolve and then reject)
@@ -62,7 +62,7 @@ describe('a1 - attach to multiple meshes (meshs?)', function() {
           }
         }
       )
-    ).then(function() {
+    ).then(function () {
 
       // console.log(config);
 
@@ -70,32 +70,32 @@ describe('a1 - attach to multiple meshes (meshs?)', function() {
       mesh.initialize(config, done);
 
     }).catch(done);
-             // call done with rejections error (if)
+    // call done with rejections error (if)
   });
 
-  after(function(done) {
-    this.kids.forEach(function(kid) {
+  after(function (done) {
+    this.kids.forEach(function (kid) {
       // console.log('killing kid', kid);
       kid.kill();
     });
-    this.mesh.stop({reconnect:false}, done);
+    this.mesh.stop({reconnect: false}, done);
   });
 
-  it('can call methods on all', function(done) {
+  it('can call methods on all', function (done) {
 
     var i = 0;
     var mesh = this.mesh;
-    var expecting = this.kids.map(function(kid) {
+    var expecting = this.kids.map(function (kid) {
       return [++i, kid.pid];
     });
 
     parallel(
       bunchOfRemoteNodes.map(
-        function(i) {
-          return function() {
+        function (i) {
+          return function () {
             return promise(
-              function(resolve, reject) {
-                mesh.exchange['mesh'+i].component.getPid(function(err, pid){
+              function (resolve, reject) {
+                mesh.exchange['mesh' + i].component.getPid(function (err, pid) {
                   if (err) return reject(err);
                   resolve([i, pid]);
                 });
@@ -104,7 +104,7 @@ describe('a1 - attach to multiple meshes (meshs?)', function() {
           }
         }
       )
-    ).then(function(iPids) {
+    ).then(function (iPids) {
 
       iPids.should.eql(expecting);
       done();

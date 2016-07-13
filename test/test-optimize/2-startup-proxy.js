@@ -13,7 +13,6 @@ describe('2-startup-proxy', function (done) {
   var spawn = require('child_process').spawn;
 
 
-
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -53,7 +52,7 @@ describe('2-startup-proxy', function (done) {
     };
 
     request(options, function (error, response, body) {
-      callback(response,body);
+      callback(response, body);
     });
 
   }
@@ -63,16 +62,15 @@ describe('2-startup-proxy', function (done) {
     var loaderPath = path.resolve('./bin/happner-loader');
     var confPath = path.resolve('./test/lib/d6_conf_w_proxy.json');
 
-    var logs = [] ;
+    var logs = [];
 
     // spawn remote mesh in another process
     var remote = spawn('node', [loaderPath, '--conf', confPath]);
 
 
+    remote.stdout.on('data', function (data) {
 
-    remote.stdout.on('data', function(data) {
-
-      if (childPIDs.length == 0){
+      if (childPIDs.length == 0) {
         childPIDs.push(remote.pid);
       }
 
@@ -80,7 +78,7 @@ describe('2-startup-proxy', function (done) {
 
       logs.push(logMessage);
 
-      if (logMessage.indexOf('child process loaded') >= 0){
+      if (logMessage.indexOf('child process loaded') >= 0) {
 
         var childPIDLog = logMessage.split(':::');
         var childPID = parseInt(childPIDLog[childPIDLog.length - 1]);
@@ -110,7 +108,7 @@ describe('2-startup-proxy', function (done) {
   it('Get the content of a proxy file, with remote http server', function (done) {
 
     var http = require("http");
-    http.createServer(function(req, res) {
+    http.createServer(function (req, res) {
       if (req.url == '/index.htm')
         res.writeHead(200, {"Content-Type": "text/html"});
       else
@@ -119,7 +117,7 @@ describe('2-startup-proxy', function (done) {
       res.end();
     }).listen(55019);
 
-    doRequest('index.htm', function (response,body) {
+    doRequest('index.htm', function (response, body) {
       body.should.eql("Marker");
       response.statusCode.should.eql(200);
       done();
@@ -127,7 +125,7 @@ describe('2-startup-proxy', function (done) {
   });
 
   it('Get the content of a 404 file, should have valid content', function (done) {
-    doRequest('bad/url/location', function (response ,body) {
+    doRequest('bad/url/location', function (response, body) {
       body.should.not.eql("Marker"); // We have the loader.htm body
       response.statusCode.should.eql(200);
       response.request.path.should.eql("/bad/url/location"); // We do not want to redirect.

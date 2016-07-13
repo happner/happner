@@ -1,4 +1,4 @@
-describe('b7 - shared data component', function() {
+describe('b7 - shared data component', function () {
 
   this.timeout(120000);
 
@@ -12,21 +12,21 @@ describe('b7 - shared data component', function() {
   var config;
   var expect = require('expect.js');
   var TestModule1 = {
-    setSharedData: function($happn, path, data, callback) {
+    setSharedData: function ($happn, path, data, callback) {
       $happn.exchange.data.set(path, data, callback);
     }
   }
 
   var TestModule2 = {
-    getSharedData: function($happn, path, callback) {
+    getSharedData: function ($happn, path, callback) {
       $happn.exchange.data.get(path, callback);
     }
   }
 
-  before(function(done) {
+  before(function (done) {
     var _this = this;
     Mesh.create(config = {
-      port:9898,
+      port: 9898,
       modules: {
         'module1': {
           instance: TestModule1
@@ -43,7 +43,7 @@ describe('b7 - shared data component', function() {
       }
 
 
-    }).then(function(mesh) {
+    }).then(function (mesh) {
       meshInstance = mesh;
       dataComponent = mesh.exchange.data;
       dataEvents = mesh.event.data;
@@ -51,16 +51,16 @@ describe('b7 - shared data component', function() {
     }).catch(done);
   });
 
-  after(function(done) {
-    meshInstance.stop({reconnect:false}, done);
+  after(function (done) {
+    meshInstance.stop({reconnect: false}, done);
   });
 
-  context('direct use', function() {
+  context('direct use', function () {
 
-    it('can set and get with opts', function(done) {
-      dataComponent.set('some/path/one', {key: 'value'}, {}, function(e, result) {
+    it('can set and get with opts', function (done) {
+      dataComponent.set('some/path/one', {key: 'value'}, {}, function (e, result) {
         if (e) return done(e);
-        dataComponent.get('some/path/one', {}, function(e, result) {
+        dataComponent.get('some/path/one', {}, function (e, result) {
           if (e) return done(e);
           result.key.should.equal('value');
           done();
@@ -69,11 +69,11 @@ describe('b7 - shared data component', function() {
     });
 
 
-    it('can set and get without opts', function(done) {
+    it('can set and get without opts', function (done) {
 
-      dataComponent.set('some/path/two', {key: 'value'}, function(e, result) {
+      dataComponent.set('some/path/two', {key: 'value'}, function (e, result) {
         if (e) return done(e);
-        dataComponent.get('some/path/two', function(e, result) {
+        dataComponent.get('some/path/two', function (e, result) {
           if (e) return done(e);
           result.key.should.equal('value');
           done();
@@ -81,27 +81,27 @@ describe('b7 - shared data component', function() {
       });
     });
 
-    it('can subscribe with opts', function(done) {
+    it('can subscribe with opts', function (done) {
 
-      dataComponent.on('/some/path/three', {}, function(data, meta) {
+      dataComponent.on('/some/path/three', {}, function (data, meta) {
         data.should.eql({key: 'VAL'});
         done();
-      }, function(e) {
+      }, function (e) {
         if (e) return done(e);
-        dataComponent.set('/some/path/three', {key: 'VAL'}, {}, function(e) {
+        dataComponent.set('/some/path/three', {key: 'VAL'}, {}, function (e) {
           if (e) return done(e);
         })
       });
     });
 
 
-    it('can subscribe without opts', function(done) {
-      dataComponent.on('/some/path/four', function(data, meta) {
+    it('can subscribe without opts', function (done) {
+      dataComponent.on('/some/path/four', function (data, meta) {
         data.should.eql({key: 'VALUE'});
         done();
-      }, function(e) {
+      }, function (e) {
         if (e) return done(e);
-        dataComponent.set('/some/path/four', {key: 'VALUE'}, function(e) {
+        dataComponent.set('/some/path/four', {key: 'VALUE'}, function (e) {
           if (e) return done(e);
         })
       });
@@ -109,26 +109,32 @@ describe('b7 - shared data component', function() {
 
     it('should subscribe and get an initial value on the callback', function (callback) {
 
-      dataComponent.set('/b7/testsubscribe/data/value_on_callback_test', {"test":"data"}, function(e){
+      dataComponent.set('/b7/testsubscribe/data/value_on_callback_test', {"test": "data"}, function (e) {
         if (e) return callback(e);
 
-        dataComponent.on('/b7/testsubscribe/data/value_on_callback_test', {"event_type": "set", "initialCallback":true}, function (message) {
+        dataComponent.on('/b7/testsubscribe/data/value_on_callback_test', {
+          "event_type": "set",
+          "initialCallback": true
+        }, function (message) {
 
           expect(message.updated).to.be(true);
           callback();
 
-        }, function(e, reference, response){
+        }, function (e, reference, response) {
           if (e) return callback(e);
-          try{
+          try {
 
             expect(response.length).to.be(1);
             expect(response[0].test).to.be('data');
 
-            dataComponent.set('/b7/testsubscribe/data/value_on_callback_test', {"test":"data", "updated":true}, function(e){
+            dataComponent.set('/b7/testsubscribe/data/value_on_callback_test', {
+              "test": "data",
+              "updated": true
+            }, function (e) {
               if (e) return callback(e);
             });
 
-          }catch(e){
+          } catch (e) {
             return callback(e);
           }
         });
@@ -139,30 +145,36 @@ describe('b7 - shared data component', function() {
 
     it('should subscribe and get initial values on the callback', function (callback) {
 
-      dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/1', {"test":"data"}, function(e){
+      dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/1', {"test": "data"}, function (e) {
         if (e) return callback(e);
 
-        dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/2', {"test":"data1"}, function(e){
+        dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/2', {"test": "data1"}, function (e) {
           if (e) return callback(e);
 
-          dataComponent.on('/b7/testsubscribe/data/values_on_callback_test/*', {"event_type": "set", "initialCallback":true}, function (message) {
+          dataComponent.on('/b7/testsubscribe/data/values_on_callback_test/*', {
+            "event_type": "set",
+            "initialCallback": true
+          }, function (message) {
 
             expect(message.updated).to.be(true);
             callback();
 
-          }, function(e, reference, response){
+          }, function (e, reference, response) {
             if (e) return callback(e);
-            try{
+            try {
 
               expect(response.length).to.be(2);
               expect(response[0].test).to.be('data');
               expect(response[1].test).to.be('data1');
 
-              dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/1', {"test":"data", "updated":true}, function(e){
+              dataComponent.set('/b7/testsubscribe/data/values_on_callback_test/1', {
+                "test": "data",
+                "updated": true
+              }, function (e) {
                 if (e) return callback(e);
               });
 
-            }catch(e){
+            } catch (e) {
               return callback(e);
             }
           });
@@ -174,99 +186,102 @@ describe('b7 - shared data component', function() {
 
       var caughtEmitted = 0;
 
-      dataComponent.set('/b7/testsubscribe/data/values_emitted_test/1', {"test":"data"}, function(e){
+      dataComponent.set('/b7/testsubscribe/data/values_emitted_test/1', {"test": "data"}, function (e) {
         if (e) return callback(e);
 
-        dataComponent.set('/b7/testsubscribe/data/values_emitted_test/2', {"test":"data1"}, function(e){
+        dataComponent.set('/b7/testsubscribe/data/values_emitted_test/2', {"test": "data1"}, function (e) {
           if (e) return callback(e);
 
-          dataComponent.on('/b7/testsubscribe/data/values_emitted_test/*', {"event_type": "set", "initialEmit":true}, function (message, meta) {
+          dataComponent.on('/b7/testsubscribe/data/values_emitted_test/*', {
+            "event_type": "set",
+            "initialEmit": true
+          }, function (message, meta) {
 
             caughtEmitted++;
 
-            if (caughtEmitted == 2){
+            if (caughtEmitted == 2) {
               expect(message.test).to.be("data1");
               callback();
             }
 
-          }, function(e){
+          }, function (e) {
             if (e) return callback(e);
           });
         });
       });
     });
 
-    it('can unsubscribe', function(done) {
+    it('can unsubscribe', function (done) {
       var received = [];
-      dataComponent.on('/some/path/five', function(data, meta) {
+      dataComponent.on('/some/path/five', function (data, meta) {
         received.push(data);
-      }, function(e) {
+      }, function (e) {
         if (e) return done(e);
         dataComponent.set('/some/path/five', {key: 1}) // <--------------- 1
-        .then(function() {
-          return dataComponent.set('/some/path/five', {key: 1}) // <------ 2
-        })
-        .then(function() {
-          return dataComponent.off('/some/path/five') // <------------- unsub
-        })
-        .then(function() {
-          return dataComponent.set('/some/path/five', {key: 1}) // <------- 3
-        })
-        .then(function() {
-          received.length.should.equal(2);
-          done();
-        })
-        .catch(done)
+          .then(function () {
+            return dataComponent.set('/some/path/five', {key: 1}) // <------ 2
+          })
+          .then(function () {
+            return dataComponent.off('/some/path/five') // <------------- unsub
+          })
+          .then(function () {
+            return dataComponent.set('/some/path/five', {key: 1}) // <------- 3
+          })
+          .then(function () {
+            received.length.should.equal(2);
+            done();
+          })
+          .catch(done)
       });
     })
 
-    it('can delete', function(done) {
+    it('can delete', function (done) {
       dataComponent.set('some/path/six', 6)
-      .then(function() {
-        return dataComponent.get('some/path/six');
-      })
-      .then(function(six) {
-        six.value.should.equal(6);
-        return dataComponent.remove('some/path/six')
-      })
-      .then(function(res) {
-        return dataComponent.get('some/path/six');
-      })
-      .then(function(res) {
-        should.not.exist(res);
-        done();
-      })
-      .catch(done)
+        .then(function () {
+          return dataComponent.get('some/path/six');
+        })
+        .then(function (six) {
+          six.value.should.equal(6);
+          return dataComponent.remove('some/path/six')
+        })
+        .then(function (res) {
+          return dataComponent.get('some/path/six');
+        })
+        .then(function (res) {
+          should.not.exist(res);
+          done();
+        })
+        .catch(done)
     });
 
-    it('can get paths', function(done) {
+    it('can get paths', function (done) {
       require('bluebird').all([
-        dataComponent.set('this/one', 1),
-        dataComponent.set('this/two', 2),
-        dataComponent.set('this/three', 3),
-      ])
-      .then(function() {
-        return dataComponent.getPaths('this/*')
-      })
-      .then(function(paths) {
-        paths.length.should.equal(3);
-        done();
-      })
-      .catch(done);
+          dataComponent.set('this/one', 1),
+          dataComponent.set('this/two', 2),
+          dataComponent.set('this/three', 3),
+        ])
+        .then(function () {
+          return dataComponent.getPaths('this/*')
+        })
+        .then(function (paths) {
+          paths.length.should.equal(3);
+          done();
+        })
+        .catch(done);
     })
 
-    it('can subscribe to data change with events', function(done) {
+    it('can subscribe to data change with events', function (done) {
 
-      dataEvents.on('/some/path/five', function(data) {
+      dataEvents.on('/some/path/five', function (data) {
 
-        data.should.property('key','VALUE');
-        dataEvents.off('/some/path/five', function(data, meta) {
+        data.should.property('key', 'VALUE');
+        dataEvents.off('/some/path/five', function (data, meta) {
           done();
         });
 
-      }, function(e) {
+      }, function (e) {
         if (e) return done(e);
-        dataComponent.set('/some/path/five', {key: 'VALUE'}, function(e) {
+        dataComponent.set('/some/path/five', {key: 'VALUE'}, function (e) {
           if (e) return done(e);
         })
       });
@@ -275,18 +290,18 @@ describe('b7 - shared data component', function() {
   });
 
 
-  context('shared use', function() {
+  context('shared use', function () {
 
-    it('can set from one component and getted from another', function(done) {
-      meshInstance.exchange.module1.setSharedData('/my/thing', {'y':'x'})
-      .then(function() {
-        return meshInstance.exchange.module2.getSharedData('/my/thing')
-      })
-      .then(function(d) {
-        d.y.should.equal('x');
-        done();
-      })
-      .catch(done);
+    it('can set from one component and getted from another', function (done) {
+      meshInstance.exchange.module1.setSharedData('/my/thing', {'y': 'x'})
+        .then(function () {
+          return meshInstance.exchange.module2.getSharedData('/my/thing')
+        })
+        .then(function (d) {
+          d.y.should.equal('x');
+          done();
+        })
+        .catch(done);
     });
 
   });

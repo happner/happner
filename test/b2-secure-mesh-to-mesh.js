@@ -1,16 +1,16 @@
-describe('b2 - secure mesh to mesh', function() {
+describe('b2 - secure mesh to mesh', function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  context('on remote mesh', function(){
+  context('on remote mesh', function () {
 
     var spawn = require('child_process').spawn
-    , sep = require('path').sep
-    , remote
-    , assert = require('assert')
-    , mesh
-    , Mesh = require('../')
+      , sep = require('path').sep
+      , remote
+      , assert = require('assert')
+      , mesh
+      , Mesh = require('../')
 
     var sep = require('path').sep;
     var libFolder = __dirname + sep + 'lib' + sep;
@@ -36,17 +36,17 @@ describe('b2 - secure mesh to mesh', function() {
 
     this.timeout(120000);
 
-    before(function(done) {
+    before(function (done) {
 
       var _this = this;
 
       // spawn remote mesh in another process
       remote = spawn('node', [libFolder + 'b2-first-mesh']);
 
-      remote.stdout.on('data', function(data) {
+      remote.stdout.on('data', function (data) {
 
         // console.log(data.toString());
-        if (data.toString().match(/READY/)){
+        if (data.toString().match(/READY/)) {
 
           // console.log('remote ready:::', remote.pid);
 
@@ -54,7 +54,7 @@ describe('b2 - secure mesh to mesh', function() {
 
           // console.log('starting this one', mesh, config);
           // mesh.initialize(config, function(err) {
-          mesh.initialize(config, function(e){
+          mesh.initialize(config, function (e) {
             done(e);
           });
         }
@@ -63,28 +63,28 @@ describe('b2 - secure mesh to mesh', function() {
     });
 
 
-    after(function(done) {
+    after(function (done) {
       remote.kill();
-      mesh.stop({reconnect:false}, function(e){
+      mesh.stop({reconnect: false}, function (e) {
         // console.log('killed ok:::', remote.pid);
         done();
       });
     });
 
-    it("can call remote component function",function(done) {
+    it("can call remote component function", function (done) {
 
       mesh.exchange.remoteMesh.remoteComponent.remoteFunction(
-        'one!', 'two!', 'three!', function(err, res) {
+        'one!', 'two!', 'three!', function (err, res) {
 
           assert(res == 'one! two! three!, wheeeeeeeeeeeeheeee!');
           done()
 
-      });
+        });
     });
 
-    it('we know when there was an accident', function(done) {
+    it('we know when there was an accident', function (done) {
 
-      mesh.exchange.remoteMesh.remoteComponent.causeError(function(err, res) {
+      mesh.exchange.remoteMesh.remoteComponent.causeError(function (err, res) {
 
         assert(err.toString().match(/ErrorType: Error string/))
         done();

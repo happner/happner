@@ -49,13 +49,13 @@ describe('d7 - Issue #113 - Event off by handle', function () {
 
       mesh.event.data.off(path, function (err) {
         should.not.exist(err);
-        mesh.exchange.data.set(path, 20, function(){
+        mesh.exchange.data.set(path, 20, function () {
           setTimeout(checkCount, 500);
         });
       })
     }
 
-    function checkCount(){
+    function checkCount() {
       event_count.should.be.eql(1);
       done();
     }
@@ -77,13 +77,13 @@ describe('d7 - Issue #113 - Event off by handle', function () {
 
       mesh.event.data.off(handle, function (err) {
         should.not.exist(err);
-        mesh.exchange.data.set(path, event_count, function(){
+        mesh.exchange.data.set(path, event_count, function () {
           setTimeout(checkCount, 500);
         });
       })
     }
 
-    function checkCount(){
+    function checkCount() {
       event_count.should.be.eql(1);
       done();
     }

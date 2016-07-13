@@ -1,4 +1,4 @@
-describe('d3-permission-changes', function() {
+describe('d3-permission-changes', function () {
 
   this.timeout(120000);
 
@@ -11,22 +11,22 @@ describe('d3-permission-changes', function() {
   var Mesh = require('../');
   var mesh = new Mesh();
 
-  var adminClient = new Mesh.MeshClient({secure:true, port:8004});
+  var adminClient = new Mesh.MeshClient({secure: true, port: 8004});
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
 
-  before(function(done) {
+  before(function (done) {
 
     mesh.initialize({
-      name:'d3-permission-changes-events',
+      name: 'd3-permission-changes-events',
       datalayer: {
         secure: true,
         adminPassword: test_id,
-        port:8004
+        port: 8004
       }
-    }, function(err) {
+    }, function (err) {
       if (err) return done(err);
-      mesh.start(function(err) {
+      mesh.start(function (err) {
         if (err) {
           return done(err);
         }
@@ -37,7 +37,7 @@ describe('d3-permission-changes', function() {
           password: test_id
         }
 
-        adminClient.login(credentials).then(function(){
+        adminClient.login(credentials).then(function () {
           done();
         }).catch(done);
 
@@ -45,22 +45,22 @@ describe('d3-permission-changes', function() {
     });
   });
 
-  after(function(done) {
-    mesh.stop({reconnect:false}, done);
+  after(function (done) {
+    mesh.stop({reconnect: false}, done);
   })
 
-  it('tests that all security events are being bubbled back from happn to happner security - and are consumable from an admin client', function(done) {
+  it('tests that all security events are being bubbled back from happn to happner security - and are consumable from an admin client', function (done) {
 
-     var testGroup = {
-      name:'TESTGROUP1' + test_id,
+    var testGroup = {
+      name: 'TESTGROUP1' + test_id,
 
-      custom_data:{
-        customString:'custom1',
-        customNumber:0
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
       },
 
-      permissions:{
-        methods:{}
+      permissions: {
+        methods: {}
       }
     }
 
@@ -79,15 +79,15 @@ describe('d3-permission-changes', function() {
     //
 
     var eventsToFire = {
-      'upsert-user':false,
-      'upsert-group':false,
-      'link-group':false,
-      'unlink-group':false,
-      'delete-group':false,
-      'delete-user':false
+      'upsert-user': false,
+      'upsert-group': false,
+      'link-group': false,
+      'unlink-group': false,
+      'delete-group': false,
+      'delete-user': false
     }
 
-    var fireEvent = function(key){
+    var fireEvent = function (key) {
 
       eventsToFire[key] = true;
 
@@ -98,74 +98,74 @@ describe('d3-permission-changes', function() {
       done();
     }
 
-    adminClient.exchange.security.attachToSecurityChanges(function(e){
+    adminClient.exchange.security.attachToSecurityChanges(function (e) {
       if (e) return callback(e);
 
-      adminClient.event.security.on('upsert-user', function(data){
+      adminClient.event.security.on('upsert-user', function (data) {
         fireEvent('upsert-user');
       });
 
-      adminClient.event.security.on('upsert-group', function(data){
+      adminClient.event.security.on('upsert-group', function (data) {
         fireEvent('upsert-group');
       });
 
-      adminClient.event.security.on('link-group', function(data){
+      adminClient.event.security.on('link-group', function (data) {
         fireEvent('link-group');
       });
 
-      adminClient.event.security.on('unlink-group', function(data){
+      adminClient.event.security.on('unlink-group', function (data) {
         fireEvent('unlink-group');
       });
 
-      adminClient.event.security.on('delete-group', function(data){
+      adminClient.event.security.on('delete-group', function (data) {
         fireEvent('delete-group');
       });
 
-      adminClient.event.security.on('delete-user', function(data){
+      adminClient.event.security.on('delete-user', function (data) {
         fireEvent('delete-user');
       });
 
-      adminClient.exchange.security.addGroup(testGroup, function(e, result){
+      adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
         if (e) return done(e);
 
         testGroupSaved = result;
 
         var testUser = {
-          username:'TESTUSER1' + test_id,
-          password:'TEST PWD',
-          custom_data:{
+          username: 'TESTUSER1' + test_id,
+          password: 'TEST PWD',
+          custom_data: {
             something: 'useful'
           }
         }
 
-        adminClient.exchange.security.addUser(testUser, function(e, result){
+        adminClient.exchange.security.addUser(testUser, function (e, result) {
 
           if (e) return done(e);
 
           expect(result.username).to.be(testUser.username);
           testUserSaved = result;
 
-          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
             //we'll need to fetch user groups, do that later
             if (e) return done(e);
 
             testUser.password = 'NEW PWD';
-            testUser.custom_data = {changedCustom:'changedCustom'};
+            testUser.custom_data = {changedCustom: 'changedCustom'};
 
-            adminClient.exchange.security.updateUser(testUser, function(e, result){
+            adminClient.exchange.security.updateUser(testUser, function (e, result) {
 
               if (e) return done(e);
 
-              adminClient.exchange.security.unlinkGroup(testGroupSaved, testUserSaved, function(e, result){
+              adminClient.exchange.security.unlinkGroup(testGroupSaved, testUserSaved, function (e, result) {
 
                 if (e) return done(e);
 
-                adminClient.exchange.security.deleteGroup(testGroupSaved, function(e, result){
+                adminClient.exchange.security.deleteGroup(testGroupSaved, function (e, result) {
 
                   if (e) return done(e);
 
-                  adminClient.exchange.security.deleteUser(testUser, function(e, result){
+                  adminClient.exchange.security.deleteUser(testUser, function (e, result) {
 
                     if (e) return done(e);
 

@@ -74,7 +74,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
 
 
   it('stops the mesh', function (done) {
-    mesh.stop({reconnect:false}, function(e, log){
+    mesh.stop({reconnect: false}, function (e, log) {
 
       done(e);
 

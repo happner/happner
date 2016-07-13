@@ -23,8 +23,8 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
     modules: {
       "module5": {
         path: __dirname + "/lib/5-module-middleware",
-        construct:{
-          type:"sync"
+        construct: {
+          type: "sync"
         }
       }
     },
@@ -38,8 +38,8 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
         web: {
           routes: {
             // http://localhost:3001/neptronicUI/...
-            "static5":["preProcessor","static"],
-            "testScope":"testScope"
+            "static5": ["preProcessor", "static"],
+            "testScope": "testScope"
           }
         }
       },
@@ -53,7 +53,7 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
         web: {
           routes: {
             // http://localhost:3001/neptronicUI/...
-            "testScope":"testScope"
+            "testScope": "testScope"
           }
         }
       }
@@ -72,8 +72,8 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
     });
   });
 
-  after(function(done){
-     mesh.stop({reconnect:false}, done);
+  after(function (done) {
+    mesh.stop({reconnect: false}, done);
   });
 
 
@@ -82,7 +82,7 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
     getBody('http://127.0.0.1:' + testport + '/testMiddleware/api/client', function (e, body) {
 
       // console.log('boo d',body);
-     return done(e);
+      return done(e);
     });
   });
 
@@ -102,8 +102,11 @@ describe('5 - Demonstrates the middleware functionality', function (done) {
   //   });
   // });
 
-  it('tests that the scope is set to module', function(done) {
-    request({uri:'http://127.0.0.1:' + testport + '/component5Module/testScope?scope=ModuleFive', method:'GET'}, function (e, resp, body) {
+  it('tests that the scope is set to module', function (done) {
+    request({
+      uri: 'http://127.0.0.1:' + testport + '/component5Module/testScope?scope=ModuleFive',
+      method: 'GET'
+    }, function (e, resp, body) {
       resp.statusCode.should.eql(200);
       done(e);
     });

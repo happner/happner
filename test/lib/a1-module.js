@@ -1,7 +1,8 @@
 module.exports = Module;
 
-function Module() {}
+function Module() {
+}
 
-Module.prototype.getPid = function(callback) {
+Module.prototype.getPid = function (callback) {
   callback(null, process.pid);
 }

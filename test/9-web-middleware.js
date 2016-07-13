@@ -23,7 +23,7 @@ describe('9 - tests that we can add middleware before a static', function (done)
   var config = {
     name: "middlewareMesh",
     datalayer: {
-      port:10000
+      port: 10000
       //setOptions:{}
     },
     modules: {
@@ -41,7 +41,7 @@ describe('9 - tests that we can add middleware before a static', function (done)
         },
         web: {
           routes: {
-            "static": ["checkIndex","static"]
+            "static": ["checkIndex", "static"]
           }
         }
       }
@@ -59,12 +59,12 @@ describe('9 - tests that we can add middleware before a static', function (done)
   });
 
   after(function (done) {
-    this.mesh.stop({reconnect:false}, done);
+    this.mesh.stop({reconnect: false}, done);
   })
 
 
   it('can get index.html that middleware renames to index.htm', function (done) {
-    http.get('http://localhost:10000/index.html', function(resp) {
+    http.get('http://localhost:10000/index.html', function (resp) {
       resp.statusCode.should.eql(200);
       done();
     })

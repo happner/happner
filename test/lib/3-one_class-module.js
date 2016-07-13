@@ -1,7 +1,8 @@
 module.exports = One;
 
-function One() {};
+function One() {
+};
 
-One.prototype.method = function(callback) {
+One.prototype.method = function (callback) {
   callback(null, 'RESULT');
 }

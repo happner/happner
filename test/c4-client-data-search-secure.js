@@ -1,4 +1,4 @@
-describe('c4 - client data search secure', function() {
+describe('c4 - client data search secure', function () {
 
   this.timeout(120000);
 
@@ -16,18 +16,18 @@ describe('c4 - client data search secure', function() {
   var test_id = Date.now() + '_' + require('shortid').generate();
 
   var TestModule1 = {
-    setSharedData: function($happn, path, data, callback) {
+    setSharedData: function ($happn, path, data, callback) {
       $happn.exchange.data.set(path, data, callback);
     }
   }
 
   var TestModule2 = {
-    getSharedData: function($happn, path, callback) {
+    getSharedData: function ($happn, path, callback) {
       $happn.exchange.data.get(path, callback);
     }
   }
 
-  before(function(done) {
+  before(function (done) {
     var _this = this;
 
     Mesh.create(config = {
@@ -54,95 +54,95 @@ describe('c4 - client data search secure', function() {
       }
 
 
-    }).then(function(mesh) {
+    }).then(function (mesh) {
       meshInstance = mesh;
       meshClientInstance = new Mesh.MeshClient();
       meshClientInstance.login({
-        username:'_ADMIN',
-        password:test_id
+        username: '_ADMIN',
+        password: test_id
       }).then(done);
     }).catch(done);
 
   });
 
-  after(function(done) {
-    meshInstance.stop({reconnect:false}, done);
+  after(function (done) {
+    meshInstance.stop({reconnect: false}, done);
   });
 
-  context('direct use', function() {
+  context('direct use', function () {
 
-    it('can get using criteria', function(done) {
+    it('can get using criteria', function (done) {
 
-      meshInstance.exchange.data.set('movie/war',{name : 'crimson tide', genre : 'war'},
-      function(e, result){
+      meshInstance.exchange.data.set('movie/war', {name: 'crimson tide', genre: 'war'},
+        function (e, result) {
 
-        if (e) return done(e);
+          if (e) return done(e);
 
-        var options = {
-          sort: {"name": 1}
-        }
+          var options = {
+            sort: {"name": 1}
+          }
 
-        var criteria = {
-          "name" : "crimson tide"
-        }
+          var criteria = {
+            "name": "crimson tide"
+          }
 
-        meshInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
-        function(e, result){
-          if(e) return done(e);
+          meshInstance.exchange.data.get('movie/*', {criteria: criteria, options: options},
+            function (e, result) {
+              if (e) return done(e);
 
-          result.length.should.eql(1);
-          done();
+              result.length.should.eql(1);
+              done();
+
+            });
 
         });
-
-      });
 
     });
 
     //DOESNT WORK USING NEDB PLUGIN
-    it('can get using criteria, limit to fields', function(done) {
+    it('can get using criteria, limit to fields', function (done) {
 
-      meshInstance.exchange.data.set('movie/war/ww2',{name : 'crimson tide', genre : 'ww2'},
-      function(e, result){
+      meshInstance.exchange.data.set('movie/war/ww2', {name: 'crimson tide', genre: 'ww2'},
+        function (e, result) {
 
-        if (e) return done(e);
+          if (e) return done(e);
 
-        var options = {
-          fields: {"name": 1}
-        }
+          var options = {
+            fields: {"name": 1}
+          }
 
-        var criteria = {
-          "genre" : "ww2"
-        }
+          var criteria = {
+            "genre": "ww2"
+          }
 
-        meshInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
-        function(e, result){
+          meshInstance.exchange.data.get('movie/*', {criteria: criteria, options: options},
+            function (e, result) {
 
-          if(e) return done(e);
+              if (e) return done(e);
 
-          expect(result[0].genre).to.be(undefined);
-          result[0].name.should.eql('crimson tide');
-          result.length.should.eql(1);
+              expect(result[0].genre).to.be(undefined);
+              result[0].name.should.eql('crimson tide');
+              result.length.should.eql(1);
 
-          done();
+              done();
+
+            });
 
         });
 
-      });
-
     });
 
-    it('can get the latest record', function(done) {
+    it('can get the latest record', function (done) {
 
-      var indexes = [0,1,2,3,4,5,6,7,8,9];
+      var indexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-      async.eachSeries(indexes, function(index, eachCallback){
+      async.eachSeries(indexes, function (index, eachCallback) {
 
         meshInstance.exchange.data.set('movie/family/' + index,
-        {name : 'the black stallion', genre : 'family'},
-        eachCallback);
+          {name: 'the black stallion', genre: 'family'},
+          eachCallback);
 
-      }, function(e){
+      }, function (e) {
 
         if (e) return callback(e);
 
@@ -152,115 +152,115 @@ describe('c4 - client data search secure', function() {
         }
 
         var criteria = {
-          "genre" : "family"
+          "genre": "family"
         }
 
         var latestResult;
 
-        meshInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
-        function(e, result){
+        meshInstance.exchange.data.get('movie/*', {criteria: criteria, options: options},
+          function (e, result) {
 
-          if(e) return done(e);
+            if (e) return done(e);
 
-          result.length.should.eql(1);
+            result.length.should.eql(1);
 
-          latestResult = result[0];
+            latestResult = result[0];
 
-          expect(latestResult._meta.created).to.not.be(null);
-          expect(latestResult._meta.created).to.not.be(undefined);
+            expect(latestResult._meta.created).to.not.be(null);
+            expect(latestResult._meta.created).to.not.be(undefined);
 
-          meshInstance.exchange.data.get('movie/family/*',
-          function(e, result){
+            meshInstance.exchange.data.get('movie/family/*',
+              function (e, result) {
 
-            if (e) return callback(e);
+                if (e) return callback(e);
 
-            for (var resultItemIndex in result){
+                for (var resultItemIndex in result) {
 
-              var resultItem = result[resultItemIndex];
+                  var resultItem = result[resultItemIndex];
 
-              expect(resultItem._meta.created).to.not.be(null);
-              expect(resultItem._meta.created).to.not.be(undefined);
+                  expect(resultItem._meta.created).to.not.be(null);
+                  expect(resultItem._meta.created).to.not.be(undefined);
 
-              if ((resultItem._meta.path != latestResult._meta.path) && resultItem._meta.created > latestResult._meta.created)
-                return done(new Error('the latest result is not the latest result...'));
+                  if ((resultItem._meta.path != latestResult._meta.path) && resultItem._meta.created > latestResult._meta.created)
+                    return done(new Error('the latest result is not the latest result...'));
 
-            }
+                }
 
-            done();
+                done();
+
+              });
 
           });
 
-        });
-
       });
 
     });
 
   });
 
-  context('client use', function() {
+  context('client use', function () {
 
-    it('can get using criteria', function(done) {
+    it('can get using criteria', function (done) {
 
-      meshClientInstance.exchange.data.set('movie/comedy',{name : 'nkandla', genre : 'comedy'},
-      function(e, result){
+      meshClientInstance.exchange.data.set('movie/comedy', {name: 'nkandla', genre: 'comedy'},
+        function (e, result) {
 
-        if (e) return done(e);
+          if (e) return done(e);
 
-        var options = {
-          sort: {"_meta.created": 1}
-        }
+          var options = {
+            sort: {"_meta.created": 1}
+          }
 
-        var criteria = {
-          "genre" : "comedy"
-        }
+          var criteria = {
+            "genre": "comedy"
+          }
 
-        meshClientInstance.exchange.data.get('movie/*',{criteria: criteria, options: options},
-        function(e, result){
-          if(e) return done(e);
+          meshClientInstance.exchange.data.get('movie/*', {criteria: criteria, options: options},
+            function (e, result) {
+              if (e) return done(e);
 
-          result.length.should.eql(1);
-           result[0].name.should.eql('nkandla');
-          done();
+              result.length.should.eql(1);
+              result[0].name.should.eql('nkandla');
+              done();
+
+            });
+
 
         });
-
-
-      });
 
     });
 
   });
 
-  context('client data use', function() {
+  context('client data use', function () {
 
-    it('can get using criteria', function(done) {
+    it('can get using criteria', function (done) {
 
-      meshClientInstance.data.set('movie/drama',{name : 'nkandla2', genre : 'drama'},
-      function(e, result){
+      meshClientInstance.data.set('movie/drama', {name: 'nkandla2', genre: 'drama'},
+        function (e, result) {
 
-        if (e) return done(e);
+          if (e) return done(e);
 
-        var options = {
-          sort: {"name": 1}
-        }
+          var options = {
+            sort: {"name": 1}
+          }
 
-        var criteria = {
-          "genre" : "drama"
-        }
+          var criteria = {
+            "genre": "drama"
+          }
 
-        meshClientInstance.data.get('movie/*',{criteria: criteria, options: options},
-        function(e, result){
-          if(e) return done(e);
+          meshClientInstance.data.get('movie/*', {criteria: criteria, options: options},
+            function (e, result) {
+              if (e) return done(e);
 
-          result.length.should.eql(1);
-          result[0].name.should.eql('nkandla2');
+              result.length.should.eql(1);
+              result[0].name.should.eql('nkandla2');
 
-          done();
+              done();
+
+            });
 
         });
-
-      });
 
     });
 

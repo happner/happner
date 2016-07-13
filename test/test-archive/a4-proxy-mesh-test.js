@@ -1,117 +1,117 @@
 /*// cannot do mocha test/4-mesh-to-mesh.js --watch
-// address already in use for 2nd... runs
+ // address already in use for 2nd... runs
 
-var spawn = require('child_process').spawn
-  , sep = require('path').sep
-  , remote
-  , assert = require('assert')
-  , mesh
-  , request = require('request');
+ var spawn = require('child_process').spawn
+ , sep = require('path').sep
+ , remote
+ , assert = require('assert')
+ , mesh
+ , request = require('request');
 
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
+ var sep = require('path').sep;
+ var libFolder = __dirname + sep + 'lib' + sep;
 
-config = {
-  name: 'cloud',
-  dataLayer: {
-    port: 3002,
-    authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
-    secret: 'mesh',
-  },
-  endpoints: {},
-  modules: {},
-  components: {}
-};
+ config = {
+ name: 'cloud',
+ dataLayer: {
+ port: 3002,
+ authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
+ secret: 'mesh',
+ },
+ endpoints: {},
+ modules: {},
+ components: {}
+ };
 
-describe('Proxy component', function() {
+ describe('Proxy component', function() {
 
-  this.timeout(10000);
+ this.timeout(10000);
 
-  before(function(done) {
+ before(function(done) {
 
-    var _this = this;
-    
+ var _this = this;
 
-    mesh = new _this.Mesh();
 
-    mesh.initialize(config, function(err) {
+ mesh = new _this.Mesh();
 
-      if (err) return done(err);
+ mesh.initialize(config, function(err) {
 
-       // spawn remote mesh in another process
-      remote = spawn('node',[libFolder + '14-proxy-mesh']);
-      remote.stdout.on('data', function(data) {
+ if (err) return done(err);
 
-        console.log('Remote:',data.toString());
-        if (!data.toString().match(/ready/)) return;
+ // spawn remote mesh in another process
+ remote = spawn('node',[libFolder + '14-proxy-mesh']);
+ remote.stdout.on('data', function(data) {
 
-        console.log('waiting for remote up');
-        setTimeout(done, 3000);
-      });
+ console.log('Remote:',data.toString());
+ if (!data.toString().match(/ready/)) return;
 
-      remote.on('error', function(e) {
-        console.log(e);
-      });
+ console.log('waiting for remote up');
+ setTimeout(done, 3000);
+ });
 
-      remote.on('exit', function() {
-        console.log('exit', arguments);
-      });
+ remote.on('error', function(e) {
+ console.log(e);
+ });
 
-    });
+ remote.on('exit', function() {
+ console.log('exit', arguments);
+ });
 
-  });
+ });
 
-  after(function(done) {
-    remote.kill();
+ });
 
-    if (mesh)
-      return mesh.stop(done);
+ after(function(done) {
+ remote.kill();
 
-    done();
-  })
+ if (mesh)
+ return mesh.stop(done);
 
-  context('testing the proxy', function() {
+ done();
+ })
 
-      it ("can proxy the dashboard page",function(done) {
+ context('testing the proxy', function() {
 
-        request('http://127.0.0.1:3002/Device1/dashboard/page', function (error, response, body) {
+ it ("can proxy the dashboard page",function(done) {
 
-          console.log(arguments);
+ request('http://127.0.0.1:3002/Device1/dashboard/page', function (error, response, body) {
 
-          if (error) return done(error);
+ console.log(arguments);
 
-          return done();
+ if (error) return done(error);
 
-        });
+ return done();
 
-      });
+ });
 
-      it ("can proxy a static resource",function(done) {
+ });
 
-        request('http://127.0.0.1:3002/Device1/module-static/controls', function (error, response, body) {
+ it ("can proxy a static resource",function(done) {
 
-          console.log(arguments);
+ request('http://127.0.0.1:3002/Device1/module-static/controls', function (error, response, body) {
 
-          if (error) return done(error);
+ console.log(arguments);
 
-          return done();
+ if (error) return done(error);
 
-        });
+ return done();
 
-      });
+ });
 
-      it ('can proxy mesh api requests', function(done) {
+ });
 
-        mesh.api.exchange.Device1.getReading('test', function(err, res) {
+ it ('can proxy mesh api requests', function(done) {
 
-           console.log(arguments);
+ mesh.api.exchange.Device1.getReading('test', function(err, res) {
 
-          done(err);
-        });
+ console.log(arguments);
 
-      });
+ done(err);
+ });
 
-    });
+ });
 
-});
-*/
+ });
+
+ });
+ */

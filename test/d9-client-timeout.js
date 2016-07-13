@@ -2,10 +2,11 @@ module.exports = TestMesh;
 
 var DONE = false;
 
-function TestMesh() {}
+function TestMesh() {
+}
 
-TestMesh.prototype.method1 = function($happn, callback) {
-  setTimeout(function(){
+TestMesh.prototype.method1 = function ($happn, callback) {
+  setTimeout(function () {
     callback(null);
   }, 11000);
 }
@@ -14,7 +15,7 @@ if (global.TESTING_D9 || global.TESTING_D9_1) return; // When 'requiring' the mo
 // don't run the tests below
 //.............
 
-describe('d9-client-timeout', function() {
+describe('d9-client-timeout', function () {
 
   this.timeout(120000);
 
@@ -26,22 +27,22 @@ describe('d9-client-timeout', function() {
   var Mesh = require('../');
   var timeoutConfigMesh = new Mesh();
 
-  var timeoutConfigClient = new Mesh.MeshClient({timeoutConfig:true,port:8000});
-  var defaultConfigClient = new Mesh.MeshClient({port:8001});
+  var timeoutConfigClient = new Mesh.MeshClient({timeoutConfig: true, port: 8000});
+  var defaultConfigClient = new Mesh.MeshClient({port: 8001});
 
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
 
-  before('starts a timeoutConfig mesh', function(done) {
+  before('starts a timeoutConfig mesh', function (done) {
 
     global.TESTING_D9 = true; //.............
 
     timeoutConfigMesh.initialize({
-      name:'d9-client-timeout-timeoutConfig',
+      name: 'd9-client-timeout-timeoutConfig',
       datalayer: {
-        port:8000,
-        setOptions:{
-          timeout:15000
+        port: 8000,
+        setOptions: {
+          timeout: 15000
         }
       },
       modules: {
@@ -57,10 +58,10 @@ describe('d9-client-timeout', function() {
           }
         }
       }
-    }, function(err) {
+    }, function (err) {
 
       if (err) return done(err);
-      timeoutConfigMesh.start(function(err) {
+      timeoutConfigMesh.start(function (err) {
         if (err) {
           // console.log(err.stack);
           return done(err);
@@ -72,7 +73,7 @@ describe('d9-client-timeout', function() {
           password: test_id
         }
 
-        timeoutConfigClient.login(credentials).then(function(){
+        timeoutConfigClient.login(credentials).then(function () {
           done();
         }).catch(done);
 
@@ -80,16 +81,16 @@ describe('d9-client-timeout', function() {
     });
   });
 
-  before('starts the default configured mesh', function(done) {
+  before('starts the default configured mesh', function (done) {
 
     global.TESTING_D9_1 = true; //.............
 
     defaultConfigMesh = this.mesh = new Mesh();
 
     defaultConfigMesh.initialize({
-      name:'d9-client-timeout-defaultConfig',
+      name: 'd9-client-timeout-defaultConfig',
       datalayer: {
-        port:8001
+        port: 8001
       },
       modules: {
         'TestMesh': {
@@ -105,10 +106,10 @@ describe('d9-client-timeout', function() {
         }
       }
 
-    }, function(err) {
+    }, function (err) {
 
       if (err) return done(err);
-      defaultConfigMesh.start(function(err) {
+      defaultConfigMesh.start(function (err) {
         if (err) {
           // console.log(err.stack);
           return done(err);
@@ -116,10 +117,10 @@ describe('d9-client-timeout', function() {
 
         // Credentials for the login method
         var credentials = {
-          port:8001
+          port: 8001
         }
 
-        defaultConfigClient.login(credentials).then(function(){
+        defaultConfigClient.login(credentials).then(function () {
           done();
         }).catch(done);
 
@@ -127,23 +128,23 @@ describe('d9-client-timeout', function() {
     });
   });
 
-  after(function(done) {
+  after(function (done) {
 
     delete global.TESTING_D9_1;
     delete global.TESTING_D9;
 
-    defaultConfigMesh.stop({reconnect:false}, function(e){
+    defaultConfigMesh.stop({reconnect: false}, function (e) {
 
       if (e) return done(e);
 
-      timeoutConfigMesh.stop({reconnect:false}, done);
+      timeoutConfigMesh.stop({reconnect: false}, done);
 
     });
   })
 
-  it('runs a method on the timeout configured mesh', function(done) {
+  it('runs a method on the timeout configured mesh', function (done) {
 
-    timeoutConfigClient.exchange.TestMesh.method1(function(e, result){
+    timeoutConfigClient.exchange.TestMesh.method1(function (e, result) {
 
       if (e) return done(e);
       done();
@@ -152,9 +153,9 @@ describe('d9-client-timeout', function() {
 
   });
 
-  it('runs a method on the default configured mesh', function(done) {
+  it('runs a method on the default configured mesh', function (done) {
 
-    defaultConfigClient.exchange.TestMesh.method1(function(e, result){
+    defaultConfigClient.exchange.TestMesh.method1(function (e, result) {
 
       expect(e).to.be("Request timed out");
       done();

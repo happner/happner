@@ -1,4 +1,3 @@
-
 // node 7-client-example-process.js
 // http://localhost:3001/ExampleMesh/ExampleComponent/ExampleFunction
 
@@ -15,50 +14,50 @@ var config = {
   },
   endpoints: {},
   modules: {
-    "example":{
-      path:__dirname + "/7-client-example",
-      constructor:{
-        type:"sync",
-        parameters:[]
+    "example": {
+      path: __dirname + "/7-client-example",
+      constructor: {
+        type: "sync",
+        parameters: []
       }
     }
   },
 
   components: {
 
-    "api":{
-      moduleName:"api",
-      scope:"component",
-      schema:{
-        "exclusive":false
+    "api": {
+      moduleName: "api",
+      scope: "component",
+      schema: {
+        "exclusive": false
       },
-      web:{
-        routes:{
+      web: {
+        routes: {
           // http://localhost:3001/ExampleMesh/api/client
-          "client":"handleRequest"
+          "client": "handleRequest"
         }
       }
     },
 
-    "ExampleComponent":{
+    "ExampleComponent": {
       moduleName: "example",
-      schema:{
-        methods:{
-          apiFunction:{
-            parameters:[
+      schema: {
+        methods: {
+          apiFunction: {
+            parameters: [
               {name: 'arg1', required: true},
-              {name:'callback', type:'callback', required:true}
+              {name: 'callback', type: 'callback', required: true}
             ]
           }
         }
       },
-      web:{
-        routes:{
+      web: {
+        routes: {
           // http://localhost:3001/ExampleMesh/ExampleComponent/staticContent/test.html
           "staticContent": "static",
 
           // http://localhost:3001/ExampleMesh/ExampleComponent/ExampleFunction
-          "ExampleFunction": "webFunction" 
+          "ExampleFunction": "webFunction"
         }
       }
     }
@@ -67,7 +66,7 @@ var config = {
 };
 
 console.log('REMOTE STARTING, port:', 3001);
-(mesh = new Mesh()).initialize(config, function(e) {
+(mesh = new Mesh()).initialize(config, function (e) {
 
   if (e) {
     console.log(e.stack);

@@ -106,7 +106,7 @@ var serverConfig = {
   }
 };
 
-describe('b9 - mesh client security login', function() {
+describe('b9 - mesh client security login', function () {
 
   this.timeout(120000);
 
@@ -122,14 +122,14 @@ describe('b9 - mesh client security login', function() {
 
 
     happner.create(serverConfig)
-        .then(addGroup)
-        .then(addUser)
-        .then(linkUser)
-        .then(createClient)
-        .then(saveClient)
-        .catch(function (err) {
-          done(err);
-        });
+      .then(addGroup)
+      .then(addUser)
+      .then(linkUser)
+      .then(createClient)
+      .then(saveClient)
+      .catch(function (err) {
+        done(err);
+      });
 
     function addGroup(server) {
       serverMesh = server;
@@ -156,9 +156,9 @@ describe('b9 - mesh client security login', function() {
     }
   });
 
-  after('close server mesh', function(done){
+  after('close server mesh', function (done) {
 
-    serverMesh.stop({reconnect:false}, done);
+    serverMesh.stop({reconnect: false}, done);
 
   });
 
@@ -192,7 +192,6 @@ describe('b9 - mesh client security login', function() {
   //         should.not.exist(err);
 
   //         console.log('device registered again:::');
-
 
 
   //         clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
@@ -249,14 +248,14 @@ describe('b9 - mesh client security login', function() {
       device_info: "someInfo"
     };
 
-    clientMesh.exchange.client.registerDevice(OemUser, device, function(err){
+    clientMesh.exchange.client.registerDevice(OemUser, device, function (err) {
       // if(err) console.log(err);
       should.not.exist(err);
 
       // console.log('device registered:::');
 
-      clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
-        if(err) console.log(err);
+      clientMesh.exchange.client.requestSomethingSpecial("some_data", function (err, data) {
+        if (err) console.log(err);
 
         should.not.exist(err);
         data.should.eql('success');
@@ -267,17 +266,17 @@ describe('b9 - mesh client security login', function() {
           device_info: "some New Info"
         };
 
-        clientMesh.exchange.client.registerDevice(OemUser, device, function(err){
-          if(err) console.log(err);
+        clientMesh.exchange.client.registerDevice(OemUser, device, function (err) {
+          if (err) console.log(err);
           should.not.exist(err);
 
           // console.log('device registered again:::');
 
-          clientMesh.exchange.client.requestSomethingSpecial("some_data", function(err, data){
+          clientMesh.exchange.client.requestSomethingSpecial("some_data", function (err, data) {
 
             // console.log('final request:::', arguments);
 
-            if(err) console.log(err);
+            if (err) console.log(err);
             should.not.exist(err);
             data.should.eql('success');
 

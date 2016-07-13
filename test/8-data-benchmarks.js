@@ -39,7 +39,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
     components: {
       "component1": {
         moduleName: "module1",
-        accessLevel:"mesh",
+        accessLevel: "mesh",
         // scope: "component",//either component(mesh aware) or module - default is module
         startMethod: "start",
         schema: {
@@ -56,7 +56,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
       },
       "component2": {
         moduleName: "module2",
-        accessLevel:"mesh",
+        accessLevel: "mesh",
         // scope: "component",
         schema: {
           "exclusive": false,
@@ -77,8 +77,8 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
     });
   });
 
-   after(function(done){
-     mesh.stop({reconnect:false}, done);
+  after(function (done) {
+    mesh.stop({reconnect: false}, done);
   });
 
   it('listens for the ping pong completed event, that module1 emits', function (done) {

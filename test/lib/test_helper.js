@@ -3,21 +3,21 @@ var Mesh = require('../../');
 var fs = require('fs');
 
 module.exports = {
-  __happnerClients:{},
-  __addHappnerClient:function(ctx, client){
+  __happnerClients: {},
+  __addHappnerClient: function (ctx, client) {
     if (!this.__happnerClients[ctx])
       this.__happnerClients[ctx] = [];
 
     this.__happnerClients[ctx].push(client);
   },
-  __happnerInstances:{},
-  __addHappnerInstance:function(ctx, instance, config){
+  __happnerInstances: {},
+  __addHappnerInstance: function (ctx, instance, config) {
     if (!this.__happnerInstances[ctx])
       this.__happnerInstances[ctx] = [];
 
-    this.__happnerInstances[ctx].push({instance:instance, config:config});
+    this.__happnerInstances[ctx].push({instance: instance, config: config});
   },
-  startHappnerInstance:function(ctx, config, callback) {
+  startHappnerInstance: function (ctx, config, callback) {
 
     var _this = this;
 
@@ -34,15 +34,15 @@ module.exports = {
 
       _this.__addHappnerInstance(ctx, instance, config);
 
-      var client = new Mesh.MeshClient({port:config.datalayer.port?config.datalayer.port:55000});
+      var client = new Mesh.MeshClient({port: config.datalayer.port ? config.datalayer.port : 55000});
       var loginParams = {
 
-        username:'_ADMIN',
-        password:config.datalayer.adminPassword?config.datalayer.adminPassword:'happn'
+        username: '_ADMIN',
+        password: config.datalayer.adminPassword ? config.datalayer.adminPassword : 'happn'
 
       }
 
-      client.login(loginParams).then(function(e){
+      client.login(loginParams).then(function (e) {
         if (e) return callback(e);
         _this.__addHappnerClient(ctx, client);
         callback(null, instance, client);
@@ -50,16 +50,16 @@ module.exports = {
 
     });
   },
-  stopHappnerInstances:function(ctx, callback){
+  stopHappnerInstances: function (ctx, callback) {
     var _this = this;
     var index = 0;
 
-    async.eachSeries(_this.__happnerInstances[ctx], function(started, stopCallback){
+    async.eachSeries(_this.__happnerInstances[ctx], function (started, stopCallback) {
 
-      started.instance.stop(function(e){
+      started.instance.stop(function (e) {
 
         if (e) return stopCallback[e];
-        if ((started.config && started.config.datalayer && started.config.datalayer.filename) || (started.config && started.config.data && started.config.data.filename)){
+        if ((started.config && started.config.datalayer && started.config.datalayer.filename) || (started.config && started.config.data && started.config.data.filename)) {
 
           var dbPath;
           if (started.config.datalayer)
@@ -73,16 +73,16 @@ module.exports = {
 
         stopCallback();
       });
-    }, function(e){
+    }, function (e) {
       if (e) return callback(e);
       _this.__happnerInstances[ctx] = [];
       callback();
     });
   },
-  exec:function(ctx, command, callback){
+  exec: function (ctx, command, callback) {
 
   },
-  kill:function(ctx, callback){
+  kill: function (ctx, callback) {
 
   }
 }

@@ -19,8 +19,7 @@ describe('1-startup-loader', function (done) {
   var configDefault = {
     name: "startupProxiedDefault",
     port: 55000,
-    "happner-loader": {
-    },
+    "happner-loader": {},
     modules: {
       testComponent: {
         instance: require("../lib/d6_slow_startup_component")
@@ -49,9 +48,8 @@ describe('1-startup-loader', function (done) {
   var configDeferredListen = {
     name: "startupProxiedDifferentPort",
     port: 55001,
-    "happner-loader": {
-    },
-    deferListen:true
+    "happner-loader": {},
+    deferListen: true
   };
 
   var configDifferentPortProgressLog = {
@@ -67,15 +65,15 @@ describe('1-startup-loader', function (done) {
   var meshes = [];
   var mesh;
 
-  function killProc(pid, callback, removeFromChildPIDs){
+  function killProc(pid, callback, removeFromChildPIDs) {
 
     var killCommand = exec("kill -9 " + pid, function (error, stdout, stderr) {
 
       if (removeFromChildPIDs)
-      childPIDs.map(function(childPid, ix){
-        if (childPid == pid)
-          childPIDs.splice(ix, 1);
-      });
+        childPIDs.map(function (childPid, ix) {
+          if (childPid == pid)
+            childPIDs.splice(ix, 1);
+        });
 
       callback();
 
@@ -104,16 +102,16 @@ describe('1-startup-loader', function (done) {
   it('starts the loader http server', function (done) {
 
     var LoaderProgress = require('../../lib/startup/loader_progress');
-    var loaderProgress = new LoaderProgress({port:55000});
+    var loaderProgress = new LoaderProgress({port: 55000});
 
-    loaderProgress.listen(function(e){
+    loaderProgress.listen(function (e) {
 
       if (e) return done(e);
 
       loaderProgress.progress('test', 10);
       loaderProgress.progress('test1', 20);
 
-      doRequest('/progress', function(data){
+      doRequest('/progress', function (data) {
 
         var prog_data = JSON.parse(data);
 
@@ -134,9 +132,9 @@ describe('1-startup-loader', function (done) {
   it('starts the loader http server, fails to start happn, stops the http server and successfully starts happn', function (done) {
 
     var LoaderProgress = require('../../lib/startup/loader_progress');
-    var loaderProgress = new LoaderProgress({port:55000});
+    var loaderProgress = new LoaderProgress({port: 55000});
 
-    loaderProgress.listen(function(e){
+    loaderProgress.listen(function (e) {
 
       if (e) return done(e);
 
@@ -153,7 +151,7 @@ describe('1-startup-loader', function (done) {
 
               expect(e).to.be(null);
 
-              doRequest('/ping', function(data){
+              doRequest('/ping', function (data) {
 
                 expect(data).to.be('pong');
                 done();
@@ -168,27 +166,27 @@ describe('1-startup-loader', function (done) {
 
   it('starts a mesh with a deferred listen', function (done) {
 
-      Mesh
-        .create(configDeferredListen, function (e, created) {
+    Mesh
+      .create(configDeferredListen, function (e, created) {
 
-          doRequest('/ping', function(data){
+        doRequest('/ping', function (data) {
 
-            expect(data).to.be(undefined);
+          expect(data).to.be(undefined);
 
-            created.listen(function(e){
+          created.listen(function (e) {
 
-              doRequest('/ping', function(data){
+            doRequest('/ping', function (data) {
 
-                expect(data).to.be('pong');
-                done();
+              expect(data).to.be('pong');
+              done();
 
-              }, 55001);
+            }, 55001);
 
-            });
+          });
 
-          }, 55001);
+        }, 55001);
 
-        });
+      });
 
   });
 
@@ -196,11 +194,11 @@ describe('1-startup-loader', function (done) {
 
     var progressLogs = [];
 
-    var startupProgressHandler = function(data){
+    var startupProgressHandler = function (data) {
 
       progressLogs.push(data);
 
-      if (data.progress == 100){
+      if (data.progress == 100) {
         expect(progressLogs.length).to.be(15);
         Mesh.off('startup-progress', startupProgressHandler)
         done();
@@ -223,11 +221,11 @@ describe('1-startup-loader', function (done) {
 
     var meshLogs = [];
 
-    var eventId = Mesh.on('mesh-log', function(data){
+    var eventId = Mesh.on('mesh-log', function (data) {
 
       meshLogs.push(data);
 
-      if (data.stack == 'started!'){
+      if (data.stack == 'started!') {
         expect(meshLogs.length > 16).to.be(true);
         done();
       }
@@ -256,30 +254,30 @@ describe('1-startup-loader', function (done) {
     var logs = [];
     var childPID = -1;
 
-    var verifyLogs = function(){
+    var verifyLogs = function () {
 
       var logScore = 0;
 
-      for (var logIndex in logs){
+      for (var logIndex in logs) {
 
         var logMessage = logs[logIndex];
 
-        if (logMessage.indexOf('(mesh) started component \'security\'') >= 0){
+        if (logMessage.indexOf('(mesh) started component \'security\'') >= 0) {
           console.log('score 1');
           logScore++;
         }
 
-        if (logMessage.indexOf('(mesh) started component \'system\'') >= 0){
+        if (logMessage.indexOf('(mesh) started component \'system\'') >= 0) {
           console.log('score 2');
           logScore++;
         }
 
-        if (logMessage.indexOf('happner ready to start listening') >= 0){
+        if (logMessage.indexOf('happner ready to start listening') >= 0) {
           console.log('score 3');
           logScore++;
         }
 
-        if (logMessage.indexOf('happner process is now listening, killing parent process in 5 seconds') >= 0){
+        if (logMessage.indexOf('happner process is now listening, killing parent process in 5 seconds') >= 0) {
           console.log('score 4');
           logScore++;
         }
@@ -287,17 +285,16 @@ describe('1-startup-loader', function (done) {
       }
 
 
-
       return logScore;
     }
 
-    remote.stdout.on('data', function(data) {
+    remote.stdout.on('data', function (data) {
 
       var logMessage = data.toString().toLowerCase();
 
       logs.push(logMessage);
 
-      if (logMessage.indexOf('child process loaded') >= 0){
+      if (logMessage.indexOf('child process loaded') >= 0) {
 
         var childPIDLog = logMessage.split(':::');
         var childPID = parseInt(childPIDLog[childPIDLog.length - 1]);
@@ -305,10 +302,10 @@ describe('1-startup-loader', function (done) {
         childPIDs.push(childPID);
       }
 
-      if (logMessage.indexOf('happner process is now listening, killing parent process in 5 seconds') >= 0){
-        setTimeout(function(){
+      if (logMessage.indexOf('happner process is now listening, killing parent process in 5 seconds') >= 0) {
+        setTimeout(function () {
 
-          doRequest('/ping', function(data){
+          doRequest('/ping', function (data) {
 
             expect(data).to.be('pong');
             var score = verifyLogs();
@@ -328,23 +325,23 @@ describe('1-startup-loader', function (done) {
 
   after('kills the proxy and stops the mesh if its running', function (done) {
 
-    var killProcs = function(){
+    var killProcs = function () {
 
-      if (childPIDs.length > 0){
+      if (childPIDs.length > 0) {
 
-        async.eachSeries(childPIDs, function(pid, cb){
+        async.eachSeries(childPIDs, function (pid, cb) {
 
           killProc(pid, cb);
 
         }, done);
 
-      }else done();
+      } else done();
     }
 
     if (meshes.length > 0)
-    async.eachSeries(meshes, function(stopMesh, cb){
-      stopMesh.stop({reconnect: false}, cb);
-    }, killProcs);
+      async.eachSeries(meshes, function (stopMesh, cb) {
+        stopMesh.stop({reconnect: false}, cb);
+      }, killProcs);
     else killProcs();
 
   });

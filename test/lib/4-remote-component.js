@@ -11,7 +11,7 @@ function RemoteComponent() {
 
   this.causeError = function (callback) {
     throw (
-        e = new Error('Error string'),
+      e = new Error('Error string'),
         e.name = 'ErrorType',
         e
     )
