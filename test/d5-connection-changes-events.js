@@ -1,4 +1,4 @@
-describe('d5-connection-changes-events', function() {
+describe('d5-connection-changes-events', function () {
 
   this.timeout(120000);
 
@@ -11,24 +11,24 @@ describe('d5-connection-changes-events', function() {
   var Mesh = require('../');
   var mesh = new Mesh();
 
-  var adminClient = new Mesh.MeshClient({secure:true, port:8004});
-  var testClient = new Mesh.MeshClient({secure:true, port:8004});
+  var adminClient = new Mesh.MeshClient({secure: true, port: 8004});
+  var testClient = new Mesh.MeshClient({secure: true, port: 8004});
 
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
 
-  before(function(done) {
+  before(function (done) {
 
     mesh.initialize({
-      name:'d5-connection-changes-events',
+      name: 'd5-connection-changes-events',
       datalayer: {
         secure: true,
         adminPassword: test_id,
-        port:8004
+        port: 8004
       }
-    }, function(err) {
+    }, function (err) {
       if (err) return done(err);
-      mesh.start(function(err) {
+      mesh.start(function (err) {
         if (err) {
           return done(err);
         }
@@ -38,7 +38,7 @@ describe('d5-connection-changes-events', function() {
           password: test_id
         }
 
-        adminClient.login(credentials).then(function(){
+        adminClient.login(credentials).then(function () {
           done();
         }).catch(done);
 
@@ -47,15 +47,15 @@ describe('d5-connection-changes-events', function() {
   });
 
   var eventsToFire = {
-    'reconnect/scheduled':false,
-    'reconnect/successful':false
+    'reconnect/scheduled': false,
+    'reconnect/successful': false
   }
 
   var eventsFired = false;
 
-  it('tests the reconnection events', function(done) {
+  it('tests the reconnection events', function (done) {
 
-    var fireEvent = function(key){
+    var fireEvent = function (key) {
 
       if (eventsFired) return;
 
@@ -70,30 +70,30 @@ describe('d5-connection-changes-events', function() {
       done();
     }
 
-    adminClient.on('reconnect/scheduled', function(evt, data){
+    adminClient.on('reconnect/scheduled', function (evt, data) {
       //TODO some expect code
 
       fireEvent('reconnect/scheduled');
     });
 
-    adminClient.on('reconnect/successful', function(evt, data){
+    adminClient.on('reconnect/successful', function (evt, data) {
       //TODO some expect code
       fireEvent('reconnect/successful');
     });
 
     for (var key in mesh._mesh.datalayer.server.connections)
-        mesh._mesh.datalayer.server.connections[key].destroy();
+      mesh._mesh.datalayer.server.connections[key].destroy();
 
   });
 
-  it('tests the connection end event', function(done) {
+  it('tests the connection end event', function (done) {
 
-    adminClient.on('connection/ended', function(evt, data){
+    adminClient.on('connection/ended', function (evt, data) {
       //TODO some expect stuff
       done();
     });
 
-    mesh.stop({reconnect:false}, function(e){
+    mesh.stop({reconnect: false}, function (e) {
       if (e) return done(e);
     });
 

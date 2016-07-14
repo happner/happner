@@ -27,32 +27,32 @@ config = {
   components: {}
 };
 
-describe('4 - Mesh to Mesh', function() {
+describe('4 - Mesh to Mesh', function () {
 
   this.timeout(120000);
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  before(function(done) {
+  before(function (done) {
 
     var _this = this;
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + '4-first-mesh']);
 
-    remote.stdout.on('data', function(data) {
+    remote.stdout.on('data', function (data) {
 
       // console.log(data.toString());
 
-      if (data.toString().match(/READY/)){
+      if (data.toString().match(/READY/)) {
 
 
         mesh = new Mesh();
 
         // console.log('starting this one', mesh, config);
         // mesh.initialize(config, function(err) {
-        mesh.initialize(config, function(e){
+        mesh.initialize(config, function (e) {
           done(e);
         });
       }
@@ -61,34 +61,34 @@ describe('4 - Mesh to Mesh', function() {
   });
 
 
-  after(function(done) {
+  after(function (done) {
     remote.kill();
-    mesh.stop({reconnect:false}, done);
+    mesh.stop({reconnect: false}, done);
   });
 
-  context('on remote mesh', function() {
+  context('on remote mesh', function () {
 
-    it("can call remote component function and subscribe to event",function(done) {
+    it("can call remote component function and subscribe to event", function (done) {
 
       var eventFired = false;
 
-      mesh.event.remoteMesh.remoteComponent.on('*', function(data, meta){
+      mesh.event.remoteMesh.remoteComponent.on('*', function (data, meta) {
         if (data.value == 'whoa') eventFired = true;
       });
 
       mesh.exchange.remoteMesh.remoteComponent.remoteFunction(
-        'one!', 'two!', 'three!', function(err, res) {
+        'one!', 'two!', 'three!', function (err, res) {
 
           assert(res == 'one! two! three!, wheeeeeeeeeeeeheeee!');
           assert(eventFired);
           done()
 
-      });
+        });
     });
 
-    it('can receive remotely caught error', function(done) {
+    it('can receive remotely caught error', function (done) {
 
-      mesh.exchange.remoteMesh.remoteComponent.causeError(function(err, res) {
+      mesh.exchange.remoteMesh.remoteComponent.causeError(function (err, res) {
 
         assert(err.toString().match(/ErrorType: Error string/))
         done();

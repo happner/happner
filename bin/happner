@@ -66,7 +66,7 @@ var loaded, configPath;
 // updates the module search paths to operate as if at
 // that location.
 
-var replaceSearchPath = function(startAt) {
+var replaceSearchPath = function (startAt) {
 
   console.warn('WARN: Replacing module search path!');
   console.warn('WARN: New path starts at ' + startAt);
@@ -77,11 +77,11 @@ var replaceSearchPath = function(startAt) {
 
   module.paths.length = 0;
 
-  var addPath = function(dir) {
+  var addPath = function (dir) {
     module.paths.push(path.normalize(dir + path.sep + 'node_modules'));
   }
 
-  var recurse = function(dir) {
+  var recurse = function (dir) {
     addPath(dir);
     var next = path.dirname(dir);
     if (next.length < 2) return addPath(next);
@@ -94,20 +94,20 @@ commander
 
   .version(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version)
   .option('')
-  .option('--conf [file]',         'Load mesh config from file/module (js)') // ie. module.exports = {/* the config */}
-  .option('',                      'use: module.exports.config = {};')
-  .option('',                      'or: module.exports = { /* config */ };')
+  .option('--conf [file]', 'Load mesh config from file/module (js)') // ie. module.exports = {/* the config */}
+  .option('', 'use: module.exports.config = {};')
+  .option('', 'or: module.exports = { /* config */ };')
   .option('')
   // .option('--create',              'Create new project happen project.')
   // .option('')
-  .option('--port [number]',       'Start localnode listening at port')
+  .option('--port [number]', 'Start localnode listening at port')
   .option('')
-  .option('--trace',               'Set LOG_LEVEL=trace')
-  .option('--debug',               'Set LOG_LEVEL=debug')
-  .option('--warn',                'Set LOG_LEVEL=warn')
+  .option('--trace', 'Set LOG_LEVEL=trace')
+  .option('--debug', 'Set LOG_LEVEL=debug')
+  .option('--warn', 'Set LOG_LEVEL=warn')
   .option('')
-  .option('--alt-prompt [\'txt\']','Alternate prompt text')
-  .option('--no-help',             'Skip intro help')
+  .option('--alt-prompt [\'txt\']', 'Alternate prompt text')
+  .option('--no-help', 'Skip intro help')
   .option('')
   .parse(process.argv);
 
@@ -167,8 +167,7 @@ if (!isNaN(commander.port)) {
 }
 
 
-
-happner.create(config, function(e, mesh) {
+happner.create(config, function (e, mesh) {
   if (e) {
     if (mesh.log) {
       mesh.log.error(e, e);
@@ -183,7 +182,7 @@ happner.create(config, function(e, mesh) {
   mesh.exchange.terminal.start({
     prefix: prefix,
     help: typeof commander.help == 'boolean' ? commander.help : true,
-  }, function(eee, prompt) {
+  }, function (eee, prompt) {
     // eee is array! of [e,e,e] if errors ocurred
     // prompt started anyway.
   });

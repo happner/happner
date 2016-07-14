@@ -1,11 +1,11 @@
-module.exports = function() {
+module.exports = function () {
   return new ModuleMesh();
 }
- function ModuleMesh() {
+function ModuleMesh() {
 
   var _this = this;
 
-  _this.getReading = function(parameters, callback) {
+  _this.getReading = function (parameters, callback) {
     callback(undefined, Math.random());
   }
 

@@ -2,17 +2,18 @@ module.exports = TestMesh;
 
 var DONE = false;
 
-function TestMesh() {}
+function TestMesh() {
+}
 
-TestMesh.prototype.method1 = function($happn, $origin, callback) {
+TestMesh.prototype.method1 = function ($happn, $origin, callback) {
   callback(null, $origin);
 }
 
 if (global.TESTING_D1 || global.TESTING_D1_1) return; // When 'requiring' the module above,
-                              // don't run the tests below
-                             //.............
+// don't run the tests below
+//.............
 
-describe('d1-session-injection', function() {
+describe('d1-session-injection', function () {
 
   this.timeout(120000);
 
@@ -26,22 +27,22 @@ describe('d1-session-injection', function() {
   var Mesh = require('../');
   var secureMesh = new Mesh();
 
-  var secureClient = new Mesh.MeshClient({secure:true,port:8000});
-  var unsecureClient = new Mesh.MeshClient({port:8001});
+  var secureClient = new Mesh.MeshClient({secure: true, port: 8000});
+  var unsecureClient = new Mesh.MeshClient({port: 8001});
 
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
 
-  before('starts a secure mesh', function(done) {
+  before('starts a secure mesh', function (done) {
 
     global.TESTING_D1 = true; //.............
 
     secureMesh.initialize({
-      name:'d1-session-injection-secure',
+      name: 'd1-session-injection-secure',
       datalayer: {
         secure: true,
         adminPassword: test_id,
-        port:8000
+        port: 8000
       },
       modules: {
         'TestMesh': {
@@ -57,10 +58,10 @@ describe('d1-session-injection', function() {
         }
       }
 
-    }, function(err) {
+    }, function (err) {
 
       if (err) return done(err);
-      secureMesh.start(function(err) {
+      secureMesh.start(function (err) {
         if (err) {
           // console.log(err.stack);
           return done(err);
@@ -72,7 +73,7 @@ describe('d1-session-injection', function() {
           password: test_id
         }
 
-        secureClient.login(credentials).then(function(){
+        secureClient.login(credentials).then(function () {
           done();
         }).catch(done);
 
@@ -80,18 +81,18 @@ describe('d1-session-injection', function() {
     });
   });
 
-  before('starts an insecure mesh', function(done) {
+  before('starts an insecure mesh', function (done) {
 
     global.TESTING_D1_1 = true; //.............
 
     unsecureMesh = this.mesh = new Mesh();
 
     unsecureMesh.initialize({
-      name:'d1-session-injection',
+      name: 'd1-session-injection',
       datalayer: {
         secure: false,
         adminPassword: test_id,
-        port:8001
+        port: 8001
       },
       modules: {
         'TestMesh': {
@@ -107,10 +108,10 @@ describe('d1-session-injection', function() {
         }
       }
 
-    }, function(err) {
+    }, function (err) {
 
       if (err) return done(err);
-      unsecureMesh.start(function(err) {
+      unsecureMesh.start(function (err) {
         if (err) {
           // console.log(err.stack);
           return done(err);
@@ -118,10 +119,10 @@ describe('d1-session-injection', function() {
 
         // Credentials for the login method
         var credentials = {
-          port:8001
+          port: 8001
         }
 
-        unsecureClient.login(credentials).then(function(){
+        unsecureClient.login(credentials).then(function () {
           done();
         }).catch(done);
 
@@ -129,23 +130,23 @@ describe('d1-session-injection', function() {
     });
   });
 
-  after(function(done) {
+  after(function (done) {
 
     delete global.TESTING_D1_1;
     delete global.TESTING_D1;
 
-    unsecureMesh.stop({reconnect:false}, function(e){
+    unsecureMesh.stop({reconnect: false}, function (e) {
 
       if (e) return done(e);
 
-      secureMesh.stop({reconnect:false}, done);
+      secureMesh.stop({reconnect: false}, done);
 
     });
   })
 
-  it('fetches the origin info on a secure mesh', function(done) {
+  it('fetches the origin info on a secure mesh', function (done) {
 
-    secureClient.exchange.TestMesh.method1(function(e, result){
+    secureClient.exchange.TestMesh.method1(function (e, result) {
 
       if (e) return done(e);
       expect(result.username).to.equal('_ADMIN');
@@ -155,9 +156,9 @@ describe('d1-session-injection', function() {
 
   });
 
-  it('fetches the origin info on an unsecure mesh', function(done) {
+  it('fetches the origin info on an unsecure mesh', function (done) {
 
-    unsecureClient.exchange.TestMesh.method1(function(e, result){
+    unsecureClient.exchange.TestMesh.method1(function (e, result) {
 
       if (e) return done(e);
       expect(result.id).to.not.equal(null);

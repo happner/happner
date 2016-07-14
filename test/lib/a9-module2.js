@@ -11,26 +11,26 @@ module.exports = function (options) {
 
 function Component2(options) {
 
-  this.storeData = function($happn, path, data, parameters, callback){
+  this.storeData = function ($happn, path, data, parameters, callback) {
 
-    try{
+    try {
 
-     $happn.data.set(path, data, parameters, callback);
+      $happn.data.set(path, data, parameters, callback);
 
-    }catch(e){
+    } catch (e) {
       callback(e);
     }
   }
 
-  this.lookForForbiddenMethods = function($happn, callback){
-    try{
+  this.lookForForbiddenMethods = function ($happn, callback) {
+    try {
 
       //look in $happn
 
       var forbiddenFruit = ['_remoteOff'];
       var innocenceLost = [];
 
-      traverse($happn).map(function(){
+      traverse($happn).map(function () {
 
         if (forbiddenFruit.indexOf(this.key) >= 0)
           innocenceLost.push(this.path);
@@ -38,29 +38,29 @@ function Component2(options) {
       });
 
       return callback(null, innocenceLost);
-    }catch(e){
+    } catch (e) {
       return callback(e);
     }
-    
+
   }
-  
-  this.subscribeToData = function($happn, options) {
-    $happn.data.on(options.path,{event_type:'set',count:0}, options.handler,options.callback);
-  };
-  
-  this.unsubscribeFromData = function($happn,options) {
-    $happn.data.off(options.path,options.callback);
-  };
-  
-  this.setData = function($happn,options) {
-    $happn.data.set(options.path,options.value,{},options.callback);
+
+  this.subscribeToData = function ($happn, options) {
+    $happn.data.on(options.path, {event_type: 'set', count: 0}, options.handler, options.callback);
   };
 
-  this.start = function(arg, $happn){
+  this.unsubscribeFromData = function ($happn, options) {
+    $happn.data.off(options.path, options.callback);
+  };
+
+  this.setData = function ($happn, options) {
+    $happn.data.set(options.path, options.value, {}, options.callback);
+  };
+
+  this.start = function (arg, $happn) {
 
   };
 
-  this.stop = function(){
+  this.stop = function () {
 
   }
 }

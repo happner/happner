@@ -21,7 +21,7 @@ var config = {
   }
 }
 
-mesh.initialize(config, function(err, m) {
+mesh.initialize(config, function (err, m) {
   if (err) {
     console.log(err);
     process.exit(err.code || 1);

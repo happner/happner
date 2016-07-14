@@ -6,7 +6,7 @@ var config = {
     port: 3001,
     authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
     systemSecret: 'mesh',
-    persist:true
+    persist: true
   },
   modules: {
     'stress-module': {
@@ -14,18 +14,17 @@ var config = {
     }
   },
   components: {
-    'stress-module': {
-    }
+    'stress-module': {}
   }
 }
 
-Mesh.start(config, function(err) {
+Mesh.start(config, function (err) {
 
   if (err) {
     console.log(err);
     process.exit(err.code || 1);
   }
   console.log('READY');
-  
+
 
 });

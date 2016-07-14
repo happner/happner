@@ -12,32 +12,32 @@ function Component2(options) {
   if (!options)
     options = {};
 
-   if (!options.maximumPings)
+  if (!options.maximumPings)
     options.maximumPings = 100;
 
-  this.exposedMethod = function($happn, message, callback){
+  this.exposedMethod = function ($happn, message, callback) {
 
-    try{
+    try {
 
-       if (!$happn)
+      if (!$happn)
         throw new Error('This module needs component level scope');
 
       //console.log("Message from " + message.message);
 
       message.message = "Component2";
 
-      $happn.exchange.component1.exposedMethod(message, function(e, response){
+      $happn.exchange.component1.exposedMethod(message, function (e, response) {
 
       });
 
       callback(null, message);
 
-    }catch(e){
+    } catch (e) {
       callback(e);
     }
   }
 
-  this.stop = function(){
+  this.stop = function () {
 
   }
 }

@@ -11,42 +11,42 @@ module.exports = function (options) {
 
 function Component1(options) {
 
-  this.storeData = function($happn, path, data, parameters, callback){
+  this.storeData = function ($happn, path, data, parameters, callback) {
 
-    try{
+    try {
 
-     // console.log('setting:::', path);
-     $happn.data.set(path, data, parameters, callback);
+      // console.log('setting:::', path);
+      $happn.data.set(path, data, parameters, callback);
 
-    }catch(e){
+    } catch (e) {
       callback(e);
     }
   }
 
   this.onCount = 0;
 
-  this.getOnCount = function($happn, callback){
+  this.getOnCount = function ($happn, callback) {
     callback(null, this.onCount);
   }
 
-  this.start = function($happn, arg, callback){
+  this.start = function ($happn, arg, callback) {
 
     var _this = this;
 
     //path, parameters, handler, done
-    $happn.data.on('*', {}, function(result){
-      // console.log('on happned:::');
-      _this.onCount++;
-    }, 
-    function(e){
-      if (e) return callback(e);
-      // console.log('on ok:::');
-      callback();
-    });
+    $happn.data.on('*', {}, function (result) {
+        // console.log('on happned:::');
+        _this.onCount++;
+      },
+      function (e) {
+        if (e) return callback(e);
+        // console.log('on ok:::');
+        callback();
+      });
 
   };
 
-  this.stop = function(){
+  this.stop = function () {
 
   }
 }

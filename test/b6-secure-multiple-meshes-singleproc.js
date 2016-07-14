@@ -69,14 +69,14 @@ describe('b6 - start meshes', function () {
     var savedGroup = null;
 
     Mesh.create(serverConfig)
-        .then(addGroup)
-        .then(addUser)
-        .then(linkUser)
-        .then(createClient)
-        .then(saveClient)
-        .catch(function (err) {
-          done(err);
-        });
+      .then(addGroup)
+      .then(addUser)
+      .then(linkUser)
+      .then(createClient)
+      .then(saveClient)
+      .catch(function (err) {
+        done(err);
+      });
 
     function addGroup(server) {
       serverMesh = server;
@@ -106,12 +106,12 @@ describe('b6 - start meshes', function () {
 
   after(function (done) {
 
-    var stopServerMesh = function(){
-      if (serverMesh) return serverMesh.stop({reconnect:false}, done);
+    var stopServerMesh = function () {
+      if (serverMesh) return serverMesh.stop({reconnect: false}, done);
       done();
     }
 
-    if (clientMesh) clientMesh.stop({reconnect:false}, function(e){
+    if (clientMesh) clientMesh.stop({reconnect: false}, function (e) {
       if (e) return done(e);
       stopServerMesh();
     });
@@ -136,7 +136,7 @@ describe('b6 - start meshes', function () {
       password: 'TEST PWD'
     };
 
-    serverMesh.exchange.security.addUser(TestUser1, function (err){
+    serverMesh.exchange.security.addUser(TestUser1, function (err) {
 
       if (err) console.log(err);
       should.not.exist(err);

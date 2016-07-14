@@ -18,8 +18,8 @@ var config = {
   name: 'mesh2',
   datalayer: {
     port: 55002,
-    secure:true,
-    encryptPayloads:true
+    secure: true,
+    encryptPayloads: true
   },
   endpoints: {
     theFarawayTree: {  // remote mesh node
@@ -35,27 +35,27 @@ var config = {
   components: {}
 };
 
-describe('c8-payload-encryption', function() {
+describe('c8-payload-encryption', function () {
 
   this.timeout(120000);
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  before(function(done) {
+  before(function (done) {
 
     var _this = this;
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + 'c8-payload-encryption']);
 
-    remote.stdout.on('data', function(data) {
+    remote.stdout.on('data', function (data) {
 
-      if (data.toString().match(/READY/)){
+      if (data.toString().match(/READY/)) {
 
         mesh = new Mesh();
         // mesh.initialize(config, function(err) {
-        mesh.initialize(config, function(e){
+        mesh.initialize(config, function (e) {
           done(e);
         });
       }
@@ -63,34 +63,34 @@ describe('c8-payload-encryption', function() {
     });
   });
 
-  after(function(done) {
+  after(function (done) {
     remote.kill();
-    mesh.stop({reconnect:false}, done);
+    mesh.stop({reconnect: false}, done);
   });
 
-  context('the faraway tree, in the mist...', function() {
+  context('the faraway tree, in the mist...', function () {
 
-    it("we can ride moonface's slippery slip",function(done) {
+    it("we can ride moonface's slippery slip", function (done) {
 
       var eventFired = false;
 
-      mesh.event.theFarawayTree.moonface.on('*', function(data, meta){
+      mesh.event.theFarawayTree.moonface.on('*', function (data, meta) {
         if (data.value == 'whoa') eventFired = true;
       });
 
       mesh.exchange.theFarawayTree.moonface.rideTheSlipperySlip(
-        'one!', 'two!', 'three!', function(err, res) {
+        'one!', 'two!', 'three!', function (err, res) {
 
           assert(res == 'one! two! three!, wheeeeeeeeeeeeheeee!');
           assert(eventFired);
           done()
 
-      });
+        });
     });
 
-    it('we know when there was an accident', function(done) {
+    it('we know when there was an accident', function (done) {
 
-      mesh.exchange.theFarawayTree.moonface.haveAnAccident(function(err, res) {
+      mesh.exchange.theFarawayTree.moonface.haveAnAccident(function (err, res) {
 
         assert(err.toString().match(/SlipFailure: Stray patch of glue./))
         done();

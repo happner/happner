@@ -1,4 +1,4 @@
-module.exports = function(opt1, opt2) {
+module.exports = function (opt1, opt2) {
   return new Thing(opt1, opt2);
 }
 

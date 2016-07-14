@@ -1,6 +1,6 @@
 {
-  "port":55004,
-  "happner-loader":{
-    "redirect":"/ping"
+  "port": 55004,
+  "happner-loader": {
+    "redirect": "/ping"
   }
 }

@@ -2,9 +2,10 @@
 
 module.exports = SeeAbove;
 
-function SeeAbove() {}
+function SeeAbove() {
+}
 
-SeeAbove.prototype.methodName1 = function(opts, callback) {
+SeeAbove.prototype.methodName1 = function (opts, callback) {
 
   if (opts.errorAs == 'callback') return callback(new Error('THIS IS JUST A TEST'));
   if (opts.errorAs == 'throw') throw new Error('THIS IS JUST A TEST');
@@ -29,11 +30,11 @@ SeeAbove.prototype.$happner = {
 
 
 if (global.TESTING_18) return; // When 'requiring' the module above,
-                              // don't run the tests below
-                             //.............
+// don't run the tests below
+//.............
 var should = require('chai').should();
 
-describe('a8 - exchange supports promises', function() {
+describe('a8 - exchange supports promises', function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
@@ -43,7 +44,7 @@ describe('a8 - exchange supports promises', function() {
 
   this.timeout(120000);
 
-  before(function(done) {
+  before(function (done) {
 
     global.TESTING_18 = true; //.............
 
@@ -61,20 +62,20 @@ describe('a8 - exchange supports promises', function() {
       components: {
         'component': {}
       }
-    }, function(err) {
+    }, function (err) {
       delete global.TESTING_18; //.............
       if (err) return done(err);
       done();
     });
   });
 
-  after(function(done){
-     mesh.stop({reconnect:false}, done);
+  after(function (done) {
+    mesh.stop({reconnect: false}, done);
   });
 
-  it('supports non-promises in the exchange', function(done) {
+  it('supports non-promises in the exchange', function (done) {
 
-    this.mesh.exchange.component.methodName1({number: 1}, function(err, res) {
+    this.mesh.exchange.component.methodName1({number: 1}, function (err, res) {
 
       res.should.eql({number: 2});
       done();
@@ -84,54 +85,55 @@ describe('a8 - exchange supports promises', function() {
   });
 
 
-  it('supports promises in the exchange', function(done) {
+  it('supports promises in the exchange', function (done) {
 
     this.mesh.exchange.component.methodName1({number: 1})
 
-    .then(function(res) {
-      res.should.eql({number: 2});
-      done();
-    })
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
 
   });
 
 
-  it('the promise implementation supports .catch from callback error', function(done) {
+  it('the promise implementation supports .catch from callback error', function (done) {
 
     this.mesh.exchange.component.methodName1({errorAs: 'callback'})
 
-    .then(function(res) {
-      done(new Error('did not catch'));
-    })
+      .then(function (res) {
+        done(new Error('did not catch'));
+      })
 
-    .catch(function(err) {
-      err.should.match(/THIS IS JUST A TEST/);
-      done();
-    })
+      .catch(function (err) {
+        err.should.match(/THIS IS JUST A TEST/);
+        done();
+      })
 
   });
 
 
-  it('the promise implementation supports .catch from thrown error', function(done) {
+  it('the promise implementation supports .catch from thrown error', function (done) {
 
     this.mesh.exchange.component.methodName1({errorAs: 'throw'})
 
-    .then(function(res) {;
-      console.log(res)
-      done(new Error('did not catch'));
-    })
+      .then(function (res) {
+        ;
+        console.log(res)
+        done(new Error('did not catch'));
+      })
 
-    .catch(function(err) {
-      err.should.match(/THIS IS JUST A TEST/);
-      done();
-    })
+      .catch(function (err) {
+        err.should.match(/THIS IS JUST A TEST/);
+        done();
+      })
 
   });
 
 
-  it('supports non-promises on the alias', function(done) {
+  it('supports non-promises on the alias', function (done) {
 
-    this.mesh.exchange.component.ancientmoth({number: 1}, function(err, res) {
+    this.mesh.exchange.component.ancientmoth({number: 1}, function (err, res) {
 
       res.should.eql({number: 2});
       done();
@@ -141,14 +143,14 @@ describe('a8 - exchange supports promises', function() {
   })
 
 
-  it('supports promises on the alias', function(done) {
+  it('supports promises on the alias', function (done) {
 
     this.mesh.exchange.component.ancientmoth({number: 1})
 
-    .then(function(res) {
-      res.should.eql({number: 2});
-      done();
-    });
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      });
 
   });
 

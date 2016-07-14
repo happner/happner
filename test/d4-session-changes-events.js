@@ -1,4 +1,4 @@
-describe('d4-session-changes-events', function() {
+describe('d4-session-changes-events', function () {
 
   this.timeout(120000);
 
@@ -11,24 +11,24 @@ describe('d4-session-changes-events', function() {
   var Mesh = require('../');
   var mesh = new Mesh();
 
-  var adminClient = new Mesh.MeshClient({secure:true, port:8004});
-  var testClient = new Mesh.MeshClient({secure:true, port:8004});
+  var adminClient = new Mesh.MeshClient({secure: true, port: 8004});
+  var testClient = new Mesh.MeshClient({secure: true, port: 8004});
 
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
 
-  before(function(done) {
+  before(function (done) {
 
     mesh.initialize({
-      name:'d4-session-changes-events',
+      name: 'd4-session-changes-events',
       datalayer: {
         secure: true,
         adminPassword: test_id,
-        port:8004
+        port: 8004
       }
-    }, function(err) {
+    }, function (err) {
       if (err) return done(err);
-      mesh.start(function(err) {
+      mesh.start(function (err) {
         if (err) {
           // console.log(err.stack);
           return done(err);
@@ -39,7 +39,7 @@ describe('d4-session-changes-events', function() {
           password: test_id
         }
 
-        adminClient.login(credentials).then(function(){
+        adminClient.login(credentials).then(function () {
           done();
         }).catch(done);
 
@@ -47,18 +47,18 @@ describe('d4-session-changes-events', function() {
     });
   });
 
-  after(function(done) {
-    mesh.stop({reconnect:false}, done);
+  after(function (done) {
+    mesh.stop({reconnect: false}, done);
   })
 
   var eventsToFire = {
-    'connect':false,
-    'disconnect':false
+    'connect': false,
+    'disconnect': false
   }
 
-  it('tests the connect and disconnect events, by logging on and off with the admin client', function(done) {
+  it('tests the connect and disconnect events, by logging on and off with the admin client', function (done) {
 
-    var fireEvent = function(key){
+    var fireEvent = function (key) {
 
       eventsToFire[key] = true;
 
@@ -70,26 +70,26 @@ describe('d4-session-changes-events', function() {
     }
 
     var testUser = {
-      username:'TESTUSER1' + test_id,
-      password:'TEST PWD',
-      custom_data:{
+      username: 'TESTUSER1' + test_id,
+      password: 'TEST PWD',
+      custom_data: {
         something: 'useful'
       }
     }
 
-    adminClient.exchange.security.addUser(testUser, function(e, result){
+    adminClient.exchange.security.addUser(testUser, function (e, result) {
 
       if (e) return done(e);
 
-      adminClient.exchange.security.attachToSessionChanges(function(e){
+      adminClient.exchange.security.attachToSessionChanges(function (e) {
 
         if (e) return callback(e);
 
-        adminClient.event.security.on('connect', function(data){
+        adminClient.event.security.on('connect', function (data) {
           fireEvent('connect');
         });
 
-        adminClient.event.security.on('disconnect', function(data){
+        adminClient.event.security.on('disconnect', function (data) {
           fireEvent('disconnect');
         });
 
@@ -98,7 +98,7 @@ describe('d4-session-changes-events', function() {
           password: 'TEST PWD'
         }
 
-        testClient.login(credentials).then(function(){
+        testClient.login(credentials).then(function () {
 
           testClient.disconnect();
 

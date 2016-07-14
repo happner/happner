@@ -17,7 +17,7 @@ function StopMeshModule2(options) {
 
   this.stop = function ($happn, done) {
 
-  	$happn.log.info('stop method called mod 2');
+    $happn.log.info('stop method called mod 2');
 
     done();
   }

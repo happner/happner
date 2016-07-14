@@ -1,68 +1,65 @@
 #!/usr/bin/env node
 
-var LoaderProgress = require('../lib/startup/loader_progress.js');
-var args = {};
+var LoaderProgress = require('../lib/startup/loader_progress.js')
+  , args = {}
+  , __happnerCommand = "./bin/happner-loader-daemon"
+  , __happnerCommandArguments = []
+  , __happnerConfig = {}
+  , __loaderConfig = {}
+  , __conf = false
+  , __logLevel = "info"
+  , __verbose = false
+;
 
-var __happnerCommand = "./bin/happner-loader-daemon";
-var __happnerCommandArguments = [];
-var __happnerConfig = {};
-var __loaderConfig = {};
-var __conf = false;
-var __logLevel = "info";
-var __verbose = false;
+for (var argIndex in process.argv) {
 
-for (var argIndex in process.argv){
   var val = process.argv[argIndex];
 
-  if (val != "node" && val.indexOf("happner-loader") == -1){
+  if (val != "node" && val.indexOf("happner-loader") == -1) {
 
-    if (__conf){
-      __happnerConfig  = require(val);
+    if (__conf) {
+      __happnerConfig = require(val);
       __conf = false;
-    }else{
+    } else {
 
-      if (val == "--conf"){
+      if (val == "--conf") {
         __conf = true;
       }
 
-      if (val == "--loader-verbose"){
+      if (val == "--loader-verbose") {
         __verbose = true;
       }
 
-      if (val == "--trace"){
+      if (val == "--trace") {
         __logLevel = "trace";
       }
 
-      if (val == "--debug"){
+      if (val == "--debug") {
         __logLevel = "debug";
       }
 
-      if (val == "--warn"){
+      if (val == "--warn") {
         __logLevel = "warn";
       }
     }
-
     __happnerCommandArguments.push(val);
   }
 }
 
-if (__happnerConfig["happner-loader"]){
-  __loaderConfig = __happnerConfig["happner-loader"];
-}
+if (__happnerConfig["happner-loader"]) __loaderConfig = __happnerConfig["happner-loader"];
 
-if (__happnerConfig["port"])
-  __loaderConfig["port"] = __happnerConfig["port"];
+if (__happnerConfig["port"]) __loaderConfig["port"] = __happnerConfig["port"];
 
 var loaderProgress = new LoaderProgress(__loaderConfig);
 
-loaderProgress.listen(function(e){
+loaderProgress.listen(function (e) {
 
   Logger = require('happn-logger');
-  Logger.configure({logLevel:__logLevel});
+  Logger.configure({logLevel: __logLevel});
 
   var log = Logger.createLogger();
 
-  if (e){
+  if (e) {
     log.fatal('failed to start proxy listener', e);
     return process.exit(1);
   }
@@ -75,34 +72,32 @@ loaderProgress.listen(function(e){
 
   log.info('child process loaded:::', __remote.pid);
 
-  __remote.on('message', function(data) {
+  __remote.on('message', function (data) {
 
     var message = data.toString();
-    var code  = message.substring(0, 8);
+    var code = message.substring(0, 8);
     var messageData = null;
 
     if (message.indexOf(":::") > -1)
       messageData = message.split(/:::(.+)?/)[1];
 
     if (__verbose)
-      log.info("message:::", {"message":message, "code":code, "data":messageData});
+      log.info("message:::", {"message": message, "code": code, "data": messageData});
 
-    if (code == "mesh-log"){
+    if (code == "mesh-log") {
       messageData = JSON.parse(messageData);
       return loaderProgress.log(messageData);
       //return log[messageData.level](messageData.message);
     }
 
-    if (code == "strt-prg"){
+    if (code == "strt-prg") {
       messageData = JSON.parse(messageData);
       return loaderProgress.progress(messageData.log, messageData.progress);
     }
 
-    if (code == "list-err")
-      return log.error("listening error", messageData);
+    if (code == "list-err") return log.error("listening error", messageData);
 
-
-    if (code == "strt-rdy"){
+    if (code == "strt-rdy") {
 
       log.info("happner ready to start listening");
 
@@ -116,21 +111,18 @@ loaderProgress.listen(function(e){
       return __remote.send("listen");
     }
 
-    if (code == "strt-err"){
+    if (code == "strt-err") {
       log.error("startup error", messageData);
       return __remote.kill();
     }
 
-    if (code == "listenin"){
+    if (code == "listenin") {
       log.info("happner process is now listening, killing parent process in 5 seconds");
-      setTimeout(function(){//so the message makes it
+      setTimeout(function () {//so the message makes it
         process.exit(0);
       }, 5000);
-
     }
-
   });
-
 });
 
 

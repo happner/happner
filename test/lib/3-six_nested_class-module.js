@@ -1,7 +1,8 @@
 module.exports.Thing = Thing;
 
-function Thing() {}
+function Thing() {
+}
 
-Thing.prototype.method = function(callback) {
+Thing.prototype.method = function (callback) {
   callback(null, 'RESULT');
 }

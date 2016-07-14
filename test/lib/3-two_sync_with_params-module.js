@@ -1,6 +1,6 @@
-module.exports.create = function(opt1, opt2) {
+module.exports.create = function (opt1, opt2) {
   return {
-    method: function(callback) {
+    method: function (callback) {
       callback('null', opt1 + ' ' + opt2);
     }
   }

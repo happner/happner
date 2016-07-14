@@ -2,17 +2,18 @@ module.exports = TestMesh;
 
 var DONE = false;
 
-function TestMesh() {}
+function TestMesh() {
+}
 
-TestMesh.prototype.method1 = function($happn, options, callback) {
+TestMesh.prototype.method1 = function ($happn, options, callback) {
   options.methodName = 'method1';
   callback(null, options);
 }
 
 if (global.TESTING_D2) return; // When 'requiring' the module above,
-                              // don't run the tests below
-                             //.............
-describe('d2-update-own-user', function() {
+// don't run the tests below
+//.............
+describe('d2-update-own-user', function () {
 
   this.timeout(120000);
 
@@ -24,22 +25,22 @@ describe('d2-update-own-user', function() {
   var mesh;
   var Mesh = require('../');
 
-  var adminClient = new Mesh.MeshClient({secure:true, port:8003});
+  var adminClient = new Mesh.MeshClient({secure: true, port: 8003});
   var test_id = Date.now() + '_' + require('shortid').generate();
   var async = require('async');
 
-  before(function(done) {
+  before(function (done) {
 
     global.TESTING_D2 = true; //.............
 
     mesh = this.mesh = new Mesh();
 
     mesh.initialize({
-      name:'d2-update-own-user',
+      name: 'd2-update-own-user',
       datalayer: {
         secure: true,
         adminPassword: test_id,
-        port:8003
+        port: 8003
       },
       modules: {
         'TestMesh': {
@@ -56,9 +57,9 @@ describe('d2-update-own-user', function() {
         }
       }
 
-    }, function(err) {
+    }, function (err) {
       if (err) return done(err);
-      mesh.start(function(err) {
+      mesh.start(function (err) {
         if (err) {
           return done(err);
         }
@@ -69,7 +70,7 @@ describe('d2-update-own-user', function() {
           password: test_id
         }
 
-        adminClient.login(credentials).then(function(){
+        adminClient.login(credentials).then(function () {
           done();
         }).catch(done);
 
@@ -77,23 +78,23 @@ describe('d2-update-own-user', function() {
     });
   });
 
-  after(function(done) {
+  after(function (done) {
     delete global.TESTING_D2; //.............
-    mesh.stop({reconnect:false}, done);
+    mesh.stop({reconnect: false}, done);
   })
 
-  it('adds a test user, modifies the users password with the admin user, logs in with the test user', function(done) {
+  it('adds a test user, modifies the users password with the admin user, logs in with the test user', function (done) {
 
-     var testGroup = {
-      name:'TESTGROUP1' + test_id,
+    var testGroup = {
+      name: 'TESTGROUP1' + test_id,
 
-      custom_data:{
-        customString:'custom1',
-        customNumber:0
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
       },
 
-      permissions:{
-        methods:{}
+      permissions: {
+        methods: {}
       }
     }
 
@@ -101,39 +102,39 @@ describe('d2-update-own-user', function() {
     var testUserSaved;
     var testUserClient;
 
-    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+    adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
       if (e) return done(e);
 
       testGroupSaved = result;
 
       var testUser = {
-        username:'TESTUSER1' + test_id,
-        password:'TEST PWD',
-        custom_data:{
+        username: 'TESTUSER1' + test_id,
+        password: 'TEST PWD',
+        custom_data: {
           something: 'useful'
         }
       }
 
-      adminClient.exchange.security.addUser(testUser, function(e, result){
+      adminClient.exchange.security.addUser(testUser, function (e, result) {
 
         if (e) return done(e);
 
         expect(result.username).to.be(testUser.username);
         testUserSaved = result;
 
-        adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
+        adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
           //we'll need to fetch user groups, do that later
           if (e) return done(e);
 
           testUser.password = 'NEW PWD';
-          testUser.custom_data = {changedCustom:'changedCustom'};
+          testUser.custom_data = {changedCustom: 'changedCustom'};
 
-          adminClient.exchange.security.updateUser(testUser, function(e, result){
+          adminClient.exchange.security.updateUser(testUser, function (e, result) {
 
             if (e) return done(e);
 
-            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+            testUserClient = new Mesh.MeshClient({secure: true, port: 8003});
             return testUserClient.login(testUser).then(done).catch(done);
 
           });
@@ -144,18 +145,18 @@ describe('d2-update-own-user', function() {
 
   });
 
-  it('adds a test user, logs in with the test user - modifies the users password successfully', function(done) {
+  it('adds a test user, logs in with the test user - modifies the users password successfully', function (done) {
 
-     var testGroup = {
-      name:'TESTGROUP2' + test_id,
+    var testGroup = {
+      name: 'TESTGROUP2' + test_id,
 
-      custom_data:{
-        customString:'custom1',
-        customNumber:0
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
       },
 
-      permissions:{
-        methods:{}
+      permissions: {
+        methods: {}
       }
     }
 
@@ -163,52 +164,52 @@ describe('d2-update-own-user', function() {
     var testUserSaved;
     var testUserClient;
 
-    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+    adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
       if (e) return done(e);
 
       testGroupSaved = result;
 
       var testUser = {
-        username:'TESTUSER2' + test_id,
-        password:'TEST PWD',
-        custom_data:{
+        username: 'TESTUSER2' + test_id,
+        password: 'TEST PWD',
+        custom_data: {
           something: 'useful'
         }
       }
 
-      adminClient.exchange.security.addUser(testUser, function(e, result){
+      adminClient.exchange.security.addUser(testUser, function (e, result) {
 
+        if (e) return done(e);
+
+        expect(result.username).to.be(testUser.username);
+        testUserSaved = result;
+
+        adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+          //we'll need to fetch user groups, do that later
           if (e) return done(e);
 
-          expect(result.username).to.be(testUser.username);
-          testUserSaved = result;
+          testUserClient = new Mesh.MeshClient({secure: true, port: 8003});
 
-          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
-            //we'll need to fetch user groups, do that later
-            if (e) return done(e);
+          testUserClient.login(testUser).then(function () {
 
-            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+            testUser.oldPassword = 'TEST PWD';
+            testUser.password = 'NEW PWD';
+            testUser.custom_data = {changedCustom: 'changedCustom'};
 
-            testUserClient.login(testUser).then(function(){
+            testUserClient.exchange.security.updateOwnUser(testUser, function (e, result) {
 
-              testUser.oldPassword = 'TEST PWD';
-              testUser.password = 'NEW PWD';
-              testUser.custom_data = {changedCustom:'changedCustom'};
+              if (e) return done(e);
+              expect(result.custom_data.changedCustom).to.be('changedCustom');
+              testUserClient.login(testUser).then(done).catch(done);
 
-              testUserClient.exchange.security.updateOwnUser(testUser, function(e, result){
-
-                if (e) return done(e);
-                expect(result.custom_data.changedCustom).to.be('changedCustom');
-                testUserClient.login(testUser).then(done).catch(done);
-
-              });
-
-            }).catch(function(e){
-              done(e);
             });
 
+          }).catch(function (e) {
+            done(e);
           });
+
+        });
 
       });
 
@@ -216,18 +217,18 @@ describe('d2-update-own-user', function() {
 
   });
 
-  it('adds a test user, logs in with the test user - fails to modify the user using updateUser on another user', function(done) {
+  it('adds a test user, logs in with the test user - fails to modify the user using updateUser on another user', function (done) {
 
-     var testGroup = {
-      name:'TESTGROUP3' + test_id,
+    var testGroup = {
+      name: 'TESTGROUP3' + test_id,
 
-      custom_data:{
-        customString:'custom1',
-        customNumber:0
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
       },
 
-      permissions:{
-        methods:{}
+      permissions: {
+        methods: {}
       }
     }
 
@@ -235,51 +236,51 @@ describe('d2-update-own-user', function() {
     var testUserSaved;
     var testUserClient;
 
-    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+    adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
       if (e) return done(e);
 
       testGroupSaved = result;
 
       var testUser = {
-        username:'TESTUSER3' + test_id,
-        password:'TEST PWD',
-        custom_data:{
+        username: 'TESTUSER3' + test_id,
+        password: 'TEST PWD',
+        custom_data: {
           something: 'useful'
         }
       }
 
-      adminClient.exchange.security.addUser(testUser, function(e, result){
+      adminClient.exchange.security.addUser(testUser, function (e, result) {
 
+        if (e) return done(e);
+
+        expect(result.username).to.be(testUser.username);
+        testUserSaved = result;
+
+        adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+          //we'll need to fetch user groups, do that later
           if (e) return done(e);
 
-          expect(result.username).to.be(testUser.username);
-          testUserSaved = result;
+          testUserClient = new Mesh.MeshClient({secure: true, port: 8003});
 
-          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
-            //we'll need to fetch user groups, do that later
-            if (e) return done(e);
+          testUserClient.login(testUser).then(function () {
 
-            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+            testUser.oldPassword = 'TEST PWD';
+            testUser.password = 'NEW PWD';
+            testUser.custom_data = {changedCustom: 'changedCustom'};
 
-            testUserClient.login(testUser).then(function(){
+            testUserClient.exchange.security.updateUser(testUser, function (e, result) {
 
-              testUser.oldPassword = 'TEST PWD';
-              testUser.password = 'NEW PWD';
-              testUser.custom_data = {changedCustom:'changedCustom'};
+              expect(e.toString()).to.be('AccessDenied: unauthorized');
+              done();
 
-              testUserClient.exchange.security.updateUser(testUser, function(e, result){
-
-               expect(e.toString()).to.be('AccessDenied: unauthorized');
-               done();
-
-              });
-
-            }).catch(function(e){
-              done(e);
             });
 
+          }).catch(function (e) {
+            done(e);
           });
+
+        });
 
       });
 
@@ -287,18 +288,18 @@ describe('d2-update-own-user', function() {
 
   });
 
-  it('adds a test user, logs in with the test user - fails to modify the password, as old password was not included', function(done) {
+  it('adds a test user, logs in with the test user - fails to modify the password, as old password was not included', function (done) {
 
-     var testGroup = {
-      name:'TESTGROUP4' + test_id,
+    var testGroup = {
+      name: 'TESTGROUP4' + test_id,
 
-      custom_data:{
-        customString:'custom1',
-        customNumber:0
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
       },
 
-      permissions:{
-        methods:{}
+      permissions: {
+        methods: {}
       }
     }
 
@@ -306,50 +307,50 @@ describe('d2-update-own-user', function() {
     var testUserSaved;
     var testUserClient;
 
-    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+    adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
       if (e) return done(e);
 
       testGroupSaved = result;
 
       var testUser = {
-        username:'TESTUSER4' + test_id,
-        password:'TEST PWD',
-        custom_data:{
+        username: 'TESTUSER4' + test_id,
+        password: 'TEST PWD',
+        custom_data: {
           something: 'useful'
         }
       }
 
-      adminClient.exchange.security.addUser(testUser, function(e, result){
+      adminClient.exchange.security.addUser(testUser, function (e, result) {
 
+        if (e) return done(e);
+
+        expect(result.username).to.be(testUser.username);
+        testUserSaved = result;
+
+        adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+          //we'll need to fetch user groups, do that later
           if (e) return done(e);
 
-          expect(result.username).to.be(testUser.username);
-          testUserSaved = result;
+          testUserClient = new Mesh.MeshClient({secure: true, port: 8003});
 
-          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
-            //we'll need to fetch user groups, do that later
-            if (e) return done(e);
+          testUserClient.login(testUser).then(function () {
 
-            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+            testUser.password = 'NEW PWD';
+            testUser.custom_data = {changedCustom: 'changedCustom'};
 
-            testUserClient.login(testUser).then(function(){
+            testUserClient.exchange.security.updateOwnUser(testUser, function (e, result) {
 
-              testUser.password = 'NEW PWD';
-              testUser.custom_data = {changedCustom:'changedCustom'};
+              expect(e.toString()).to.be('Error: missing oldPassword parameter');
+              done();
 
-              testUserClient.exchange.security.updateOwnUser(testUser, function(e, result){
-
-                expect(e.toString()).to.be('Error: missing oldPassword parameter');
-                done();
-
-              });
-
-            }).catch(function(e){
-              done(e);
             });
 
+          }).catch(function (e) {
+            done(e);
           });
+
+        });
 
       });
 
@@ -357,18 +358,18 @@ describe('d2-update-own-user', function() {
 
   });
 
-  it('adds a test user, logs in with the test user - fails to modify the password, as old password does not match the current one', function(done) {
+  it('adds a test user, logs in with the test user - fails to modify the password, as old password does not match the current one', function (done) {
 
-     var testGroup = {
-      name:'TESTGROUP5' + test_id,
+    var testGroup = {
+      name: 'TESTGROUP5' + test_id,
 
-      custom_data:{
-        customString:'custom1',
-        customNumber:0
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
       },
 
-      permissions:{
-        methods:{}
+      permissions: {
+        methods: {}
       }
     }
 
@@ -376,51 +377,51 @@ describe('d2-update-own-user', function() {
     var testUserSaved;
     var testUserClient;
 
-    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+    adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
       if (e) return done(e);
 
       testGroupSaved = result;
 
       var testUser = {
-        username:'TESTUSER5' + test_id,
-        password:'TEST PWD',
-        custom_data:{
+        username: 'TESTUSER5' + test_id,
+        password: 'TEST PWD',
+        custom_data: {
           something: 'useful'
         }
       }
 
-      adminClient.exchange.security.addUser(testUser, function(e, result){
+      adminClient.exchange.security.addUser(testUser, function (e, result) {
 
+        if (e) return done(e);
+
+        expect(result.username).to.be(testUser.username);
+        testUserSaved = result;
+
+        adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+          //we'll need to fetch user groups, do that later
           if (e) return done(e);
 
-          expect(result.username).to.be(testUser.username);
-          testUserSaved = result;
+          testUserClient = new Mesh.MeshClient({secure: true, port: 8003});
 
-          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
-            //we'll need to fetch user groups, do that later
-            if (e) return done(e);
+          testUserClient.login(testUser).then(function () {
 
-            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+            testUser.oldPassword = 'NEW PWD';
+            testUser.password = 'NEW PWD';
+            testUser.custom_data = {changedCustom: 'changedCustom'};
 
-            testUserClient.login(testUser).then(function(){
+            testUserClient.exchange.security.updateOwnUser(testUser, function (e, result) {
 
-              testUser.oldPassword = 'NEW PWD';
-              testUser.password = 'NEW PWD';
-              testUser.custom_data = {changedCustom:'changedCustom'};
+              expect(e.toString()).to.be('Error: old password incorrect');
+              done();
 
-              testUserClient.exchange.security.updateOwnUser(testUser, function(e, result){
-
-                expect(e.toString()).to.be('Error: old password incorrect');
-                done();
-
-              });
-
-            }).catch(function(e){
-              done(e);
             });
 
+          }).catch(function (e) {
+            done(e);
           });
+
+        });
 
       });
 
@@ -428,18 +429,18 @@ describe('d2-update-own-user', function() {
 
   });
 
-  it('adds a test user, logs in with the test user - modifies the user details without the users password changing', function(done) {
+  it('adds a test user, logs in with the test user - modifies the user details without the users password changing', function (done) {
 
-     var testGroup = {
-      name:'TESTGROUP6' + test_id,
+    var testGroup = {
+      name: 'TESTGROUP6' + test_id,
 
-      custom_data:{
-        customString:'custom1',
-        customNumber:0
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
       },
 
-      permissions:{
-        methods:{}
+      permissions: {
+        methods: {}
       }
     }
 
@@ -447,55 +448,55 @@ describe('d2-update-own-user', function() {
     var testUserSaved;
     var testUserClient;
 
-    adminClient.exchange.security.addGroup(testGroup, function(e, result){
+    adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
       if (e) return done(e);
 
       testGroupSaved = result;
 
       var testUser = {
-        username:'TESTUSER6' + test_id,
-        password:'TEST PWD',
-        custom_data:{
+        username: 'TESTUSER6' + test_id,
+        password: 'TEST PWD',
+        custom_data: {
           something: 'useful'
         }
       }
 
-      adminClient.exchange.security.addUser(testUser, function(e, result){
+      adminClient.exchange.security.addUser(testUser, function (e, result) {
 
+        if (e) return done(e);
+
+        expect(result.username).to.be(testUser.username);
+        testUserSaved = result;
+
+        adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+          //we'll need to fetch user groups, do that later
           if (e) return done(e);
 
-          expect(result.username).to.be(testUser.username);
-          testUserSaved = result;
+          testUserClient = new Mesh.MeshClient({secure: true, port: 8003});
 
-          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function(e){
-            //we'll need to fetch user groups, do that later
-            if (e) return done(e);
+          testUserClient.login(testUser).then(function () {
 
-            testUserClient = new Mesh.MeshClient({secure:true, port:8003});
+            delete testUser.password;
+            testUser.custom_data = {changedCustom: 'changedCustom'};
 
-            testUserClient.login(testUser).then(function(){
+            //NB - we are using testUserSaved - so there is some _meta data - otherwise this wont work
 
-              delete testUser.password;
-              testUser.custom_data = {changedCustom:'changedCustom'};
+            testUserClient.exchange.security.updateOwnUser(testUser, function (e, result) {
 
-              //NB - we are using testUserSaved - so there is some _meta data - otherwise this wont work
+              if (e) return done(e);
 
-              testUserClient.exchange.security.updateOwnUser(testUser, function(e, result){
+              expect(result.custom_data.changedCustom).to.be('changedCustom');
 
-                if (e) return done(e);
+              testUserClient.login({username: testUser.username, password: 'TEST PWD'}).then(done).catch(done);
 
-                expect(result.custom_data.changedCustom).to.be('changedCustom');
-
-                testUserClient.login({username:testUser.username, password:'TEST PWD'}).then(done).catch(done);
-
-              });
-
-            }).catch(function(e){
-              done(e);
             });
 
+          }).catch(function (e) {
+            done(e);
           });
+
+        });
 
       });
 

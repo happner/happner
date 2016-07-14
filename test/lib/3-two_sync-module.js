@@ -1,6 +1,6 @@
-module.exports = function() {
+module.exports = function () {
   return {
-    method: function(callback) {
+    method: function (callback) {
       callback(null, 'RESULT');
     }
   }

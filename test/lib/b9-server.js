@@ -4,17 +4,17 @@
 
 var DEVICE_GROUP_NAME = 'Special Devices';
 
-module.exports = function(){
+module.exports = function () {
   return new Server();
 };
 
-var Server = function(){
+var Server = function () {
 
-  this.start = function(options){
+  this.start = function (options) {
 
   };
 
-  this.registerDevice = function(username, device, callback, $happn){
+  this.registerDevice = function (username, device, callback, $happn) {
     // check if the device group exist
     getDeviceGroup($happn, function (err, group) {
       if (err) {
@@ -28,7 +28,7 @@ var Server = function(){
     });
   };
 
-  this.doSomethingSpecial = function(data, callback, $happn){
+  this.doSomethingSpecial = function (data, callback, $happn) {
     $happn.emit('special', data);
     callback(null, 'success');
   }

@@ -1,4 +1,4 @@
-describe('2 - Bounces a message between two components, demonstrates how the events layer works', function(done) {
+describe('2 - Bounces a message between two components, demonstrates how the events layer works', function (done) {
 
   this.timeout(120000);
 
@@ -8,80 +8,80 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
   var maximumPings = 1000;
-  var libFolder ;
+  var libFolder;
   var Mesh = require('../');
 
   var mesh = new Mesh();
 
   var config = {
-    name:"testComponent2Component",
+    name: "testComponent2Component",
     modules: {
-      "module1":{
-        path:libFolder + "2-module1",
-        constructor:{
-          type:"sync",
-          parameters:[
-            {value:{maximumPings:maximumPings}}
+      "module1": {
+        path: libFolder + "2-module1",
+        constructor: {
+          type: "sync",
+          parameters: [
+            {value: {maximumPings: maximumPings}}
           ]
         }
       },
-      "module2":{
-        path:libFolder + "2-module2",
-        constructor:{
-          type:"sync"
+      "module2": {
+        path: libFolder + "2-module2",
+        constructor: {
+          type: "sync"
         }
       }
     },
     components: {
-      "component1":{
-        moduleName:"module1",
+      "component1": {
+        moduleName: "module1",
         // scope:"component",//either component(mesh aware) or module - default is module
-        startMethod:"start",
-        schema:{
-          "exclusive":false,//means we dont dynamically share anything else
-          "methods":{
-            "start":{
-              type:"sync",
-              parameters:[
-               {"required":true, "value":{"message":"this is a start parameter"}}
+        startMethod: "start",
+        schema: {
+          "exclusive": false,//means we dont dynamically share anything else
+          "methods": {
+            "start": {
+              type: "sync",
+              parameters: [
+                {"required": true, "value": {"message": "this is a start parameter"}}
               ]
             }
           }
         }
       },
-      "component2":{
-        moduleName:"module2",
+      "component2": {
+        moduleName: "module2",
         // scope:"component",
-        schema:{
-          "exclusive":false
+        schema: {
+          "exclusive": false
         }
       }
     }
   };
 
-  after(function(done){
-     mesh.stop({reconnect:false}, done);
+  after(function (done) {
+    mesh.stop({reconnect: false}, done);
   });
 
-  it('starts the mesh, listens for the ping pong completed event, that module1 emits', function(done) {
+  it('starts the mesh, listens for the ping pong completed event, that module1 emits', function (done) {
 
     mesh = new Mesh();
 
     var onEventRef;
 
-    mesh.initialize(config, function(err) {
+    mesh.initialize(config, function (err) {
 
       if (err) {
         // console.log(err.stack);
         done(err);
-      }else{
+      } else {
 
-        mesh.event.component1.on('maximum-pings-reached', function(message, meta){
+        mesh.event.component1.on('maximum-pings-reached', function (message, meta) {
 
           console.log(message.m);
 
           //console.log(mesh.api.event.component1.off.toString());
-          mesh.event.component1.off(onEventRef, function(err){
+          mesh.event.component1.off(onEventRef, function (err) {
             // if (err)
             //  console.log('Couldnt detach from event maximum-pings-reached');
 
@@ -90,17 +90,17 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
             done(err);
           });
 
-        }, function(err, ref){
-          if (err){
-             // console.log('Couldnt attach to event maximum-pings-reached');
-             done(err);
-          }else{
+        }, function (err, ref) {
+          if (err) {
+            // console.log('Couldnt attach to event maximum-pings-reached');
+            done(err);
+          } else {
             //we have attached our events, now we start the mesh
             // console.log('attached on ok, ref: ' + ref);
             onEventRef = ref;
             //console.log(mesh.api.data.events);
-            mesh.start(function(err) {
-               if (err) {
+            mesh.start(function (err) {
+              if (err) {
                 // console.log('Failed to start mesh');
                 done(err);
               }

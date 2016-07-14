@@ -5,6 +5,6 @@ function One(opt1, opt2) {
   this.opt2 = opt2;
 };
 
-One.prototype.method = function(callback) {
+One.prototype.method = function (callback) {
   callback(null, this.opt1 + ' ' + this.opt2);
 }

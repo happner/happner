@@ -3,7 +3,7 @@ var Mesh = require('../../lib/mesh');
 var config = {
   name: 'remoteMesh',
   dataLayer: {
-    secure:true,
+    secure: true,
     port: 51234,
     authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
     systemSecret: 'mesh',
@@ -11,32 +11,32 @@ var config = {
   },
   endpoints: {},
   modules: {
-    "remoteComponent":{
-      path:__dirname + "/4-remote-component",
-      constructor:{
-        type:"sync",
-        parameters:[]
+    "remoteComponent": {
+      path: __dirname + "/4-remote-component",
+      constructor: {
+        type: "sync",
+        parameters: []
       }
     }
   },
   components: {
-    "remoteComponent":{
-      moduleName:"remoteComponent",
-      schema:{
-        "exclusive":false,
-        "methods":{
+    "remoteComponent": {
+      moduleName: "remoteComponent",
+      schema: {
+        "exclusive": false,
+        "methods": {
           "remoteFunction": {
             parameters: [
-              {name:'one',required:true},
-              {name:'two',required:true},
-              {name:'three',required:true},
-              {name:'callback', type:'callback', required:true}
+              {name: 'one', required: true},
+              {name: 'two', required: true},
+              {name: 'three', required: true},
+              {name: 'callback', type: 'callback', required: true}
             ]
           }
           ,
           "causeError": {
             parameters: [
-              {name:'callback', type:'callback', required:true}
+              {name: 'callback', type: 'callback', required: true}
             ]
           }
         }
@@ -45,7 +45,7 @@ var config = {
   }
 };
 
-(new Mesh()).initialize(config, function(err) {
+(new Mesh()).initialize(config, function (err) {
 
   if (err) {
 

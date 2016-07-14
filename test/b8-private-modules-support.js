@@ -1,7 +1,7 @@
 var should = require('chai').should();
 var Mesh = require('../');
 
-describe('b8 - private module support', function() {
+describe('b8 - private module support', function () {
 
   this.timeout(120000);
 
@@ -13,18 +13,17 @@ describe('b8 - private module support', function() {
   //   Mesh = require('../');
   // });
 
-  it('generates the necessary element defn from component name', function(done) {
+  it('generates the necessary element defn from component name', function (done) {
 
     var startingConfig = {
       modules: {},
       components: {
-        '@private/cul-de-sac': {
-        }
+        '@private/cul-de-sac': {}
       }
     }
 
     meshInstance = {
-      _createElement: function(elementSpec) {
+      _createElement: function (elementSpec) {
         elementSpec.should.eql({
           module: {
             name: 'cul-de-sac', // <---------- module name without @private/
@@ -43,12 +42,13 @@ describe('b8 - private module support', function() {
       }
     }
 
-    Mesh.prototype._initializeElements.call(meshInstance, startingConfig, function() {});
+    Mesh.prototype._initializeElements.call(meshInstance, startingConfig, function () {
+    });
 
   });
 
 
-  it('renames existing @private/ module and merges in the path', function(done) {
+  it('renames existing @private/ module and merges in the path', function (done) {
 
     var startingConfig = {
       modules: {
@@ -66,7 +66,7 @@ describe('b8 - private module support', function() {
     }
 
     meshInstance = {
-      _createElement: function(spec) {
+      _createElement: function (spec) {
         // it created the correct element spec
         spec.should.eql({
           module: {
@@ -90,7 +90,8 @@ describe('b8 - private module support', function() {
       }
     }
 
-    Mesh.prototype._initializeElements.call(meshInstance, startingConfig, function() {});
+    Mesh.prototype._initializeElements.call(meshInstance, startingConfig, function () {
+    });
 
   });
 

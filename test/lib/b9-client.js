@@ -4,7 +4,7 @@
 
 var Mesh = require('../../lib/mesh.js');
 
-module.exports = function(){
+module.exports = function () {
   return new Client();
 };
 

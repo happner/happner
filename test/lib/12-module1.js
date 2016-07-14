@@ -12,38 +12,42 @@ function Component1(options) {
   if (!options)
     options = {};
 
-   if (!options.maximumPings)
+  if (!options.maximumPings)
     options.maximumPings = 100;
 
-  this.moduleMethod = function(){
+  this.moduleMethod = function () {
     // console.log('ran the module method from the component level scope');
   }
 
-  this.exposedMethod = function($happn, message, callback){
+  this.exposedMethod = function ($happn, message, callback) {
 
-    try{
+    try {
 
       // console.log($happn);
 
       this.moduleMethod();
       callback(null, 'hooray, message was: ' + message);
 
-    }catch(e){
+    } catch (e) {
       callback(e);
     }
   }
 
-  this.start = function(arg, $happn){
+  this.start = function (arg, $happn) {
 
     //console.log('starting module1 component');
 
-    $happn.mesh.exchange.component2.exposedMethod({message:"Component1", "timestamp":Date.now(), "pingCount":0}, function(e, response){
+    $happn.mesh.exchange.component2.exposedMethod({
+      message: "Component1",
+      "timestamp": Date.now(),
+      "pingCount": 0
+    }, function (e, response) {
       if (e) return //console.log('call to component2 broke...' + e);
 
     });
   };
 
-  this.stop = function(){
+  this.stop = function () {
 
   }
 }

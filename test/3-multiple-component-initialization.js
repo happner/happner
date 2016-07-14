@@ -1,14 +1,14 @@
 var should = require('chai').should();
 var Mesh = require('../');
 
-describe('3 - Multiple component initialization', function() {
+describe('3 - Multiple component initialization', function () {
   var mesh;
 
   this.timeout(120000);
 
   require('benchmarket').start();
 
-  before(function(done) {
+  before(function (done) {
     var config = {
       name: 'meshName',
       modules: {
@@ -111,7 +111,7 @@ describe('3 - Multiple component initialization', function() {
 
 
     mesh = new Mesh();
-    mesh.initialize(config, function(err) {
+    mesh.initialize(config, function (err) {
 
       if (err) return done(err);
       done();
@@ -119,93 +119,92 @@ describe('3 - Multiple component initialization', function() {
 
   });
 
-  after(function(done){
+  after(function (done) {
 
-    mesh.stop({reconnect:false}, done);
+    mesh.stop({reconnect: false}, done);
 
   });
 
   after(require('benchmarket').store());
 
 
-  it('loads the class ok', function(done) {
-    mesh.exchange.one_class.method(function(err, res) {
+  it('loads the class ok', function (done) {
+    mesh.exchange.one_class.method(function (err, res) {
       res.should.equal('RESULT');
       done();
     });
 
   });
 
-  it('loads the class with parameters ok', function(done) {
-    mesh.exchange.one_class_with_params.method(function(err, res) {
+  it('loads the class with parameters ok', function (done) {
+    mesh.exchange.one_class_with_params.method(function (err, res) {
       res.should.equal('1 2')
       done();
     });
 
   });
 
-  it('loads the returned from sync ok', function(done) {
-    mesh.exchange.two_sync.method(function(err, res) {
+  it('loads the returned from sync ok', function (done) {
+    mesh.exchange.two_sync.method(function (err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
-  it('loads the returned from sync with params ok', function(done) {
-    mesh.exchange.two_sync_with_params.method(function(err, res) {
+  it('loads the returned from sync with params ok', function (done) {
+    mesh.exchange.two_sync_with_params.method(function (err, res) {
       res.should.equal('1 2')
       done();
     });
   });
 
-  it('loads the async ok', function(done) {
-    mesh.exchange.three_async.method(function(err, res) {
+  it('loads the async ok', function (done) {
+    mesh.exchange.three_async.method(function (err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
-  it('loads the async with params ok', function(done) {
-    mesh.exchange.three_async_with_params.method(function(err, res) {
-      res.should.equal('1 2')
-      done();
-    });
-  });
-
-
-  it('loads the object ok', function(done) {
-    mesh.exchange.four_object.method(function(err, res) {
-      res.should.equal('RESULT');
-      done();
-    });
-  });
-
-
-
-  it('loads the hidden class ok', function(done) {
-    mesh.exchange.five_hidden_class.method(function(err, res) {
-      res.should.equal('RESULT');
-      done();
-    });
-  });
-
-  it('loads the class with parameters ok', function(done) {
-    mesh.exchange.five_hidden_class_with_params.method(function(err, res) {
+  it('loads the async with params ok', function (done) {
+    mesh.exchange.three_async_with_params.method(function (err, res) {
       res.should.equal('1 2')
       done();
     });
   });
 
 
-  it('loads the nested class ok', function(done) {
-    mesh.exchange.six_nested_class.method(function(err, res) {
+  it('loads the object ok', function (done) {
+    mesh.exchange.four_object.method(function (err, res) {
       res.should.equal('RESULT');
       done();
     });
   });
 
-  it('loads the nested class with parameters ok', function(done) {
-    mesh.exchange.six_nested_class_with_params.method(function(err, res) {
+
+  it('loads the hidden class ok', function (done) {
+    mesh.exchange.five_hidden_class.method(function (err, res) {
+      res.should.equal('RESULT');
+      done();
+    });
+  });
+
+  it('loads the class with parameters ok', function (done) {
+    mesh.exchange.five_hidden_class_with_params.method(function (err, res) {
+      res.should.equal('1 2')
+      done();
+    });
+  });
+
+
+  it('loads the nested class ok', function (done) {
+    mesh.exchange.six_nested_class.method(function (err, res) {
+      res.should.equal('RESULT');
+      done();
+    });
+  });
+
+  it('loads the nested class with parameters ok', function (done) {
+    mesh.exchange.six_nested_class_with_params.method(function (err, res) {
       res.should.equal('1 2')
       done();
     });
