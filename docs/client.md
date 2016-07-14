@@ -144,3 +144,9 @@ var client = new MeshClient(...
 
 ```
 
+### testing the browser client
+*a browser test via chai can be run from the command line:*
+```bash
+gulp --gulpfile test/test-browser/gulp-01.js
+```
+

@@ -270,3 +270,11 @@
 ---------------------------
 
 - Updated happn version 2.9.4
+
+1.14.0 2016-07-14
+---------------------------
+
+- Updated happn version 2.9.5
+- Updated the shared data component and tests
+- Did a code refactor
+- Fixed a bug in the component-instance - scope issue with this.log

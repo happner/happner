@@ -235,17 +235,65 @@ describe('b7 - shared data component', function () {
       });
     })
 
+    it('can unsubscribe from all', function (done) {
+      var received = [];
+      dataComponent.on('/some/path/six', function (data, meta) {
+        received.push(data);
+      }, function (e) {
+        if (e) return done(e);
+        dataComponent.set('/some/path/six', {key: 1}) // <--------------- 1
+          .then(function () {
+            return dataComponent.set('/some/path/six', {key: 1}) // <------ 2
+          })
+          .then(function(){
+           return dataComponent.offAll()
+          })
+          .then(function () {
+            return dataComponent.set('/some/path/six', {key: 1}) // <------- 3
+          })
+          .then(function () {
+            received.length.should.equal(2);
+            done();
+          })
+          .catch(done)
+      });
+    });
+
+    it('can unsubscribe from a path', function (done) {
+      var received = [];
+      dataComponent.on('/some/path/seven', function (data, meta) {
+        received.push(data);
+      }, function (e) {
+        if (e) return done(e);
+        dataComponent.set('/some/path/seven', {key: 1}) // <--------------- 1
+          .then(function () {
+            return dataComponent.set('/some/path/seven', {key: 1}) // <------ 2
+          })
+          .then(function(){
+            return dataComponent.offPath('/some/path/seven');
+          })
+          .then(function () {
+            return dataComponent.set('/some/path/seven', {key: 1}) // <------- 3
+          })
+          .then(function () {
+            received.length.should.equal(2);
+            done();
+          })
+          .catch(done)
+      });
+    })
+
     it('can delete', function (done) {
-      dataComponent.set('some/path/six', 6)
+      dataComponent.set('some/path/eight', 6)
         .then(function () {
-          return dataComponent.get('some/path/six');
+          return dataComponent.get('some/path/eight');
         })
         .then(function (six) {
           six.value.should.equal(6);
-          return dataComponent.remove('some/path/six')
+          return dataComponent.remove('some/path/eight')
         })
         .then(function (res) {
-          return dataComponent.get('some/path/six');
+          return dataComponent.get('some/path/eight');
         })
         .then(function (res) {
           should.not.exist(res);
