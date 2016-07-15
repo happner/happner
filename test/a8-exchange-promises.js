@@ -1,5 +1,7 @@
 /* RUN: LOG_LEVEL=off mocha test/18-exchange-promises.js */
 
+var Promise = require('bluebird');
+
 module.exports = SeeAbove;
 
 function SeeAbove() {
@@ -12,6 +14,45 @@ SeeAbove.prototype.methodName1 = function (opts, callback) {
 
   opts.number++;
   callback(null, opts);
+};
+
+SeeAbove.prototype.promiseMethod = Promise.promisify(function (opts, callback) {
+
+  if (opts.errorAs == 'callback') return callback(new Error('THIS IS JUST A TEST'));
+  if (opts.errorAs == 'throw') throw new Error('THIS IS JUST A TEST');
+
+
+  console.log('CALLED PROMISE:::');
+
+  opts.number++;
+  callback(null, opts);
+
+});
+
+SeeAbove.prototype.promisePromiseCaller = Promise.promisify(function (opts, callback) {
+
+  console.log('CALLING PROMISE FROM PROMISE:::', this.promiseMethod);
+
+  this.promiseMethod(opts)
+    .then(function(){
+      console.log('CALLED PROMISE FROM PROMISE NOW CB:::');
+      callback();
+    })
+    .catch(callback)
+
+});
+
+SeeAbove.prototype.promiseCaller = function (opts, callback) {
+
+  console.log('CALLING PROMISE FROM ASYNC:::', this.promiseMethod);
+
+  this.promiseMethod(opts, callback)
+    .then(function(){
+      console.log('CALLED PROMISE FROM ASYNC NOW CB:::');
+      callback();
+    })
+    .catch(callback)
+
 };
 
 SeeAbove.prototype.synchronousMethod = function(opts, opts2){
@@ -192,6 +233,43 @@ describe('a8 - exchange supports promises', function () {
     this.timeout(1500);
     this.mesh.exchange.component.synchronousMethod(1, 2);
     done();
+
+  });
+
+  it('supports exposing a promise on the exchange', function (done) {
+
+    this.mesh.exchange.component.promiseMethod({number: 1})
+
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
+
+  });
+
+  it('supports calling a promise from a promise on the exchange', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promisePromiseCaller({number: 1})
+
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
+
+  });
+
+  it('supports calling a promise from a method on the exchange', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promiseCaller({number: 1})
+
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
 
   });
 
