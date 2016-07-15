@@ -52,9 +52,11 @@ describe('c6 - https', function (done) {
 
     var nodeProc = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
     var timeout;
+    var beenDone = false;
 
     if (nodeProc == '0.10') {
       timeout = setTimeout(function () {
+        beenDone = true;
         done();
       }, 3000);
     }
@@ -63,10 +65,11 @@ describe('c6 - https', function (done) {
     badClient.login().then(function (e) {
       done(new Error('this was not meant to happen'));
     }).catch(function (e) {
-      expect(e.toString()).to.equal('Error: socket hang up');
-      if (nodeProc != '0.10') done();
+      if (!beenDone){
+        expect(e.toString()).to.equal('Error: socket hang up');
+        if (nodeProc != '0.10') done();
+      }
     });
-
   });
 
   it('does a set on the datalayer component', function (done) {
@@ -142,21 +145,6 @@ describe('c6 - https', function (done) {
       });
 
     });
-
-  });
-
-  xit('does an on, on the datalayer component', function (done) {
-
-
-  });
-
-  xit('runs a method on a component', function (done) {
-
-
-  });
-
-  xit('runs attaches to an event on a component', function (done) {
-
 
   });
 

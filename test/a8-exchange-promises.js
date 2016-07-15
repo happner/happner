@@ -12,7 +12,11 @@ SeeAbove.prototype.methodName1 = function (opts, callback) {
 
   opts.number++;
   callback(null, opts);
-}
+};
+
+SeeAbove.prototype.synchronousMethod = function(opts, opts2){
+  return opts + opts2;
+};
 
 SeeAbove.prototype.$happner = {
   config: {
@@ -21,12 +25,15 @@ SeeAbove.prototype.$happner = {
         methods: {
           'methodName1': {
             alias: 'ancientmoth'
+          },
+          'synchronousMethod': {
+            type: 'sync'//NB - this is how you can wrap a synchronous method with a promise
           }
         }
       }
     }
   }
-}
+};
 
 
 if (global.TESTING_18) return; // When 'requiring' the module above,
@@ -151,6 +158,40 @@ describe('a8 - exchange supports promises', function () {
         res.should.eql({number: 2});
         done();
       });
+
+  });
+
+  it('supports fire and forget', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.methodName1({errorAs: 'throw'});
+    done();
+  });
+
+  it('supports calling a synchronous method and getting a promise back', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.synchronousMethod(1, 2)
+
+      .then(function (res) {
+        res.should.eql(3);
+        done();
+      })
+
+      .catch(function (err) {
+        done(err);
+      })
+    ;
+
+  });
+
+  it('supports calling a synchronous method fire and forget', function (done) {
+
+    this.timeout(1500);
+    this.mesh.exchange.component.synchronousMethod(1, 2);
+    done();
 
   });
 
