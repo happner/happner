@@ -27,7 +27,7 @@ SeeAbove.prototype.$happner = {
             alias: 'ancientmoth'
           },
           'synchronousMethod': {
-            synchronous: true
+            type: 'sync'//NB - this is how you can wrap a synchronous method with a promise
           }
         }
       }

@@ -279,9 +279,10 @@
 - Did a code refactor
 - Fixed a bug in the component-instance - scope issue with this.log
 
-1.14.1 2016-07-14
+1.15.0 2016-07-14
 ---------------------------
 
 - Updated happn version 2.9.6
 - Added ability to honour promises on synchronous methods (on the other side of the exchange)
+
 
