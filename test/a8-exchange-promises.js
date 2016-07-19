@@ -22,8 +22,6 @@ SeeAbove.prototype.promiseMethod = Promise.promisify(function (opts, callback) {
   if (opts.errorAs == 'throw') throw new Error('THIS IS JUST A TEST');
 
 
-  console.log('CALLED PROMISE:::');
-
   opts.number++;
   callback(null, opts);
 
@@ -31,12 +29,9 @@ SeeAbove.prototype.promiseMethod = Promise.promisify(function (opts, callback) {
 
 SeeAbove.prototype.promisePromiseCaller = Promise.promisify(function (opts, callback) {
 
-  console.log('CALLING PROMISE FROM PROMISE:::', this.promiseMethod);
-
   this.promiseMethod(opts)
     .then(function(){
-      console.log('CALLED PROMISE FROM PROMISE NOW CB:::');
-      callback();
+      callback(null, opts);
     })
     .catch(callback)
 
@@ -44,16 +39,17 @@ SeeAbove.prototype.promisePromiseCaller = Promise.promisify(function (opts, call
 
 SeeAbove.prototype.promiseCaller = function (opts, callback) {
 
-  console.log('CALLING PROMISE FROM ASYNC:::', this.promiseMethod);
-
-  this.promiseMethod(opts, callback)
+  this.promiseMethod(opts)
     .then(function(){
-      console.log('CALLED PROMISE FROM ASYNC NOW CB:::');
-      callback();
+      callback(null, opts);
     })
     .catch(callback)
 
 };
+
+SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts,callback) {
+  return this.promiseMethod(opts, callback);
+});
 
 SeeAbove.prototype.synchronousMethod = function(opts, opts2){
   return opts + opts2;
@@ -250,13 +246,14 @@ describe('a8 - exchange supports promises', function () {
   it('supports calling a promise from a promise on the exchange', function (done) {
 
     this.timeout(1500);
+    var _this = this;
 
     this.mesh.exchange.component.promisePromiseCaller({number: 1})
 
       .then(function (res) {
         res.should.eql({number: 2});
         done();
-      })
+      }.bind(_this))
 
   });
 
@@ -265,6 +262,20 @@ describe('a8 - exchange supports promises', function () {
     this.timeout(1500);
 
     this.mesh.exchange.component.promiseCaller({number: 1})
+
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
+
+  });
+
+
+  it('supports returning a promise from a method on the exchange', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promiseReturner({number: 1})
 
       .then(function (res) {
         res.should.eql({number: 2});
