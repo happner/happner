@@ -1,5 +1,7 @@
 /* RUN: LOG_LEVEL=off mocha test/18-exchange-promises.js */
 
+var Promise = require('bluebird');
+
 module.exports = SeeAbove;
 
 function SeeAbove() {
@@ -12,6 +14,49 @@ SeeAbove.prototype.methodName1 = function (opts, callback) {
 
   opts.number++;
   callback(null, opts);
+};
+
+SeeAbove.prototype.promiseMethod = Promise.promisify(function (opts, callback) {
+
+  if (opts.errorAs == 'callback') return callback(new Error('THIS IS JUST A TEST'));
+  if (opts.errorAs == 'throw') throw new Error('THIS IS JUST A TEST');
+
+
+  opts.number++;
+  callback(null, opts);
+
+});
+
+SeeAbove.prototype.promisePromiseCaller = Promise.promisify(function (opts, callback) {
+
+  this.promiseMethod(opts)
+    .then(function(){
+      callback(null, opts);
+    })
+    .catch(callback)
+
+});
+
+SeeAbove.prototype.promiseCaller = function (opts, callback) {
+
+  this.promiseMethod(opts)
+    .then(function(){
+      callback(null, opts);
+    })
+    .catch(callback)
+
+};
+
+SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts,callback) {
+  return this.promiseMethod(opts, callback);
+});
+
+SeeAbove.prototype.synchronousMethodHappnOrigin = function(opts, opts2, $happn, $origin){
+
+  if (!$happn) throw new Error('$happn is meant to exist');
+  if (!$origin) throw new Error('$origin is meant to exist');
+
+  return opts + opts2;
 };
 
 SeeAbove.prototype.synchronousMethod = function(opts, opts2){
@@ -27,7 +72,10 @@ SeeAbove.prototype.$happner = {
             alias: 'ancientmoth'
           },
           'synchronousMethod': {
-            type: 'sync'//NB - this is how you can wrap a synchronous method with a promise
+            type: 'sync-promise'//NB - this is how you can wrap a synchronous method with a promise
+          },
+          'synchronousMethodHappnOrigin': {
+            type: 'sync-promise'//NB - this is how you can wrap a synchronous method with a promise
           }
         }
       }
@@ -187,11 +235,81 @@ describe('a8 - exchange supports promises', function () {
 
   });
 
+  it('supports calling a synchronous method with $happn and $origin and getting a promise back', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.synchronousMethodHappnOrigin(1, 2)
+
+      .then(function (res) {
+        res.should.eql(3);
+        done();
+      })
+
+      .catch(function (err) {
+        done(err);
+      })
+    ;
+
+  });
+
   it('supports calling a synchronous method fire and forget', function (done) {
 
     this.timeout(1500);
     this.mesh.exchange.component.synchronousMethod(1, 2);
     done();
+
+  });
+
+  it('supports exposing a promise on the exchange', function (done) {
+
+    this.mesh.exchange.component.promiseMethod({number: 1})
+
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
+
+  });
+
+  it('supports calling a promise from a promise on the exchange', function (done) {
+
+    this.timeout(1500);
+    var _this = this;
+
+    this.mesh.exchange.component.promisePromiseCaller({number: 1})
+
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      }.bind(_this))
+
+  });
+
+  it('supports calling a promise from a method on the exchange', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promiseCaller({number: 1})
+
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
+
+  });
+
+
+  it('supports returning a promise from a method on the exchange', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promiseReturner({number: 1})
+
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
 
   });
 

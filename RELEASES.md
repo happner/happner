@@ -285,4 +285,8 @@
 - Updated happn version 2.9.6
 - Added ability to honour promises on synchronous methods (on the other side of the exchange)
 
+1.15.1 2016-07-19
+---------------------------
 
+- Created 'sync-promise' configuration for synch methods over the exchange
+- Added to the promises tests
