@@ -51,6 +51,14 @@ SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts,callback) 
   return this.promiseMethod(opts, callback);
 });
 
+SeeAbove.prototype.synchronousMethodHappnOrigin = function(opts, opts2, $happn, $origin){
+
+  if (!$happn) throw new Error('$happn is meant to exist');
+  if (!$origin) throw new Error('$origin is meant to exist');
+
+  return opts + opts2;
+};
+
 SeeAbove.prototype.synchronousMethod = function(opts, opts2){
   return opts + opts2;
 };
@@ -64,7 +72,10 @@ SeeAbove.prototype.$happner = {
             alias: 'ancientmoth'
           },
           'synchronousMethod': {
-            type: 'sync'//NB - this is how you can wrap a synchronous method with a promise
+            type: 'sync-promise'//NB - this is how you can wrap a synchronous method with a promise
+          },
+          'synchronousMethodHappnOrigin': {
+            type: 'sync-promise'//NB - this is how you can wrap a synchronous method with a promise
           }
         }
       }
@@ -211,6 +222,24 @@ describe('a8 - exchange supports promises', function () {
     this.timeout(1500);
 
     this.mesh.exchange.component.synchronousMethod(1, 2)
+
+      .then(function (res) {
+        res.should.eql(3);
+        done();
+      })
+
+      .catch(function (err) {
+        done(err);
+      })
+    ;
+
+  });
+
+  it('supports calling a synchronous method with $happn and $origin and getting a promise back', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.synchronousMethodHappnOrigin(1, 2)
 
       .then(function (res) {
         res.should.eql(3);

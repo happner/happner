@@ -417,7 +417,7 @@ The `config.components` section should list components to be loaded into the mes
             alias: 'mn1'
           },
           'methodName2': {
-            type: 'sync'
+            type: 'sync-promise'
           }
         }
       },
@@ -474,7 +474,7 @@ When specifying `schema.startMethod`, if the corresponding startmethod is not de
 ###### schema.methods
 __(optional)__
 
-List the methods. Each has a subconfig defining the method details. In most cases no subconfig is required. If the method is configured to be type 'sync' it means the method is synchronous, but will be wrapped by a promiseover the exchange. Methods are of type 'async' by default, thus the system will expect there to be a callback argument in the method signature. To see how this works look at the test a8-exchange-promises
+List the methods. Each has a subconfig defining the method details. In most cases no subconfig is required. If the method is configured to be type 'sync-promise' it means the method is synchronous, but will be wrapped by a promiseover the exchange. Methods are of type 'async' by default, thus the system will expect there to be a callback argument in the method signature. To see how this works look at the test a8-exchange-promises
 
 ###### web.routes
 __(optional)__
