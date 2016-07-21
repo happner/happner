@@ -11,8 +11,8 @@ describe(filename, function() {
 
   // Given a connected endpoint, and then it goes down (perhaps the server was restarted):
   //
-  // - NOT HAPPENING...  Currently happner accumulates a backlog of exchange requests and
-  //                     unloads them all onto the server when the endpoint reconnects.
+  // - Currently happner accumulates a backlog of exchange requests and
+  //   unloads them all onto the server when the endpoint reconnects.
   // - This happens despite the requests timing out.
   //
   // Exactly what should happen when the server is offline needs to be carefully considered...
@@ -23,8 +23,8 @@ describe(filename, function() {
   //   could be reported to exchange caller rather than waisting time awaiting timeout.
   //   (cases: happnerclient, happnermesh)
   //
-  // - NOT HAPPENING Sending the backlog is dangerous, (thundering herd...), large volume of accumulated
-  //                 field data can drown/crash the server.
+  // - Sending the backlog is dangerous, (thundering herd...), large volume of accumulated
+  //   field data can drown/crash the server.
   //
 
   var startServer;
