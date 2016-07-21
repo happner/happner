@@ -1,9 +1,9 @@
 var Mesh = require('../../lib/mesh');
 
 var config = {
-  name: 'remoteMesh',
+  name: 'remoteMeshE2',
   dataLayer: {
-    port: 3001,
+    port: 3030,
     authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
     systemSecret: 'mesh',
     secure: true,
@@ -45,7 +45,8 @@ var config = {
   }
 };
 
-Mesh.create(config, function(err){
+(new Mesh()).initialize(config, function (err) {
+
   if (err) {
     console.log(err);
     process.exit(err.code || 1);
@@ -53,4 +54,5 @@ Mesh.create(config, function(err){
   }
 
   console.log('READY');
+
 });

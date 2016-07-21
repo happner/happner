@@ -3,7 +3,8 @@ module.exports = function () {
 };
 
 function RemoteComponent() {
-  this.remoteFunctionTest = function ($happn, one, two, three, callback) {
+
+  this.remoteFunction = function ($happn, one, two, three, callback) {
     $happn.emit('whoops', 'whoa');
     callback(undefined, one + ' ' + two + ' ' + three + ', wheeeeeeeeeeeeheeee!');
   };
@@ -16,14 +17,3 @@ function RemoteComponent() {
     )
   }
 }
-
-RemoteComponent.prototype.remoteFunction = function (args, callback) {
-  console.log('running remote function:::', args);
-  callback(undefined, 'UMBERTO ' + args);
-};
-
-RemoteComponent.prototype.otherRemoteFunction = function (args, callback) {
-  return callback();
-  console.log('running remote function:::', args);
-  callback();
-};
