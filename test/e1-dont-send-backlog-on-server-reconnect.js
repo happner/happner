@@ -113,11 +113,12 @@ describe(filename, function() {
 
         //
         //
-        // could be failing because the server is not yet actually stopped
-        // by the time this next call to method is made
+        // strange thing:
+        // with this timeout the problem is permanent
+        // without it the problem is intermittent
+        // (one would expect the inverse)
         //
-        //
-        // ensure server is stopped
+        // timeout to ensure server is stopped
         setTimeout(function() {
 
           // make call (2) from client across __disconnected__ endpoint
