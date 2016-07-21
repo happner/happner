@@ -111,47 +111,58 @@ describe(filename, function() {
 
       .then(function() {
 
-        // make call (2) from client across __disconnected__ endpoint
-        return client.exchange.SERVER.component.method({data: count++}, function(err) {
+        //
+        //
+        // could be failing because the server is not yet actually stopped
+        // by the time this next call to method is made
+        //
+        //
+        // ensure server is stopped
+        setTimeout(function() {
 
-          err.should.equal('Request timed out'); // this may change to 'Endpoint offline' ?? <----------------------
-                                                // no need to have waited timeout,
-                                               // offline is known inside happn,
-                                              // (which is currently in a reconnect loop)
-          // now restart the server...
-          return startServer().then(function(mesh) {
-            server = mesh;
+          // make call (2) from client across __disconnected__ endpoint
+          return client.exchange.SERVER.component.method({data: count++}, function(err) {
 
-            // wait for client's endpoint to reconnect
-            setTimeout(function() {
+            err.should.equal('Request timed out'); // this may change to 'Endpoint offline' ?? <----------------------
+            // no need to have waited timeout,
+            // offline is known inside happn,
+            // (which is currently in a reconnect loop)
+            // now restart the server...
+            return startServer().then(function(mesh) {
+              server = mesh;
 
-              // make call (3) across __reconnected__ endpoint
-              return client.exchange.SERVER.component.method({data: count++})
+              // wait for client's endpoint to reconnect
+              setTimeout(function() {
 
-                .then(function() {
+                // make call (3) across __reconnected__ endpoint
+                return client.exchange.SERVER.component.method({data: count++})
 
-                  try {
+                  .then(function() {
 
-                    calledData.should.eql([
-                      {data: 1},
-                      // {data: 2}, // <-------------- should not have arrived at server
-                      {data: 3}
-                    ]);
-                    done();
+                    try {
 
-                  } catch (e) {
-                    done(e);
-                  }
+                      calledData.should.eql([
+                        {data: 1},
+                        // {data: 2}, // <-------------- should not have arrived at server
+                        {data: 3}
+                      ]);
+                      done();
 
-                })
+                    } catch (e) {
+                      done(e);
+                    }
 
-                .catch(done);
+                  })
 
-            }, 1000);
+                  .catch(done);
 
-          }).catch(done);
+              }, 1000);
 
-        });
+            }).catch(done);
+
+          });
+
+        }, 1000);
 
       })
 
