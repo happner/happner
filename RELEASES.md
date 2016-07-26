@@ -295,5 +295,5 @@
 ---------------------------
 
 - Mesh stop removes mesh from root, also unsubscribes all from process events if the mesh being stopped is the last one on the root
-- client reconnection tests
-- endpoint reconnection test
+- client reconnection
+- endpoint reconnection
