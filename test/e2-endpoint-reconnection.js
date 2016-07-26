@@ -42,7 +42,7 @@ describe('e2-endpoint-reconnection', function () {
 
     var timedOut = setTimeout(function(){
       callback(new Error('remote mesh start timed out'));
-    },2000);
+    },5000);
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + REMOTE_MESH]);
@@ -86,7 +86,7 @@ describe('e2-endpoint-reconnection', function () {
   var testExchangeCalls = function(done){
 
     mesh.exchange.remoteMeshE2.remoteComponent.remoteFunction(
-      'one!', 'two!', 'three!', function (err, res) {
+      'one!', 'two!', 'three!', function (err) {
 
         if (err) return done(err);
         done()

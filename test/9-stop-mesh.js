@@ -1,25 +1,16 @@
 // Uses unit test 2 modules
-var should = require('chai').should();
+var expect = require('expect.js');
 var Mesh = require('../');
 
-
-describe('8 - does some benchmarks on api calls, data events and events', function (done) {
-///events/testComponent2Component/component1/maximum-pings-reached
-///events/testComponent2Component/component1/maximum-pings-reached
+describe('9-stop-mesh', function (done) {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  this.timeout(120000);
-
-  var maximumPings = 1000;
-  var defaultTimeout = (process.arch == 'arm') ? 50000 : 10000;
+  this.timeout(5000);
 
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
-
-  var comp1Timeout = 5000;
-  var comp2Timeout = 7000;
 
   var config = {
     name: "stopMesh",
@@ -63,20 +54,57 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
 
   var mesh;
 
-  before(function (done) {
-    console.time('startup');
-    mesh = new Mesh();
-    mesh.initialize(config, function (err) {
-      console.timeEnd('startup');
-      done();
-    });
-  });
+  after(function (done) {
+    if (mesh) mesh.stop({reconnect: false}, done);
+  })
 
+  var startMesh = function(callback){
+    mesh = new Mesh();
+    mesh.initialize(config, callback);
+  };
 
   it('stops the mesh', function (done) {
-    mesh.stop({reconnect: false}, function (e, log) {
 
-      done(e);
+    startMesh(function(e){
+
+      if (e) return done(e);
+      mesh.stop({reconnect: false}, function (e, mesh, log) {
+
+        var stopScore = 0;
+
+        log.map(function(item){
+
+          if (['stopped components','stopped datalayer','unsubscribed from process events'].indexOf(item.message) >= 0)
+            stopScore++;
+
+        });
+
+        if (stopScore < 3) return done('stop events did not happen or were not logged properly');
+        done();
+      });
+
+    });
+
+  });
+
+  it('stops then starts the same mesh, tests the echo method', function (done) {
+
+    startMesh(function(e){
+
+      if (e) return done(e);
+      mesh.stop({reconnect: false}, function (e) {
+
+        if (e) return done(e);
+        mesh.initialize(config, function(e){
+
+          if (e) return done(e);
+          mesh.exchange.component1.echo('test', function(e, response){
+            expect(e).to.be(null);
+            expect(response).to.be('test');
+            done();
+          });
+        })
+      });
 
     });
   });

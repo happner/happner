@@ -3,22 +3,29 @@
  * Updated by S.Bishop 6/1/2015.
  */
 
-var moment = require('moment');
 
-module.exports = function (options) {
-  return new StopMeshModule1(options);
+module.exports = function () {
+  return new StopMeshModule1();
 };
 
-function StopMeshModule1(options) {
+function StopMeshModule1() {
+
+  this.echo = function ($happn, message, callback) {
+    return callback(null, message);
+  };
 
   this.start = function ($happn) {
+    $happn.emit('start-method-called', {data:'test'});
+    $happn.log.info('start method called mod');
+  };
 
-  }
+  this.stop = function ($happn, callback) {
+    $happn.emit('stop-method-called', {data:'test'});
+    $happn.log.info('stop method called mod');
+    callback();
+  };
 
-  this.stop = function ($happn, done) {
+  this.startData = function ($happn) {
 
-    $happn.log.info('stop method called mod 2');
-
-    done();
-  }
+  };
 }
