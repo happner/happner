@@ -290,3 +290,10 @@
 
 - Created 'sync-promise' configuration for synch methods over the exchange
 - Added to the promises tests
+
+1.16.0 2016-07-26
+---------------------------
+
+- Mesh stop removes mesh from root, also unsubscribes all from process events if the mesh being stopped is the last one on the root
+- client reconnection
+- endpoint reconnection

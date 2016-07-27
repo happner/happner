@@ -13,7 +13,7 @@ Happner is a cloud application framework ideal for integrating multiple micro se
 These walkthroughs use *happner* to create a rudimentary monitoring service.
 
 * [The Basics](https://github.com/happner/happner/blob/master/docs/walkthrough/the-basics.md)
-*
+
 
 ## documentation
 
@@ -33,6 +33,7 @@ These walkthroughs use *happner* to create a rudimentary monitoring service.
 ###
 
 * [Starting and Stopping Mesh Node](https://github.com/happner/happner/blob/master/docs/starting.md)
+* [Mesh events](https://github.com/happner/happner/blob/master/docs/mesh-events.md)
 * [Using the loader to start a mesh](https://github.com/happner/happner/blob/master/docs/loader.md)
 * [System Components](https://github.com/happner/happner/blob/master/docs/system.md)
 * [Using the Client](https://github.com/happner/happner/blob/master/docs/client.md)
