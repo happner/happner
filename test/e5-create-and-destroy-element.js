@@ -194,9 +194,46 @@ describe(filename, function () {
       .catch(done)
   });
 
-  it('emits description change on adding component');
+  it('emits description change on adding component', function(done) {
+    mesh._mesh.data.on('/mesh/schema/description', function(data, meta) {
+      try {
+        data.components.component1.methods.should.eql({
+          method: {
+            parameters: [
+              {name: 'callback'}
+            ]
+          }
+        });
+        done();
+      } catch (e) {
+        done(e);
+      }
+    });
+
+    mesh._createElement({
+      module: {
+        name: 'component1',
+        config: {
+          instance: {
+            method: function(callback) {
+              callback();
+            }
+          }
+        }
+      },
+      component: {
+        name: 'component1',
+        config: {}
+      }
+    }).catch(done);
+
+  });
 
   it('emits description change on destroying component');
+
+  it('informs mesh client on create component');
+
+  it('informs mesh client on destroy component');
 
   it('what happens to reference still held');
 
