@@ -275,10 +275,6 @@ describe(filename, function () {
         });
       })
 
-      // .then(function() {
-      //   return Promise.delay(100);
-      // })
-
       .then(function () {
         return mesh._createElement({
           module: {
