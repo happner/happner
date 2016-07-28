@@ -308,3 +308,4 @@
 
 - Fixed _this in mesh.__newMesh function
 - added e3 test
+- added e4 test
