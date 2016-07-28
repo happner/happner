@@ -343,9 +343,7 @@ describe(filename, function () {
   });
 
   xit('what happens to reference still held', function (done) {
-
     var keepRefToDeletedComponent;
-
     return mesh._createElement({
         module: {
           name: 'component5',
