@@ -265,7 +265,7 @@ describe(filename, function () {
     client.login()
 
       .then(function() {
-        return client.on('components/created', function(array) {
+        return client.once('components/created', function(array) {
           try {
             array[0].description.name.should.equal('component3');
             done();
@@ -301,7 +301,46 @@ describe(filename, function () {
       .catch(done);
   });
 
-  it('informs mesh client on destroy component');
+  it('informs mesh client on destroy component', function(done) {
+    var client = new Happner.MeshClient();
+    return mesh._createElement({
+      module: {
+        name: 'component4',
+        config: {
+          instance: {
+            method: function(callback) {
+              callback();
+            }
+          }
+        }
+      },
+      component: {
+        name: 'component4',
+        config: {}
+      }
+    })
+
+      .then(function() {
+        return client.login();
+      })
+
+      .then(function() {
+        return client.once('components/destroyed', function(array) {
+          try {
+            array[0].description.name.should.equal('component4');
+            done();
+          } catch (e) {
+            done(e);
+          }
+        });
+      })
+
+      .then(function () {
+        return mesh._destroyElement('component4');
+      })
+
+      .catch(done);
+  });
 
   it('what happens to reference still held');
 
