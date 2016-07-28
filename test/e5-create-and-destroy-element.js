@@ -128,16 +128,77 @@ describe(filename, function () {
   });
 
 
-  xit('can remove components from the mesh including web methods', function () {
+  it('can remove components from the mesh including web methods', function (done) {
+    mesh._createElement({
+        module: {
+          name: 'anotherComponent',
+          config: {
+            instance: {
+              method: function (callback) {
+                callback(null, 'anotherComponent OK');
+              },
+              page: function (req, res) {
+                res.end('WEB PAGE');
+              }
+            }
+          }
+        },
+        component: {
+          name: 'anotherComponent',
+          config: {
+            web: {
+              routes: {
+                page: 'page'
+              }
+            }
+          }
+        }
+      })
 
+      .then(function () {
+        return mesh.exchange.anotherComponent.method()
+      })
 
+      .then(function(result) {
+        result.should.equal('anotherComponent OK');
+      })
+
+      .then(function() {
+        return request('http://localhost:55000/anotherComponent/page')
+      })
+
+      .then(function(result) {
+        result[1].should.equal('WEB PAGE');
+      })
+
+      // now remove the component
+      .then(function() {
+        return mesh._destroyElement('anotherComponent')
+      })
+
+      // exchange reference is gone
+      .then(function(result) {
+        should.not.exist(mesh.exchange.anotherComponent);
+      })
+
+      // web route is gone
+      .then(function() {
+        return request('http://localhost:55000/anotherComponent/page');
+      })
+
+      .then(function(result) {
+        result[1].should.equal('Cannot GET /anotherComponent/page\n');
+      })
+
+      .then(done)
+      .catch(done)
   });
 
   it('emits description change on adding component');
 
   it('emits description change on destroying component');
 
-  it('clears messenger subscriptions on remove component');
+  it('what happens to reference still held');
 
   require('benchmarket').stop();
 
