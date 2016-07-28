@@ -226,10 +226,40 @@ describe(filename, function () {
         config: {}
       }
     }).catch(done);
-
   });
 
-  it('emits description change on destroying component');
+  it.only('emits description change on destroying component', function(done) {
+    mesh._createElement({
+      module: {
+        name: 'component2',
+        config: {
+          instance: {
+            method: function(callback) {
+              callback();
+            }
+          }
+        }
+      },
+      component: {
+        name: 'component2',
+        config: {}
+      }
+    })
+
+      .then(function() {
+        return mesh._mesh.data.on('/mesh/schema/description', function(data, meta) {
+          should.not.exist(data.components.component1);
+          done();
+        });
+      })
+
+      .then(function() {
+        return mesh._destroyElement('component2');
+      })
+
+      .catch(done);
+
+  });
 
   it('informs mesh client on create component');
 
