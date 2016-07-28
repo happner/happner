@@ -17,7 +17,7 @@ describe('e4-newMesh', function () {
       if (e) return callback(e);
       mesh = instance;
 
-      mesh._createElement({component:{}, module:{config:{}}},{}, function(e){
+      mesh._mesh._createElement({component:{}, module:{config:{}}},{}, function(e){
         mesh.stop({reconnect:false}, done);
       });
 
@@ -32,7 +32,7 @@ describe('e4-newMesh', function () {
       if (e) return callback(e);
       mesh = instance;
 
-      mesh._createElement({component:{}, module:{config:{}}},{}, function(e){
+      mesh._mesh._createElement({component:{}, module:{config:{}}},{}, function(e){
 
           mesh.stop({reconnect:false}, function(e){
 
@@ -40,7 +40,7 @@ describe('e4-newMesh', function () {
 
             mesh.initialize({},function(e, instance){
 
-              instance._createElement({component:{}, module:{config:{}}},{}, function(e){
+              instance._mesh._createElement({component:{}, module:{config:{}}},{}, function(e){
 
                 mesh.stop({reconnect:false},done);
 
