@@ -195,7 +195,7 @@ describe(filename, function () {
   });
 
   it('emits description change on adding component', function(done) {
-    mesh._mesh.data.on('/mesh/schema/description', function(data, meta) {
+    mesh._mesh.data.on('/mesh/schema/description', {count: 1}, function(data, meta) {
       try {
         data.components.component1.methods.should.eql({
           method: {
@@ -228,7 +228,7 @@ describe(filename, function () {
     }).catch(done);
   });
 
-  it.only('emits description change on destroying component', function(done) {
+  it('emits description change on destroying component', function(done) {
     mesh._createElement({
       module: {
         name: 'component2',
@@ -247,8 +247,8 @@ describe(filename, function () {
     })
 
       .then(function() {
-        return mesh._mesh.data.on('/mesh/schema/description', function(data, meta) {
-          should.not.exist(data.components.component1);
+        return mesh._mesh.data.on('/mesh/schema/description', {count: 1}, function(data, meta) {
+          should.not.exist(data.components.component2);
           done();
         });
       })
@@ -258,10 +258,48 @@ describe(filename, function () {
       })
 
       .catch(done);
-
   });
 
-  it('informs mesh client on create component');
+  it('informs mesh client on create component', function(done) {
+    var client = new Happner.MeshClient();
+    client.login()
+
+      .then(function() {
+        return client.on('components/created', function(array) {
+          try {
+            array[0].description.name.should.equal('component3');
+            done();
+          } catch (e) {
+            done(e);
+          }
+        });
+      })
+
+      // .then(function() {
+      //   return Promise.delay(100);
+      // })
+
+      .then(function() {
+        return mesh._createElement({
+          module: {
+            name: 'component3',
+            config: {
+              instance: {
+                method: function(callback) {
+                  callback();
+                }
+              }
+            }
+          },
+          component: {
+            name: 'component3',
+            config: {}
+          }
+        })
+      })
+
+      .catch(done);
+  });
 
   it('informs mesh client on destroy component');
 
