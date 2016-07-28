@@ -159,34 +159,34 @@ describe(filename, function () {
         return mesh.exchange.anotherComponent.method()
       })
 
-      .then(function(result) {
+      .then(function (result) {
         result.should.equal('anotherComponent OK');
       })
 
-      .then(function() {
+      .then(function () {
         return request('http://localhost:55000/anotherComponent/page')
       })
 
-      .then(function(result) {
+      .then(function (result) {
         result[1].should.equal('WEB PAGE');
       })
 
       // now remove the component
-      .then(function() {
+      .then(function () {
         return mesh._destroyElement('anotherComponent')
       })
 
       // exchange reference is gone
-      .then(function(result) {
+      .then(function (result) {
         should.not.exist(mesh.exchange.anotherComponent);
       })
 
       // web route is gone
-      .then(function() {
+      .then(function () {
         return request('http://localhost:55000/anotherComponent/page');
       })
 
-      .then(function(result) {
+      .then(function (result) {
         result[1].should.equal('Cannot GET /anotherComponent/page\n');
       })
 
@@ -194,8 +194,8 @@ describe(filename, function () {
       .catch(done)
   });
 
-  it('emits description change on adding component', function(done) {
-    mesh._mesh.data.on('/mesh/schema/description', {count: 1}, function(data, meta) {
+  it('emits description change on adding component', function (done) {
+    mesh._mesh.data.on('/mesh/schema/description', {count: 1}, function (data, meta) {
       try {
         data.components.component1.methods.should.eql({
           method: {
@@ -215,7 +215,7 @@ describe(filename, function () {
         name: 'component1',
         config: {
           instance: {
-            method: function(callback) {
+            method: function (callback) {
               callback();
             }
           }
@@ -228,44 +228,44 @@ describe(filename, function () {
     }).catch(done);
   });
 
-  it('emits description change on destroying component', function(done) {
+  it('emits description change on destroying component', function (done) {
     mesh._createElement({
-      module: {
-        name: 'component2',
-        config: {
-          instance: {
-            method: function(callback) {
-              callback();
+        module: {
+          name: 'component2',
+          config: {
+            instance: {
+              method: function (callback) {
+                callback();
+              }
             }
           }
+        },
+        component: {
+          name: 'component2',
+          config: {}
         }
-      },
-      component: {
-        name: 'component2',
-        config: {}
-      }
-    })
+      })
 
-      .then(function() {
-        return mesh._mesh.data.on('/mesh/schema/description', {count: 1}, function(data, meta) {
+      .then(function () {
+        return mesh._mesh.data.on('/mesh/schema/description', {count: 1}, function (data, meta) {
           should.not.exist(data.components.component2);
           done();
         });
       })
 
-      .then(function() {
+      .then(function () {
         return mesh._destroyElement('component2');
       })
 
       .catch(done);
   });
 
-  it('informs mesh client on create component', function(done) {
+  it('informs mesh client on create component', function (done) {
     var client = new Happner.MeshClient();
     client.login()
 
-      .then(function() {
-        return client.once('components/created', function(array) {
+      .then(function () {
+        return client.once('components/created', function (array) {
           try {
             array[0].description.name.should.equal('component3');
             done();
@@ -279,13 +279,13 @@ describe(filename, function () {
       //   return Promise.delay(100);
       // })
 
-      .then(function() {
+      .then(function () {
         return mesh._createElement({
           module: {
             name: 'component3',
             config: {
               instance: {
-                method: function(callback) {
+                method: function (callback) {
                   callback();
                 }
               }
@@ -301,31 +301,31 @@ describe(filename, function () {
       .catch(done);
   });
 
-  it('informs mesh client on destroy component', function(done) {
+  it('informs mesh client on destroy component', function (done) {
     var client = new Happner.MeshClient();
     return mesh._createElement({
-      module: {
-        name: 'component4',
-        config: {
-          instance: {
-            method: function(callback) {
-              callback();
+        module: {
+          name: 'component4',
+          config: {
+            instance: {
+              method: function (callback) {
+                callback();
+              }
             }
           }
+        },
+        component: {
+          name: 'component4',
+          config: {}
         }
-      },
-      component: {
-        name: 'component4',
-        config: {}
-      }
-    })
+      })
 
-      .then(function() {
+      .then(function () {
         return client.login();
       })
 
-      .then(function() {
-        return client.once('components/destroyed', function(array) {
+      .then(function () {
+        return client.once('components/destroyed', function (array) {
           try {
             array[0].description.name.should.equal('component4');
             done();
@@ -342,7 +342,47 @@ describe(filename, function () {
       .catch(done);
   });
 
-  it('what happens to reference still held');
+  xit('what happens to reference still held', function (done) {
+
+    var keepRefToDeletedComponent;
+
+    return mesh._createElement({
+        module: {
+          name: 'component5',
+          config: {
+            instance: {
+              method: function (callback) {
+                callback();
+              }
+            }
+          }
+        },
+        component: {
+          name: 'component5',
+          config: {}
+        }
+      })
+
+      .then(function () {
+        keepRefToDeletedComponent = mesh.exchange.component5;
+      })
+
+      .then(function () {
+        return mesh._destroyElement('component5');
+      })
+
+      .then(function () {
+        console.log(keepRefToDeletedComponent);
+        return keepRefToDeletedComponent.method();
+      })
+
+      .then(function (result) {
+        console.log(result);
+      })
+
+      .then(done)
+      .catch(done);
+  });
 
   require('benchmarket').stop();
 
