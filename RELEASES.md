@@ -297,3 +297,8 @@
 - Mesh stop removes mesh from root, also unsubscribes all from process events if the mesh being stopped is the last one on the root
 - client reconnection
 - endpoint reconnection
+
+1.16.1 2016-07-28
+-----------------
+
+- Fix function call pointer for some mesh reconnect events (#153)
