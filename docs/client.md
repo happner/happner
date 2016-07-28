@@ -82,7 +82,7 @@ __something.html__
       // Component notifications to enable the dynamic creation of
       // widgets or menu updates (or similar) into the running app.
 
-      client.on('components/create', function(array) {
+      client.on('components/created', function(array) {
 
         // First emit lists all components.
 
@@ -92,7 +92,7 @@ __something.html__
 
       });
 
-      client.on('components/destroy', function(array) {
+      client.on('components/destroyed', function(array) {
 
         // Components being removed from the mesh.
 
