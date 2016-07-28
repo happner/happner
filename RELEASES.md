@@ -302,3 +302,9 @@
 -----------------
 
 - Fix function call pointer for some mesh reconnect events (#153)
+
+1.16.2 2016-07-28
+-----------------
+
+- Fixed _this in mesh.__newMesh function
+- added e3 test
