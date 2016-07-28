@@ -306,6 +306,6 @@
 1.16.2 2016-07-28
 -----------------
 
-- Fixed _this in mesh.__newMesh function
+- Fixed _this in mesh.__protectedMesh function
 - added e3 test
 - added e4 test
