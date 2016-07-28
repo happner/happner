@@ -309,3 +309,4 @@
 - Fixed _this in mesh.__protectedMesh function
 - added e3 test
 - added e4 test
+- added e5 test
