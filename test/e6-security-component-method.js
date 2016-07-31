@@ -77,7 +77,7 @@ describe(filename, function() {
 
       var security = secureMesh.exchange.security;
 
-      Promise.all([
+      return Promise.all([
         security.addGroup(theGroup),
         security.addUser(theUser)
       ])
