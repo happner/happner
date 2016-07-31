@@ -11,11 +11,16 @@ var fs = require('fs');
 var Promise = require('bluebird');
 
 var testId = shortid.generate();
+var testId2 = shortid.generate();
 var dbFileName = __dirname + path.sep + 'temp/' + testId + '.nedb';
+var dbFileName2 = __dirname + path.sep + 'temp/' + testId2 + '.nedb';
 var secureMesh;
 var mesh2;
 
 var SECURE = true;
+
+// DONE - from insecure mesh to secure mesh
+// TODO - from secure mesh to secure mesh
 
 describe(filename, function() {
 
@@ -92,6 +97,10 @@ describe(filename, function() {
   });
 
   after('stop mesh2', function(done) {
+    // fs.unlink(dbFileName2, function(e) {
+    //   if (mesh2) return mesh2.stop({reconnect: false}, done);
+    //   done();
+    // });
     if (mesh2) return mesh2.stop({reconnect: false}, done);
     done();
   });
@@ -109,13 +118,19 @@ describe(filename, function() {
   before('start mesh2', function(done) {
     Happner.create({
       port: 55001,
+      // datalayer: {
+      //   secure: SECURE,
+      //   adminPassword: testId2,
+      //   filename: dbFileName2
+      // },
       endpoints: {
         'secureMesh': {
           config: {
             host: '127.0.0.1',
             port: 55000,
             username: 'username',
-            password: 'password'
+            password: 'password',
+            // secure: true
           }
         }
       }
@@ -126,7 +141,7 @@ describe(filename, function() {
   });
 
 
-  xit('allows access to allowed function', function(done) {
+  it('allows access to allowed function', function(done) {
     //
     // test times out... no callback from allowed method
     //                   (works if security is switched off)
@@ -171,6 +186,12 @@ describe(filename, function() {
         }
       });
   });
+
+
+  // xit('allows access to allowed function from mesh client', function(done) {
+  //   var client = new Happner.MeshClient({
+  //   });
+  // });
 
 
   require('benchmarket').stop();
