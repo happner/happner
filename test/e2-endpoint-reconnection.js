@@ -23,11 +23,14 @@ describe('e2-endpoint-reconnection', function () {
     },
     endpoints: {
       'remoteMeshE2': {  // remote mesh node
+        reconnect:{
+          max:2000 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds
+        },
         config: {
           port: PORT_REMOTE,
           host: 'localhost',
           username: '_ADMIN',
-          password: 'guessme'
+          password: 'guessme',
         }
       }
     }
@@ -149,15 +152,15 @@ describe('e2-endpoint-reconnection', function () {
     testExchangeCalls(function(e){                           // 1. check the remote exchange works
 
       if (e) return done(e);
-      console.log('2.1 EXCHANGE CALLS WORKED:::');
+      //console.log('2.1 EXCHANGE CALLS WORKED:::');
 
       mesh.on('endpoint-reconnect-scheduled', function(evt){ // 2. attach to the endpoint disconnection
 
         if (__remoteRestartTestDisconnected1) return;
         __remoteRestartTestDisconnected1 = true;
 
-        console.log('2.2 KILLED REMOTE:::');
-        console.log('2.3 TESTING EXCHANGE CALLS FAIL:::');
+        //console.log('2.2 KILLED REMOTE:::');
+        //console.log('2.3 TESTING EXCHANGE CALLS FAIL:::');
 
         expect(evt.endpointName).to.be('remoteMeshE2');
         expect(evt.endpointConfig.config.port).to.be(PORT_REMOTE);
@@ -167,7 +170,7 @@ describe('e2-endpoint-reconnection', function () {
           expect(e).to.not.be(null);
           expect(e).to.not.be(undefined);
 
-          console.log('2.4 EXCHANGE CALLS TESTED AND FAILED, OK:::');
+          //console.log('2.4 EXCHANGE CALLS TESTED AND FAILED, OK:::');
 
           mesh.on('endpoint-reconnect-successful', function(evt){
 
@@ -177,9 +180,9 @@ describe('e2-endpoint-reconnection', function () {
             expect(evt.endpointName).to.be('remoteMeshE2');
             expect(evt.endpointConfig.config.port).to.be(PORT_REMOTE);
 
-            console.log('2.6 REMOTE ENDPOINT RECONNECTED:::');
+            //console.log('2.6 REMOTE ENDPOINT RECONNECTED:::');
             testExchangeCalls(function(e){
-              console.log('2.7 EXCHANGE CALLS TESTED AFTER RESTART:::');
+              //console.log('2.7 EXCHANGE CALLS TESTED AFTER RESTART:::');
 
               done(e);
             });
@@ -189,7 +192,7 @@ describe('e2-endpoint-reconnection', function () {
           startRemoteMesh(function(e) {       // 5. start the remote mesh
 
             if (e) return done(e);
-            console.log('5. STARTED REMOTE MESH:::', e);
+            //console.log('5. STARTED REMOTE MESH:::', e);
 
           });
         });
@@ -197,6 +200,56 @@ describe('e2-endpoint-reconnection', function () {
 
       remote.kill();                          // 3. bring down the remote mesh unexpectedly
     });
+  });
+
+  var __doneMeasuring = false;
+
+  it.only("can call remote component, restart remote mesh - and reconnect before 5 seconds have passed because our max retry interval is 2 seconds", function (done) {
+
+    testExchangeCalls(function(e){                           // 1. check the remote exchange works
+
+      if (e) return done(e);
+
+      remote.kill();//kill remote
+
+      console.log('killed remote:::');
+
+      setTimeout(function(){//wait 10 seconds, enough time to build up
+
+        var lastMeasurement;
+        var measuredCount = 0;
+        var measuredDifference = 0;
+
+        mesh.on('endpoint-reconnect-scheduled', function(){
+
+          if (__doneMeasuring) return;
+
+          if (measuredCount == 0){
+            lastMeasurement = Date.now();
+            return measuredCount++;
+          }
+
+          measuredCount++;
+          measuredDifference += (Date.now() - lastMeasurement);
+          lastMeasurement = Date.now();
+
+          console.log('lastMeasurement:::',lastMeasurement);
+          console.log('measuredCount:::',measuredCount);
+          console.log('measuredDifference:::',measuredDifference);
+
+          if (measuredCount == 4){
+            __doneMeasuring = true;
+            measuredAverage = measuredDifference / 3;
+            //console.log('measured average:::', measuredAverage);
+            expect(measuredAverage < 3000).to.be(true);
+            done();
+          }
+        });
+
+      }, 10000);
+
+    });
+
   });
 
   require('benchmarket').stop();
