@@ -168,6 +168,26 @@ When the remote MeshNode has securty enabled and is using https.
   ...
 ```
 
+###### Reconnection configuration
+endpoints can be configured with different reconnection policies
+```javascript
+ var config = {
+    endpoints: {
+      'test': { 
+        reconnect:{ // as per Primus's reconnection settings
+          max:2000, //default 3 seconds (3000)
+          retries:100 // default Infinity
+        },
+        config: {
+          port: PORT_REMOTE,
+          host: 'localhost',
+          username: '_ADMIN',
+          password: 'guessme',
+        }
+      }
+    }
+```
+
 ### Module Config
 
 [&#9650;](#)
