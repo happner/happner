@@ -2,6 +2,11 @@
  * Created by nomilous on 2016/07/31.
  */
 
+//TODO: test either incomplete or not started
+// secure->insecure - not tested
+// insecure->secure - timing out for allowed, access denied for not allowed
+// secure->secure - timing out on access denied
+
 var path = require('path');
 var filename = path.basename(__filename);
 var should = require('chai').should();

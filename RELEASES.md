@@ -310,3 +310,9 @@
 - added e3 test
 - added e4 test
 - added e5 test
+
+1.17.0 2016-08-02
+-----------------
+
+- updated happn to version 2.10.1
+- made endpoint configuration reconnect configurable

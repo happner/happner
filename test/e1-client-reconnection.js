@@ -10,7 +10,11 @@ describe('e1-client-reconnection', function () {
   var Mesh = require('../');
   var mesh;
 
-  var adminClient = new Mesh.MeshClient({secure: true, port: 8004});
+  var adminClient = new Mesh.MeshClient({secure: true, port: 8004,
+                                          reconnect:{
+                                            max:2000 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
+                                          }
+                                        });
 
   var test_id = Date.now() + '_' + require('shortid').generate();
 
@@ -46,7 +50,10 @@ describe('e1-client-reconnection', function () {
 
   });
 
+  var __stopped = false;
+
   after(function (done) {
+    if (__stopped) return done();
     mesh.stop({reconnect:false},done);
   });
 
@@ -94,6 +101,53 @@ describe('e1-client-reconnection', function () {
           if (e) return done(e);
         })
 
+      });
+
+    });
+
+  });
+
+  var __doneMeasuring = false;
+
+  it('tests the client reconnection configuration', function (done) {
+
+    adminClient.exchange.data.set('/test/path', {test:'data'}, function(e){
+
+      if (e) return done(e);
+
+      var lastMeasurement;
+      var measuredCount = 0;
+      var measuredDifference = 0;
+
+      adminClient.on('reconnect/scheduled', function () {
+
+        if (__doneMeasuring) return;
+
+        if (measuredCount == 0){
+          lastMeasurement = Date.now();
+          return measuredCount++;
+        }
+
+        measuredCount++;
+        measuredDifference += (Date.now() - lastMeasurement);
+        lastMeasurement = Date.now();
+
+        // console.log('lastMeasurement:::',lastMeasurement);
+        // console.log('measuredCount:::',measuredCount);
+        // console.log('measuredDifference:::',measuredDifference);
+
+        if (measuredCount == 4){
+          __doneMeasuring = true;
+          var measuredAverage = measuredDifference / 3;
+          //console.log('measured average:::', measuredAverage);
+          expect(measuredAverage < 3000).to.be(true);
+          done();
+        }
+      });
+
+      mesh.stop(function (e) {
+        if (e) return done(e);
+        __stopped = true;
       });
 
     });
