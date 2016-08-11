@@ -316,3 +316,8 @@
 
 - updated happn to version 2.10.1
 - made endpoint configuration reconnect configurable
+
+1.17.1 2016-08-11
+-----------------
+
+- prevent crash due to unresolved issue #172
