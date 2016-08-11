@@ -1,6 +1,6 @@
 describe('d6_shareddata_metadata', function () {
 
-  this.timeout(5000);
+  this.timeout(120000);
 
   require('benchmarket').start();
   after(require('benchmarket').store());

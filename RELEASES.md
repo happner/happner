@@ -290,3 +290,29 @@
 
 - Created 'sync-promise' configuration for synch methods over the exchange
 - Added to the promises tests
+
+1.16.0 2016-07-26
+---------------------------
+
+- Mesh stop removes mesh from root, also unsubscribes all from process events if the mesh being stopped is the last one on the root
+- client reconnection
+- endpoint reconnection
+
+1.16.1 2016-07-28
+-----------------
+
+- Fix function call pointer for some mesh reconnect events (#153)
+
+1.16.2 2016-07-28
+-----------------
+
+- Fixed _this in mesh.__protectedMesh function
+- added e3 test
+- added e4 test
+- added e5 test
+
+1.17.0 2016-08-02
+-----------------
+
+- updated happn to version 2.10.1
+- made endpoint configuration reconnect configurable

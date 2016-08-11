@@ -1,33 +1,32 @@
-var spawn = require('child_process').spawn
-  , sep = require('path').sep
-  , remote
-  , assert = require('assert')
-  , mesh
-  , Mesh = require('../')
-
-var sep = require('path').sep;
-var libFolder = __dirname + sep + 'lib' + sep;
-
-config = {
-  name: 'mesh2',
-  datalayer: {
-    port: 3002
-  },
-  endpoints: {
-    'remoteMesh': {  // remote mesh node
-      config: {
-        port: 3001,
-        host: 'localhost', // TODO This was necessary, did not default
-        username: '_ADMIN',
-        password: 'guessme'
-      }
-    }
-  },
-  modules: {},
-  components: {}
-};
-
 describe('4 - Mesh to Mesh', function () {
+
+  var spawn = require('child_process').spawn
+    , sep = require('path').sep
+    , remote
+    , assert = require('assert')
+    , mesh
+    , Mesh = require('../')
+
+  var libFolder = __dirname + sep + 'lib' + sep;
+
+  var config = {
+    name: 'mesh2',
+    datalayer: {
+      port: 3002
+    },
+    endpoints: {
+      'remoteMesh': {  // remote mesh node
+        config: {
+          port: 3001,
+          host: 'localhost', // TODO This was necessary, did not default
+          username: '_ADMIN',
+          password: 'guessme'
+        }
+      }
+    },
+    modules: {},
+    components: {}
+  };
 
   this.timeout(120000);
 
