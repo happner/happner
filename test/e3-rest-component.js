@@ -60,8 +60,6 @@ if (global.TESTING_E9) return; // When 'requiring' the module above,
 var expect = require('expect.js');
 var should = require('chai').should();
 var Mesh = require('../');
-var http = require('http');
-var rest = require('./restler');
 
 describe('e3-rest-component', function () {
 
@@ -71,29 +69,6 @@ describe('e3-rest-component', function () {
   this.timeout(120000);
 
   var mesh;
-
-  function doPost(path, token, body, callback){
-
-    request.post('http://service.com/upload').form({key:'value'})
-
-  }
-
-  function doRequest(path, token, callback) {
-
-    var request = require('request');
-
-    var options = {
-      url: 'http://127.0.0.1:10000' + path
-    };
-
-    if (token)
-      options.url += '?happn_token=' + token;
-
-    request(options, function (error, response, body) {
-      callback(null, response, body);
-    });
-
-  };
 
   before(function (done) {
 
@@ -126,14 +101,107 @@ describe('e3-rest-component', function () {
     mesh.stop({reconnect: false}, done);
   });
 
-  it('tests the rest components describe method', function(done){
+  var mock$Happn = {
+    _mesh:{
 
-    var restModule = require('../lib/modules/rest/index.js');
+    }
+  };
+
+  var mock$Origin = {
+
+  };
+
+  var mockResponse = {
+    writeHead:function(code, header){
+      this.header = {code:code, header:header};
+    }
+  };
+
+  xit('tests the rest components __respond method', function(done){
+    var RestModule = require('../lib/modules/rest/index.js');
+    var restModule = new RestModule();
+
+    var testStage = 'success';
+
+    mockResponse.end = function(responseString){
+      var response = JSON.parse(responseString);
+
+      if (testStage == 'success'){
+
+        testStage = 'error';
+      }
+
+      if (testStage == 'error'){
+
+        done();
+      }
+    };
+
 
 
   });
 
-  it('tests the rest components handleRequest method', function(done){
+  it('tests the rest components __parseBody method', function(done){
+
+    var RestModule = require('../lib/modules/rest/index.js');
+    var restModule = new RestModule();
+
+    var MockRequest = require('./lib/helper_mock_req');
+    var request = new MockRequest({
+      method: 'POST',
+      url: '/testComponent/methodName1',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    request.write({
+      uri:'/testComponent/methodName1',
+      parameters:{
+        'opts':{
+          number:1
+        }
+      }
+    });
+
+    request.end();
+
+    mockResponse.end = function(responseString){
+      var response = JSON.parse(responseString);
+
+      if (!response.error) return done(new Error('bad resposne expected error'));
+
+      done(new Error(response.error));
+    };
+
+    restModule.__parseBody(request, mockResponse, mock$Happn, mock$Origin, function(body){
+
+      console.log('body back:::', body);
+
+      expect(body).to.not.be(null);
+      expect(body).to.not.be(undefined);
+      expect(body.uri).to.be('/testComponent/methodName1');
+      expect(body.parameters['opts'].number).to.be(1);
+
+      done();
+
+    });
+
+  });
+
+  xit('tests the rest components describe method', function(done){
+
+    var restClient = require('restler');
+    var restModule = require('../lib/modules/rest/index.js');
+
+    restClient.get('http://localhost:10000/rest/describe').on('complete', function(result){
+      console.log('desc result:::', result);
+      done();
+    });
+
+  });
+
+  xit('tests the rest components handleRequest method', function(done){
 
   });
 
