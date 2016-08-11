@@ -58,7 +58,6 @@ if (global.TESTING_E9) return; // When 'requiring' the module above,
 
 // Uses unit test 2 modules
 var expect = require('expect.js');
-var should = require('chai').should();
 var Mesh = require('../');
 
 describe('e3-rest-component', function () {
@@ -101,9 +100,11 @@ describe('e3-rest-component', function () {
     mesh.stop({reconnect: false}, done);
   });
 
+  var happnUtils = require('../lib/system/utilities');
+
   var mock$Happn = {
     _mesh:{
-
+      utilities:happnUtils
     }
   };
 
@@ -117,27 +118,49 @@ describe('e3-rest-component', function () {
     }
   };
 
-  xit('tests the rest components __respond method', function(done){
+  it('tests the rest components __respond method', function(done){
+
     var RestModule = require('../lib/modules/rest/index.js');
     var restModule = new RestModule();
 
     var testStage = 'success';
 
     mockResponse.end = function(responseString){
-      var response = JSON.parse(responseString);
 
-      if (testStage == 'success'){
+      try{
 
-        testStage = 'error';
-      }
+        if (testStage == "done") return;
 
-      if (testStage == 'error'){
+        var response = JSON.parse(responseString);
 
-        done();
+        //TODO: an unexpected GET or POST with a non-json content
+
+        if (testStage == 'success'){
+
+          expect(response.message).to.be("test success response");
+          expect(response.data.test).to.be("data");
+          testStage = 'error';
+
+          restModule.__respond(mock$Happn, 'test success response', {"test":"data"}, new Error('a test error'), mockResponse);
+
+        }
+
+        if (testStage == 'error'){
+
+          expect(response.error).to.not.be(null);
+          expect(response.error.message).to.be('a test error');
+
+          testStage = "done";
+
+          done();
+        }
+
+      }catch(e){
+        done(e);
       }
     };
 
-
+    restModule.__respond(mock$Happn, 'test success response', {"test":"data"}, null, mockResponse);
 
   });
 
@@ -175,8 +198,6 @@ describe('e3-rest-component', function () {
     };
 
     restModule.__parseBody(request, mockResponse, mock$Happn, mock$Origin, function(body){
-
-      console.log('body back:::', body);
 
       expect(body).to.not.be(null);
       expect(body).to.not.be(undefined);
