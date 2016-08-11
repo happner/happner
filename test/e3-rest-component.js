@@ -1,7 +1,8 @@
 /* RUN: LOG_LEVEL=off mocha test/18-exchange-promises.js */
 
 var Promise = require('bluebird');
-
+var sep = require('path').sep;
+var spawn = require('child_process').spawn;
 module.exports = SeeAbove;
 
 function SeeAbove() {
@@ -17,6 +18,15 @@ SeeAbove.prototype.method1 = function (opts, callback) {
 };
 
 SeeAbove.prototype.method2 = function (opts, callback) {
+
+  if (opts.errorAs == 'callback') return callback(new Error('THIS IS JUST A TEST'));
+  if (opts.errorAs == 'throw') throw new Error('THIS IS JUST A TEST');
+
+  opts.number++;
+  callback(null, opts);
+};
+
+SeeAbove.prototype.method3 = function ($happn, $origin, opts, callback) {
 
   if (opts.errorAs == 'callback') return callback(new Error('THIS IS JUST A TEST'));
   if (opts.errorAs == 'throw') throw new Error('THIS IS JUST A TEST');
@@ -59,6 +69,10 @@ if (global.TESTING_E9) return; // When 'requiring' the module above,
 // Uses unit test 2 modules
 var expect = require('expect.js');
 var Mesh = require('../');
+var libFolder = __dirname + sep + 'lib' + sep;
+
+//var REMOTE_MESH = 'e2-remote-mesh';
+var REMOTE_MESH = 'e3-remote-mesh';
 
 describe('e3-rest-component', function () {
 
@@ -68,36 +82,84 @@ describe('e3-rest-component', function () {
   this.timeout(120000);
 
   var mesh;
+  var remote;
+
+  var startRemoteMesh = function(callback){
+
+    var timedOut = setTimeout(function(){
+      callback(new Error('remote mesh start timed out'));
+    },5000);
+
+    // spawn remote mesh in another process
+    remote = spawn('node', [libFolder + REMOTE_MESH]);
+
+    remote.stdout.on('data', function (data) {
+
+      if (data.toString().match(/READY/)) {
+
+        clearTimeout(timedOut);
+
+        setTimeout(function(){
+          callback();
+        },1000);
+      }
+    });
+  };
 
   before(function (done) {
 
     global.TESTING_E9 = true; //.............
 
-    Mesh.create({
-      port: 10000,
-      util: {
-        // logger: {}
-      },
-      modules: {
-        'testComponent': {
-          path: __filename   // .............
-        }
-      },
-      components: {
-        'testComponent': {}
-      }
-    }, function (err, instance) {
+    startRemoteMesh(function(e){
 
-      delete global.TESTING_E9; //.............
-      mesh = instance;
-      if (err) return done(err);
-      done();
+      if (e) return done(e);
+
+      Mesh.create({
+        port: 10000,
+        util: {
+          // logger: {}
+        },
+        modules: {
+          'testComponent': {
+            path: __filename   // .............
+          }
+        },
+        components: {
+          'testComponent': {}
+        },
+        endpoints:{
+          'remoteMeshE3': {  // remote mesh node
+            reconnect:{
+              max:2000, //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
+              retries:100
+            },
+            config: {
+              port: 10001,
+              host: '127.0.0.1',
+              username: '_ADMIN',
+              password: 'guessme',
+            }
+          }
+        }
+      }, function (err, instance) {
+
+        delete global.TESTING_E9; //.............
+        mesh = instance;
+        if (err) return done(err);
+        done();
+
+      });
 
     });
   });
 
   after(function (done) {
-    mesh.stop({reconnect: false}, done);
+
+    this.timeout(30000);
+
+    if (remote) remote.kill();
+    if (mesh) mesh.stop({reconnect: false}, done);
+
   });
 
   var happnUtils = require('../lib/system/utilities');
@@ -172,7 +234,7 @@ describe('e3-rest-component', function () {
     var MockRequest = require('./lib/helper_mock_req');
     var request = new MockRequest({
       method: 'POST',
-      url: '/testComponent/methodName1',
+      url: '/rest/api',
       headers: {
         'Accept': 'application/json'
       }
@@ -192,7 +254,7 @@ describe('e3-rest-component', function () {
     mockResponse.end = function(responseString){
       var response = JSON.parse(responseString);
 
-      if (!response.error) return done(new Error('bad resposne expected error'));
+      if (!response.error) return done(new Error('bad response expected error'));
 
       done(new Error(response.error));
     };
@@ -212,35 +274,25 @@ describe('e3-rest-component', function () {
 
   xit('tests the rest components describe method', function(done){
 
+  });
+
+  it('tests the rest components describe method over the api', function(done){
+
     var restClient = require('restler');
-    var restModule = require('../lib/modules/rest/index.js');
 
     restClient.get('http://localhost:10000/rest/describe').on('complete', function(result){
+
       console.log('desc result:::', result);
+
+      expect(result.data.components.testComponent.method1).to.not.be(null);
+      expect(result.data.components.testComponent.method2).to.not.be(null);
+
       done();
     });
 
   });
 
   xit('tests the rest components handleRequest method', function(done){
-
-  });
-
-  xit('can get the mesh description, to perform api calls with', function (done) {
-
-    doRequest('/rest/describe', null, function (e, resp, body) {
-
-      var description = JSON.parse(resp.body);
-      resp.statusCode.should.eql(200);
-
-      console.log('description:::', description);
-
-      expect(description.components.testComponent.method1).to.not.be(null);
-      expect(description.components.testComponent.method2).to.not.be(null);
-
-      done();
-
-    });
 
   });
 
