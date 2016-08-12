@@ -13,9 +13,9 @@ function Module() {
     res.end(JSON.stringify({"secure": "value", "origin":$origin}));
   };
 
-  this.method2 = function (req, res, next, $happn, $origin) {
+  this.method2 = function (req, res, next, $happn) {
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({"secure": "value", "origin":$origin}));
+    res.end(JSON.stringify({"secure": "value", "origin":"NONE"}));
   };
 
 }

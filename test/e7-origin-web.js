@@ -12,13 +12,10 @@ describe('e7-origin-web', function (done) {
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  var should = require('chai').should();
   var Mesh = require('../');
   var http = require('http');
   var test_id = require('shortid').generate();
   var expect = require('expect.js');
-
-  var defaultTimeout = (process.arch == 'arm') ? 50000 : 15000;
 
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
@@ -48,21 +45,8 @@ describe('e7-origin-web', function (done) {
         moduleName: "middlewareTest",
         web: {
           routes: {
-            "test/excluded/specific": ["excludedSpecific"],
-            "test/excluded/wildcard/blah": ["excludedWildcard"],
-          }
-        }
-      },
-      "www": { // <------------------- because of www, routes.static goes /
-        moduleName: "middlewareTest",
-        // scope: "component",//either component(mesh aware) or module - default is module
-        schema: {
-          "exclusive": false,//means we dont dynamically share anything else
-          "methods": {}
-        },
-        web: {
-          routes: {
-            "static": ["checkIndex", "static"]
+            "method1": "method1",
+            "method2": "method2"
           }
         }
       }
@@ -94,37 +78,32 @@ describe('e7-origin-web', function (done) {
     };
 
     request(options, function (error, response, body) {
-      callback(response);
+      callback(error,response, body);
     });
 
   }
 
+  it('logs in wth the admin user, we have a token - we run a method that takes in the origin', function (done) {
 
-  it('fails to access a file, missing the token', function (done) {
-
-    doRequest('/index.html', null, function (response) {
-
-      expect(response.statusCode).to.equal(403);
-      done();
-
-    });
-
-  });
-
-  var adminClient = new Mesh.MeshClient({secure: true, port: 15000});
-
-  it('logs in wth the admin user, we have a token - we can access the file', function (done) {
+    var adminClient = new Mesh.MeshClient({secure: true, port: 15000});
 
     var credentials = {
       username: '_ADMIN', // pending
       password: test_id
-    }
+    };
 
     adminClient.login(credentials).then(function () {
 
-      doRequest('/index.html', adminClient.token, function (response) {
+      doRequest('/webmethodtest/method1', adminClient.token, function (error,response, body) {
 
         expect(response.statusCode).to.equal(200);
+
+        var bodyParsed = JSON.parse(body);
+
+        expect(bodyParsed.origin.user.username).to.equal('_ADMIN');
+
+        adminClient.disconnect({reconnect:false});
+
         done();
 
       });
@@ -133,117 +112,87 @@ describe('e7-origin-web', function (done) {
 
   });
 
-  it('it tests the specific exclusion', function (done) {
+  it('logs in wth the admin user, we have a token - we run a method that does not take in the origin', function (done) {
 
-    doRequest('/webmethodtest/test/excluded/specific', null, function (response) {
-
-      expect(response.statusCode).to.equal(200);
-      done();
-
-    });
-
-  });
-
-  it('it tests the wildcard exclusion', function (done) {
-
-    doRequest('/webmethodtest/test/excluded/wildcard/blah', null, function (response) {
-
-      expect(response.statusCode).to.equal(200);
-      done();
-
-    });
-
-  });
-
-  it('creates a test user, fails to log in, add group with web permission and log in ok', function (done) {
-
-    var testGroup = {
-      name: 'TESTUSER_' + test_id,
-
-      custom_data: {
-        customString: 'custom1',
-        customNumber: 0
-      },
-
-      permissions: {
-        web: {}
-      }
-    }
-
-    var testGroupSaved;
-    var testUserSaved;
-    var testUserClient;
+    var adminClient = new Mesh.MeshClient({secure: true, port: 15000});
 
     var credentials = {
       username: '_ADMIN', // pending
       password: test_id
-    }
+    };
 
     adminClient.login(credentials).then(function () {
 
-      adminClient.exchange.security.addGroup(testGroup, function (e, result) {
+      doRequest('/webmethodtest/method2', adminClient.token, function (error,response, body) {
 
-        if (e) return done(e);
+        expect(response.statusCode).to.equal(200);
 
-        testGroupSaved = result;
+        var bodyParsed = JSON.parse(body);
 
-        var testUser = {
-          username: 'TEST_USER' + test_id,
-          password: 'TEST PWD',
-          custom_data: {
-            something: 'useful'
-          }
-        }
+        expect(bodyParsed.origin).to.equal('NONE');
 
-        adminClient.exchange.security.addUser(testUser, function (e, result) {
+        adminClient.disconnect({reconnect:false});
 
-          if (e) return done(e);
-          testUserSaved = result;
+        done();
 
-          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
-            //we'll need to fetch user groups, do that later
-            if (e) return done(e);
-
-            testUserClient = new Mesh.MeshClient({secure: true, port: 15000});
-
-            testUserClient.login(testUser).then(function () {
-
-              doRequest('/index.html', testUserClient.token, function (response) {
-
-                expect(response.statusCode).to.equal(403);
-
-                testGroupSaved.permissions.web = {
-                  '/index.html': {actions: ['get', 'put', 'post'], description: 'a test web permission'}
-                };
-
-                adminClient.exchange.security.updateGroup(testGroupSaved, function (e, updated) {
-
-                  if (e) return done(e);
-
-                  doRequest('/index.html', testUserClient.token, function (response) {
-
-                    expect(response.statusCode).to.equal(200);
-                    done();
-
-                  });
-
-                });
-
-
-              });
-
-            }).catch(function (e) {
-              done(e);
-            });
-
-          });
-
-        });
       });
 
     }).catch(done);
 
   });
+
+  it('logs in wth the admin user, we use a bad token', function (done) {
+
+    var adminClient = new Mesh.MeshClient({secure: true, port: 15000});
+
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: test_id
+    };
+
+    adminClient.login(credentials).then(function () {
+
+      doRequest('/webmethodtest/method2', 'DODGETOKEN', function (error,response, body) {
+
+        expect(body).to.be('invalid token format or null token');
+        adminClient.disconnect({reconnect:false});
+        done();
+
+      });
+
+    }).catch(done);
+
+  });
+
+  it('logs in wth the admin user, we have a token - we run a method that takes in the origin again', function (done) {
+
+    var adminClient = new Mesh.MeshClient({secure: true, port: 15000});
+
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: test_id
+    };
+
+    adminClient.login(credentials).then(function () {
+
+      doRequest('/webmethodtest/method1', adminClient.token, function (error,response, body) {
+
+        expect(response.statusCode).to.equal(200);
+
+        var bodyParsed = JSON.parse(body);
+
+        expect(bodyParsed.origin.user.username).to.equal('_ADMIN');
+
+        adminClient.disconnect({reconnect:false});
+
+        done();
+
+      });
+
+    }).catch(done);
+
+  });
+
 
   require('benchmarket').stop();
 
