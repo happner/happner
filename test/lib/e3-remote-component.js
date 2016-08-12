@@ -6,6 +6,9 @@ function RemoteComponent() {
 
   this.remoteFunction = function ($happn, one, two, three, callback) {
     $happn.emit('whoops', 'whoa');
+
+    console.log('IN REMOTE FUNC:::');
+
     callback(undefined, one + ' ' + two + ' ' + three + ', wheeeeeeeeeeeeheeee!');
   };
 

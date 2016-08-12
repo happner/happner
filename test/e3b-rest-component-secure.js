@@ -63,7 +63,8 @@ SeeAbove.prototype.$happner = {
 if (global.TESTING_E9) return; // When 'requiring' the module above,
 
 /**
- * Created by Johan on 10/14/2015.
+ * Simon Bishop
+ * @type {expect}
  */
 
 // Uses unit test 2 modules
@@ -259,7 +260,7 @@ describe('e3-rest-component', function () {
       done(new Error(response.error));
     };
 
-    restModule.__parseBody(request, mockResponse, mock$Happn, mock$Origin, function(body){
+    restModule.__parseBody(request, mockResponse, mock$Happn, function(body){
 
       expect(body).to.not.be(null);
       expect(body).to.not.be(undefined);
@@ -272,47 +273,36 @@ describe('e3-rest-component', function () {
 
   });
 
-  xit('tests the rest components describe method', function(done){
-
-  });
-
   it('tests the rest components describe method over the api', function(done){
 
     var restClient = require('restler');
 
     restClient.get('http://localhost:10000/rest/describe').on('complete', function(result){
 
-      console.log('desc result:::', result);
-
       expect(result.data.components.testComponent.method1).to.not.be(null);
       expect(result.data.components.testComponent.method2).to.not.be(null);
+      expect(result.data.endpoints.remoteMeshE3.components.remoteComponent.remoteFunction).to.not.be(null);
 
       done();
     });
 
   });
 
-  xit('tests the rest components handleRequest method', function(done){
+  it('tests the rest components handleRequest method', function(done){
 
-  });
+    var restClient = require('restler');
 
-  xit('can call a method on the mesh, via the rest API', function (done) {
-
-    var requestData = {
+    var operation = {
       uri:'testComponent/method1',
-      parameters:[
-        {number:1}
-      ]
+      parameters:{
+        'opts':{'number':1}
+      }
     };
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
 
-    rest.post('http://localhost:10000/rest/api', requestData).on('complete', function(data, response) {
+      expect(result.data.number).to.be(2);
 
-      expect(response.statusCode).to.be(200);
-      var returnedOptions = JSON.parse(data);
-
-      expect(returnedOptions.number).to.be(2);
       done();
-
     });
 
   });
