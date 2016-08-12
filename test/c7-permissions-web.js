@@ -86,7 +86,7 @@ describe('c7-permissions-web', function (done) {
 
   after(function (done) {
     mesh.stop({reconnect: false}, done);
-  })
+  });
 
   var http = require('http');
 
