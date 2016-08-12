@@ -75,7 +75,7 @@ var libFolder = __dirname + sep + 'lib' + sep;
 //var REMOTE_MESH = 'e2-remote-mesh';
 var REMOTE_MESH = 'e3-remote-mesh';
 
-describe('e3-rest-component', function () {
+describe('e3-rest-component-secure', function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
@@ -129,16 +129,14 @@ describe('e3-rest-component', function () {
           'testComponent': {}
         },
         endpoints:{
-          'remoteMeshE3': {  // remote mesh node
+          'remoteMesh': {  // remote mesh node
             reconnect:{
               max:2000, //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
               retries:100
             },
             config: {
               port: 10001,
-              host: '127.0.0.1',
-              username: '_ADMIN',
-              password: 'guessme',
+              host: 'localhost'
             }
           }
         }
@@ -146,9 +144,14 @@ describe('e3-rest-component', function () {
 
         delete global.TESTING_E9; //.............
         mesh = instance;
-        if (err) return done(err);
-        done();
 
+        if (err) return done(err);
+        console.log('calling remote:::');
+        mesh.exchange.remoteMesh.remoteComponent.remoteFunction('one','two','three', function(err, result){
+          if (err) return done(err);
+          console.log('tested remote:::', result);
+          done();
+        });
       });
 
     });
@@ -167,7 +170,20 @@ describe('e3-rest-component', function () {
 
   var mock$Happn = {
     _mesh:{
-      utilities:happnUtils
+      utilities:happnUtils,
+      config:{
+        datalayer:{
+          secure:false
+        }
+      }
+    },
+    exchange:{
+      testComponent:{
+        method1:function(opts, callback){
+          opts.number++;
+          callback(null, opts);
+        }
+      }
     }
   };
 
@@ -281,7 +297,7 @@ describe('e3-rest-component', function () {
 
       expect(result.data.components.testComponent.method1).to.not.be(null);
       expect(result.data.components.testComponent.method2).to.not.be(null);
-      expect(result.data.endpoints.remoteMeshE3.components.remoteComponent.remoteFunction).to.not.be(null);
+      expect(result.data.endpoints.remoteMesh.components.remoteComponent.remoteFunction).to.not.be(null);
 
       done();
     });
@@ -289,6 +305,58 @@ describe('e3-rest-component', function () {
   });
 
   it('tests the rest components handleRequest method', function(done){
+
+    var RestModule = require('../lib/modules/rest/index.js');
+    var restModule = new RestModule();
+
+    restModule.__exchangeDescription = {
+      components:{
+        testComponent:{
+          methods:{
+            method1:{
+              parameters:[
+                {name:'opts'},
+                {name:'callback'}
+              ]
+            }
+          }
+        }
+      }
+    };
+
+    var MockRequest = require('./lib/helper_mock_req');
+    var request = new MockRequest({
+      method: 'POST',
+      url: '/rest/api',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    var operation = {
+      uri:'testComponent/method1',
+      parameters:{
+        'opts':{'number':1}
+      }
+    };
+
+    request.write(operation);
+
+    request.end();
+
+    mockResponse.end = function(responseString){
+
+      var response = JSON.parse(responseString);
+      expect(response.data.number).to.be(2);
+      done();
+
+    };
+
+    restModule.handleRequest(request, mockResponse, mock$Happn, mock$Origin);
+
+  });
+
+  it('tests posting an operation to a local method', function(done){
 
     var restClient = require('restler');
 
@@ -301,6 +369,28 @@ describe('e3-rest-component', function () {
     restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
 
       expect(result.data.number).to.be(2);
+
+      done();
+    });
+
+  });
+
+  it('tests posting an operation to a remote method', function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      uri:'/remoteMesh/remoteComponent/remoteFunction',
+      parameters:{
+        'one':'one',
+        'two':'two',
+        'three':'three'
+      }
+    };
+
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+
+      expect(result.data).to.be('one two three, wheeeeeeeeeeeeheeee!');
 
       done();
     });
