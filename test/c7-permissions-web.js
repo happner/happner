@@ -123,7 +123,7 @@ describe('c7-permissions-web', function (done) {
     var credentials = {
       username: '_ADMIN', // pending
       password: test_id
-    }
+    };
 
     adminClient.login(credentials).then(function () {
 

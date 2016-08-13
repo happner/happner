@@ -60,7 +60,7 @@ SeeAbove.prototype.$happner = {
 };
 
 
-if (global.TESTING_E9) return; // When 'requiring' the module above,
+if (global.TESTING_E3B) return; // When 'requiring' the module above,
 
 /**
  * Simon Bishop
@@ -73,7 +73,7 @@ var Mesh = require('../');
 var libFolder = __dirname + sep + 'lib' + sep;
 
 //var REMOTE_MESH = 'e2-remote-mesh';
-var REMOTE_MESH = 'e3-remote-mesh';
+var REMOTE_MESH = 'e3-remote-mesh-secure';
 
 describe('e3-rest-component-secure', function () {
 
@@ -109,14 +109,19 @@ describe('e3-rest-component-secure', function () {
 
   before(function (done) {
 
-    global.TESTING_E9 = true; //.............
+    global.TESTING_E3B = true; //.............
 
     startRemoteMesh(function(e){
 
       if (e) return done(e);
 
       Mesh.create({
-        port: 10000,
+        name:'e3b-test',
+        datalayer:{
+          secure:true,
+          adminPassword: 'happn',
+          port: 10000
+        },
         util: {
           // logger: {}
         },
@@ -130,26 +135,24 @@ describe('e3-rest-component-secure', function () {
         },
         endpoints:{
           'remoteMesh': {  // remote mesh node
-            reconnect:{
-              max:2000, //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
-              retries:100
-            },
             config: {
+              secure:true,
               port: 10001,
-              host: 'localhost'
+              host: 'localhost',
+              username:'_ADMIN',
+              password:'happn'
             }
           }
         }
       }, function (err, instance) {
 
-        delete global.TESTING_E9; //.............
+        delete global.TESTING_E3B; //.............
         mesh = instance;
 
         if (err) return done(err);
-        console.log('calling remote:::');
+
         mesh.exchange.remoteMesh.remoteComponent.remoteFunction('one','two','three', function(err, result){
           if (err) return done(err);
-          console.log('tested remote:::', result);
           done();
         });
       });
@@ -169,11 +172,24 @@ describe('e3-rest-component-secure', function () {
   var happnUtils = require('../lib/system/utilities');
 
   var mock$Happn = {
+    datalayer:{
+
+    },
     _mesh:{
       utilities:happnUtils,
       config:{
         datalayer:{
-          secure:false
+          secure:true,
+          port: 10000
+        }
+      },
+      description:{
+        name:'e3b-test'
+      },
+      endpoints:{},
+      datalayer:{
+        server:{
+          services:{}
         }
       }
     },
@@ -188,7 +204,7 @@ describe('e3-rest-component-secure', function () {
   };
 
   var mock$Origin = {
-
+    test:"data"
   };
 
   var mockResponse = {
@@ -289,40 +305,161 @@ describe('e3-rest-component-secure', function () {
 
   });
 
+  var mockLogin = function(restModule, done){
+
+    restModule.initialize(mock$Happn, function(e){
+
+      if (e) return done(e);
+
+      var MockRequest = require('./lib/helper_mock_req');
+      var request = new MockRequest({
+        method: 'POST',
+        url: '/rest/login',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      request.write({
+        username:'_ADMIN',
+        password:'happn'
+      });
+
+      request.end();
+
+      mockResponse.end = function(responseString){
+
+        var response = JSON.parse(responseString);
+
+        if (response.error){
+          console.log('RESPONSE FAILED:::', JSON.stringify(response));
+          done(new Error(response.error.message));
+        }
+
+        expect(response.data.token).to.not.be(null);
+        done();
+      };
+
+      restModule.login(mock$Happn, request, mockResponse);
+
+    });
+  };
+
+  it('tests the rest components login method', function(done){
+
+    var RestModule = require('../lib/modules/rest/index.js');
+    var restModule = new RestModule();
+
+    mockLogin(restModule, done);
+
+  });
+
+  var login = function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      username:'_ADMIN',
+      password:'happn'
+    };
+
+    restClient.postJson('http://localhost:10000/rest/login', operation).on('complete', function(result){
+      if (result.error) return done(new Error(result.error.message));
+      done(null, result);
+    });
+
+  };
+
+  it('tests the rest components login method over the wire', function(done){
+
+    login(function(e, response){
+      if (e) return done(e);
+      expect(response.data.token).to.not.be(null);
+      done();
+    });
+
+  });
+
+  it('tests the rest components authorize method, successful', function(done){
+
+    var RestModule = require('../lib/modules/rest/index.js');
+    var restModule = new RestModule();
+
+    //$happn._mesh.datalayer.services.security
+
+    mock$Happn._mesh.datalayer.server.services.security = {
+      authorize:function(origin, accessPoint, action, callback){
+
+        try{
+
+          expect(origin.test).to.be("data");
+          expect(accessPoint).to.be("/_exchange/test/method");
+          expect(action).to.be("set");
+
+          callback();
+        }catch(e){
+          callback(e);
+        }
+      }
+    };
+
+    mockLogin(restModule, function(e){
+
+      if (e) return done(e);
+
+      //req, res, $happn, $origin, uri, successful
+
+      var MockRequest = require('./lib/helper_mock_req');
+      var request = new MockRequest({
+        method: 'POST',
+        url: '/rest/api',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      request.write({
+        uri:'/testComponent/methodName1',
+        parameters:{
+          'opts':{
+            number:1
+          }
+        }
+      });
+
+      mockResponse.end = function(responseString){
+        done(new Error('this was not meant to happn: ' + responseString));
+      };
+
+      restModule.__authorize(request, mockResponse, mock$Happn, mock$Origin, 'test/method', done);
+
+    });
+  });
+
   it('tests the rest components describe method over the api', function(done){
 
     var restClient = require('restler');
 
-    restClient.get('http://localhost:10000/rest/describe').on('complete', function(result){
+    login(function(e, result){
 
-      expect(result.data.components.testComponent.method1).to.not.be(null);
-      expect(result.data.components.testComponent.method2).to.not.be(null);
-      expect(result.data.endpoints.remoteMesh.components.remoteComponent.remoteFunction).to.not.be(null);
+      if (e) return done(e);
 
-      done();
+      restClient.get('http://localhost:10000/rest/describe?happn_token=' + result.data.token).on('complete', function(result){
+
+        expect(result.data.components.testComponent.method1).to.not.be(null);
+        expect(result.data.components.testComponent.method2).to.not.be(null);
+        expect(result.data.endpoints.remoteMesh.components.remoteComponent.remoteFunction).to.not.be(null);
+
+        done();
+      });
+
     });
-
   });
 
   it('tests the rest components handleRequest method', function(done){
 
     var RestModule = require('../lib/modules/rest/index.js');
     var restModule = new RestModule();
-
-    restModule.__exchangeDescription = {
-      components:{
-        testComponent:{
-          methods:{
-            method1:{
-              parameters:[
-                {name:'opts'},
-                {name:'callback'}
-              ]
-            }
-          }
-        }
-      }
-    };
 
     var MockRequest = require('./lib/helper_mock_req');
     var request = new MockRequest({
@@ -344,57 +481,93 @@ describe('e3-rest-component-secure', function () {
 
     request.end();
 
-    mockResponse.end = function(responseString){
-
-      var response = JSON.parse(responseString);
-      expect(response.data.number).to.be(2);
-      done();
-
+    mock$Happn._mesh.datalayer.server.services.security = {
+      authorize:function(origin, accessPoint, action, callback){
+        callback();
+      }
     };
 
-    restModule.handleRequest(request, mockResponse, mock$Happn, mock$Origin);
+    mockLogin(restModule, function(e){
+      if (e) return done(e);
+
+      mockResponse.end = function(responseString){
+
+        var response = JSON.parse(responseString);
+        expect(response.data.number).to.be(2);
+        done();
+
+      };
+
+      restModule.__exchangeDescription = {
+        components:{
+          testComponent:{
+            methods:{
+              method1:{
+                parameters:[
+                  {name:'opts'},
+                  {name:'callback'}
+                ]
+              }
+            }
+          }
+        }
+      };
+
+      restModule.handleRequest(request, mockResponse, mock$Happn, mock$Origin);
+    });
 
   });
 
   it('tests posting an operation to a local method', function(done){
 
-    var restClient = require('restler');
+    //TODO login function gives us a token, token is used in body of rest request
 
-    var operation = {
-      uri:'testComponent/method1',
-      parameters:{
-        'opts':{'number':1}
-      }
-    };
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+    login(function(e, result){
 
-      expect(result.data.number).to.be(2);
+      if (e) return done(e);
 
-      done();
+      var restClient = require('restler');
+
+      var operation = {
+        uri:'testComponent/method1',
+        parameters:{
+          'opts':{'number':1}
+        }
+      };
+
+      restClient.postJson('http://localhost:10000/rest/api?happn_token=' + result.data.token, operation).on('complete', function(result){
+        expect(result.data.number).to.be(2);
+        done();
+      });
     });
-
   });
 
   it('tests posting an operation to a remote method', function(done){
 
-    var restClient = require('restler');
+    //TODO login function gives us a token, token is used in body of rest request
 
-    var operation = {
-      uri:'/remoteMesh/remoteComponent/remoteFunction',
-      parameters:{
-        'one':'one',
-        'two':'two',
-        'three':'three'
-      }
-    };
+    login(function(e, result){
 
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+      if (e) return done(e);
 
-      expect(result.data).to.be('one two three, wheeeeeeeeeeeeheeee!');
+      var restClient = require('restler');
 
-      done();
+      var operation = {
+        uri:'/remoteMesh/remoteComponent/remoteFunction',
+        parameters:{
+          'one':'one',
+          'two':'two',
+          'three':'three'
+        }
+      };
+
+      restClient.postJson('http://localhost:10000/rest/api?happn_token=' + result.data.token, operation).on('complete', function(result){
+
+        expect(result.data).to.be('one two three, wheeeeeeeeeeeeheeee!');
+
+        done();
+      });
     });
-
   });
 
   require('benchmarket').stop();

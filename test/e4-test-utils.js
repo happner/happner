@@ -35,8 +35,6 @@ describe('e3-rest-component', function () {
 
     var stringifiedError = utils.stringifyError(error);
 
-    console.log('stringified error:::', stringifiedError);
-
     var parsedError = JSON.parse(stringifiedError);
 
     expect(parsedError.stack).to.not.be(null);

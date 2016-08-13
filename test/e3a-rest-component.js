@@ -146,10 +146,8 @@ describe('e3-rest-component', function () {
         mesh = instance;
 
         if (err) return done(err);
-        console.log('calling remote:::');
         mesh.exchange.remoteMesh.remoteComponent.remoteFunction('one','two','three', function(err, result){
           if (err) return done(err);
-          console.log('tested remote:::', result);
           done();
         });
       });
