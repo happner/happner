@@ -293,9 +293,12 @@ describe('e3-rest-component', function () {
 
     restClient.get('http://localhost:10000/rest/describe').on('complete', function(result){
 
-      expect(result.data.components.testComponent.method1).to.not.be(null);
-      expect(result.data.components.testComponent.method2).to.not.be(null);
-      expect(result.data.endpoints.remoteMesh.components.remoteComponent.remoteFunction).to.not.be(null);
+      expect(result.data['/testComponent/method1']).to.not.be(null);
+      expect(result.data['/testComponent/method2']).to.not.be(null);
+
+      expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['one']).to.be('{{one}}');
+      expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['two']).to.be('{{two}}');
+      expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['three']).to.be('{{three}}');
 
       done();
     });
@@ -389,6 +392,127 @@ describe('e3-rest-component', function () {
     restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
 
       expect(result.data).to.be('one two three, wheeeeeeeeeeeeheeee!');
+
+      done();
+    });
+
+  });
+
+  it('tests posting an operation to a local method, no uri', function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      parameters:{
+        'opts':{'number':1}
+      }
+    };
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+
+      expect(result.error.message).to.be('no uri configured');
+
+      done();
+    });
+
+  });
+
+  it('tests posting an operation to a remote method, no uri', function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      parameters:{
+        'one':'one',
+        'two':'two',
+        'three':'three'
+      }
+    };
+
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+
+      expect(result.error.message).to.be('no uri configured');
+
+      done();
+    });
+
+  });
+
+  it('tests posting an operation to a local method, bad uri component', function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      uri:'/nonexistant/uri',
+      parameters:{
+        'opts':{'number':1}
+      }
+    };
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+
+      expect(result.error.message).to.be('component nonexistant does not exist on mesh');
+
+      done();
+    });
+
+  });
+
+  it('tests posting an operation to a remote method, bad uri component', function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      uri:'/nonexistant/uri',
+      parameters:{
+        'one':'one',
+        'two':'two',
+        'three':'three'
+      }
+    };
+
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+
+      expect(result.error.message).to.be('component nonexistant does not exist on mesh');
+
+      done();
+    });
+
+  });
+
+  it('tests posting an operation to a local method, bad uri method', function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      uri:'testComponent/nonexistant',
+      parameters:{
+        'opts':{'number':1}
+      }
+    };
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+
+      expect(result.error.message).to.be('method nonexistant does not exist on component testComponent');
+
+      done();
+    });
+
+  });
+
+  it('tests posting an operation to a remote method, bad uri method', function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      uri:'/remoteMesh/remoteComponent/nonexistant',
+      parameters:{
+        'one':'one',
+        'two':'two',
+        'three':'three'
+      }
+    };
+
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+
+      expect(result.error.message).to.be('method nonexistant does not exist on component remoteComponent');
 
       done();
     });

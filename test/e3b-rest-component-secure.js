@@ -479,9 +479,12 @@ describe('e3-rest-component-secure', function () {
 
       restClient.get('http://localhost:10000/rest/describe?happn_token=' + result.data.token).on('complete', function(result){
 
-        expect(result.data.components.testComponent.method1).to.not.be(null);
-        expect(result.data.components.testComponent.method2).to.not.be(null);
-        expect(result.data.endpoints.remoteMesh.components.remoteComponent.remoteFunction).to.not.be(null);
+        expect(result.data['/testComponent/method1']).to.not.be(null);
+        expect(result.data['/testComponent/method2']).to.not.be(null);
+
+        expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['one']).to.be('{{one}}');
+        expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['two']).to.be('{{two}}');
+        expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['three']).to.be('{{three}}');
 
         done();
       });
