@@ -100,7 +100,7 @@ describe('e7-origin-web', function (done) {
 
         var bodyParsed = JSON.parse(body);
 
-        expect(bodyParsed.origin.user.username).to.equal('_ADMIN');
+        expect(bodyParsed.origin.username).to.equal('_ADMIN');
 
         adminClient.disconnect({reconnect:false});
 
@@ -181,7 +181,7 @@ describe('e7-origin-web', function (done) {
 
         var bodyParsed = JSON.parse(body);
 
-        expect(bodyParsed.origin.user.username).to.equal('_ADMIN');
+        expect(bodyParsed.origin.username).to.equal('_ADMIN');
 
         adminClient.disconnect({reconnect:false});
 

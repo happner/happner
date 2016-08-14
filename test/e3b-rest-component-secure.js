@@ -307,6 +307,39 @@ describe('e3-rest-component-secure', function () {
 
   var mockLogin = function(restModule, done){
 
+    if (!mock$Happn._mesh.datalayer)
+      mock$Happn._mesh.datalayer = {};
+
+    if (!mock$Happn._mesh.datalayer.server)
+      mock$Happn._mesh.datalayer.server = {};
+
+    if (!mock$Happn._mesh.datalayer.server.services)
+      mock$Happn._mesh.datalayer.server.services = {};
+
+    if (!mock$Happn._mesh.datalayer.server.services.security)
+      mock$Happn._mesh.datalayer.server.services.security = {};
+
+    mock$Happn._mesh.datalayer.server.services.security.authorize = function(origin, accessPoint, action, callback){
+        try{
+
+          expect(origin.test).to.be("data");
+          expect(action).to.be("set");
+
+          callback();
+        }catch(e){
+          callback(e);
+        }
+      };
+
+    mock$Happn._mesh.datalayer.server.services.security.login = function(opts, callback){
+      try{
+        callback(null, {token:'test'});
+      }catch(e){
+        callback(e);
+      }
+    };
+
+
     restModule.initialize(mock$Happn, function(e){
 
       if (e) return done(e);
@@ -493,6 +526,7 @@ describe('e3-rest-component-secure', function () {
       mockResponse.end = function(responseString){
 
         var response = JSON.parse(responseString);
+
         expect(response.data.number).to.be(2);
         done();
 

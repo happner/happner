@@ -316,3 +316,10 @@
 
 - updated happn to version 2.10.1
 - made endpoint configuration reconnect configurable
+
+1.18.0 2016-08-14
+-----------------
+
+- updated to happn 2.11.0
+- $origin on secured web requests
+- REST component
