@@ -75,7 +75,7 @@ var libFolder = __dirname + sep + 'lib' + sep;
 //var REMOTE_MESH = 'e2-remote-mesh';
 var REMOTE_MESH = 'e3-remote-mesh-secure';
 
-describe('e3-rest-component-secure', function () {
+describe('e3b-rest-component-secure', function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
@@ -178,6 +178,7 @@ describe('e3-rest-component-secure', function () {
     _mesh:{
       utilities:happnUtils,
       config:{
+        name:'e3b-test',
         datalayer:{
           secure:true,
           port: 10000
@@ -387,7 +388,7 @@ describe('e3-rest-component-secure', function () {
 
   });
 
-  var login = function(done){
+  var login = function(done, credentials){
 
     var restClient = require('restler');
 
@@ -395,6 +396,8 @@ describe('e3-rest-component-secure', function () {
       username:'_ADMIN',
       password:'happn'
     };
+
+    if (credentials) operation = credentials;
 
     restClient.postJson('http://localhost:10000/rest/login', operation).on('complete', function(result){
       if (result.error) return done(new Error(result.error.message));
@@ -420,27 +423,27 @@ describe('e3-rest-component-secure', function () {
 
     //$happn._mesh.datalayer.services.security
 
-    mock$Happn._mesh.datalayer.server.services.security = {
-      authorize:function(origin, accessPoint, action, callback){
-
-        try{
-
-          expect(origin.test).to.be("data");
-          expect(accessPoint).to.be("/_exchange/test/method");
-          expect(action).to.be("set");
-
-          callback();
-        }catch(e){
-          callback(e);
-        }
-      }
-    };
-
     mockLogin(restModule, function(e){
 
       if (e) return done(e);
 
       //req, res, $happn, $origin, uri, successful
+
+      mock$Happn._mesh.datalayer.server.services.security = {
+        authorize:function(origin, accessPoint, action, callback){
+
+          try{
+
+            expect(origin.test).to.be("data");
+            expect(accessPoint).to.be("/_exchange/requests/e3b-test/test/method");
+            expect(action).to.be("set");
+
+            callback(null, true);
+          }catch(e){
+            callback(e);
+          }
+        }
+      };
 
       var MockRequest = require('./lib/helper_mock_req');
       var request = new MockRequest({
@@ -464,6 +467,7 @@ describe('e3-rest-component-secure', function () {
         done(new Error('this was not meant to happn: ' + responseString));
       };
 
+      restModule.__securityService = mock$Happn._mesh.datalayer.server.services.security;
       restModule.__authorize(request, mockResponse, mock$Happn, mock$Origin, 'test/method', done);
 
     });
@@ -488,7 +492,6 @@ describe('e3-rest-component-secure', function () {
 
         done();
       });
-
     });
   });
 
@@ -514,22 +517,22 @@ describe('e3-rest-component-secure', function () {
     };
 
     request.write(operation);
-
     request.end();
-
-    mock$Happn._mesh.datalayer.server.services.security = {
-      authorize:function(origin, accessPoint, action, callback){
-        callback();
-      }
-    };
 
     mockLogin(restModule, function(e){
       if (e) return done(e);
 
+      mock$Happn._mesh.datalayer.server.services.security = {
+        authorize:function(origin, accessPoint, action, callback){
+          callback(null, true);
+        }
+      };
+
+      restModule.__securityService = mock$Happn._mesh.datalayer.server.services.security;
+
       mockResponse.end = function(responseString){
 
         var response = JSON.parse(responseString);
-
         expect(response.data.number).to.be(2);
         done();
 
@@ -605,6 +608,104 @@ describe('e3-rest-component-secure', function () {
         done();
       });
     });
+  });
+
+  it('creates a test user, fails to log in, add group with web permission and log in ok', function (done) {
+
+    var adminClient = new Mesh.MeshClient({secure: true, port: 10000});
+
+    var testGroup = {
+      name: 'REST',
+      permissions: {
+        methods: {
+          '/remoteMesh/remoteComponent/remoteFunction':{authorized:true},
+          '/testComponent/method1':{authorized:true}
+        },
+        web: {
+          '/rest/describe':{actions: ['get'], description: 'rest describe permission'},
+          '/rest/api':{actions: ['post'], description: 'rest post permission'}
+        }
+      }
+    };
+
+    var testGroupSaved;
+    var testUserSaved;
+
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: 'happn'
+    };
+
+    adminClient.login(credentials).then(function () {
+
+      adminClient.exchange.security.addGroup(testGroup, function (e, result) {
+
+        if (e) return done(e);
+
+        testGroupSaved = result;
+
+        var testUser = {
+          username: 'RESTTEST',
+          password: 'REST_TEST'
+        };
+
+        adminClient.exchange.security.addUser(testUser, function (e, result) {
+
+          if (e) return done(e);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+
+            if (e) return done(e);
+
+            login(function(e, response){
+
+              if (e) return done(e);
+
+              var token = response.data.token;
+              var restClient = require('restler');
+
+              restClient.get('http://localhost:10000/rest/describe?happn_token=' + token).on('complete', function(result){
+
+                expect(result.data['/security/updateOwnUser']).to.not.be(null);
+                expect(result.data['/remoteMesh/security/updateOwnUser']).to.not.be(null);
+
+                expect(result.data['/testComponent/method1']).to.not.be(null);
+                expect(result.data['/testComponent/method2']).to.be(undefined);
+
+                expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['one']).to.be('{{one}}');
+                expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['two']).to.be('{{two}}');
+                expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['three']).to.be('{{three}}');
+
+                expect(Object.keys(result.data).length).to.be(4);
+
+                var operation = {
+                  uri:'/remoteMesh/remoteComponent/remoteFunction',
+                  parameters:{
+                    'one':'one',
+                    'two':'two',
+                    'three':'three'
+                  }
+                };
+
+                restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
+
+                  expect(result.data).to.be('one two three, wheeeeeeeeeeeeheeee!');
+
+                  done();
+                });
+
+              });
+
+            }, testUser);
+
+          });
+
+        });
+      });
+
+    }).catch(done);
+
   });
 
   require('benchmarket').stop();

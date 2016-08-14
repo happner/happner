@@ -231,10 +231,7 @@ describe('c7-permissions-web', function (done) {
                     done();
 
                   });
-
                 });
-
-
               });
 
             }).catch(function (e) {

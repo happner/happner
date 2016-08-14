@@ -75,7 +75,7 @@ var libFolder = __dirname + sep + 'lib' + sep;
 //var REMOTE_MESH = 'e2-remote-mesh';
 var REMOTE_MESH = 'e3-remote-mesh';
 
-describe('e3-rest-component', function () {
+describe('e3a-rest-component', function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
