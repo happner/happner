@@ -52,7 +52,7 @@ SeeAbove.prototype.promiseReturnAsIs = function (opts) {
 };
 
 SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts, callback) {
-  return this.promiseMethod(opts, callback);
+  this.promiseMethod(opts, callback);
 });
 
 SeeAbove.prototype.synchronousMethodHappnOrigin = function (opts, opts2, $happn, $origin) {
@@ -321,13 +321,11 @@ describe('a8 - exchange supports promises', function () {
 
     this.timeout(1500);
 
-    var promise = this.mesh.exchange.component.promiseReturnAsIs({number: 1})
+    this.mesh.exchange.component.promiseReturnAsIs({number: 1})
       .then(function (res) {
         res.should.eql({number: 2});
         done();
       });
-
-    return promise;
 
   });
 
