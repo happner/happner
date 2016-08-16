@@ -89,6 +89,9 @@ SeeAbove.prototype.$happner = {
           },
           'synchronousMethodHappnOrigin': {
             type: 'sync-promise'//NB - this is how you can wrap a synchronous method with a promise
+          },
+          'fireAndForget': {
+            type: 'sync'
           }
         }
       }
