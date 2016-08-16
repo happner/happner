@@ -30,7 +30,7 @@ SeeAbove.prototype.promiseMethod = Promise.promisify(function (opts, callback) {
 SeeAbove.prototype.promisePromiseCaller = Promise.promisify(function (opts, callback) {
 
   this.promiseMethod(opts)
-    .then(function(){
+    .then(function () {
       callback(null, opts);
     })
     .catch(callback)
@@ -40,18 +40,22 @@ SeeAbove.prototype.promisePromiseCaller = Promise.promisify(function (opts, call
 SeeAbove.prototype.promiseCaller = function (opts, callback) {
 
   this.promiseMethod(opts)
-    .then(function(){
+    .then(function () {
       callback(null, opts);
     })
     .catch(callback)
 
 };
 
-SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts,callback) {
+SeeAbove.prototype.promiseReturnAsIs = function (opts) {
+  return this.promiseMethod(opts);
+};
+
+SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts, callback) {
   return this.promiseMethod(opts, callback);
 });
 
-SeeAbove.prototype.synchronousMethodHappnOrigin = function(opts, opts2, $happn, $origin){
+SeeAbove.prototype.synchronousMethodHappnOrigin = function (opts, opts2, $happn, $origin) {
 
   if (!$happn) throw new Error('$happn is meant to exist');
   if (!$origin) throw new Error('$origin is meant to exist');
@@ -59,7 +63,7 @@ SeeAbove.prototype.synchronousMethodHappnOrigin = function(opts, opts2, $happn, 
   return opts + opts2;
 };
 
-SeeAbove.prototype.synchronousMethod = function(opts, opts2){
+SeeAbove.prototype.synchronousMethod = function (opts, opts2) {
   return opts + opts2;
 };
 
@@ -310,6 +314,20 @@ describe('a8 - exchange supports promises', function () {
         res.should.eql({number: 2});
         done();
       })
+
+  });
+
+  it('supports returning a promise without wrapping it', function (done) {
+
+    this.timeout(1500);
+
+    var promise = this.mesh.exchange.component.promiseReturnAsIs({number: 1})
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      });
+
+    return promise;
 
   });
 
