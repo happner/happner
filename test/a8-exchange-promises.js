@@ -60,9 +60,14 @@ SeeAbove.prototype.promiseCaller = function (opts, callback) {
 
 };
 
-SeeAbove.prototype.promiseReturner = function (opts) {
+SeeAbove.prototype.promiseReturnerNoCallback = function (opts) {
   return this.promiseMethod(opts);
 };
+
+SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts,callback) {
+  return this.promiseMethod(opts, callback);
+});
+
 
 SeeAbove.prototype.synchronousMethodHappnOrigin = function (opts, opts2, $happn, $origin) {
 
@@ -332,11 +337,23 @@ describe('a8 - exchange supports promises', function () {
 
   });
 
+  it('supports returning a promise from a method on the exchange with no callback', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promiseReturnerNoCallback({number: 1})
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
+
+  });
+
   it('supports returning a promise from a method on the exchange that throws an error', function (done) {
 
     this.timeout(1500);
 
-    this.mesh.exchange.component.promiseReturner({number: 1, errorAs: 'throw'})
+    this.mesh.exchange.component.promiseReturnerNoCallback({number: 1, errorAs: 'throw'})
       .then(function () {
         done(new Error('should not get here'));
       })
@@ -350,7 +367,7 @@ describe('a8 - exchange supports promises', function () {
 
     this.timeout(1500);
 
-    this.mesh.exchange.component.promiseReturner({number: 1, errorAs: 'callback'})
+    this.mesh.exchange.component.promiseReturnerNoCallback({number: 1, errorAs: 'callback'})
       .then(function () {
         done(new Error('should not get here'));
       })
