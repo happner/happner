@@ -51,13 +51,9 @@ SeeAbove.prototype.promiseCaller = function (opts, callback) {
 
 };
 
-SeeAbove.prototype.promiseReturnAsIs = function (opts) {
+SeeAbove.prototype.promiseReturner = function (opts) {
   return this.promiseMethod(opts);
 };
-
-SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts, callback) {
-  this.promiseMethod(opts, callback);
-});
 
 SeeAbove.prototype.synchronousMethodHappnOrigin = function (opts, opts2, $happn, $origin) {
 
@@ -318,28 +314,10 @@ describe('a8 - exchange supports promises', function () {
     this.timeout(1500);
 
     this.mesh.exchange.component.promiseReturner({number: 1})
-
       .then(function (res) {
         res.should.eql({number: 2});
         done();
       })
-
-  });
-
-  it('supports returning a promise without wrapping it', function (done) {
-
-    this.timeout(1500);
-
-    var promise = this.mesh.exchange.component.promiseReturnAsIs({number: 1})
-
-    promise
-      .then(function (res) {
-        res.should.eql({number: 2});
-        done();
-      })
-      .catch(function(err){
-        done(err);
-      });
 
   });
 
