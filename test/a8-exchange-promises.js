@@ -16,6 +16,10 @@ SeeAbove.prototype.methodName1 = function (opts, callback) {
   callback(null, opts);
 };
 
+SeeAbove.prototype.fireAndForget = function(opts) {
+  //do nothing
+};
+
 SeeAbove.prototype.promiseMethod = Promise.promisify(function (opts, callback) {
 
   if (opts.errorAs == 'callback') return callback(new Error('THIS IS JUST A TEST'));
@@ -110,8 +114,13 @@ describe('a8 - exchange supports promises', function () {
     mesh = this.mesh = new Mesh();
 
     mesh.initialize({
+      dataLayer:{
+        setOptions:{
+          timeout:1000
+        }
+      },
       util: {
-        // logger: {}
+        logLevel: 'trace'
       },
       modules: {
         'component': {
@@ -321,11 +330,33 @@ describe('a8 - exchange supports promises', function () {
 
     this.timeout(1500);
 
-    this.mesh.exchange.component.promiseReturnAsIs({number: 1})
+    var promise = this.mesh.exchange.component.promiseReturnAsIs({number: 1})
+
+    promise
       .then(function (res) {
         res.should.eql({number: 2});
         done();
+      })
+      .catch(function(err){
+        done(err);
       });
+
+  });
+
+  it('does not time out a sync function', function (done) {
+
+    this.timeout(2500);
+
+    this.mesh.exchange.component.fireAndForget({number: 1})
+      .then(function (res) {
+        // should never get here
+        throw('Should not get a result');
+      })
+      .catch(function(err){
+        done(err);
+      });
+
+    setTimeout(done,2000);
 
   });
 
