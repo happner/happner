@@ -321,3 +321,8 @@
 -----------------
 
 - prevent crash due to unresolved issue #172
+
+1.18.0 2016-08-16
+-----------------
+
+- Allow module function called over the exchange to return a promise.
