@@ -16,10 +16,23 @@ SeeAbove.prototype.methodName1 = function (opts, callback) {
   callback(null, opts);
 };
 
+SeeAbove.prototype.callCallbackTwice = function (opts, callback) {
+  opts.number++;
+  callback(null, opts);
+
+  setTimeout(function () {
+    callback(null, {number: opts.number + 1});
+  }, 100);
+};
+
+SeeAbove.prototype.fireAndForget = function (opts) {
+  //do nothing
+};
+
 SeeAbove.prototype.promiseMethod = Promise.promisify(function (opts, callback) {
 
-  if (opts.errorAs == 'callback') return callback(new Error('THIS IS JUST A TEST'));
-  if (opts.errorAs == 'throw') throw new Error('THIS IS JUST A TEST');
+  if (opts.errorAs == 'callback') return callback(new Error('THIS IS JUST A TEST WITH CALLBACK ERROR'));
+  if (opts.errorAs == 'throw') throw new Error('THIS IS JUST A TEST THAT THROWS AN ERROR');
 
 
   opts.number++;
@@ -30,7 +43,7 @@ SeeAbove.prototype.promiseMethod = Promise.promisify(function (opts, callback) {
 SeeAbove.prototype.promisePromiseCaller = Promise.promisify(function (opts, callback) {
 
   this.promiseMethod(opts)
-    .then(function(){
+    .then(function () {
       callback(null, opts);
     })
     .catch(callback)
@@ -40,18 +53,23 @@ SeeAbove.prototype.promisePromiseCaller = Promise.promisify(function (opts, call
 SeeAbove.prototype.promiseCaller = function (opts, callback) {
 
   this.promiseMethod(opts)
-    .then(function(){
+    .then(function () {
       callback(null, opts);
     })
     .catch(callback)
 
 };
 
+SeeAbove.prototype.promiseReturnerNoCallback = function (opts) {
+  return this.promiseMethod(opts);
+};
+
 SeeAbove.prototype.promiseReturner = Promise.promisify(function (opts,callback) {
   return this.promiseMethod(opts, callback);
 });
 
-SeeAbove.prototype.synchronousMethodHappnOrigin = function(opts, opts2, $happn, $origin){
+
+SeeAbove.prototype.synchronousMethodHappnOrigin = function (opts, opts2, $happn, $origin) {
 
   if (!$happn) throw new Error('$happn is meant to exist');
   if (!$origin) throw new Error('$origin is meant to exist');
@@ -59,7 +77,7 @@ SeeAbove.prototype.synchronousMethodHappnOrigin = function(opts, opts2, $happn, 
   return opts + opts2;
 };
 
-SeeAbove.prototype.synchronousMethod = function(opts, opts2){
+SeeAbove.prototype.synchronousMethod = function (opts, opts2) {
   return opts + opts2;
 };
 
@@ -76,6 +94,9 @@ SeeAbove.prototype.$happner = {
           },
           'synchronousMethodHappnOrigin': {
             type: 'sync-promise'//NB - this is how you can wrap a synchronous method with a promise
+          },
+          'fireAndForget': {
+            type: 'sync'
           }
         }
       }
@@ -106,8 +127,13 @@ describe('a8 - exchange supports promises', function () {
     mesh = this.mesh = new Mesh();
 
     mesh.initialize({
+      dataLayer: {
+        setOptions: {
+          timeout: 1000
+        }
+      },
       util: {
-        // logger: {}
+        //logLevel: 'trace'
       },
       modules: {
         'component': {
@@ -173,8 +199,7 @@ describe('a8 - exchange supports promises', function () {
     this.mesh.exchange.component.methodName1({errorAs: 'throw'})
 
       .then(function (res) {
-        ;
-        console.log(res)
+        console.log(res);
         done(new Error('did not catch'));
       })
 
@@ -305,12 +330,78 @@ describe('a8 - exchange supports promises', function () {
     this.timeout(1500);
 
     this.mesh.exchange.component.promiseReturner({number: 1})
-
       .then(function (res) {
         res.should.eql({number: 2});
         done();
       })
 
+  });
+
+  it('supports returning a promise from a method on the exchange with no callback', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promiseReturnerNoCallback({number: 1})
+      .then(function (res) {
+        res.should.eql({number: 2});
+        done();
+      })
+
+  });
+
+  it('supports returning a promise from a method on the exchange that throws an error', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promiseReturnerNoCallback({number: 1, errorAs: 'throw'})
+      .then(function () {
+        done(new Error('should not get here'));
+      })
+      .catch(function (err) {
+        err.message.should.eql('THIS IS JUST A TEST THAT THROWS AN ERROR');
+        done();
+      });
+  });
+
+  it('supports returning a promise from a method on the exchange that callbacks an error', function (done) {
+
+    this.timeout(1500);
+
+    this.mesh.exchange.component.promiseReturnerNoCallback({number: 1, errorAs: 'callback'})
+      .then(function () {
+        done(new Error('should not get here'));
+      })
+      .catch(function (err) {
+        err.message.should.eql('THIS IS JUST A TEST WITH CALLBACK ERROR');
+        done();
+      });
+  });
+
+  it('does not time out a sync function', function (done) {
+
+    this.timeout(2500);
+
+    this.mesh.exchange.component.fireAndForget({number: 1})
+      .then(function (res) {
+        // should never get here
+        done(new Error('Should not get a result'));
+      })
+      .catch(function (err) {
+        done(err);
+      });
+
+    setTimeout(done, 2000);
+
+  });
+
+  it('does not fire a callback twice', function (done) {
+
+    this.timeout(2000);
+
+    this.mesh.exchange.component.callCallbackTwice({number: 1}, function (err, result) {
+      result.number.should.eql(2);
+      setTimeout(done, 500);
+    });
   });
 
 

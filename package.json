@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "1.17.1",
+  "version": "1.18.0",
   "description": "distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
