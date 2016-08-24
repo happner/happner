@@ -326,3 +326,8 @@
 -----------------
 
 - Allow module function called over the exchange to return a promise.
+
+1.19.0 2016-08-24
+-----------------
+
+- happn update 2.12.0, small changes to make mongo plugin backwards compatible
