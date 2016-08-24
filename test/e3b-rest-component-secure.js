@@ -486,10 +486,6 @@ describe('e3b-rest-component-secure', function () {
         expect(result.data['/testComponent/method1']).to.not.be(null);
         expect(result.data['/testComponent/method2']).to.not.be(null);
 
-        expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['one']).to.be('{{one}}');
-        expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['two']).to.be('{{two}}');
-        expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['three']).to.be('{{three}}');
-
         done();
       });
     });
@@ -582,7 +578,34 @@ describe('e3b-rest-component-secure', function () {
     });
   });
 
-  it('tests posting an operation to a remote method', function(done){
+  it('tests posting an operation to the security component fails', function(done){
+
+    //TODO login function gives us a token, token is used in body of rest request
+
+    login(function(e, result){
+
+      if (e) return done(e);
+
+      var restClient = require('restler');
+
+      var operation = {
+        uri:'/security/updateOwnUser',
+        parameters:{
+          'username':'_ADMIN',
+          'password':'blah'
+        }
+      };
+
+      restClient.postJson('http://localhost:10000/rest/api?happn_token=' + result.data.token, operation).on('complete', function(result){
+        expect(result.error.number).to.not.be(null);
+        expect(result.error.message).to.be('attempt to access security component over rest');
+        done();
+      });
+    });
+  });
+
+
+  it('tests posting an operation to a remote method fails', function(done){
 
     //TODO login function gives us a token, token is used in body of rest request
 
@@ -603,7 +626,8 @@ describe('e3b-rest-component-secure', function () {
 
       restClient.postJson('http://localhost:10000/rest/api?happn_token=' + result.data.token, operation).on('complete', function(result){
 
-        expect(result.data).to.be('one two three, wheeeeeeeeeeeeheeee!');
+        expect(result.error).to.not.be(null);
+        expect(result.error.message).to.be('attempt to access remote mesh: remoteMesh');
 
         done();
       });
@@ -618,7 +642,6 @@ describe('e3b-rest-component-secure', function () {
       name: 'REST',
       permissions: {
         methods: {
-          '/remoteMesh/remoteComponent/remoteFunction':{authorized:true},
           '/testComponent/method1':{authorized:true}
         },
         web: {
@@ -667,30 +690,24 @@ describe('e3b-rest-component-secure', function () {
 
               restClient.get('http://localhost:10000/rest/describe?happn_token=' + token).on('complete', function(result){
 
-                expect(result.data['/security/updateOwnUser']).to.not.be(null);
-                expect(result.data['/remoteMesh/security/updateOwnUser']).to.not.be(null);
+                expect(result.data['/security/updateOwnUser']).to.be(undefined);
+                expect(result.data['/remoteMesh/security/updateOwnUser']).to.be(undefined);
 
                 expect(result.data['/testComponent/method1']).to.not.be(null);
                 expect(result.data['/testComponent/method2']).to.be(undefined);
 
-                expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['one']).to.be('{{one}}');
-                expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['two']).to.be('{{two}}');
-                expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['three']).to.be('{{three}}');
-
-                expect(Object.keys(result.data).length).to.be(4);
+                expect(Object.keys(result.data).length).to.be(1);
 
                 var operation = {
-                  uri:'/remoteMesh/remoteComponent/remoteFunction',
+                  uri:'/testComponent/method1',
                   parameters:{
-                    'one':'one',
-                    'two':'two',
-                    'three':'three'
+                    'opts':{number:1}
                   }
                 };
 
                 restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
 
-                  expect(result.data).to.be('one two three, wheeeeeeeeeeeeheeee!');
+                  expect(result.data.number).to.be(2);
 
                   done();
                 });

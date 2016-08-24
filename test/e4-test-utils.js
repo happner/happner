@@ -44,4 +44,33 @@ describe('e3-test-utils', function () {
 
   });
 
+  it('tests removing characters from a string', function(done){
+
+    var str = "tthis is a test stringh";
+
+    var utils = require('../lib/system/utilities');
+
+    var removedLeading = utils.removeLeading('t', str);
+    var removedLast = utils.removeLast('h', removedLeading);
+
+    var removedLeadingNull = utils.removeLeading('t', null);
+    var removedLastNull = utils.removeLast('t', null);
+
+    var removedLeadingUndefined = utils.removeLeading('t', undefined);
+    var removedLastUndefined = utils.removeLast('t', undefined);
+
+    expect(removedLeading).to.be('this is a test stringh');
+    expect(removedLast).to.be('this is a test string');
+    expect(str).to.be('tthis is a test stringh');
+
+    expect(removedLeadingNull).to.be(null);
+    expect(removedLastNull).to.be(null);
+
+    expect(removedLeadingUndefined).to.be(undefined);
+    expect(removedLastUndefined).to.be(undefined);
+
+    done();
+
+  });
+
 });

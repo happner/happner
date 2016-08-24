@@ -296,9 +296,9 @@ describe('e3a-rest-component', function () {
       expect(result.data['/testComponent/method1']).to.not.be(null);
       expect(result.data['/testComponent/method2']).to.not.be(null);
 
-      expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['one']).to.be('{{one}}');
-      expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['two']).to.be('{{two}}');
-      expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['three']).to.be('{{three}}');
+      // expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['one']).to.be('{{one}}');
+      // expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['two']).to.be('{{two}}');
+      // expect(result.data['/remoteMesh/remoteComponent/remoteFunction'].parameters['three']).to.be('{{three}}');
 
       done();
     });
@@ -376,7 +376,7 @@ describe('e3a-rest-component', function () {
 
   });
 
-  it('tests posting an operation to a remote method', function(done){
+  it('tests posting an operation to a remote method fails', function(done){
 
     var restClient = require('restler');
 
@@ -391,7 +391,8 @@ describe('e3a-rest-component', function () {
 
     restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
 
-      expect(result.data).to.be('one two three, wheeeeeeeeeeeeheeee!');
+      expect(result.error).to.not.be(null);
+      expect(result.error.message).to.be('attempt to access remote mesh: remoteMesh');
 
       done();
     });
@@ -415,6 +416,47 @@ describe('e3a-rest-component', function () {
     });
 
   });
+
+  it('tests posting an operation to the security component fails', function(done){
+
+    //TODO login function gives us a token, token is used in body of rest request
+
+    var restClient = require('restler');
+
+    var operation = {
+      uri:'/security/updateOwnUser',
+      parameters:{
+        'username':'_ADMIN',
+        'password':'blah'
+      }
+    };
+
+    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+      expect(result.error.number).to.not.be(null);
+      expect(result.error.message).to.be('attempt to access security component over rest');
+      done();
+    });
+
+  });
+
+  it('tests posting an operation an unsecured mesh, with a token works', function(done){
+
+    var restClient = require('restler');
+
+    var operation = {
+      uri:'testComponent/method1',
+      parameters:{
+        'opts':{'number':1}
+      }
+    };
+
+    restClient.postJson('http://localhost:10000/rest/api?happn_token=' + 'blahblah', operation).on('complete', function(result){
+      expect(result.data.number).to.be(2);
+      done();
+    });
+
+  });
+
 
   it('tests posting an operation to a remote method, no uri', function(done){
 
@@ -512,7 +554,7 @@ describe('e3a-rest-component', function () {
 
     restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
 
-      expect(result.error.message).to.be('method nonexistant does not exist on component remoteComponent');
+      expect(result.error.message).to.be('attempt to access remote mesh: remoteMesh');
 
       done();
     });
