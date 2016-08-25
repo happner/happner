@@ -182,11 +182,13 @@ happner.create(config, function (e, mesh) {
 
   var prefix = commander.altPrompt || process.env.HAPPNER_PROMPT || '► ';
 
-  mesh.exchange.terminal.start({
-    prefix: prefix,
-    help: typeof commander.help == 'boolean' ? commander.help : true,
-  }, function (eee, prompt) {
-    // eee is array! of [e,e,e] if errors ocurred
-    // prompt started anyway.
-  });
+  if (mesh.exchange.terminal) {
+    mesh.exchange.terminal.start({
+      prefix: prefix,
+      help: typeof commander.help == 'boolean' ? commander.help : true,
+    }, function (eee, prompt) {
+      // eee is array! of [e,e,e] if errors ocurred
+      // prompt started anyway.
+    });
+  }
 });
