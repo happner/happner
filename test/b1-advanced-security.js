@@ -422,6 +422,7 @@ describe('b1 - advanced security', function (done) {
                 if(e) return done(e);
                 adminClient.exchange.security.getUser(testUser.username,function(e,user){
                   //We get both TEST GROUP ADMIN and TEST GROUP USER in user.groups here.
+                  if(e) return done(e);
                   console.log('user',user);
                   var new_meshClient = new Mesh.MeshClient({secure: true});
                   new_meshClient.login(testUser).then(function(){
@@ -431,7 +432,7 @@ describe('b1 - advanced security', function (done) {
                       console.log('user',user);
                       expect(e).to.not.equal(null); //This expectation fails.
                       // expect(e.message).to.be('unauthorized');
-                      done();
+                      return done();
                     })
                   }).catch(function(e){
                     return done(e);
