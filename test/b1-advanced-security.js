@@ -97,7 +97,7 @@ describe('b1 - advanced security', function (done) {
   var testGroupSaved;
 
   it('creates a test group, with permissions to access the security component', function (done) {
-
+    console.log('adminClient.exchange.security',adminClient.exchange.security);
     adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
       if (e) return callback(e);
@@ -418,24 +418,26 @@ describe('b1 - advanced security', function (done) {
             adminClient.exchange.security.linkGroup(admin_group,user,function(e){
               if(e) return done(e);
               //Linking the group to TEST GROUP USER next.
-              adminClient.exchange.security.linkGroup(user_group,user,function(e){
-                if(e) return done(e);
-                adminClient.exchange.security.getUser(testUser.username,function(e,user){
-                  //We get both TEST GROUP ADMIN and TEST GROUP USER in user.groups here.
+              adminClient.exchange.security.unlinkGroup(admin_group,user,function(e){
+                adminClient.exchange.security.linkGroup(user_group,user,function(e){
                   if(e) return done(e);
-                  console.log('user',user);
-                  var new_meshClient = new Mesh.MeshClient({secure: true});
-                  new_meshClient.login(testUser).then(function(){
-                    //Expected to throw an error as the TEST GROUP USER has no permission for this method.
-                    new_meshClient.exchange.security.getUser(testUser.username,function(e,user){
-                      console.log('e',e);
-                      console.log('user',user);
-                      expect(e).to.not.equal(null); //This expectation fails.
-                      // expect(e.message).to.be('unauthorized');
-                      return done();
-                    })
-                  }).catch(function(e){
-                    return done(e);
+                  adminClient.exchange.security.getUser(testUser.username,function(e,user){
+                    //We get both TEST GROUP ADMIN and TEST GROUP USER in user.groups here.
+                    if(e) return done(e);
+                    console.log('user',user);
+                    var new_meshClient = new Mesh.MeshClient({secure: true});
+                    new_meshClient.login(testUser).then(function(){
+                      //Expected to throw an error as the TEST GROUP USER has no permission for this method.
+                      new_meshClient.exchange.security.getUser(testUser.username,function(e,user){
+                        console.log('e',e);
+                        console.log('user',user);
+                        expect(e).to.not.equal(null); //This expectation fails.
+                        expect(e.message).to.be('unauthorized');
+                        return done();
+                      })
+                    }).catch(function(e){
+                      return done(e);
+                    });
                   });
                 });
               });
