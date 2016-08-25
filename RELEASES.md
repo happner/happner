@@ -336,3 +336,8 @@
 -----------------
 
 - removed terminal from bin/happner cli for win32
+
+1.19.2 2016-08-25
+-----------------
+
+- fix crash in win32 after terminal removed
