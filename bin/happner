@@ -4,6 +4,7 @@
 
 var path = require('path');
 var fs = require('fs-extra');
+var os = require('os');
 var merge = require('merge');
 var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 var happnHome = homeDir + path.sep + '.happn';
@@ -55,10 +56,12 @@ var config = {
   datalayer: {
     persist: true
   },
-  components: {
-    'terminal': {} // <--- first, so that other's start methods can write in command actions
-  }
+  components: {}
 };
+
+if (os.platform() !== 'win32') {
+  config.components.terminal = {}; // <--- first component, so that other's start methods can write in command actions
+}
 
 var loaded, configPath;
 
