@@ -387,7 +387,7 @@ describe('b1 - advanced security', function (done) {
     }
   };
 
-  it('create user role to testGroupUser to prevent the user from calling methods from /testadvancedSecurity/security',
+  it('update user role to TEST GROUP USER to prevent the user from calling methods from /testadvancedSecurity/security',
   function(done){
     this.timeout(2000);
     var testUser = {
