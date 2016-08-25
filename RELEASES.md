@@ -331,3 +331,8 @@
 -----------------
 
 - happn update 2.12.0, small changes to make mongo plugin backwards compatible
+
+1.19.1 2016-08-25
+-----------------
+
+- removed terminal from bin/happner cli for win32
