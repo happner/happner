@@ -347,9 +347,107 @@ describe('b1 - advanced security', function (done) {
 
   });
 
+  var testGroupAdmin = {
+    name: 'TEST GROUP ADMIN',
+
+    custom_data: {
+      customString: 'custom1',
+      customNumber: 0
+    },
+
+    permissions: {
+      methods: {
+        //in a /Mesh name/component name/method name - with possible wildcards
+        '/testadvancedSecurity/security/*': {authorized: true}
+      },
+      events: {
+        //in a /Mesh name/component name/event key - with possible wildcards
+        '/testadvancedSecurity/security/*': {authorized: true}
+      }
+    }
+  };
+
+  var testGroupUser = {
+    name: 'TEST GROUP USER',
+
+    custom_data: {
+      customString: 'custom2',
+      customNumber: 0
+    },
+
+    permissions: {
+      methods: {
+        //in a /Mesh name/component name/method name - with possible wildcards
+        '/testadvancedSecurity/security/*': {authorized: false}
+      },
+      events: {
+        //in a /Mesh name/component name/event key - with possible wildcards
+        '/testadvancedSecurity/security/*': {authorized: false}
+      }
+    }
+  };
+
+  it('create user role to testGroupUser to prevent the user from calling methods from /testadvancedSecurity/security',
+  function(done){
+    this.timeout(2000);
+    var testUser = {
+      username : 'user1',
+      password : 'password',
+      custom_data : {
+        role : 'TEST GROUP ADMIN'
+      }
+    };
+
+    adminClient.exchange.security.addGroup(testGroupAdmin, function (e, result) {
+      if(e) return done(e);
+      adminClient.exchange.security.addGroup(testGroupUser, function (e, result) {
+        if(e) return done(e);
+        adminClient.exchange.security.listGroups('*', function (e, groups) {
+          if(e) return done(e);
+          adminClient.exchange.security.addUser(testUser,function(e, user){
+            if(e) return done(e);
+            for(var i=0;i<groups.length;i++){
+              if(groups[i].name === 'TEST GROUP ADMIN'){
+                var admin_group = groups[i];
+              }
+              if(groups[i].name === 'TEST GROUP USER'){
+                var user_group = groups[i];
+              }
+            }
+            //Linking the group to TEST GROUP ADMIN first.
+            adminClient.exchange.security.linkGroup(admin_group,user,function(e){
+              if(e) return done(e);
+              //Linking the group to TEST GROUP USER next.
+              adminClient.exchange.security.linkGroup(user_group,user,function(e){
+                if(e) return done(e);
+                adminClient.exchange.security.getUser(testUser.username,function(e,user){
+                  //We get both TEST GROUP ADMIN and TEST GROUP USER in user.groups here.
+                  console.log('user',user);
+                  var new_meshClient = new Mesh.MeshClient({secure: true});
+                  new_meshClient.login(testUser).then(function(){
+                    //Expected to throw an error as the TEST GROUP USER has no permission for this method.
+                    new_meshClient.exchange.security.getUser(testUser.username,function(e,user){
+                      console.log('e',e);
+                      console.log('user',user);
+                      expect(e).to.not.equal(null); //This expectation fails.
+                      // expect(e.message).to.be('unauthorized');
+                      done();
+                    })
+                  }).catch(function(e){
+                    return done(e);
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+
+
   //deleteUser
 
   require('benchmarket').stop();
 
 });
-
