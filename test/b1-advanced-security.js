@@ -418,6 +418,7 @@ describe('b1 - advanced security', function (done) {
               if(e) return done(e);
               //Linking the group to TEST GROUP USER next.
               adminClient.exchange.security.unlinkGroup(admin_group,user,function(e){
+                if(e) return done(e);
                 adminClient.exchange.security.linkGroup(user_group,user,function(e){
                   if(e) return done(e);
                   adminClient.exchange.security.getUser(testUser.username,function(e,user){
