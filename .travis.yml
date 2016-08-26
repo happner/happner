@@ -5,6 +5,7 @@ os:
 language: node_js
 node_js:
   - "6"
+  - "4"
   - "0.10"
 #script: "npm run-script test"
 script: "npm run-script test-cover"
