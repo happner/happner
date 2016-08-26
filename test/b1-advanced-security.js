@@ -386,7 +386,7 @@ describe('b1 - advanced security', function (done) {
     }
   };
 
-  it('update user role to TEST GROUP USER to prevent the user from calling methods from /testadvancedSecurity/security',
+  it('should not allow to call methods from /testadvancedSecurity/security after groups is updated to TEST GROUP USER',
   function(done){
     this.timeout(2000);
     var testUser = {
@@ -397,14 +397,10 @@ describe('b1 - advanced security', function (done) {
       }
     };
 
-    adminClient.exchange.security.addGroup(testGroupAdmin, function (e, result) {
-      if(e) return done(e);
-      adminClient.exchange.security.addGroup(testGroupUser, function (e, result) {
-        if(e) return done(e);
-        adminClient.exchange.security.listGroups('*', function (e, groups) {
-          if(e) return done(e);
-          adminClient.exchange.security.addUser(testUser,function(e, user){
-            if(e) return done(e);
+    adminClient.exchange.security.addGroup(testGroupAdmin).then(function (result) {
+      adminClient.exchange.security.addGroup(testGroupUser).then(function (result) {
+        adminClient.exchange.security.listGroups('*').then(function (groups) {
+          adminClient.exchange.security.addUser(testUser).then(function(user){
             for(var i=0;i<groups.length;i++){
               if(groups[i].name === 'TEST GROUP ADMIN'){
                 var admin_group = groups[i];
@@ -414,33 +410,43 @@ describe('b1 - advanced security', function (done) {
               }
             }
             //Linking the group to TEST GROUP ADMIN first.
-            adminClient.exchange.security.linkGroup(admin_group,user,function(e){
-              if(e) return done(e);
-              //Linking the group to TEST GROUP USER next.
-              adminClient.exchange.security.unlinkGroup(admin_group,user,function(e){
-                if(e) return done(e);
-                adminClient.exchange.security.linkGroup(user_group,user,function(e){
-                  if(e) return done(e);
-                  adminClient.exchange.security.getUser(testUser.username,function(e,user){
-                    if(e) return done(e);
-                    var new_meshClient = new Mesh.MeshClient({secure: true});
-                    new_meshClient.login(testUser).then(function(){
-                      //Expected to throw an error as the TEST GROUP USER has no permission for this method.
-                      new_meshClient.exchange.security.getUser(testUser.username,function(e,user){
-                        expect(e.message).to.be('unauthorized');
-                        return done();
-                      })
-                    }).catch(function(e){
-                      return done(e);
+            adminClient.exchange.security.linkGroup(admin_group,user).then(function(){
+              //UnLinking the group from TEST GROUP ADMIN.
+              adminClient.exchange.security.unlinkGroup(admin_group,user).then(function(){
+                //Linking the group to TEST GROUP USER next.
+                adminClient.exchange.security.linkGroup(user_group,user).then(function(){
+                  var new_meshClient = new Mesh.MeshClient({secure: true});
+                  new_meshClient.login(testUser).then(function(){
+                    //Expected to throw an error as the TEST GROUP USER has no permission for this method.
+                    new_meshClient.exchange.security.getUser(testUser.username,function(e,user){
+                      expect(e.message).to.be('unauthorized');
+                      return done();
                     });
+                  }).catch(function(e){
+                    return done(e);
                   });
+                }).catch(function(e){
+                  return done(e);
                 });
+              }).catch(function(e){
+                return done(e);
               });
+            }).catch(function(e){
+              return done(e);
             });
+          }).catch(function(e){
+            return done(e);
           });
+        }).catch(function(e){
+          return done(e);
         });
+      }).catch(function(e){
+        return done(e);
       });
+    }).catch(function(e){
+      return done(e);
     });
+
   });
 
 
