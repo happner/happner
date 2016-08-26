@@ -396,52 +396,38 @@ describe('b1 - advanced security', function (done) {
         role : 'TEST GROUP ADMIN'
       }
     };
-
-    adminClient.exchange.security.addGroup(testGroupAdmin).then(function (result) {
-      adminClient.exchange.security.addGroup(testGroupUser).then(function (result) {
-        adminClient.exchange.security.listGroups('*').then(function (groups) {
-          adminClient.exchange.security.addUser(testUser).then(function(user){
-            for(var i=0;i<groups.length;i++){
-              if(groups[i].name === 'TEST GROUP ADMIN'){
-                var admin_group = groups[i];
-              }
-              if(groups[i].name === 'TEST GROUP USER'){
-                var user_group = groups[i];
-              }
-            }
-            //Linking the group to TEST GROUP ADMIN first.
-            adminClient.exchange.security.linkGroup(admin_group,user).then(function(){
-              //UnLinking the group from TEST GROUP ADMIN.
-              adminClient.exchange.security.unlinkGroup(admin_group,user).then(function(){
-                //Linking the group to TEST GROUP USER next.
-                adminClient.exchange.security.linkGroup(user_group,user).then(function(){
-                  var new_meshClient = new Mesh.MeshClient({secure: true});
-                  new_meshClient.login(testUser).then(function(){
-                    //Expected to throw an error as the TEST GROUP USER has no permission for this method.
-                    new_meshClient.exchange.security.getUser(testUser.username,function(e,user){
-                      expect(e.message).to.be('unauthorized');
-                      return done();
-                    });
-                  }).catch(function(e){
-                    return done(e);
-                  });
-                }).catch(function(e){
-                  return done(e);
-                });
-              }).catch(function(e){
-                return done(e);
-              });
-            }).catch(function(e){
-              return done(e);
-            });
-          }).catch(function(e){
-            return done(e);
-          });
-        }).catch(function(e){
-          return done(e);
-        });
-      }).catch(function(e){
-        return done(e);
+    var all_groups = [], admin_group, user_group, user_data, new_meshClient;
+    adminClient.exchange.security.addGroup(testGroupAdmin)
+    .then(function() {
+      return adminClient.exchange.security.addGroup(testGroupUser);
+    }).then(function(){
+      return adminClient.exchange.security.listGroups('*');
+    }).then(function(groups){
+      all_groups = groups;
+      return adminClient.exchange.security.addUser(testUser);
+    }).then(function(user_data){
+      user = user_data;
+      for(var i=0;i<all_groups.length;i++){
+        if(all_groups[i].name === 'TEST GROUP ADMIN') admin_group = all_groups[i];
+        if(all_groups[i].name === 'TEST GROUP USER') user_group = all_groups[i];
+      }
+      //Linking the group to TEST GROUP ADMIN first.
+      return adminClient.exchange.security.linkGroup(admin_group,user);
+    }).then(function(){
+      //UnLinking the group from TEST GROUP ADMIN.
+      return adminClient.exchange.security.unlinkGroup(admin_group,user);
+    }).then(function(){
+      //Linking the group to TEST GROUP USER next.
+      return adminClient.exchange.security.linkGroup(user_group,user);
+    }).then(function(){
+      new_meshClient = new Mesh.MeshClient({secure: true});
+      return new_meshClient.login(testUser);
+    }).then(function(){
+      //Expected to throw an error as the TEST GROUP USER has no permission for this method.
+      new_meshClient.exchange.security.getUser(testUser.username,function(e,user){
+        expect(e.message).to.equal('unauthorized');
+        expect(user).to.be(undefined);
+        return done();
       });
     }).catch(function(e){
       return done(e);
