@@ -109,7 +109,7 @@ describe(path.basename(__filename), function (done) {
           var diffTimeDirectArray = process.hrtime(startTime);
           diffTimeDirect = diffTimeDirectArray[0] + diffTimeDirectArray[1] / 1000000000;
           overheadTimeDirect = diffTimeDirect - (callbackTimeout / 1000 * exchangeIterations);
-          mesh.log.info(exchangeIterations + " exchange calls took %d seconds, added %d seconds overhead per call", diffTimeDirect, overheadTimeDirect / exchangeIterations);
+          mesh.log.info(exchangeIterations + " direct calls took %d seconds, added %d seconds overhead per call", diffTimeDirect, overheadTimeDirect / exchangeIterations);
           var difference = ((overheadTimeExchange - overheadTimeDirect) / overheadTimeDirect) * 100;
           mesh.log.info("Exchange is %d\% slower than direct", difference);
           (difference).should.be.lt(allowedOverhead + 100);
