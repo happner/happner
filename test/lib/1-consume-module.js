@@ -113,7 +113,6 @@ describe('Consumes an external module', function () {
         // console.log('failure in init')
         // console.log(err.stack)
       }
-      ;
 
       done(err);
 

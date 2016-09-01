@@ -317,9 +317,35 @@
 - updated happn to version 2.10.1
 - made endpoint configuration reconnect configurable
 
-1.18.0 2016-08-14
+1.17.1 2016-08-11
+-----------------
+
+- prevent crash due to unresolved issue #172
+
+1.18.0 2016-08-16
+-----------------
+
+- Allow module function called over the exchange to return a promise.
+
+1.19.0 2016-08-24
+-----------------
+
+- happn update 2.12.0, small changes to make mongo plugin backwards compatible
+
+1.19.1 2016-08-25
+-----------------
+
+- removed terminal from bin/happner cli for win32
+
+1.19.2 2016-08-25
+-----------------
+
+- fix crash in win32 after terminal removed
+
+1.20.0 2016-08-14
 -----------------
 
 - updated to happn 2.11.0
 - $origin on secured web requests
 - REST component
+
