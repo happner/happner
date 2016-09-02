@@ -168,7 +168,7 @@ describe('2-rest-component-stress-secure', function () {
 
   });
 
-  var CONNECTIONS_COUNT = 10000;
+  var CONNECTIONS_COUNT = 1000;
 
   var generateRequests = function(testKey, count){
     var requests = [];

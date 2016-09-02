@@ -125,12 +125,12 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
         message.m.should.contain('Hooray');
         console.log(message);
         done();
-      }, function () {
+      }, function (e) {
+
+        mesh.exchange.component1.startData();
+
       });
-
-      mesh.exchange.component1.startData();
     });
-
   });
 
   require('benchmarket').stop();

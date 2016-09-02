@@ -62,22 +62,20 @@ SeeAbove.prototype.$happner = {
 
 if (global.TESTING_E3B) return; // When 'requiring' the module above,
 
+/**
+ * Simon Bishop
+ * @type {expect}
+ */
+
+// Uses unit test 2 modules
+var expect = require('expect.js');
+var Mesh = require('../');
+var libFolder = __dirname + sep + 'lib' + sep;
+
+//var REMOTE_MESH = 'e2-remote-mesh';
+var REMOTE_MESH = 'e3-remote-mesh-secure';
+
 describe('e3b-rest-component-secure', function () {
-
-  /**
-   * Simon Bishop
-   * @type {expect}
-   */
-
-  // Uses unit test 2 modules
-  var expect = require('expect.js');
-  var Mesh = require('../');
-  var libFolder = __dirname + sep + 'lib' + sep;
-
-  //var REMOTE_MESH = 'e2-remote-mesh';
-  var REMOTE_MESH = 'e3-remote-mesh-secure';
-
-  var ADMIN_PASSWORD = 'ADMIN_PASSWORD';
 
   require('benchmarket').start();
   after(require('benchmarket').store());
@@ -121,7 +119,7 @@ describe('e3b-rest-component-secure', function () {
         name:'e3b-test',
         datalayer:{
           secure:true,
-          adminPassword: ADMIN_PASSWORD,
+          adminPassword: 'happn',
           port: 10000
         },
         util: {
@@ -358,7 +356,7 @@ describe('e3b-rest-component-secure', function () {
 
       request.write({
         username:'_ADMIN',
-        password:ADMIN_PASSWORD
+        password:'happn'
       });
 
       request.end();
@@ -367,8 +365,10 @@ describe('e3b-rest-component-secure', function () {
 
         var response = JSON.parse(responseString);
 
-        if (response.error) return done(new Error(response.error.message));
-
+        if (response.error){
+          console.log('RESPONSE FAILED:::', JSON.stringify(response));
+          done(new Error(response.error.message));
+        }
 
         expect(response.data.token).to.not.be(null);
         done();
@@ -394,7 +394,7 @@ describe('e3b-rest-component-secure', function () {
 
     var operation = {
       username:'_ADMIN',
-      password:ADMIN_PASSWORD
+      password:'happn'
     };
 
     if (credentials) operation = credentials;
@@ -636,7 +636,7 @@ describe('e3b-rest-component-secure', function () {
 
   it('creates a test user, fails to log in, add group with web permission and log in ok', function (done) {
 
-    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
+    var adminClient = new Mesh.MeshClient({secure: true, port: 10000});
 
     var testGroup = {
       name: 'REST',
@@ -656,12 +656,12 @@ describe('e3b-rest-component-secure', function () {
 
     var credentials = {
       username: '_ADMIN', // pending
-      password: ADMIN_PASSWORD
+      password: 'happn'
     };
 
-    testAdminClient.login(credentials).then(function () {
+    adminClient.login(credentials).then(function () {
 
-      testAdminClient.exchange.security.addGroup(testGroup, function (e, result) {
+      adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
         if (e) return done(e);
 
@@ -672,12 +672,12 @@ describe('e3b-rest-component-secure', function () {
           password: 'REST_TEST'
         };
 
-        testAdminClient.exchange.security.addUser(testUser, function (e, result) {
+        adminClient.exchange.security.addUser(testUser, function (e, result) {
 
           if (e) return done(e);
           testUserSaved = result;
 
-          testAdminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
 
             if (e) return done(e);
 
@@ -727,7 +727,7 @@ describe('e3b-rest-component-secure', function () {
 
   it('creates a test user, logs in, but fails to access a method via REST', function (done) {
 
-    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
+    var adminClient = new Mesh.MeshClient({secure: true, port: 10000});
 
     var testGroup = {
       name: 'REST-2',
@@ -748,28 +748,28 @@ describe('e3b-rest-component-secure', function () {
 
     var credentials = {
       username: '_ADMIN', // pending
-      password: ADMIN_PASSWORD
+      password: 'happn'
     };
 
-    testAdminClient.login(credentials).then(function () {
+    adminClient.login(credentials).then(function () {
 
-      testAdminClient.exchange.security.addGroup(testGroup, function (e, result) {
+      adminClient.exchange.security.addGroup(testGroup, function (e, result) {
 
         if (e) return done(e);
 
         testGroupSaved = result;
 
-        var testRESTUser = {
+        var testUser = {
           username: 'RESTTEST2',
           password: 'REST_TEST2'
         };
 
-        testAdminClient.exchange.security.addUser(testRESTUser, function (e, result) {
+        adminClient.exchange.security.addUser(testUser, function (e, result) {
 
           if (e) return done(e);
           testUserSaved = result;
 
-          testAdminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
 
             if (e) return done(e);
 
@@ -792,6 +792,8 @@ describe('e3b-rest-component-secure', function () {
               //this call fails
               restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
 
+                //console.log('REST TEST:::', result)
+
                 expect(result.error).to.not.be(null);
                 expect(result.error.message).to.be('Access denied');
 
@@ -807,12 +809,14 @@ describe('e3b-rest-component-secure', function () {
                 //this call works
                 restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
 
+                  //console.log('REST TEST2:::', result)
+
                   expect(result.error).to.be(null);
                   expect(result.data.number).to.be(2);
 
                   testGroup.permissions.methods['/testComponent/method2'] = {authorized:false};
 
-                  testAdminClient.exchange.security.updateGroup(testGroup, function (e, result) {
+                  adminClient.exchange.security.updateGroup(testGroup, function (e, result) {
 
                     if (e) return done(e);
 
@@ -828,6 +832,8 @@ describe('e3b-rest-component-secure', function () {
                     //this call stops working
                     restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
 
+                      console.log('ISSUE HERE:::', result)
+
                       expect(result.error).to.not.be(null);
                       expect(result.error.message).to.be('Access denied');
 
@@ -838,7 +844,7 @@ describe('e3b-rest-component-secure', function () {
                 });
               });
 
-            }, testRESTUser);
+            }, testUser);
 
           });
 

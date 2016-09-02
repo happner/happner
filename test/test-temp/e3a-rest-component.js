@@ -62,20 +62,20 @@ SeeAbove.prototype.$happner = {
 
 if (global.TESTING_E9) return; // When 'requiring' the module above,
 
+/**
+ * Simon Bishop
+ * @type {expect}
+ */
+
+// Uses unit test 2 modules
+var expect = require('expect.js');
+var Mesh = require('../../');
+var libFolder = require('path').resolve('..',__dirname + sep + 'lib' + sep);
+
+//var REMOTE_MESH = 'e2-remote-mesh';
+var REMOTE_MESH = 'e3-remote-mesh';
+
 describe('e3a-rest-component', function () {
-
-  /**
-   * Simon Bishop
-   * @type {expect}
-   */
-
-  // Uses unit test 2 modules
-  var expect = require('expect.js');
-  var Mesh = require('../');
-  var libFolder = __dirname + sep + 'lib' + sep;
-
-  //var REMOTE_MESH = 'e2-remote-mesh';
-  var REMOTE_MESH = 'e3-remote-mesh';
 
   require('benchmarket').start();
   after(require('benchmarket').store());
@@ -164,7 +164,7 @@ describe('e3a-rest-component', function () {
 
   });
 
-  var happnUtils = require('../lib/system/utilities');
+  var happnUtils = require('../../lib/system/utilities');
 
   var mock$Happn = {
     _mesh:{
@@ -197,7 +197,7 @@ describe('e3a-rest-component', function () {
 
   it('tests the rest components __respond method', function(done){
 
-    var RestModule = require('../lib/modules/rest/index.js');
+    var RestModule = require('../../lib/modules/rest/index.js');
     var restModule = new RestModule();
 
     var testStage = 'success';
@@ -246,7 +246,7 @@ describe('e3a-rest-component', function () {
     var RestModule = require('../lib/modules/rest/index.js');
     var restModule = new RestModule();
 
-    var MockRequest = require('./lib/helper_mock_req');
+    var MockRequest = require('../lib/helper_mock_req');
     var request = new MockRequest({
       method: 'POST',
       url: '/rest/api',
