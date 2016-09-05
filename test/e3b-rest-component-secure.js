@@ -499,14 +499,13 @@ describe('e3b-rest-component-secure', function () {
     var MockRequest = require('./lib/helper_mock_req');
     var request = new MockRequest({
       method: 'POST',
-      url: '/rest/api',
+      url: '/testComponent/method1',
       headers: {
         'Accept': 'application/json'
       }
     });
 
     var operation = {
-      uri:'testComponent/method1',
       parameters:{
         'opts':{'number':1}
       }
@@ -565,13 +564,12 @@ describe('e3b-rest-component-secure', function () {
       var restClient = require('restler');
 
       var operation = {
-        uri:'testComponent/method1',
         parameters:{
           'opts':{'number':1}
         }
       };
 
-      restClient.postJson('http://localhost:10000/rest/api?happn_token=' + result.data.token, operation).on('complete', function(result){
+      restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + result.data.token, operation).on('complete', function(result){
         expect(result.data.number).to.be(2);
         done();
       });
@@ -589,14 +587,13 @@ describe('e3b-rest-component-secure', function () {
       var restClient = require('restler');
 
       var operation = {
-        uri:'/security/updateOwnUser',
         parameters:{
           'username':'_ADMIN',
           'password':'blah'
         }
       };
 
-      restClient.postJson('http://localhost:10000/rest/api?happn_token=' + result.data.token, operation).on('complete', function(result){
+      restClient.postJson('http://localhost:10000/rest/method/security/updateOwnUser?happn_token=' + result.data.token, operation).on('complete', function(result){
         expect(result.error.number).to.not.be(null);
         expect(result.error.message).to.be('attempt to access security component over rest');
         done();
@@ -616,7 +613,6 @@ describe('e3b-rest-component-secure', function () {
       var restClient = require('restler');
 
       var operation = {
-        uri:'/remoteMesh/remoteComponent/remoteFunction',
         parameters:{
           'one':'one',
           'two':'two',
@@ -624,7 +620,7 @@ describe('e3b-rest-component-secure', function () {
         }
       };
 
-      restClient.postJson('http://localhost:10000/rest/api?happn_token=' + result.data.token, operation).on('complete', function(result){
+      restClient.postJson('http://localhost:10000/rest/method/remoteMesh/remoteComponent/remoteFunction?happn_token=' + result.data.token, operation).on('complete', function(result){
 
         expect(result.error).to.not.be(null);
         expect(result.error.message).to.be('attempt to access remote mesh: remoteMesh');
@@ -695,17 +691,16 @@ describe('e3b-rest-component-secure', function () {
 
                 expect(result.data['/testComponent/method1']).to.not.be(null);
                 expect(result.data['/testComponent/method2']).to.be(undefined);
-
+                
                 expect(Object.keys(result.data).length).to.be(1);
 
                 var operation = {
-                  uri:'/testComponent/method1',
                   parameters:{
                     'opts':{number:1}
                   }
                 };
 
-                restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
+                restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result){
 
                   expect(result.data.number).to.be(2);
 
@@ -781,7 +776,6 @@ describe('e3b-rest-component-secure', function () {
               var restClient = require('restler');
 
               var operation = {
-                uri:'/testComponent/method1',
                 parameters:{
                   'opts':{
                     number:1
@@ -790,13 +784,12 @@ describe('e3b-rest-component-secure', function () {
               };
 
               //this call fails
-              restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
+              restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result){
 
                 expect(result.error).to.not.be(null);
                 expect(result.error.message).to.be('Access denied');
 
                 var operation = {
-                  uri:'/testComponent/method2',
                   parameters:{
                     'opts':{
                       number:1
@@ -805,7 +798,7 @@ describe('e3b-rest-component-secure', function () {
                 };
 
                 //this call works
-                restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
+                restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function(result){
 
                   expect(result.error).to.be(null);
                   expect(result.data.number).to.be(2);
@@ -817,7 +810,6 @@ describe('e3b-rest-component-secure', function () {
                     if (e) return done(e);
 
                     var operation = {
-                      uri:'/testComponent/method2',
                       parameters:{
                         'opts':{
                           number:1
@@ -826,7 +818,7 @@ describe('e3b-rest-component-secure', function () {
                     };
 
                     //this call stops working
-                    restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
+                    restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function(result){
 
                       expect(result.error).to.not.be(null);
                       expect(result.error.message).to.be('Access denied');

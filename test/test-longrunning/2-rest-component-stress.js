@@ -166,7 +166,7 @@ describe('2-rest-component-stress', function () {
 
   });
 
-  var CONNECTIONS_COUNT = 1000;
+  var CONNECTIONS_COUNT = 100;
 
   var generateRequests = function(testKey, count){
     var requests = [];
@@ -215,7 +215,7 @@ describe('2-rest-component-stress', function () {
 
     async.eachSeries(requests, function(request, requestCB){
 
-      restClient.postJson('http://localhost:10000/rest/api', request).on('complete', function(result){
+      restClient.postJson('http://localhost:10000/rest/method/' + request.uri, request).on('complete', function(result){
 
         responses.push({request:request, response:result});
 
@@ -240,7 +240,7 @@ describe('2-rest-component-stress', function () {
 
     async.each(requests, function(request, requestCB){
 
-      restClient.postJson('http://localhost:10000/rest/api', request).on('complete', function(result){
+      restClient.postJson('http://localhost:10000/rest/method/' + request.uri, request).on('complete', function(result){
 
         responses.push({request:request, response:result});
 

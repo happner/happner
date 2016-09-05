@@ -256,7 +256,6 @@ describe('e3a-rest-component', function () {
     });
 
     request.write({
-      uri:'/testComponent/methodName1',
       parameters:{
         'opts':{
           number:1
@@ -278,7 +277,6 @@ describe('e3a-rest-component', function () {
 
       expect(body).to.not.be(null);
       expect(body).to.not.be(undefined);
-      expect(body.uri).to.be('/testComponent/methodName1');
       expect(body.parameters['opts'].number).to.be(1);
 
       done();
@@ -328,14 +326,13 @@ describe('e3a-rest-component', function () {
     var MockRequest = require('./lib/helper_mock_req');
     var request = new MockRequest({
       method: 'POST',
-      url: '/rest/api',
+      url: '/testComponent/method1',
       headers: {
         'Accept': 'application/json'
       }
     });
 
     var operation = {
-      uri:'testComponent/method1',
       parameters:{
         'opts':{'number':1}
       }
@@ -362,12 +359,12 @@ describe('e3a-rest-component', function () {
     var restClient = require('restler');
 
     var operation = {
-      uri:'testComponent/method1',
       parameters:{
         'opts':{'number':1}
       }
     };
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+
+    restClient.postJson('http://localhost:10000/rest/method/testComponent/method1', operation).on('complete', function(result){
 
       expect(result.data.number).to.be(2);
 
@@ -381,7 +378,6 @@ describe('e3a-rest-component', function () {
     var restClient = require('restler');
 
     var operation = {
-      uri:'/remoteMesh/remoteComponent/remoteFunction',
       parameters:{
         'one':'one',
         'two':'two',
@@ -389,7 +385,7 @@ describe('e3a-rest-component', function () {
       }
     };
 
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+    restClient.postJson('http://localhost:10000/rest/method/remoteMesh/remoteComponent/remoteFunction', operation).on('complete', function(result){
 
       expect(result.error).to.not.be(null);
       expect(result.error.message).to.be('attempt to access remote mesh: remoteMesh');
@@ -399,7 +395,7 @@ describe('e3a-rest-component', function () {
 
   });
 
-  it('tests posting an operation to a local method, no uri', function(done){
+  it('tests posting an operation to a bad method', function(done){
 
     var restClient = require('restler');
 
@@ -408,9 +404,9 @@ describe('e3a-rest-component', function () {
         'opts':{'number':1}
       }
     };
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+    restClient.postJson('http://localhost:10000/rest/method/blithering_idiot', operation).on('complete', function(result){
 
-      expect(result.error.message).to.be('no uri configured');
+      expect(result.error.message).to.be('component blithering_idiot does not exist on mesh');
 
       done();
     });
@@ -424,14 +420,13 @@ describe('e3a-rest-component', function () {
     var restClient = require('restler');
 
     var operation = {
-      uri:'/security/updateOwnUser',
       parameters:{
         'username':'_ADMIN',
         'password':'blah'
       }
     };
 
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+    restClient.postJson('http://localhost:10000/rest/method/security/updateOwnUser', operation).on('complete', function(result){
       expect(result.error.number).to.not.be(null);
       expect(result.error.message).to.be('attempt to access security component over rest');
       done();
@@ -444,36 +439,13 @@ describe('e3a-rest-component', function () {
     var restClient = require('restler');
 
     var operation = {
-      uri:'testComponent/method1',
       parameters:{
         'opts':{'number':1}
       }
     };
 
-    restClient.postJson('http://localhost:10000/rest/api?happn_token=' + 'blahblah', operation).on('complete', function(result){
+    restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + 'blahblah', operation).on('complete', function(result){
       expect(result.data.number).to.be(2);
-      done();
-    });
-
-  });
-
-
-  it('tests posting an operation to a remote method, no uri', function(done){
-
-    var restClient = require('restler');
-
-    var operation = {
-      parameters:{
-        'one':'one',
-        'two':'two',
-        'three':'three'
-      }
-    };
-
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
-
-      expect(result.error.message).to.be('no uri configured');
-
       done();
     });
 
@@ -484,34 +456,11 @@ describe('e3a-rest-component', function () {
     var restClient = require('restler');
 
     var operation = {
-      uri:'/nonexistant/uri',
       parameters:{
         'opts':{'number':1}
       }
     };
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
-
-      expect(result.error.message).to.be('component nonexistant does not exist on mesh');
-
-      done();
-    });
-
-  });
-
-  it('tests posting an operation to a remote method, bad uri component', function(done){
-
-    var restClient = require('restler');
-
-    var operation = {
-      uri:'/nonexistant/uri',
-      parameters:{
-        'one':'one',
-        'two':'two',
-        'three':'three'
-      }
-    };
-
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+    restClient.postJson('http://localhost:10000/rest/method/nonexistant/uri', operation).on('complete', function(result){
 
       expect(result.error.message).to.be('component nonexistant does not exist on mesh');
 
@@ -525,36 +474,13 @@ describe('e3a-rest-component', function () {
     var restClient = require('restler');
 
     var operation = {
-      uri:'testComponent/nonexistant',
       parameters:{
         'opts':{'number':1}
       }
     };
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
+    restClient.postJson('http://localhost:10000/rest/method/testComponent/nonexistant', operation).on('complete', function(result){
 
       expect(result.error.message).to.be('method nonexistant does not exist on component testComponent');
-
-      done();
-    });
-
-  });
-
-  it('tests posting an operation to a remote method, bad uri method', function(done){
-
-    var restClient = require('restler');
-
-    var operation = {
-      uri:'/remoteMesh/remoteComponent/nonexistant',
-      parameters:{
-        'one':'one',
-        'two':'two',
-        'three':'three'
-      }
-    };
-
-    restClient.postJson('http://localhost:10000/rest/api', operation).on('complete', function(result){
-
-      expect(result.error.message).to.be('attempt to access remote mesh: remoteMesh');
 
       done();
     });
