@@ -39,8 +39,11 @@ gulp.task('default', function (done) {
   var testComponent = new TestComponent();
 
   var meshConfig = {
-    secure: true,
-    encryptPayloads: true,
+    datalayer:{
+      secure:true,
+      adminPassword: 'happn',
+      encryptPayloads: true
+    },
     modules: {
       test: {
         instance: testComponent
@@ -54,6 +57,7 @@ gulp.task('default', function (done) {
     services: {
       security: {
         config: {
+          adminPassword:'happn',
           keyPair: {
             privateKey: 'Kd9FQzddR7G6S9nJ/BK8vLF83AzOphW2lqDOQ/LjU4M=',
             publicKey: 'AlHCtJlFthb359xOxR5kiBLJpfoC2ZLPLWYHN3+hdzf2'

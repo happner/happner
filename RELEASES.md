@@ -341,3 +341,11 @@
 -----------------
 
 - fix crash in win32 after terminal removed
+
+1.20.0 2016-08-14
+-----------------
+
+- updated to happn 2.11.0
+- $origin on secured web requests
+- REST component
+
