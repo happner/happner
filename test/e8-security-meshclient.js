@@ -43,7 +43,7 @@ describe(path.basename(__filename), function () {
       }
     })
       .then(function(mesh) {
-        var security = mesh.exchange.security
+        var security = mesh.exchange.security;
         server = mesh;
         return Promise.all([
           security.addGroup({
@@ -62,7 +62,7 @@ describe(path.basename(__filename), function () {
           })
         ]).spread(function(group, user) {
           return security.linkGroup(group, user);
-        })
+        });
       })
       .then(function() {
         done();
