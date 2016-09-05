@@ -1,22 +1,25 @@
 var path = require('path');
 
-describe(path.basename(__filename), function (done) {
-
-  this.timeout(120000);
+describe(path.basename(__filename), function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
   var libFolder = path.join(__dirname, 'lib');
-  var Mesh = require('../');
+  var Happner = require('../');
+  var Promise = require('bluebird');
   var async = require('async');
   require('chai').should();
   var test_id = Date.now() + '_' + require('shortid').generate();
   var dbFileName = './temp/' + test_id + '.nedb';
   var mesh;
+  var fs = require('fs');
+  try {
+    fs.unlinkSync(dbFileName);
+  } catch (e) {}
 
   var exchangeIterations = (process.arch == 'arm') ? 100 : 1000;
-  var allowedOverhead = 100; // this is just value. Based on the best we can get this to, this can change. At least then we have a baseline.
+  var allowedOverhead = 200; // this is just value. Based on the best we can get this to, this can change. At least then we have a baseline.
   var callbackTimeout = (process.arch == 'arm') ? 0 : 0;
 
   var config = {
@@ -25,7 +28,8 @@ describe(path.basename(__filename), function (done) {
       secure: true,
       persist: true,
       defaultRoute: "mem",
-      filename: dbFileName
+      filename: dbFileName,
+      adminPassword: 'xxx'
     },
     modules: {
       "e7Module": {
@@ -42,7 +46,7 @@ describe(path.basename(__filename), function (done) {
         startMethod: 'start',
         // scope:"component",//either component(mesh aware) or module - default is module
         schema: {
-          "exclusive": false,//means we dont dynamically share anything else
+          "exclusive": false,
           "methods": {
             start: {
               type: 'sync',
@@ -56,18 +60,24 @@ describe(path.basename(__filename), function (done) {
     }
   };
 
-  before(function () {
-    return Mesh.create(config)
+  before(function (done) {
+    return Happner.create(config)
       .then(function (createdMesh) {
         mesh = createdMesh;
-      });
+        done();
+      })
+      .catch(done);
   });
 
-  after(function () {
-    return mesh.stop({reconnect: false});
+  after(function (done) {
+    try {
+      fs.unlinkSync(dbFileName);
+    } catch (e) {}
+    return mesh.stop({reconnect: false}, done);
   });
 
   it('does not add more than ' + allowedOverhead + '% overhead on local exchange functions', function (done) {
+    this.timeout(120000);
     var startTime = process.hrtime();
     var diffTimeExchange;
     var diffTimeDirect;
@@ -113,7 +123,7 @@ describe(path.basename(__filename), function (done) {
           var difference = ((overheadTimeExchange - overheadTimeDirect) / overheadTimeDirect) * 100;
           mesh.log.info("Exchange is %d\% slower than direct", difference);
           try {
-            (difference).should.be.lt(allowedOverhead + 100);
+            (difference).should.be.lt(allowedOverhead);
             done();
           } catch (e) {
             done(e);
@@ -121,6 +131,124 @@ describe(path.basename(__filename), function (done) {
         });
     }
 
+  });
+
+  context('as async with callback', function() {
+
+    it('can call ok', function(done) {
+      mesh.exchange.e7Component.methodOk({key: 'value'}, function(err, result) {
+        try {
+          result.should.eql({key: 'value'});
+          done();
+        } catch (e) {
+          done(e);
+        }
+      });
+    });
+
+    it('can call with error', function(done) {
+      mesh.exchange.e7Component.methodError(function(err, result) {
+        try {
+          err.toString().should.equal('Error: Some problem');
+          done();
+        } catch (e) {
+          done(e);
+        }
+      });
+    });
+
+    it('can inject $happn into position 1', function(done) {
+      mesh.exchange.e7Component.methodInjectHappn1({}, function(err, result) {
+        try {
+          result.meshName.should.equal('testComponent2Component');
+          done();
+        } catch (e) {
+          done(e);
+        }
+      });
+    });
+
+    it('can inject $happn into position 2', function(done) {
+      mesh.exchange.e7Component.methodInjectHappn2({}, function(err, result) {
+        try {
+          result.meshName.should.equal('testComponent2Component');
+          done();
+        } catch (e) {
+          done(e);
+        }
+      });
+    });
+
+    it('does inject $origin as _ADMIN', function(done) {
+      mesh.exchange.e7Component.methodInjectOrigin({key: 'value'}, function(err, result) {
+        try {
+          result.should.eql({
+            key: 'value',
+            meshName: 'testComponent2Component',
+            originUser: '_ADMIN'
+          });
+          done();
+        } catch (e) {
+          done(e);
+        }
+      });
+    });
+
+  });
+
+  context('as async with promise', function() {
+
+    it('can call ok', function(done) {
+      mesh.exchange.e7Component.methodOk({key: 'value'})
+        .then(function(result) {
+          result.should.eql({key: 'value'});
+          done();
+        })
+        .catch(done);
+    });
+
+    it('can call with error', function(done) {
+      mesh.exchange.e7Component.methodError()
+        .then(function() {
+          done(new Error('should not succeed'));
+        })
+        .catch(function(error) {
+          error.toString().should.equal('Error: Some problem');
+          done();
+        })
+        .catch(done)
+    });
+
+    it('can inject $happn into position 1', function(done) {
+      mesh.exchange.e7Component.methodInjectHappn1({})
+        .then(function(result) {
+          result.meshName.should.equal('testComponent2Component');
+          done();
+        })
+        .catch(done);
+    });
+
+    it('can inject $happn into position 2', function(done) {
+      mesh.exchange.e7Component.methodInjectHappn2({})
+        .then(function(result) {
+          result.meshName.should.equal('testComponent2Component');
+          done();
+        })
+        .catch(done);
+    });
+
+    it('does inject $origin as _ADMIN', function(done) {
+      mesh.exchange.e7Component.methodInjectOrigin({key: 'value'})
+        .then(function(result) {
+          result.should.eql({
+            key: 'value',
+            meshName: 'testComponent2Component',
+            originUser: '_ADMIN'
+          });
+          done();
+        })
+        .catch(done);
+    });
   });
 
   require('benchmarket').stop();

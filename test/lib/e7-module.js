@@ -16,4 +16,31 @@ function E7Module() {
       callback(null, object);
     },this.callbackTimeout);
   };
+
+  this.methodOk = function(object, callback) {
+    callback(null, object);
+  };
+
+  this.methodError = function(callback) {
+    callback(new Error('Some problem'));
+  };
+
+  this.methodInjectHappn1 = function($happn, object, callback) {
+    callback(null, {meshName: $happn.info.mesh.name});
+  };
+
+  this.methodInjectHappn2 = function(object, $happn, callback) {
+    callback(null, {meshName: $happn.info.mesh.name});
+  };
+
+  this.methodInjectOrigin = function($origin, object, $happn, callback) {
+    object.meshName = $happn.info.mesh.name;
+    object.originUser = $origin.username;
+    callback(null, object);
+  };
+
+  this.synchronousMethod = function($origin, object, $happn) {
+    console.log(arguments);
+  }
+
 }
