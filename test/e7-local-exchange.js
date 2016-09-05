@@ -112,8 +112,12 @@ describe(path.basename(__filename), function (done) {
           mesh.log.info(exchangeIterations + " direct calls took %d seconds, added %d seconds overhead per call", diffTimeDirect, overheadTimeDirect / exchangeIterations);
           var difference = ((overheadTimeExchange - overheadTimeDirect) / overheadTimeDirect) * 100;
           mesh.log.info("Exchange is %d\% slower than direct", difference);
-          (difference).should.be.lt(allowedOverhead + 100);
-          done();
+          try {
+            (difference).should.be.lt(allowedOverhead + 100);
+            done();
+          } catch (e) {
+            done(e);
+          }
         });
     }
 
