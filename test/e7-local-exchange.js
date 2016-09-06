@@ -2,6 +2,8 @@ var path = require('path');
 
 describe(path.basename(__filename), function () {
 
+  this.timeout(120000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
@@ -19,7 +21,7 @@ describe(path.basename(__filename), function () {
   } catch (e) {}
 
   var exchangeIterations = (process.arch == 'arm') ? 100 : 1000;
-  var allowedOverhead = 200; // this is just value. Based on the best we can get this to, this can change. At least then we have a baseline.
+  var allowedOverhead = 400; // this is just value. Based on the best we can get this to, this can change. At least then we have a baseline.
   var callbackTimeout = (process.arch == 'arm') ? 0 : 0;
 
   var config = {
@@ -77,7 +79,6 @@ describe(path.basename(__filename), function () {
   });
 
   it('does not add more than ' + allowedOverhead + '% overhead on local exchange functions', function (done) {
-    this.timeout(120000);
     var startTime = process.hrtime();
     var diffTimeExchange;
     var diffTimeDirect;

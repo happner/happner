@@ -12,10 +12,7 @@ describe('8 - does some benchmarks on api calls, data events and events', functi
 
   this.timeout(120000);
 
-  // var maximumPings = 1000;
-  var maximumPings = 900; // with local exchange methods calling directly instead of through happn this
-                          // this test cannot reach 1000 as the methods are calling each other recursively
-                          // (so stack depth becomes a problem)
+  var maximumPings = 1000;
 
   var config = {
     name: "testBenchmark",
