@@ -22,7 +22,7 @@ describe(path.basename(__filename), function () {
   }
 
   var exchangeIterations = (process.arch == 'arm') ? 100 : 1000;
-  var allowedOverhead = 600; // Based on tests with node 6
+  var allowedOverhead = 1000; // Based on tests with node 6. setImmediate introduces variation in the test result
 
   var config = {
     name: "testComponent2Component",
