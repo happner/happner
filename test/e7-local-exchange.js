@@ -61,7 +61,7 @@ describe(path.basename(__filename), function () {
   };
 
   before(function (done) {
-    return Happner.create(config)
+    Happner.create(config)
       .then(function (createdMesh) {
         mesh = createdMesh;
         done();
@@ -73,7 +73,7 @@ describe(path.basename(__filename), function () {
     try {
       fs.unlinkSync(dbFileName);
     } catch (e) {}
-    return mesh.stop({reconnect: false}, done);
+    mesh.stop({reconnect: false}, done);
   });
 
   it('does not add more than ' + allowedOverhead + '% overhead on local exchange functions', function (done) {
