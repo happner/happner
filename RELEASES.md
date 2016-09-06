@@ -341,3 +341,9 @@
 -----------------
 
 - fix crash in win32 after terminal removed
+
+1.19.3 2016-09-05
+-----------------
+
+- bypass exchange messenger on calls to local components
+- fix injection misalignment when injecting $origin before $happn

@@ -53,10 +53,9 @@ __something.html__
 
       });
 
-      // pending
-      // client.on('login/deny', function() {
-      //
-      // });
+      client.on('login/deny', function(err) {
+      
+      });
 
       client.on('login/error', function(err) {
 
