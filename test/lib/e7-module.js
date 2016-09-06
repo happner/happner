@@ -8,13 +8,7 @@ function E7Module() {
   };
 
   this.exchangeFunction = function (object, callback) {
-    if (!this.callbackTimeout) return callback(null, object);
-    var startTime = (new Date()).getTime();
-    setTimeout(function() {
-      var diff = (new Date()).getTime() - startTime;
-      if (diff > (this.callbackTimeout)) throw(new Error('Timeout too quick'));
-      callback(null, object);
-    },this.callbackTimeout);
+    return callback(null, object);
   };
 
   this.methodOk = function(object, callback) {
