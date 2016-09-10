@@ -56,6 +56,7 @@
     "happn": "2.13.4-DEV",
     "happn-logger": "0.0.2",
     "happner-terminal": "0.0.7",
+    "later": "^1.2.0",
     "md5": "2.0.0",
     "merge": "1.2.0",
     "proc-stats": "0.0.4",

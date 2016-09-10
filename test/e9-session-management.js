@@ -31,8 +31,6 @@ describe('e9_session_management', function () {
 
     disconnectClient();
 
-    console.log('disconnected client:::');
-
     stopService(function(e){
 
       if (e) return callback(e);
@@ -86,7 +84,7 @@ describe('e9_session_management', function () {
 
   it('tests session revocation on a secure instance', function (callback) {
 
-    this.timeout(10000);
+    this.timeout(15000);
 
     getService(function(e){
       clientInstance.exchange.security.listActiveSessions(function(e, list){
@@ -111,24 +109,24 @@ describe('e9_session_management', function () {
                 if (e) return callback(e);
                 expect(list.length).to.be(3);
 
-                var session = list[2];
-
-                clientInstance.exchange.security.revokeSession(session, 'APP', function(e){
+                clientInstance.exchange.security.revokeSession(newInstance.data.session, 'APP', function(e){
 
                   if (e) return callback(e);
 
-                  clientInstance.exchange.security.listRevokedSessions(function(e, items){
+                  setTimeout(function(){
 
-                    expect(items.length).to.be(1);
+                    clientInstance.exchange.security.listRevokedSessions(function(e, items){
 
-                    newInstance.exchange.security.listActiveSessions(function(e, list){
-                      if (!e) return callback(new Error('this was not meant to happn'));
+                      expect(items.length).to.be(1);
+
+                      newInstance.exchange.security.listActiveSessions(function(err, list){
+                        if (!err) return callback(new Error('this was not meant to happn'));
+                        expect(err.toString()).to.be('Error: session with id ' + newInstance.data.session.id + ' has been revoked');
+                        callback();
+                      });
+
                     });
-
-                    setTimeout(function(){
-                      callback();
-                    }, 2000)
-                  });
+                  }, 2000);
                 });
               });
             })
