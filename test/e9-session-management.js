@@ -2,7 +2,7 @@ describe('e9_session_management', function () {
 
   require('benchmarket').start();
 
-  after(require('benchmarket').store());
+  //after(require('benchmarket').store());
 
   var expect = require('expect.js');
   var Mesh = require('../');
@@ -22,39 +22,62 @@ describe('e9_session_management', function () {
       callback();
   };
 
-  var getService = function(activateSessionManagement, callback){
+  after('disconnects the client and stops the server', function(callback){
+
+    this.timeout(3000);
+
+    disconnectClient();
+    setTimeout(function(){
+      stopService(callback);
+    }, 1000);
+
+  });
+
+  var getService = function(activateSessionManagement, logSessionActivity, callback){
 
     if (typeof activateSessionManagement == 'function'){
       callback = activateSessionManagement;
       activateSessionManagement = true;
+      logSessionActivity = true;
+    }
+
+    if (typeof logSessionActivity == 'function'){
+      callback = logSessionActivity;
+      activateSessionManagement = activateSessionManagement;
+      logSessionActivity = true;
     }
 
     disconnectClient();
 
-    stopService(function(e){
+    setTimeout(function(){
 
-      if (e) return callback(e);
+      stopService(function(e){
 
-      Mesh.create({
-        secure:true,
-        port: 11111,
-        activateSessionManagement:activateSessionManagement,
-        datalayer:{
-          adminPassword:'happn'
-        }
-      }, function (err, instance) {
+        if (e) return callback(e);
 
-        serviceInstance = instance;
+        Mesh.create({
+          secure:true,
+          port: 11111,
+          activateSessionManagement:activateSessionManagement,
+          logSessionActivity:logSessionActivity,
+          datalayer:{
+            adminPassword:'happn'
+          }
+        }, function (err, instance) {
 
-        if (err) return callback(err);
+          serviceInstance = instance;
 
-        clientInstance
-          .login({username: '_ADMIN', password: 'happn'})
-          .then(callback)
-          .catch(callback);
+          if (err) return callback(err);
 
+          clientInstance
+            .login({username: '_ADMIN', password: 'happn'})
+            .then(callback)
+            .catch(callback);
+
+        });
       });
-    });
+
+    }, 1000);
   };
 
   it('tests active sessions and session activity logging on a secure instance', function (callback) {
@@ -122,7 +145,10 @@ describe('e9_session_management', function () {
                       newInstance.exchange.security.listActiveSessions(function(err, list){
                         if (!err) return callback(new Error('this was not meant to happn'));
                         expect(err.toString()).to.be('Error: session with id ' + newInstance.data.session.id + ' has been revoked');
+
+                        newInstance.disconnect({reconnect:false});
                         callback();
+
                       });
 
                     });
@@ -131,7 +157,82 @@ describe('e9_session_management', function () {
               });
             })
             .catch(callback);
+        });
+      });
+    });
+  });
 
+  it('tests switching on active sessions but not session activity logging on a secure instance', function (callback) {
+
+    this.timeout(6000);
+
+    getService(false, false, function(e){
+
+      if (e) return callback(e);
+
+      clientInstance.exchange.security.listActiveSessions(function(e, list){
+
+        expect(e.toString()).to.be('Error: session management not activated');
+
+        clientInstance.exchange.security.listSessionActivity(function(e, list){
+
+          expect(e.toString()).to.be('Error: session activity logging not activated');
+
+          clientInstance.exchange.security.activateSessionManagement(function(e){
+
+            if (e) return callback(e);
+
+            clientInstance.exchange.security.listActiveSessions(function(e, list){
+
+              if (e) return callback(e);
+              expect(list.length).to.be(1);
+
+              clientInstance.exchange.security.listSessionActivity(function(e, list){
+                expect(e.toString()).to.be('Error: session activity logging not activated');
+                callback();
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+
+  it('tests switching on active sessions and session activity logging on a secure instance', function (callback) {
+
+    this.timeout(6000);
+
+    getService(false, false, function(e){
+
+      if (e) return callback(e);
+
+      clientInstance.exchange.security.listActiveSessions(function(e, list){
+
+        expect(e.toString()).to.be('Error: session management not activated');
+
+        clientInstance.exchange.security.listSessionActivity(function(e, list){
+
+          expect(e.toString()).to.be('Error: session activity logging not activated');
+
+          clientInstance.exchange.security.activateSessionManagement(true, function(e){
+
+            if (e) return callback(e);
+
+            clientInstance.exchange.security.listActiveSessions(function(e, list){
+
+              if (e) return callback(e);
+              expect(list.length).to.be(1);
+
+              clientInstance.exchange.security.listSessionActivity(function(e, list){
+
+                if (e) return callback(e);
+                expect(list.length).to.be(2);
+
+                callback();
+
+              });
+            });
+          });
         });
       });
     });
