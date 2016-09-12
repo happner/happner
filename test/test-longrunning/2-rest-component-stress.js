@@ -166,7 +166,7 @@ describe('2-rest-component-stress', function () {
 
   });
 
-  var CONNECTIONS_COUNT = 100;
+  var CONNECTIONS_COUNT = 10000;
 
   var generateRequests = function(testKey, count){
     var requests = [];
