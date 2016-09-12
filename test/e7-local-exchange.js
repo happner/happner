@@ -188,6 +188,21 @@ describe(path.basename(__filename), function () {
       });
     });
 
+    it('can inject $happn last', function(done) {
+      mesh.exchange.e7Component.methodInjectHappnLast({key: 'value'}, function (err, result) {
+        try {
+          result.should.eql({
+            key: 'value',
+            meshName: 'testComponent2Component',
+            originUser: '_ADMIN'
+          });
+          done();
+        } catch (e) {
+          done(e);
+        }
+      });
+    });
+
   });
 
   context('as async with promise', function () {
@@ -243,6 +258,20 @@ describe(path.basename(__filename), function () {
         })
         .catch(done);
     });
+
+    it('can inject $happn last', function (done) {
+      mesh.exchange.e7Component.methodInjectHappnLast({key: 'value'})
+        .then(function (result) {
+          result.should.eql({
+            key: 'value',
+            meshName: 'testComponent2Component',
+            originUser: '_ADMIN'
+          });
+          done();
+        })
+        .catch(done);
+    });
+
   });
 
   require('benchmarket').stop();

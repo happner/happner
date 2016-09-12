@@ -33,6 +33,12 @@ function E7Module() {
     callback(null, object);
   };
 
+  this.methodInjectHappnLast = function(object, $origin, callback, $happn) {
+    object.meshName = $happn.info.mesh.name;
+    object.originUser = $origin.username;
+    callback(null, object);
+  };
+
   this.synchronousMethod = function($origin, object, $happn) {
     console.log(arguments);
   }
