@@ -79,7 +79,7 @@ describe(path.basename(__filename), function (done) {
   });
 
   it('contains the mesh name and version', function () {
-    expect(testClient.info.version).to.be('1.0.0');
+    expect(testClient.info.version).to.be(require(__dirname + '/../package.json').version);
     expect(testClient.info.name).to.be('test_6');
   });
 

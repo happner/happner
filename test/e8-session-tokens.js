@@ -79,8 +79,8 @@ describe('e8-session-tokens', function () {
 
   var ADMIN_PASSWORD = 'ADMIN_PASSWORD';
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  // require('benchmarket').start();
+  // after(require('benchmarket').store());
 
   this.timeout(120000);
 
@@ -149,7 +149,7 @@ describe('e8-session-tokens', function () {
                     type:{$eq:0} //token stateless
                   }]},
                 policy: {
-                  ttl: 2000//stale after 2 seconds
+                  ttl: '2 seconds'//stale after 2 seconds
                 }
               },{
                 name:"trusted-device",
@@ -161,7 +161,7 @@ describe('e8-session-tokens', function () {
                     type:{$eq:1} //stateful connected device
                   }]},
                 policy: {
-                  ttl: 2000,//stale after 2 seconds
+                  ttl: 4000,//stale after 4 seconds
                   permissions:{//permissions that the holder of this token is limited, regardless of the underlying user
                     '/TRUSTED_DEVICES/*':{actions: ['*']}
                   }
@@ -181,28 +181,21 @@ describe('e8-session-tokens', function () {
       }
     }, function (err, instance) {
 
+      if (err) return done(err);
       delete global.TESTING_E8; //.............
       mesh = instance;
-
-      if (err) return done(err);
-
-      mesh.exchange.remoteMesh.remoteComponent.remoteFunction('one','two','three', function(err, result){
-        if (err) return done(err);
-        done();
-      });
+      done();
     });
   });
 
-  after(function (done) {
+  // after(function (done) {
+  //
+  //   this.timeout(30000);
+  //   if (mesh) mesh.stop({reconnect: false}, done);
+  //
+  // });
 
-    this.timeout(30000);
-
-    if (remote) remote.kill();
-    if (mesh) mesh.stop({reconnect: false}, done);
-
-  });
-
-  it('tests the rest components describe method over the api', function(done){
+  xit('tests the rest component with a managed profile, ttl times out', function(done){
 
     var restClient = require('restler');
 
@@ -220,265 +213,14 @@ describe('e8-session-tokens', function () {
     });
   });
 
-  it('tests posting an operation to a local method', function(done){
-
-    //TODO login function gives us a token, token is used in body of rest request
-
-    login(function(e, result){
-
-      if (e) return done(e);
-
-      var restClient = require('restler');
-
-      var operation = {
-        parameters:{
-          'opts':{'number':1}
-        }
-      };
-
-      restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + result.data.token, operation).on('complete', function(result){
-        expect(result.data.number).to.be(2);
-        done();
-      });
-    });
-  });
-
-  it('tests posting an operation to the security component fails', function(done){
-
-    //TODO login function gives us a token, token is used in body of rest request
-
-    login(function(e, result){
-
-      if (e) return done(e);
-
-      var restClient = require('restler');
-
-      var operation = {
-        parameters:{
-          'username':'_ADMIN',
-          'password':'blah'
-        }
-      };
-
-      restClient.postJson('http://localhost:10000/rest/method/security/updateOwnUser?happn_token=' + result.data.token, operation).on('complete', function(result){
-        expect(result.error.number).to.not.be(null);
-        expect(result.error.message).to.be('attempt to access security component over rest');
-        done();
-      });
-    });
-  });
-
-  it('creates a test user, fails to log in, add group with web permission and log in ok', function (done) {
-
-    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
-
-    var testGroup = {
-      name: 'REST',
-      permissions: {
-        methods: {
-          '/testComponent/method1':{authorized:true}
-        },
-        web: {
-          '/rest/describe':{actions: ['get'], description: 'rest describe permission'},
-          '/rest/api':{actions: ['post'], description: 'rest post permission'}
-        }
-      }
-    };
-
-    var testGroupSaved;
-    var testUserSaved;
-
-    var credentials = {
-      username: '_ADMIN', // pending
-      password: ADMIN_PASSWORD
-    };
-
-    testAdminClient.login(credentials).then(function () {
-
-      testAdminClient.exchange.security.addGroup(testGroup, function (e, result) {
-
-        if (e) return done(e);
-
-        testGroupSaved = result;
-
-        var testUser = {
-          username: 'RESTTEST',
-          password: 'REST_TEST'
-        };
-
-        testAdminClient.exchange.security.addUser(testUser, function (e, result) {
-
-          if (e) return done(e);
-          testUserSaved = result;
-
-          testAdminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
-
-            if (e) return done(e);
-
-            login(function(e, response){
-
-              if (e) return done(e);
-
-              var token = response.data.token;
-              var restClient = require('restler');
-
-              restClient.get('http://localhost:10000/rest/describe?happn_token=' + token).on('complete', function(result){
-
-                expect(result.data['/security/updateOwnUser']).to.be(undefined);
-                expect(result.data['/remoteMesh/security/updateOwnUser']).to.be(undefined);
-
-                expect(result.data['/testComponent/method1']).to.not.be(null);
-                expect(result.data['/testComponent/method2']).to.be(undefined);
-
-                expect(Object.keys(result.data).length).to.be(1);
-
-                var operation = {
-                  parameters:{
-                    'opts':{number:1}
-                  }
-                };
-
-                restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result){
-
-                  expect(result.data.number).to.be(2);
-
-                  done();
-                });
-
-              });
-
-            }, testUser);
-
-          });
-
-        });
-      });
-
-    }).catch(done);
+  xit('tests the rest component with a managed profile, only able to access a trusted path', function(done){
 
   });
 
-  it('creates a test user, logs in, but fails to access a method via REST', function (done) {
-
-    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
-
-    var testGroup = {
-      name: 'REST-2',
-      permissions: {
-        methods: {
-          '/remoteMesh/remoteComponent/remoteFunction':{authorized:true},
-          '/testComponent/method2':{authorized:true}
-        },
-        web: {
-          '/rest/describe':{actions: ['get'], description: 'rest describe permission'},
-          '/rest/api':{actions: ['post'], description: 'rest post permission'}
-        }
-      }
-    };
-
-    var testGroupSaved;
-    var testUserSaved;
-
-    var credentials = {
-      username: '_ADMIN', // pending
-      password: ADMIN_PASSWORD
-    };
-
-    testAdminClient.login(credentials).then(function () {
-
-      testAdminClient.exchange.security.addGroup(testGroup, function (e, result) {
-
-        if (e) return done(e);
-
-        testGroupSaved = result;
-
-        var testRESTUser = {
-          username: 'RESTTEST2',
-          password: 'REST_TEST2'
-        };
-
-        testAdminClient.exchange.security.addUser(testRESTUser, function (e, result) {
-
-          if (e) return done(e);
-          testUserSaved = result;
-
-          testAdminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
-
-            if (e) return done(e);
-
-            login(function(e, response){
-
-              if (e) return done(e);
-
-              var token = response.data.token;
-              var restClient = require('restler');
-
-              var operation = {
-                parameters:{
-                  'opts':{
-                    number:1
-                  }
-                }
-              };
-
-              //this call fails
-              restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result){
-
-                expect(result.error).to.not.be(null);
-                expect(result.error.message).to.be('Access denied');
-
-                var operation = {
-                  parameters:{
-                    'opts':{
-                      number:1
-                    }
-                  }
-                };
-
-                //this call works
-                restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function(result){
-
-                  expect(result.error).to.be(null);
-                  expect(result.data.number).to.be(2);
-
-                  testGroup.permissions.methods['/testComponent/method2'] = {authorized:false};
-
-                  testAdminClient.exchange.security.updateGroup(testGroup, function (e, result) {
-
-                    if (e) return done(e);
-
-                    var operation = {
-                      parameters:{
-                        'opts':{
-                          number:1
-                        }
-                      }
-                    };
-
-                    //this call stops working
-                    restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function(result){
-
-                      expect(result.error).to.not.be(null);
-                      expect(result.error.message).to.be('Access denied');
-
-                      done();
-
-                    });
-                  });
-                });
-              });
-
-            }, testRESTUser);
-
-          });
-
-        });
-      });
-
-    }).catch(done);
+  xit('tests the rest component, ensures listing of ', function(done){
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });
