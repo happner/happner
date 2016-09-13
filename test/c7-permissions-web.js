@@ -86,7 +86,7 @@ describe('c7-permissions-web', function (done) {
 
   after(function (done) {
     mesh.stop({reconnect: false}, done);
-  })
+  });
 
   var http = require('http');
 
@@ -123,7 +123,7 @@ describe('c7-permissions-web', function (done) {
     var credentials = {
       username: '_ADMIN', // pending
       password: test_id
-    }
+    };
 
     adminClient.login(credentials).then(function () {
 
@@ -231,10 +231,7 @@ describe('c7-permissions-web', function (done) {
                     done();
 
                   });
-
                 });
-
-
               });
 
             }).catch(function (e) {

@@ -18,7 +18,8 @@ describe('7 - start and stop a persisted mesh', function () {
     secure: true,
     datalayer: {
       persist: true,
-      filename: dbFileName
+      filename: dbFileName,
+      adminPassword:"TEST7"
     },
     components: {
       'data': {}

@@ -477,7 +477,7 @@ describe('a2 - mesh awareness via $happn injection', function () {
             "methodWithHappnInMiddle": "methodWithHappnInMiddle"
           }
         }
-      })
+      });
       done()
     })
   });

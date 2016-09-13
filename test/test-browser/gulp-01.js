@@ -8,8 +8,6 @@ var mesh;
  * Run test once and exit
  */
 
-
-
 gulp.task('start', function (done) {
 
   function TestComponent() {
@@ -53,12 +51,11 @@ gulp.task('start', function (done) {
   var testComponent = new TestComponent();
 
   var meshConfig = {
-    name: 'Server',
-    secure: true,
-    encryptPayloads: true,
     datalayer: {
+      name: 'Server',
       secure: true,
-      adminPassword: 'xxx'
+      adminPassword: 'happn',
+      encryptPayloads: true
     },
     modules: {
       test: {
@@ -73,6 +70,7 @@ gulp.task('start', function (done) {
     services: {
       security: {
         config: {
+          adminPassword:'happn',
           keyPair: {
             privateKey: 'Kd9FQzddR7G6S9nJ/BK8vLF83AzOphW2lqDOQ/LjU4M=',
             publicKey: 'AlHCtJlFthb359xOxR5kiBLJpfoC2ZLPLWYHN3+hdzf2'
