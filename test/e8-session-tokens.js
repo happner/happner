@@ -79,8 +79,8 @@ describe('e8-session-tokens', function () {
 
   var ADMIN_PASSWORD = 'ADMIN_PASSWORD';
 
-  // require('benchmarket').start();
-  // after(require('benchmarket').store());
+  require('benchmarket').start();
+  after(require('benchmarket').store());
 
   this.timeout(120000);
 
@@ -156,12 +156,13 @@ describe('e8-session-tokens', function () {
                 user:{groups:{
                   "TRUSTED_DEVICES" : { $exists: true }
                 }},
-                type:{$eq:1} //stateful connected device
+                type:{$eq:0} //stateless rest device
               }]},
             policy: {
               ttl: 4000,//stale after 4 seconds
               permissions:{//permissions that the holder of this token is limited, regardless of the underlying user
-                '/TRUSTED_DEVICES/*':{actions: ['*']}
+                '/_exchange/requests/e3b-test/testComponent/method3*':{actions: ['set']},
+                '/_exchange/responses/e3b-test/testComponent/method3*':{actions: ['on']}
               }
             }
           }
@@ -191,7 +192,7 @@ describe('e8-session-tokens', function () {
   //
   // });
 
-  xit('tests the rest component with a managed profile, ttl times out', function(done){
+  it('tests the rest component with a managed profile, ttl times out', function(done){
 
     this.timeout(8000);
 
@@ -262,8 +263,7 @@ describe('e8-session-tokens', function () {
 
                   restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result) {
 
-                    expect(result.message).to.be('Authorization failed');
-                    expect(result.error.toString()).to.be('Error: expired session token');
+                    expect(result.message).to.be('expired session token');
                     done();
                   });
 
@@ -293,14 +293,92 @@ describe('e8-session-tokens', function () {
     // });
   });
 
-  xit('tests the rest component with a managed profile, only able to access a trusted path', function(done){
+  it('tests the rest component with a managed profile, only able to access a trusted path', function(done){
 
+    this.timeout(8000);
+
+    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
+
+    var testGroupSaved;
+    var testUserSaved;
+
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: ADMIN_PASSWORD
+    };
+
+    var testGroup = {
+      name: 'TRUSTED_DEVICES',
+      permissions: {
+        methods: {
+          '/remoteMesh/remoteComponent/remoteFunction':{authorized:true},
+          '/testComponent/method2':{authorized:true}
+        },
+        web: {
+          '/rest/describe':{actions: ['get'], description: 'rest describe permission'},
+          '/rest/api':{actions: ['post'], description: 'rest post permission'}
+        }
+      }
+    };
+
+    testAdminClient.login(credentials).then(function () {
+
+      testAdminClient.exchange.security.addGroup(testGroup, function (e, result) {
+
+        if (e) return done(e);
+
+        testGroupSaved = result;
+
+        var testRESTUser = {
+          username: 'RESTTEST3',
+          password: 'REST_TEST2'
+        };
+
+        testAdminClient.exchange.security.addUser(testRESTUser, function (e, result) {
+
+          if (e) return done(e);
+          testUserSaved = result;
+
+          testAdminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+
+            if (e) return done(e);
+
+            login(function(e, result){
+
+              if (e) return done(e);
+
+              var restClient = require('restler');
+
+              var operation = {
+                parameters:{
+                  'opts':{'number':1}
+                }
+              };
+
+              var token =  result.data.token;
+
+              restClient.postJson('http://localhost:10000/rest/method/testComponent/method3?happn_token=' + token, operation).on('complete', function(result){
+
+                expect(result.data.number).to.be(2);
+
+                setTimeout(function(){
+
+                  restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function(result) {
+
+                    expect(result.message).to.be('token permissions limited');
+                    done();
+                  });
+
+                }, 500);
+
+              });
+            }, testRESTUser);
+          });
+        });
+      });
+    }).catch(done);
   });
 
-  xit('tests the rest component, ensures listing of ', function(done){
-
-  });
-
-  //require('benchmarket').stop();
+  require('benchmarket').stop();
 
 });

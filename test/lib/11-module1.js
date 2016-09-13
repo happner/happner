@@ -12,6 +12,6 @@ Module1.prototype.stop = function () {
   // console.log('stop', this.$happn.config);
 }
 
-Module1.prototype.getThingFromConfig = function ($happn, callback) {
+Module1.prototype.getThingFromConfig = function ($happn, $origin, callback) {
   callback(null, $happn.config.configThing);
 }

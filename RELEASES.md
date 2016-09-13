@@ -342,10 +342,21 @@
 
 - fix crash in win32 after terminal removed
 
-1.20.0 2016-08-14
+
+1.19.3 2016-09-05
 -----------------
 
-- updated to happn 2.11.0
+- bypass exchange messenger on calls to local components
+- fix injection misalignment when injecting $origin before $happn
+
+1.20.0 2016-09-13
+-----------------
+
+- updated to happn 2.13.5
 - $origin on secured web requests
 - REST component
+- fix #183
+- Session management
+
+
 

@@ -13,7 +13,7 @@ describe('01_browsertest_encryptedpayloads', function () {
       secure: true
     });
 
-    client.login({username: '_ADMIN', password: 'happn'}).then(done).catch(done);
+    client.login({username: '_ADMIN', password: 'xxx'}).then(done).catch(done);
 
   });
 

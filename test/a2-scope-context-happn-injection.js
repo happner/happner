@@ -173,7 +173,7 @@ describe('a2 - mesh awareness via $happn injection', function () {
   });
 
 
-  it('leaves happn out of the description when defaulting method parameters', function (done) {
+  it('leaves happn and origin out of the description when defaulting method parameters', function (done) {
     var meshes = this.meshes;
     meshes[0]._mesh.description.components.component1.methods.getThingFromConfig.should.eql [
     {name: 'callback'}
