@@ -155,7 +155,7 @@ describe('e9_session_management', function () {
 
                 if (e) return callback(e);
                 expect(list.length <= 3).to.be(true);
-                
+
                 clientInstance.exchange.security.revokeSession(newInstance.data.session, 'APP', function(e){
 
                   if (e) return callback(e);
