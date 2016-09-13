@@ -352,11 +352,16 @@
 1.20.0 2016-09-13
 -----------------
 
-- updated to happn 2.13.5
+- updated to happn 2.13.0
 - $origin on secured web requests
 - REST component
 - fix #183
 - Session management
+
+1.20.1 2016-09-13
+-----------------
+
+- updated to happn 2.13.2
 
 
 
