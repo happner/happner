@@ -136,40 +136,36 @@ describe('e8-session-tokens', function () {
         secure:true,
         adminPassword: ADMIN_PASSWORD,
         port: 10000,
-        services:{
-          security:{
-            profiles:[
-              {
-                name:"rest-device",
-                session:{
-                  $and:[{ //filter by the security properties of the session - check if this session user belongs to a specific group
-                    user:{groups:{
-                      "REST_DEVICES" : { $exists: true }
-                    }},
-                    type:{$eq:0} //token stateless
-                  }]},
-                policy: {
-                  ttl: '2 seconds'//stale after 2 seconds
-                }
-              },{
-                name:"trusted-device",
-                session:{
-                  $and:[{ //filter by the security properties of the session, so user, groups and permissions
-                    user:{groups:{
-                      "TRUSTED_DEVICES" : { $exists: true }
-                    }},
-                    type:{$eq:1} //stateful connected device
-                  }]},
-                policy: {
-                  ttl: 4000,//stale after 4 seconds
-                  permissions:{//permissions that the holder of this token is limited, regardless of the underlying user
-                    '/TRUSTED_DEVICES/*':{actions: ['*']}
-                  }
-                }
+        profiles:[
+          {
+            name:"rest-device",
+            session:{
+              $and:[{ //filter by the security properties of the session - check if this session user belongs to a specific group
+                user:{groups:{
+                  REST_DEVICES : { $exists: true }
+                }},
+                type:{$eq:0} //token stateless
+              }]},
+            policy: {
+              ttl: '2 seconds'//stale after 2 seconds
+            }
+          },{
+            name:"trusted-device",
+            session:{
+              $and:[{ //filter by the security properties of the session, so user, groups and permissions
+                user:{groups:{
+                  "TRUSTED_DEVICES" : { $exists: true }
+                }},
+                type:{$eq:1} //stateful connected device
+              }]},
+            policy: {
+              ttl: 4000,//stale after 4 seconds
+              permissions:{//permissions that the holder of this token is limited, regardless of the underlying user
+                '/TRUSTED_DEVICES/*':{actions: ['*']}
               }
-            ]
+            }
           }
-        }
+        ]
       },
       modules: {
         'testComponent': {
@@ -197,20 +193,104 @@ describe('e8-session-tokens', function () {
 
   xit('tests the rest component with a managed profile, ttl times out', function(done){
 
-    var restClient = require('restler');
+    this.timeout(8000);
 
-    login(function(e, result){
+    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
 
-      if (e) return done(e);
+    var testGroupSaved;
+    var testUserSaved;
 
-      restClient.get('http://localhost:10000/rest/describe?happn_token=' + result.data.token).on('complete', function(result){
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: ADMIN_PASSWORD
+    };
 
-        expect(result.data['/testComponent/method1']).to.not.be(null);
-        expect(result.data['/testComponent/method2']).to.not.be(null);
+    var testGroup = {
+      name: 'REST_DEVICES',
+      permissions: {
+        methods: {
+          '/remoteMesh/remoteComponent/remoteFunction':{authorized:true},
+          '/testComponent/method1':{authorized:true}
+        },
+        web: {
+          '/rest/describe':{actions: ['get'], description: 'rest describe permission'},
+          '/rest/api':{actions: ['post'], description: 'rest post permission'}
+        }
+      }
+    };
+    testAdminClient.login(credentials).then(function () {
 
-        done();
+      testAdminClient.exchange.security.addGroup(testGroup, function (e, result) {
+
+        if (e) return done(e);
+
+        testGroupSaved = result;
+
+        var testRESTUser = {
+          username: 'RESTTEST2',
+          password: 'REST_TEST2'
+        };
+
+        testAdminClient.exchange.security.addUser(testRESTUser, function (e, result) {
+
+          if (e) return done(e);
+          testUserSaved = result;
+
+          testAdminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+
+            if (e) return done(e);
+
+            login(function(e, result){
+
+              if (e) return done(e);
+
+              var restClient = require('restler');
+
+              var operation = {
+                parameters:{
+                  'opts':{'number':1}
+                }
+              };
+
+              var token =  result.data.token;
+
+              restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result){
+
+                expect(result.data.number).to.be(2);
+
+                setTimeout(function(){
+
+                  restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result) {
+
+                    expect(result.message).to.be('Authorization failed');
+                    expect(result.error.toString()).to.be('Error: expired session token');
+                    done();
+                  });
+
+                }, 2100);
+
+              });
+            }, testRESTUser);
+          });
+        });
       });
-    });
+    }).catch(done);
+
+
+    // var restClient = require('restler');
+    //
+    // login(function(e, result){
+    //
+    //   if (e) return done(e);
+    //
+    //   restClient.get('http://localhost:10000/rest/describe?happn_token=' + result.data.token).on('complete', function(result){
+    //
+    //     expect(result.data['/testComponent/method1']).to.not.be(null);
+    //     expect(result.data['/testComponent/method2']).to.not.be(null);
+    //
+    //     done();
+    //   });
+    // });
   });
 
   xit('tests the rest component with a managed profile, only able to access a trusted path', function(done){

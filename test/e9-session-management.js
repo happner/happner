@@ -155,7 +155,7 @@ describe('e9_session_management', function () {
 
                 if (e) return callback(e);
                 expect(list.length <= 3).to.be(true);
-
+                
                 clientInstance.exchange.security.revokeSession(newInstance.data.session, 'APP', function(e){
 
                   if (e) return callback(e);
@@ -169,7 +169,7 @@ describe('e9_session_management', function () {
                       newInstance.exchange.security.listActiveSessions(function(err, list){
 
                         if (!err) return callback(new Error('this was not meant to happn'));
-                        expect(err.toString()).to.be('Error: session with id ' + newInstance.data.session.id + ' has been revoked');
+                        expect(err.toString()).to.be('AccessDenied: unauthorized');
 
                         disconnectClient(newInstance, callback);
 

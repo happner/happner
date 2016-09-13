@@ -53,7 +53,7 @@
     "diskspace": "0.1.7",
     "fs-extra": "0.24.0",
     "glob": "5.0.15",
-    "happn": "2.13.4-DEV",
+    "happn": "2.13.5",
     "happn-logger": "0.0.2",
     "happner-terminal": "0.0.7",
     "later": "^1.2.0",
