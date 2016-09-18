@@ -45,8 +45,12 @@ __something.html__
         // username: 'username', // pending
         // password: 'password', // pending
       }
-
-      client.login(credentials); // .then(function() {... etc.
+      
+      // login with callback
+      client.login(credentials, function(e) { //...etc
+      
+      // or login with promise
+      client.login(credentials); // .then(function() { //... etc.
 
 
       client.on('login/allow', function() {

@@ -97,7 +97,6 @@ describe('f2-client-disconnection', function () {
   });
 
   it.only('tests the client disconnection with callback login', function (done) {
-
     this.timeout(10000);
 
     var packetsIn = [];
