@@ -62,7 +62,6 @@ describe('f2-client-disconnection', function () {
     startMesh(middleware, function(e){
 
       if (e) return done(e);
-
       done();
 
     });

@@ -95,7 +95,7 @@ describe('f1-datalayer-transform-middleware', function () {
 
     var spyConfig = {
 
-      suppressPrint:false,
+      suppressPrint:true,
 
       log:function(direction, packet){
 

@@ -362,6 +362,5 @@
 -----------------
 
 - updated to happn 2.13.2
-
-
+- added MeshClient.login callback in addition to promise
 
