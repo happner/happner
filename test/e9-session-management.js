@@ -2,7 +2,7 @@ describe('e9_session_management', function () {
 
   require('benchmarket').start();
 
-  //after(require('benchmarket').store());
+  after(require('benchmarket').store());
 
   var expect = require('expect.js');
   var Mesh = require('../');
