@@ -89,5 +89,34 @@ describe('d7 - Issue #113 - Event off by handle', function () {
     }
   });
 
+  it('02 - should subscribe to an event then unsubscribe by path', function (done) {
+    var event_count = 0;
+    var path = "test2/path";
+    var handle = null;
+
+    mesh.event.data.on(path, event_handler, function (err, _handle) {
+      should.not.exist(err);
+      handle = _handle;
+
+      mesh.exchange.data.set(path, 10);
+    });
+
+    function event_handler(message, _meta) {
+      event_count++;
+
+      mesh.event.data.offPath(path, function (err) {
+        should.not.exist(err);
+        mesh.exchange.data.set(path, event_count, function () {
+          setTimeout(checkCount, 500);
+        });
+      })
+    }
+
+    function checkCount() {
+      event_count.should.be.eql(1);
+      done();
+    }
+  });
+
 
 });

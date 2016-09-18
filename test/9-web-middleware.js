@@ -1,17 +1,15 @@
 /**
  * Created by Johan on 10/14/2015.
  */
-
-// Uses unit test 2 modules
-var should = require('chai').should();
-var Mesh = require('../');
-var http = require('http');
-
-
 describe('9 - tests that we can add middleware before a static', function (done) {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
+
+  // Uses unit test 2 modules
+  var should = require('chai').should();
+  var Mesh = require('../');
+  var http = require('http');
 
   this.timeout(120000);
 
@@ -60,7 +58,7 @@ describe('9 - tests that we can add middleware before a static', function (done)
 
   after(function (done) {
     this.mesh.stop({reconnect: false}, done);
-  })
+  });
 
 
   it('can get index.html that middleware renames to index.htm', function (done) {

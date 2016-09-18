@@ -342,8 +342,25 @@
 
 - fix crash in win32 after terminal removed
 
+
 1.19.3 2016-09-05
 -----------------
 
 - bypass exchange messenger on calls to local components
 - fix injection misalignment when injecting $origin before $happn
+
+1.20.0 2016-09-13
+-----------------
+
+- updated to happn 2.13.0
+- $origin on secured web requests
+- REST component
+- fix #183
+- Session management
+
+1.20.1 2016-09-13
+-----------------
+
+- updated to happn 2.13.2
+- added MeshClient.login callback in addition to promise
+
