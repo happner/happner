@@ -12,7 +12,7 @@ describe('f2-client-disconnection', function () {
 
   var adminClient = new Mesh.MeshClient({secure: true, port: 8884,
     reconnect:{
-      max:2000 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
+      max:500 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
     }
   });
 
@@ -35,13 +35,38 @@ describe('f2-client-disconnection', function () {
 
       if (e) return callback(e);
       mesh = instance;
+
       callback();
 
     });
   };
 
+  var packetsIn = [];
+  var packetsOut = [];
+
   before(function (done) {
-    done();
+
+    var spyConfig = {
+
+      suppressPrint:true,
+
+      log:function(direction, packet){
+
+        if (direction == 'incoming') packetsIn.push(packet);
+        if (direction == 'outgoing') packetsOut.push(packet);
+
+      }
+    };
+
+    var middleware = [{path:'./transform-message-spy', options:spyConfig}];
+    startMesh(middleware, function(e){
+
+      if (e) return done(e);
+
+      done();
+
+    });
+
   });
 
   after(function (done) {
@@ -52,99 +77,58 @@ describe('f2-client-disconnection', function () {
 
     this.timeout(10000);
 
-    var packetsIn = [];
-    var packetsOut = [];
-
-    var spyConfig = {
-
-      suppressPrint:true,
-
-      log:function(direction, packet){
-
-        if (direction == 'incoming') packetsIn.push(packet);
-        if (direction == 'outgoing') packetsOut.push(packet);
-
-      }
-    };
-
-    var middleware = [{path:'./transform-message-spy', options:spyConfig}];
-
-    startMesh(middleware, function(e){
-      if (e) return done(e);
-
-      adminClient
-        .login({username: '_ADMIN', password: test_id})
-        .then(finishTest())
-        .catch(done);
-    });
-
     var finishTest = function(){
 
       adminClient.disconnect(function(e){
 
         if (e) return done(e);
+
         packetsIn = [];
 
         setTimeout(function(){
 
-          console.log('packetsIn:::', packetsIn);
+          expect(packetsIn.length).to.be(0);
           done();
 
         }, 5000);
-
       });
     };
+
+    adminClient
+      .login({username: '_ADMIN', password: test_id})
+      .then(finishTest)
+      .catch(done);
+
+
   });
 
-  it.only('tests the client disconnection with callback login', function (done) {
+  it('tests the client disconnection with promise', function (done) {
 
     this.timeout(10000);
 
-    var packetsIn = [];
-    var packetsOut = [];
+    var completeDisconnect = function(e){
 
-    var spyConfig = {
-
-      suppressPrint:true,
-
-      log:function(direction, packet){
-
-        if (direction == 'incoming') packetsIn.push(packet);
-        if (direction == 'outgoing') packetsOut.push(packet);
-
-      }
-    };
-
-    var middleware = [{path:'./transform-message-spy', options:spyConfig}];
-
-    startMesh(middleware, function(e){
       if (e) return done(e);
 
-      adminClient
-        .login({username: '_ADMIN', password: test_id}, function(e){
+      packetsIn = [];
 
-          if (e) return done(e);
-          finishTest();
+      setTimeout(function(){
 
-        });
-    });
+        expect(packetsIn.length).to.be(0);
+        done();
+
+      }, 5000);
+
+    };
 
     var finishTest = function(){
-
-      adminClient.disconnect(function(e){
-
-        if (e) return done(e);
-        packetsIn = [];
-
-        setTimeout(function(){
-
-          console.log('packetsIn:::', packetsIn);
-          done();
-
-        }, 5000);
-
-      });
+      adminClient.disconnect().then(completeDisconnect).catch(done);
     };
+
+    adminClient
+      .login({username: '_ADMIN', password: test_id})
+      .then(finishTest)
+      .catch(done);
   });
 
   require('benchmarket').stop();
