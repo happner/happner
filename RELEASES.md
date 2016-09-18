@@ -358,9 +358,10 @@
 - fix #183
 - Session management
 
-1.20.1 2016-09-13
+1.20.1 2016-09-18
 -----------------
 
-- updated to happn 2.13.2
+- updated to happn 2.14.1
 - added MeshClient.login callback in addition to promise
+- added tests demonstrating client disconnect
 
