@@ -11,8 +11,8 @@ describe('f2-client-disconnection', function () {
   var mesh;
 
   var adminClient = new Mesh.MeshClient({secure: true, port: 8884,
-    reconnect:{
-      max:2000 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
+    reconnect: {
+      max: 2000
     }
   });
 
@@ -74,7 +74,7 @@ describe('f2-client-disconnection', function () {
 
       adminClient
         .login({username: '_ADMIN', password: test_id})
-        .then(finishTest())
+        .then(finishTest)
         .catch(done);
     });
 
@@ -97,6 +97,7 @@ describe('f2-client-disconnection', function () {
   });
 
   it.only('tests the client disconnection with callback login', function (done) {
+
     this.timeout(10000);
 
     var packetsIn = [];
