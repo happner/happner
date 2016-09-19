@@ -17,7 +17,7 @@ restClient.postJson('http://localhost:10000/rest/login', operation).on('complete
 
   var token = result.data.token;
   
-  //you can get a description o fthe services
+  //you can get a description of the services
   
    restClient.get('http://localhost:10000/rest/describe?happn_token=' + token).on('complete', function(result){
 
@@ -27,27 +27,22 @@ restClient.postJson('http://localhost:10000/rest/login', operation).on('complete
       done();
     });
     
-    // or call a component over the exchange, the operation JSON contains a URI
-    // for the route to the exchange method, and also contains a set of parameters 
-    // that are named to match the parameters of the remote exchange method
+    // or call a component over the exchange, the operation contains the parameters for the method
+    // methods are called via the URI /rest/method/[component name]/[method name]
     
-    var operation = {
-        uri:'/remoteMesh/remoteComponent/remoteFunction',
-        parameters:{
-          'one':'one',
-          'two':'two',
-          'three':'three'
-        }
-      };
-      
-
-      restClient.postJson('http://localhost:10000/rest/api?happn_token=' + token, operation).on('complete', function(result){
-
-        expect(result.message).to.be("Call successful");
-        expect(result.data).to.be({"test":"ok"});
-
-        done();
-      });
+     var restClient = require('restler');
+    
+        var operation = {
+          parameters:{
+            'opts':{'number':1}
+          }
+        };
+        restClient.postJson('http://localhost:10000/rest/method/testComponent/testMethod', operation).on('complete', function(result){
+    
+          expect(result).to.be(3);
+ 
+          done();
+        });
 
 });
 
