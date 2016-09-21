@@ -51,10 +51,10 @@ gulp.task('start', function (done) {
   var testComponent = new TestComponent();
 
   var meshConfig = {
+    name: 'Server',
     datalayer: {
-      name: 'Server',
       secure: true,
-      adminPassword: 'happn',
+      adminPassword: 'xxx',
       encryptPayloads: true
     },
     modules: {
@@ -65,17 +65,6 @@ gulp.task('start', function (done) {
     components: {
       test: {
         moduleName: 'test'
-      }
-    },
-    services: {
-      security: {
-        config: {
-          adminPassword:'happn',
-          keyPair: {
-            privateKey: 'Kd9FQzddR7G6S9nJ/BK8vLF83AzOphW2lqDOQ/LjU4M=',
-            publicKey: 'AlHCtJlFthb359xOxR5kiBLJpfoC2ZLPLWYHN3+hdzf2'
-          }
-        }
       }
     }
   };
