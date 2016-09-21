@@ -129,13 +129,9 @@ describe('b4 - component start and validation -', function () {
 
       if (e) return done(e);
 
-      //console.log(permissions);
-
       expect(permissions.events != undefined).to.be(true);
       expect(permissions.methods != undefined).to.be(true);
       expect(permissions.web != undefined).to.be(true);
-
-      //console.log(permissions.methods['/b4_permissions_translation/SecuredComponent/*']);
 
       expect(permissions.methods['/b4_permissions_translation/SecuredComponent/*'].authorized).to.be(true);
       expect(permissions.methods['/b4_permissions_translation/SecuredComponent/method1'].authorized).to.be(true);

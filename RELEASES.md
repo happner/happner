@@ -365,3 +365,8 @@
 - added MeshClient.login callback in addition to promise
 - added tests demonstrating client disconnect
 
+1.21.0 2016-09-21
+-----------------
+
+- updated happn 2.15.1
+
