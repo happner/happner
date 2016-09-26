@@ -370,3 +370,10 @@
 
 - updated happn 2.15.1
 
+1.21.1 2016-09-26
+-----------------
+
+- neatened up some code
+- updated to happn 2.15.4
+
+

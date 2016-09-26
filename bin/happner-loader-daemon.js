@@ -3,10 +3,7 @@ var commander = require('commander');
 var trySend = function (code, data) {
   try {
     var message = code;
-
-    if (data)
-      message = message + ":::" + JSON.stringify(data);
-
+    if (data) message = message + ":::" + JSON.stringify(data);
     process.send(message);
   } catch (e) {
     //do nothing
@@ -45,8 +42,7 @@ try {
     }
   });
 
-  if (commander.conf)
-    __config = require(commander.conf);
+  if (commander.conf) __config = require(commander.conf);
 
   __config.deferListen = true;
 
@@ -60,8 +56,7 @@ try {
 
   happner.create(__config, function (e, mesh) {
 
-    if (e)
-      return trySend('strt-err', e.toString());
+    if (e) return trySend('strt-err', e.toString());
 
     __mesh = mesh;
     trySend('strt-rdy');
