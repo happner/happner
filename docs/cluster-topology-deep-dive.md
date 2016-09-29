@@ -1063,7 +1063,7 @@ $happn.exchange.componentX({sticky: true}).method();
 I suggest `sticky` one for good reason. My biggest fear in this whole endeavour is the potentially unrealised
 extent of the difficulty in achieving component designs that are both functional AND cluster friendly.
 
-And what i mean by that is `this`. Looking through my own work i find `this` everywhere. 
+And what i mean by that is `this`. Looking through my own work i find `this` used everywhere. 
  
 For example the act of calling `exchange.myComponent.ready(params1)` brings about a co-mingling between
 `params1` and `this` in preparation for all subsequent calls to `exchange.myComponent.action(params2)`.
@@ -1084,11 +1084,11 @@ Possible solution:
 
 ```javascript
 $happn.myComponent.$reconnected(function() {
-  $happn.myComponent.ready(params1);
+  $happn.exchange.myComponent.ready(params1);
 });
 
-$happn.myComponent.ready(params1);
-$happn.myComponent.action(params2);
+$happn.exchange.myComponent.ready(params1);
+$happn.exchange.myComponent.action(params2);
 ```
 
 But how do we spread all the `stickies` evenly throughout the cluster? Tricky, but solvable.
