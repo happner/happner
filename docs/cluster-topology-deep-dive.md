@@ -348,7 +348,7 @@ The solution below solves for both. And the same implementation would need to be
 * each node as master of its own events
 
 
-### Solution 3: Work It, Flip it, And reverse it!
+### Solution 3: ...reverse it!
 
 Event DJ, [please pick up your phone, I'm on the request line!](https://www.youtube.com/watch?v=UODX_pYpVxk)
 
