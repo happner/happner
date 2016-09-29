@@ -399,10 +399,10 @@ Now we can emit to only ONE `customerNotifier` by broadcasting `/10-0-0-2/device
 
 Then we also need to emit to all instances of `browserNotifier` by broadcasting all of:
 
-`/10-0-0-1/deviceManager/alert`<\br>
-`/10-0-0-2/deviceManager/alert`<\br>
-`/10-0-0-3/deviceManager/alert`<\br>
-`/10-0-0-4/deviceManager/alert`<\br>
+`/10-0-0-1/deviceManager/alert`<\ br>
+`/10-0-0-2/deviceManager/alert`<\ br>
+`/10-0-0-3/deviceManager/alert`<\ br>
+`/10-0-0-4/deviceManager/alert`<\ br>
 
 This can be simplified by introducing support for emitting to wildcards in happn as suggested by Simon,
 but underneath it will still be replicating cluster-wide, just slightly differently:
