@@ -388,12 +388,12 @@ Lets say the subscribing components are spread among 4 remote mesh nodes
   }
 ```
 
-Now if we emit `deviceManager/alert` as is then both instances of `customerNotifier` notifier will receive it
-without any way to honour the `{any: true}`.
+Now if we emit `deviceManager/alert` as is then all instances of `customerNotifier` notifier will receive it
+without any way to honour the `{any: true}` that declared our intent for it to go to only one.
 
 In order to resolve this problem we need to direct the event to correct mesh node. With vanilla pubsub this
 will require that events also contain the target mesh node's name in their path. And consequently subscribers
-will need to subscribe with their mesh name in the path.
+will need to subscribe with their own mesh name in the path.
 
 Now we can emit to only ONE `customerNotifier` by broadcasting `/10-0-0-2/deviceManager/alert`.
 
