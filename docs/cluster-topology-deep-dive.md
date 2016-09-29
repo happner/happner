@@ -152,7 +152,7 @@ There is one problem...
 Now we have a situation where the event needs to be emitted to:
  
 * **exactly one** `customerNotifier` (to prevent the sending of 10 SMS messages)
-* **all of** the `browserNotifier`s.
+* **all of** the `browserNotifier`s. (to find all the browsers that need a popup) 
 
 Further specifying the targets in the `$happn.emit()` will require pre-knowledge at implementation time of
 which remote components will be subscribing. This is not practical.
