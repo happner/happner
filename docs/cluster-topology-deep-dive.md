@@ -399,7 +399,7 @@ Now we can emit to only ONE `customerNotifier` by broadcasting `/10-0-0-2/device
 
 Then we also need to emit to all instances of `browserNotifier` by broadcasting all of:
 
-`/10-0-0-1/deviceManager/alert`<\ br>
+`/10-0-0-1/deviceManager/alert`<br/>
 `/10-0-0-2/deviceManager/alert`<\ br>
 `/10-0-0-3/deviceManager/alert`<\ br>
 `/10-0-0-4/deviceManager/alert`<\ br>
