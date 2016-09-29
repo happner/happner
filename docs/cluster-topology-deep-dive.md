@@ -37,13 +37,13 @@ reconfiguring all cluster nodes using the component.**
 ```javascript
 
 // got this
-$happn.event.endpointName.componentName.on('...
+$happn.event.endpointName.componentName.on('...', 
 
 // want this
-$happn.event.componentName.on('...
+$happn.event.componentName.on('...', 
 
 // getting this
-$happn.event.domainName.componentName.on('...
+$happn.event.domainName.componentName.on('...',
 
 ```
 
