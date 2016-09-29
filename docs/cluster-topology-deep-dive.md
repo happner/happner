@@ -1083,7 +1083,7 @@ that we'll need a way to repeat `ready()` when we get switched to another node.
 Possible solution:
 
 ```javascript
-$happn.myComponent.$reconnected(function() {
+$happn.exchange.myComponent.$reconnected(function() {
   $happn.exchange.myComponent.ready(params1);
 });
 
