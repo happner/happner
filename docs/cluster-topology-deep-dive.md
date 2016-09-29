@@ -400,17 +400,17 @@ Now we can emit to only ONE `customerNotifier` by broadcasting `/10-0-0-2/device
 Then we also need to emit to all instances of `browserNotifier` by broadcasting all of:
 
 `/10-0-0-1/deviceManager/alert`<br/>
-`/10-0-0-2/deviceManager/alert`<\ br>
-`/10-0-0-3/deviceManager/alert`<\ br>
-`/10-0-0-4/deviceManager/alert`<\ br>
+`/10-0-0-2/deviceManager/alert`<br/>
+`/10-0-0-3/deviceManager/alert`<br/>
+`/10-0-0-4/deviceManager/alert`<br/>
 
 This can be simplified by introducing support for emitting to wildcards in happn as suggested by Simon,
 but underneath it will still be replicating cluster-wide, just slightly differently:
 
-`/*/deviceManager/alert` (sent to 10-0-0-1)<\br>
-`/*/deviceManager/alert` (sent to 10-0-0-2)<\br>
-`/*/deviceManager/alert` (etc.)<\br>
-`/*/deviceManager/alert`<\br>
+`/*/deviceManager/alert` (sent to 10-0-0-1)<br/>
+`/*/deviceManager/alert` (sent to 10-0-0-2)<br/>
+`/*/deviceManager/alert` (etc.)<br/>
+`/*/deviceManager/alert`<br/>
 
 And now that we're sending the event to both `10-0-0-1` and `10-0-0-2` we have a new problem in that
 both `customerNotifier`s are receiving it, but only one must process it, the receiving end has no way
@@ -422,19 +422,19 @@ obligations.
 
 Now, one `deviceManager/alert` needs to be routed from among 8 subscriptions.
 
-`/10-0-0-1/customerNotifier/deviceManager/alert`<\br>
-`/10-0-0-2/customerNotifier/deviceManager/alert` (emitter eliminates this one somehow) <\br>
-`/10-0-0-3/customerNotifier/deviceManager/alert` (and this one)<\br>
-`/10-0-0-4/customerNotifier/deviceManager/alert` (and this one)<\br>
-`/10-0-0-1/browserNotifier/deviceManager/alert`<\br>
-`/10-0-0-2/browserNotifier/deviceManager/alert`<\br>
-`/10-0-0-3/browserNotifier/deviceManager/alert`<\br>
-`/10-0-0-4/browserNotifier/deviceManager/alert`<\br>
+`/10-0-0-1/customerNotifier/deviceManager/alert`<br/>
+`/10-0-0-2/customerNotifier/deviceManager/alert` (emitter eliminates this one somehow) <br/>
+`/10-0-0-3/customerNotifier/deviceManager/alert` (and this one)<br/>
+`/10-0-0-4/customerNotifier/deviceManager/alert` (and this one)<br/>
+`/10-0-0-1/browserNotifier/deviceManager/alert`<br/>
+`/10-0-0-2/browserNotifier/deviceManager/alert`<br/>
+`/10-0-0-3/browserNotifier/deviceManager/alert`<br/>
+`/10-0-0-4/browserNotifier/deviceManager/alert`<br/>
 
 Admittedly only 2 payloads are actually replicated cluster-wide.
 
-`/10-0-0-1/customerNotifier/deviceManager/alert`<\br>
-`/*/browserNotifier/deviceManager/alert`<\br>
+`/10-0-0-1/customerNotifier/deviceManager/alert`<br/>
+`/*/browserNotifier/deviceManager/alert`<br/>
 
 Not so bad...
 
