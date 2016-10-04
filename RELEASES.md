@@ -376,4 +376,9 @@
 - neatened up some code
 - updated to happn 2.15.4
 
+1.22.0 2016-10-04
+-----------------
+
+- updated to happn 2.15.5
+
 
