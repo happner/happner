@@ -5,7 +5,8 @@
 var path = require('path');
 var filename = path.basename(__filename);
 var should = require('chai').should();
-var Happner = require('../');
+var path = require('path');
+var Happner = require('..' + path.sep);
 
 describe(filename, function() {
 
