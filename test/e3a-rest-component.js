@@ -89,7 +89,7 @@ describe('e3a-rest-component', function () {
 
     var timedOut = setTimeout(function(){
       callback(new Error('remote mesh start timed out'));
-    },5000);
+    }, 60000);
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + REMOTE_MESH]);
@@ -102,7 +102,7 @@ describe('e3a-rest-component', function () {
 
         setTimeout(function(){
           callback();
-        },1000);
+        }, 1000);
       }
     });
   };
