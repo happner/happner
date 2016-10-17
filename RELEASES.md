@@ -395,3 +395,5 @@
 -----------------
 
 - fix for path sep in packager
+- added appveypr.yml
+- removed osx tests on travis
