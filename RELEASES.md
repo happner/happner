@@ -390,3 +390,8 @@
 -----------------
 
 - updated to happn 2.15.8
+
+1.22.3 2016-10-17
+-----------------
+
+- fix for path sep in packager
