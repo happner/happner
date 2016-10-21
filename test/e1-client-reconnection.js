@@ -10,15 +10,16 @@ describe('e1-client-reconnection', function () {
   var Mesh = require('../');
   var mesh;
 
-  var adminClient = new Mesh.MeshClient({secure: true, port: 8004,
-                                          reconnect:{
-                                            max:2000 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
-                                          }
-                                        });
+  var adminClient = new Mesh.MeshClient({
+    secure: true, port: 8004,
+    reconnect: {
+      max: 2000 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
+    }
+  });
 
   var test_id = Date.now() + '_' + require('shortid').generate();
 
-  var startMesh = function(callback){
+  var startMesh = function (callback) {
     Mesh.create({
       name: 'e1-client-reconnection',
       datalayer: {
@@ -29,7 +30,7 @@ describe('e1-client-reconnection', function () {
       components: {
         'data': {}
       }
-    }, function(e, instance){
+    }, function (e, instance) {
 
       if (e) return callback(e);
       mesh = instance;
@@ -39,7 +40,7 @@ describe('e1-client-reconnection', function () {
   };
 
   before(function (done) {
-    startMesh(function(e){
+    startMesh(function (e) {
       if (e) return done(e);
 
       adminClient
@@ -54,7 +55,7 @@ describe('e1-client-reconnection', function () {
 
   after(function (done) {
     if (__stopped) return done();
-    mesh.stop({reconnect:false},done);
+    mesh.stop({reconnect: false}, done);
   });
 
   var eventsToFire = {
@@ -77,10 +78,10 @@ describe('e1-client-reconnection', function () {
           return;
 
       eventsFired = true;
-      adminClient.exchange.data.set('/test/path', {test:'data'}, done);
+      adminClient.exchange.data.set('/test/path', {test: 'data'}, done);
     };
 
-    adminClient.exchange.data.set('/test/path', {test:'data'}, function(e){
+    adminClient.exchange.data.set('/test/path', {test: 'data'}, function (e) {
       if (e) return done(e);
 
       adminClient.on('reconnect/scheduled', function (evt, data) {
@@ -97,7 +98,7 @@ describe('e1-client-reconnection', function () {
       mesh.stop(function (e) {
         if (e) return done(e);
 
-        startMesh(function(e){
+        startMesh(function (e) {
           if (e) return done(e);
         })
 
@@ -111,7 +112,7 @@ describe('e1-client-reconnection', function () {
 
   it('tests the client reconnection configuration', function (done) {
 
-    adminClient.exchange.data.set('/test/path', {test:'data'}, function(e){
+    adminClient.exchange.data.set('/test/path', {test: 'data'}, function (e) {
 
       if (e) return done(e);
 
@@ -123,7 +124,7 @@ describe('e1-client-reconnection', function () {
 
         if (__doneMeasuring) return;
 
-        if (measuredCount == 0){
+        if (measuredCount == 0) {
           lastMeasurement = Date.now();
           return measuredCount++;
         }
@@ -136,11 +137,17 @@ describe('e1-client-reconnection', function () {
         // console.log('measuredCount:::',measuredCount);
         // console.log('measuredDifference:::',measuredDifference);
 
-        if (measuredCount == 4){
+        if (measuredCount == 4) {
           __doneMeasuring = true;
           var measuredAverage = measuredDifference / 3;
           //console.log('measured average:::', measuredAverage);
-          expect(measuredAverage < 3000).to.be(true);
+
+          // use try/catch to avoid process.exit (issue 222)
+          try {
+            expect(measuredAverage < 3300).to.be(true); // allow 10% grace for windows
+          } catch (e) {
+            return (done(e));
+          }
           done();
         }
       });
