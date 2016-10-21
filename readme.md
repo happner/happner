@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/happner.svg)](https://www.npmjs.com/package/happner) [![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner) [![Coverage Status](https://coveralls.io/repos/happner/happner/badge.svg?branch=develop&service=github)](https://coveralls.io/github/happner/happner?branch=master) [![David](https://img.shields.io/david/happner/happner.svg)]()
+[![npm](https://img.shields.io/npm/v/happner.svg)](https://www.npmjs.com/package/happner) [![Build Status](https://travis-ci.org/happner/happner.svg?branch=master)](https://travis-ci.org/happner/happner) [![Build status](https://ci.appveyor.com/api/projects/status/e5yrnt4fca59hksc/branch/master?svg=true)](https://ci.appveyor.com/project/happner/happner/branch/master)[![Coverage Status](https://coveralls.io/repos/happner/happner/badge.svg?branch=develop&service=github)](https://coveralls.io/github/happner/happner?branch=master) [![David](https://img.shields.io/david/happner/happner.svg)]()
 
 <img src="https://raw.githubusercontent.com/happner/happner-website/master/images/HAPPNER%20Logo.png" width="300"></img>
 
