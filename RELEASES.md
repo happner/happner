@@ -397,3 +397,9 @@
 - fix for path sep in packager
 - added appveypr.yml
 - removed osx tests on travis
+
+1.23.0 2016-10-20
+-----------------
+
+- REST now able to GET from a remote method, passing params through the query string
+

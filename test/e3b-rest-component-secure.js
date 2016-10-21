@@ -35,6 +35,12 @@ SeeAbove.prototype.method3 = function ($happn, $origin, opts, callback) {
   callback(null, opts);
 };
 
+SeeAbove.prototype.method4 = function ($happn, $origin, number, another, callback) {
+
+  callback(null, {product:parseInt(number) + parseInt(another)});
+};
+
+
 SeeAbove.prototype.synchronousMethod = function(opts, opts2){
   return opts + opts2;
 };
@@ -576,6 +582,51 @@ describe('e3b-rest-component-secure', function () {
     });
   });
 
+  it('tests getting an operation from a local method with a simple parameter set', function(done){
+
+    //TODO login function gives us a token, token is used in body of rest request
+
+    login(function(e, result){
+
+      if (e) return done(e);
+
+      var restClient = require('restler');
+
+      restClient.get('http://localhost:10000/rest/method/testComponent/method4?number=1&another=2&happn_token=' + result.data.token).on('complete', function(result){
+
+        expect(result.data.product).to.be(3);
+        done();
+      });
+
+    });
+  });
+
+  it('tests getting an operation from a local method with a serialized parameter', function(done){
+
+    login(function(e, result){
+
+      if (e) return done(e);
+
+      var restClient = require('restler');
+
+      var operation = {
+        parameters:{
+          "number":1,
+          "another":2
+        }
+      };
+
+      var encoded = encodeURIComponent(JSON.stringify(operation));
+
+      restClient.get('http://localhost:10000/rest/method/testComponent/method4?encoded_parameters=' + encoded + '&happn_token=' + result.data.token).on('complete', function(result){
+
+        expect(result.data.product).to.be(3);
+        done();
+      });
+
+    });
+  });
+
   it('tests posting an operation to the security component fails', function(done){
 
     //TODO login function gives us a token, token is used in body of rest request
@@ -691,7 +742,7 @@ describe('e3b-rest-component-secure', function () {
 
                 expect(result.data['/testComponent/method1']).to.not.be(null);
                 expect(result.data['/testComponent/method2']).to.be(undefined);
-                
+
                 expect(Object.keys(result.data).length).to.be(1);
 
                 var operation = {
