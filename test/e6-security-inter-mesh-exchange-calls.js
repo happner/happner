@@ -27,12 +27,15 @@ var SECURE = true;
 // DONE - from insecure mesh to secure mesh
 // TODO - from secure mesh to secure mesh
 
-describe(filename, function() {
+describe.skipWindows = (process.platform === 'win32') ? describe.skip : describe;
+
+// skip for issue 223
+describe.skipWindows(filename, function () {
 
   require('benchmarket').start();
   after(require('benchmarket').store());
 
-  before('start secureMesh', function(done) {
+  before('start secureMesh', function (done) {
     Happner.create({
       name: 'secureMesh',
       datalayer: {
@@ -43,18 +46,18 @@ describe(filename, function() {
       modules: {
         'service-name': {
           instance: {
-            method1: function(callback) {
+            method1: function (callback) {
               console.log('\nmethod is run, but callback goes nowhere\n');
               callback(null, 'service-name/method1 ok');
             },
-            method2: function(callback) {
+            method2: function (callback) {
               callback(null, 'service-name/method2 ok');
             }
           }
         },
         'x-service-name': {
           instance: {
-            method1: function(callback) {
+            method1: function (callback) {
               callback(null, 'x-service-nam/method1 ok');
             }
           }
@@ -64,7 +67,7 @@ describe(filename, function() {
         'service-name': {},
         'x-service-name': {}
       }
-    }).then(function(_mesh) {
+    }).then(function (_mesh) {
       secureMesh = _mesh;
 
       if (!SECURE) return done();
@@ -91,17 +94,17 @@ describe(filename, function() {
         security.addGroup(theGroup),
         security.addUser(theUser)
       ])
-        .spread(function(group, user) {
+        .spread(function (group, user) {
           return security.linkGroup(group, user);
         })
-        .then(function() {
+        .then(function () {
           done();
         });
 
     }).catch(done);
   });
 
-  after('stop mesh2', function(done) {
+  after('stop mesh2', function (done) {
     // fs.unlink(dbFileName2, function(e) {
     //   if (mesh2) return mesh2.stop({reconnect: false}, done);
     //   done();
@@ -110,8 +113,8 @@ describe(filename, function() {
     done();
   });
 
-  after('stop secureMesh', function(done) {
-    fs.unlink(dbFileName, function(e) {
+  after('stop secureMesh', function (done) {
+    fs.unlink(dbFileName, function (e) {
       // ignore e
       if (secureMesh) {
         return secureMesh.stop({reconnect: false}, done);
@@ -120,7 +123,7 @@ describe(filename, function() {
     })
   });
 
-  before('start mesh2', function(done) {
+  before('start mesh2', function (done) {
     Happner.create({
       port: 55001,
       // datalayer: {
@@ -139,20 +142,20 @@ describe(filename, function() {
           }
         }
       }
-    }).then(function(_mesh) {
+    }).then(function (_mesh) {
       mesh2 = _mesh;
       done();
     }).catch(done);
   });
 
 
-  xit('allows access to allowed function', function(done) {
+  xit('allows access to allowed function', function (done) {
     //
     // test times out... no callback from allowed method
     //                   (works if security is switched off)
     //
     mesh2.exchange.secureMesh['service-name'].method1()
-      .then(function(result) {
+      .then(function (result) {
         result.should.equal('service-name/method1 ok');
       })
       .then(done)
@@ -160,12 +163,12 @@ describe(filename, function() {
   });
 
 
-  it('denies access to denied function', function(done) {
+  it('denies access to denied function', function (done) {
     mesh2.exchange.secureMesh['service-name'].method2()
-      .then(function(result) {
+      .then(function (result) {
         throw new Error('should have been denied');
       })
-      .catch(function(e) {
+      .catch(function (e) {
         try {
           e.name.should.equal('AccessDenied');
           done();
@@ -176,13 +179,13 @@ describe(filename, function() {
   });
 
 
-  it('denies access to denied function with similar name to allowed function', function(done) {
+  it('denies access to denied function with similar name to allowed function', function (done) {
     // mesh2.exchange.secureMesh['service-name'].method1() // almost identical name is allowed
     mesh2.exchange.secureMesh['x-service-name'].method1() // but this should denied
-      .then(function(result) {
+      .then(function (result) {
         throw new Error('should have been denied');
       })
-      .catch(function(e) {
+      .catch(function (e) {
         try {
           e.name.should.equal('AccessDenied');
           done();
