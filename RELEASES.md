@@ -413,3 +413,8 @@
 
 - REST can now inject all parameters as a single object called $restParams (#228)
 - REST can inject the user that was logged in as $restOrigin (#229)
+
+1.24.1 2016-10-24
+-----------------
+
+- Change $restOrigin to $userSession

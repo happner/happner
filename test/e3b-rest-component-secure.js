@@ -40,8 +40,8 @@ SeeAbove.prototype.method4 = function ($happn, $origin, number, another, callbac
   callback(null, {product: parseInt(number) + parseInt(another)});
 };
 
-SeeAbove.prototype.method5 = function ($happn, $origin, $restOrigin, $restParams, callback) {
-  $restParams.$restOrigin = $restOrigin;
+SeeAbove.prototype.method5 = function ($happn, $origin, $userSession, $restParams, callback) {
+  $restParams.$userSession = $userSession;
   $restParams.$origin = $origin;
   callback(null, $restParams);
 };
@@ -918,10 +918,9 @@ describe('e3b-rest-component-secure', function () {
 
   });
 
-  it('passes params as an object $restParams and injects the $restOrigin as the rest user', function (done) {
+  it('passes params as an object $restParams and injects the $userSession as the rest user', function (done) {
 
     var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
-
 
     var testGroup = {
       name: 'RESTPARAMS',
@@ -984,7 +983,7 @@ describe('e3b-rest-component-secure', function () {
 
                   expect(result.data.userValue).to.eql(testUser.username);
                   expect(result.data.$origin.username).to.be('_ADMIN');
-                  expect(result.data.$restOrigin.username).to.be(testUser.username);
+                  expect(result.data.$userSession.username).to.be(testUser.username);
 
                   done();
                 });
