@@ -37,11 +37,17 @@ SeeAbove.prototype.method3 = function ($happn, $origin, opts, callback) {
 
 SeeAbove.prototype.method4 = function ($happn, $origin, number, another, callback) {
 
-  callback(null, {product:parseInt(number) + parseInt(another)});
+  callback(null, {product: parseInt(number) + parseInt(another)});
 };
 
+SeeAbove.prototype.method5 = function ($happn, $origin, $restOrigin, $restParams, callback) {
+  var expect = require('expect.js');
+  expect($origin.username).to.be('_ADMIN');
+  expect($restOrigin.username).to.be($restParams.userValue);
+  callback(null, $restParams);
+};
 
-SeeAbove.prototype.synchronousMethod = function(opts, opts2){
+SeeAbove.prototype.synchronousMethod = function (opts, opts2) {
   return opts + opts2;
 };
 
@@ -93,11 +99,11 @@ describe('e3b-rest-component-secure', function () {
   var mesh;
   var remote;
 
-  var startRemoteMesh = function(callback){
+  var startRemoteMesh = function (callback) {
 
-    var timedOut = setTimeout(function(){
+    var timedOut = setTimeout(function () {
       callback(new Error('remote mesh start timed out'));
-    },5000);
+    }, 5000);
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + REMOTE_MESH]);
@@ -108,9 +114,9 @@ describe('e3b-rest-component-secure', function () {
 
         clearTimeout(timedOut);
 
-        setTimeout(function(){
+        setTimeout(function () {
           callback();
-        },1000);
+        }, 1000);
       }
     });
   };
@@ -119,14 +125,14 @@ describe('e3b-rest-component-secure', function () {
 
     global.TESTING_E3B = true; //.............
 
-    startRemoteMesh(function(e){
+    startRemoteMesh(function (e) {
 
       if (e) return done(e);
 
       Mesh.create({
-        name:'e3b-test',
-        datalayer:{
-          secure:true,
+        name: 'e3b-test',
+        datalayer: {
+          secure: true,
           adminPassword: ADMIN_PASSWORD,
           port: 10000
         },
@@ -141,14 +147,14 @@ describe('e3b-rest-component-secure', function () {
         components: {
           'testComponent': {}
         },
-        endpoints:{
+        endpoints: {
           'remoteMesh': {  // remote mesh node
             config: {
-              secure:true,
+              secure: true,
               port: 10001,
               host: 'localhost',
-              username:'_ADMIN',
-              password:'happn'
+              username: '_ADMIN',
+              password: 'happn'
             }
           }
         }
@@ -159,7 +165,7 @@ describe('e3b-rest-component-secure', function () {
 
         if (err) return done(err);
 
-        mesh.exchange.remoteMesh.remoteComponent.remoteFunction('one','two','three', function(err, result){
+        mesh.exchange.remoteMesh.remoteComponent.remoteFunction('one', 'two', 'three', function (err, result) {
           if (err) return done(err);
           done();
         });
@@ -180,31 +186,29 @@ describe('e3b-rest-component-secure', function () {
   var happnUtils = require('../lib/system/utilities');
 
   var mock$Happn = {
-    datalayer:{
-
-    },
-    _mesh:{
-      utilities:happnUtils,
-      config:{
-        name:'e3b-test',
-        datalayer:{
-          secure:true,
+    datalayer: {},
+    _mesh: {
+      utilities: happnUtils,
+      config: {
+        name: 'e3b-test',
+        datalayer: {
+          secure: true,
           port: 10000
         }
       },
-      description:{
-        name:'e3b-test'
+      description: {
+        name: 'e3b-test'
       },
-      endpoints:{},
-      datalayer:{
-        server:{
-          services:{}
+      endpoints: {},
+      datalayer: {
+        server: {
+          services: {}
         }
       }
     },
-    exchange:{
-      testComponent:{
-        method1:function(opts, callback){
+    exchange: {
+      testComponent: {
+        method1: function (opts, callback) {
           opts.number++;
           callback(null, opts);
         }
@@ -213,25 +217,25 @@ describe('e3b-rest-component-secure', function () {
   };
 
   var mock$Origin = {
-    test:"data"
+    test: "data"
   };
 
   var mockResponse = {
-    writeHead:function(code, header){
-      this.header = {code:code, header:header};
+    writeHead: function (code, header) {
+      this.header = {code: code, header: header};
     }
   };
 
-  it('tests the rest components __respond method', function(done){
+  it('tests the rest components __respond method', function (done) {
 
     var RestModule = require('../lib/modules/rest/index.js');
     var restModule = new RestModule();
 
     var testStage = 'success';
 
-    mockResponse.end = function(responseString){
+    mockResponse.end = function (responseString) {
 
-      try{
+      try {
 
         if (testStage == "done") return;
 
@@ -239,17 +243,17 @@ describe('e3b-rest-component-secure', function () {
 
         //TODO: an unexpected GET or POST with a non-json content
 
-        if (testStage == 'success'){
+        if (testStage == 'success') {
 
           expect(response.message).to.be("test success response");
           expect(response.data.test).to.be("data");
           testStage = 'error';
 
-          restModule.__respond(mock$Happn, 'test success response', {"test":"data"}, new Error('a test error'), mockResponse);
+          restModule.__respond(mock$Happn, 'test success response', {"test": "data"}, new Error('a test error'), mockResponse);
 
         }
 
-        if (testStage == 'error'){
+        if (testStage == 'error') {
 
           expect(response.error).to.not.be(null);
           expect(response.error.message).to.be('a test error');
@@ -259,16 +263,16 @@ describe('e3b-rest-component-secure', function () {
           done();
         }
 
-      }catch(e){
+      } catch (e) {
         done(e);
       }
     };
 
-    restModule.__respond(mock$Happn, 'test success response', {"test":"data"}, null, mockResponse);
+    restModule.__respond(mock$Happn, 'test success response', {"test": "data"}, null, mockResponse);
 
   });
 
-  it('tests the rest components __parseBody method', function(done){
+  it('tests the rest components __parseBody method', function (done) {
 
     var RestModule = require('../lib/modules/rest/index.js');
     var restModule = new RestModule();
@@ -283,17 +287,17 @@ describe('e3b-rest-component-secure', function () {
     });
 
     request.write({
-      uri:'/testComponent/methodName1',
-      parameters:{
-        'opts':{
-          number:1
+      uri: '/testComponent/methodName1',
+      parameters: {
+        'opts': {
+          number: 1
         }
       }
     });
 
     request.end();
 
-    mockResponse.end = function(responseString){
+    mockResponse.end = function (responseString) {
       var response = JSON.parse(responseString);
 
       if (!response.error) return done(new Error('bad response expected error'));
@@ -301,7 +305,7 @@ describe('e3b-rest-component-secure', function () {
       done(new Error(response.error));
     };
 
-    restModule.__parseBody(request, mockResponse, mock$Happn, function(body){
+    restModule.__parseBody(request, mockResponse, mock$Happn, function (body) {
 
       expect(body).to.not.be(null);
       expect(body).to.not.be(undefined);
@@ -314,7 +318,7 @@ describe('e3b-rest-component-secure', function () {
 
   });
 
-  var mockLogin = function(restModule, done){
+  var mockLogin = function (restModule, done) {
 
     if (!mock$Happn._mesh.datalayer)
       mock$Happn._mesh.datalayer = {};
@@ -328,28 +332,28 @@ describe('e3b-rest-component-secure', function () {
     if (!mock$Happn._mesh.datalayer.server.services.security)
       mock$Happn._mesh.datalayer.server.services.security = {};
 
-    mock$Happn._mesh.datalayer.server.services.security.authorize = function(origin, accessPoint, action, callback){
-        try{
+    mock$Happn._mesh.datalayer.server.services.security.authorize = function (origin, accessPoint, action, callback) {
+      try {
 
-          expect(origin.test).to.be("data");
-          expect(action).to.be("set");
+        expect(origin.test).to.be("data");
+        expect(action).to.be("set");
 
-          callback();
-        }catch(e){
-          callback(e);
-        }
-      };
+        callback();
+      } catch (e) {
+        callback(e);
+      }
+    };
 
-    mock$Happn._mesh.datalayer.server.services.security.login = function(opts, callback){
-      try{
-        callback(null, {token:'test'});
-      }catch(e){
+    mock$Happn._mesh.datalayer.server.services.security.login = function (opts, callback) {
+      try {
+        callback(null, {token: 'test'});
+      } catch (e) {
         callback(e);
       }
     };
 
 
-    restModule.initialize(mock$Happn, function(e){
+    restModule.initialize(mock$Happn, function (e) {
 
       if (e) return done(e);
 
@@ -363,13 +367,13 @@ describe('e3b-rest-component-secure', function () {
       });
 
       request.write({
-        username:'_ADMIN',
-        password:ADMIN_PASSWORD
+        username: '_ADMIN',
+        password: ADMIN_PASSWORD
       });
 
       request.end();
 
-      mockResponse.end = function(responseString){
+      mockResponse.end = function (responseString) {
 
         var response = JSON.parse(responseString);
 
@@ -385,7 +389,7 @@ describe('e3b-rest-component-secure', function () {
     });
   };
 
-  it('tests the rest components login method', function(done){
+  it('tests the rest components login method', function (done) {
 
     var RestModule = require('../lib/modules/rest/index.js');
     var restModule = new RestModule();
@@ -394,27 +398,27 @@ describe('e3b-rest-component-secure', function () {
 
   });
 
-  var login = function(done, credentials){
+  var login = function (done, credentials) {
 
     var restClient = require('restler');
 
     var operation = {
-      username:'_ADMIN',
-      password:ADMIN_PASSWORD
+      username: '_ADMIN',
+      password: ADMIN_PASSWORD
     };
 
     if (credentials) operation = credentials;
 
-    restClient.postJson('http://localhost:10000/rest/login', operation).on('complete', function(result){
+    restClient.postJson('http://localhost:10000/rest/login', operation).on('complete', function (result) {
       if (result.error) return done(new Error(result.error.message));
       done(null, result);
     });
 
   };
 
-  it('tests the rest components login method over the wire', function(done){
+  it('tests the rest components login method over the wire', function (done) {
 
-    login(function(e, response){
+    login(function (e, response) {
       if (e) return done(e);
       expect(response.data.token).to.not.be(null);
       done();
@@ -422,30 +426,30 @@ describe('e3b-rest-component-secure', function () {
 
   });
 
-  it('tests the rest components authorize method, successful', function(done){
+  it('tests the rest components authorize method, successful', function (done) {
 
     var RestModule = require('../lib/modules/rest/index.js');
     var restModule = new RestModule();
 
     //$happn._mesh.datalayer.services.security
 
-    mockLogin(restModule, function(e){
+    mockLogin(restModule, function (e) {
 
       if (e) return done(e);
 
       //req, res, $happn, $origin, uri, successful
 
       mock$Happn._mesh.datalayer.server.services.security = {
-        authorize:function(origin, accessPoint, action, callback){
+        authorize: function (origin, accessPoint, action, callback) {
 
-          try{
+          try {
 
             expect(origin.test).to.be("data");
             expect(accessPoint).to.be("/_exchange/requests/e3b-test/test/method");
             expect(action).to.be("set");
 
             callback(null, true);
-          }catch(e){
+          } catch (e) {
             callback(e);
           }
         }
@@ -461,15 +465,15 @@ describe('e3b-rest-component-secure', function () {
       });
 
       request.write({
-        uri:'/testComponent/methodName1',
-        parameters:{
-          'opts':{
-            number:1
+        uri: '/testComponent/methodName1',
+        parameters: {
+          'opts': {
+            number: 1
           }
         }
       });
 
-      mockResponse.end = function(responseString){
+      mockResponse.end = function (responseString) {
         done(new Error('this was not meant to happn: ' + responseString));
       };
 
@@ -479,15 +483,15 @@ describe('e3b-rest-component-secure', function () {
     });
   });
 
-  it('tests the rest components describe method over the api', function(done){
+  it('tests the rest components describe method over the api', function (done) {
 
     var restClient = require('restler');
 
-    login(function(e, result){
+    login(function (e, result) {
 
       if (e) return done(e);
 
-      restClient.get('http://localhost:10000/rest/describe?happn_token=' + result.data.token).on('complete', function(result){
+      restClient.get('http://localhost:10000/rest/describe?happn_token=' + result.data.token).on('complete', function (result) {
 
         expect(result.data['/testComponent/method1']).to.not.be(null);
         expect(result.data['/testComponent/method2']).to.not.be(null);
@@ -497,7 +501,7 @@ describe('e3b-rest-component-secure', function () {
     });
   });
 
-  it('tests the rest components handleRequest method', function(done){
+  it('tests the rest components handleRequest method', function (done) {
 
     var RestModule = require('../lib/modules/rest/index.js');
     var restModule = new RestModule();
@@ -512,26 +516,26 @@ describe('e3b-rest-component-secure', function () {
     });
 
     var operation = {
-      parameters:{
-        'opts':{'number':1}
+      parameters: {
+        'opts': {'number': 1}
       }
     };
 
     request.write(operation);
     request.end();
 
-    mockLogin(restModule, function(e){
+    mockLogin(restModule, function (e) {
       if (e) return done(e);
 
       mock$Happn._mesh.datalayer.server.services.security = {
-        authorize:function(origin, accessPoint, action, callback){
+        authorize: function (origin, accessPoint, action, callback) {
           callback(null, true);
         }
       };
 
       restModule.__securityService = mock$Happn._mesh.datalayer.server.services.security;
 
-      mockResponse.end = function(responseString){
+      mockResponse.end = function (responseString) {
 
         var response = JSON.parse(responseString);
         expect(response.data.number).to.be(2);
@@ -540,13 +544,13 @@ describe('e3b-rest-component-secure', function () {
       };
 
       restModule.__exchangeDescription = {
-        components:{
-          testComponent:{
-            methods:{
-              method1:{
-                parameters:[
-                  {name:'opts'},
-                  {name:'callback'}
+        components: {
+          testComponent: {
+            methods: {
+              method1: {
+                parameters: [
+                  {name: 'opts'},
+                  {name: 'callback'}
                 ]
               }
             }
@@ -559,36 +563,36 @@ describe('e3b-rest-component-secure', function () {
 
   });
 
-  it('tests posting an operation to a local method', function(done){
+  it('tests posting an operation to a local method', function (done) {
 
-    login(function(e, result){
+    login(function (e, result) {
 
       if (e) return done(e);
 
       var restClient = require('restler');
 
       var operation = {
-        parameters:{
-          'opts':{'number':1}
+        parameters: {
+          'opts': {'number': 1}
         }
       };
 
-      restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + result.data.token, operation).on('complete', function(result){
+      restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + result.data.token, operation).on('complete', function (result) {
         expect(result.data.number).to.be(2);
         done();
       });
     });
   });
 
-  it('tests getting an operation from a local method with a simple parameter set', function(done){
+  it('tests getting an operation from a local method with a simple parameter set', function (done) {
 
-    login(function(e, result){
+    login(function (e, result) {
 
       if (e) return done(e);
 
       var restClient = require('restler');
 
-      restClient.get('http://localhost:10000/rest/method/testComponent/method4?number=1&another=2&happn_token=' + result.data.token).on('complete', function(result){
+      restClient.get('http://localhost:10000/rest/method/testComponent/method4?number=1&another=2&happn_token=' + result.data.token).on('complete', function (result) {
 
         expect(result.data.product).to.be(3);
         done();
@@ -597,24 +601,24 @@ describe('e3b-rest-component-secure', function () {
     });
   });
 
-  it('tests getting an operation from a local method with a serialized parameter', function(done){
+  it('tests getting an operation from a local method with a serialized parameter', function (done) {
 
-    login(function(e, result){
+    login(function (e, result) {
 
       if (e) return done(e);
 
       var restClient = require('restler');
 
       var operation = {
-        parameters:{
-          "number":1,
-          "another":2
+        parameters: {
+          "number": 1,
+          "another": 2
         }
       };
 
       var encoded = encodeURIComponent(JSON.stringify(operation));
 
-      restClient.get('http://localhost:10000/rest/method/testComponent/method4?encoded_parameters=' + encoded + '&happn_token=' + result.data.token).on('complete', function(result){
+      restClient.get('http://localhost:10000/rest/method/testComponent/method4?encoded_parameters=' + encoded + '&happn_token=' + result.data.token).on('complete', function (result) {
 
         expect(result.data.product).to.be(3);
         done();
@@ -622,17 +626,17 @@ describe('e3b-rest-component-secure', function () {
     });
   });
 
-  it('tests logging in using GET', function(done){
+  it('tests logging in using GET', function (done) {
 
     var restClient = require('restler');
 
-    restClient.get('http://localhost:10000/rest/login?username=_ADMIN&password=' + ADMIN_PASSWORD).on('complete', function(result){
+    restClient.get('http://localhost:10000/rest/login?username=_ADMIN&password=' + ADMIN_PASSWORD).on('complete', function (result) {
 
       console.log('logged in:::', result);
       expect(result.error).to.be(null);
       expect(result.data.token).to.not.be(null);
 
-      restClient.get('http://localhost:10000/rest/method/testComponent/method4?number=1&another=2&happn_token=' + result.data.token).on('complete', function(result){
+      restClient.get('http://localhost:10000/rest/method/testComponent/method4?number=1&another=2&happn_token=' + result.data.token).on('complete', function (result) {
 
         expect(result.data.product).to.be(3);
         done();
@@ -641,11 +645,11 @@ describe('e3b-rest-component-secure', function () {
     });
   });
 
-  it('tests failed logging in using GET', function(done){
+  it('tests failed logging in using GET', function (done) {
 
     var restClient = require('restler');
 
-    restClient.get('http://localhost:10000/rest/login?username=_ADMIN&password=wrong').on('complete', function(result){
+    restClient.get('http://localhost:10000/rest/login?username=_ADMIN&password=wrong').on('complete', function (result) {
 
       expect(result.error.message).to.be('Invalid credentials');
       expect(result.message).to.be('Failure logging in');
@@ -654,22 +658,22 @@ describe('e3b-rest-component-secure', function () {
     });
   });
 
-  it('tests posting an operation to the security component fails', function(done){
+  it('tests posting an operation to the security component fails', function (done) {
 
-    login(function(e, result){
+    login(function (e, result) {
 
       if (e) return done(e);
 
       var restClient = require('restler');
 
       var operation = {
-        parameters:{
-          'username':'_ADMIN',
-          'password':'blah'
+        parameters: {
+          'username': '_ADMIN',
+          'password': 'blah'
         }
       };
 
-      restClient.postJson('http://localhost:10000/rest/method/security/updateOwnUser?happn_token=' + result.data.token, operation).on('complete', function(result){
+      restClient.postJson('http://localhost:10000/rest/method/security/updateOwnUser?happn_token=' + result.data.token, operation).on('complete', function (result) {
         expect(result.error.number).to.not.be(null);
         expect(result.error.message).to.be('attempt to access security component over rest');
         done();
@@ -678,23 +682,23 @@ describe('e3b-rest-component-secure', function () {
   });
 
 
-  it('tests posting an operation to a remote method fails', function(done){
+  it('tests posting an operation to a remote method fails', function (done) {
 
-    login(function(e, result){
+    login(function (e, result) {
 
       if (e) return done(e);
 
       var restClient = require('restler');
 
       var operation = {
-        parameters:{
-          'one':'one',
-          'two':'two',
-          'three':'three'
+        parameters: {
+          'one': 'one',
+          'two': 'two',
+          'three': 'three'
         }
       };
 
-      restClient.postJson('http://localhost:10000/rest/method/remoteMesh/remoteComponent/remoteFunction?happn_token=' + result.data.token, operation).on('complete', function(result){
+      restClient.postJson('http://localhost:10000/rest/method/remoteMesh/remoteComponent/remoteFunction?happn_token=' + result.data.token, operation).on('complete', function (result) {
 
         expect(result.error).to.not.be(null);
         expect(result.error.message).to.be('attempt to access remote mesh: remoteMesh');
@@ -712,11 +716,11 @@ describe('e3b-rest-component-secure', function () {
       name: 'REST',
       permissions: {
         methods: {
-          '/testComponent/method1':{authorized:true}
+          '/testComponent/method1': {authorized: true}
         },
         web: {
-          '/rest/describe':{actions: ['get'], description: 'rest describe permission'},
-          '/rest/api':{actions: ['post'], description: 'rest post permission'}
+          '/rest/describe': {actions: ['get'], description: 'rest describe permission'},
+          '/rest/api': {actions: ['post'], description: 'rest post permission'}
         }
       }
     };
@@ -751,14 +755,14 @@ describe('e3b-rest-component-secure', function () {
 
             if (e) return done(e);
 
-            login(function(e, response){
+            login(function (e, response) {
 
               if (e) return done(e);
 
               var token = response.data.token;
               var restClient = require('restler');
 
-              restClient.get('http://localhost:10000/rest/describe?happn_token=' + token).on('complete', function(result){
+              restClient.get('http://localhost:10000/rest/describe?happn_token=' + token).on('complete', function (result) {
 
                 expect(result.data['/security/updateOwnUser']).to.be(undefined);
                 expect(result.data['/remoteMesh/security/updateOwnUser']).to.be(undefined);
@@ -769,12 +773,12 @@ describe('e3b-rest-component-secure', function () {
                 expect(Object.keys(result.data).length).to.be(1);
 
                 var operation = {
-                  parameters:{
-                    'opts':{number:1}
+                  parameters: {
+                    'opts': {number: 1}
                   }
                 };
 
-                restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result){
+                restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function (result) {
 
                   expect(result.data.number).to.be(2);
 
@@ -802,12 +806,12 @@ describe('e3b-rest-component-secure', function () {
       name: 'REST-2',
       permissions: {
         methods: {
-          '/remoteMesh/remoteComponent/remoteFunction':{authorized:true},
-          '/testComponent/method2':{authorized:true}
+          '/remoteMesh/remoteComponent/remoteFunction': {authorized: true},
+          '/testComponent/method2': {authorized: true}
         },
         web: {
-          '/rest/describe':{actions: ['get'], description: 'rest describe permission'},
-          '/rest/api':{actions: ['post'], description: 'rest post permission'}
+          '/rest/describe': {actions: ['get'], description: 'rest describe permission'},
+          '/rest/api': {actions: ['post'], description: 'rest post permission'}
         }
       }
     };
@@ -842,7 +846,7 @@ describe('e3b-rest-component-secure', function () {
 
             if (e) return done(e);
 
-            login(function(e, response){
+            login(function (e, response) {
 
               if (e) return done(e);
 
@@ -850,49 +854,49 @@ describe('e3b-rest-component-secure', function () {
               var restClient = require('restler');
 
               var operation = {
-                parameters:{
-                  'opts':{
-                    number:1
+                parameters: {
+                  'opts': {
+                    number: 1
                   }
                 }
               };
 
               //this call fails
-              restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function(result){
+              restClient.postJson('http://localhost:10000/rest/method/testComponent/method1?happn_token=' + token, operation).on('complete', function (result) {
 
                 expect(result.error).to.not.be(null);
                 expect(result.error.message).to.be('Access denied');
 
                 var operation = {
-                  parameters:{
-                    'opts':{
-                      number:1
+                  parameters: {
+                    'opts': {
+                      number: 1
                     }
                   }
                 };
 
                 //this call works
-                restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function(result){
+                restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function (result) {
 
                   expect(result.error).to.be(null);
                   expect(result.data.number).to.be(2);
 
-                  testGroup.permissions.methods['/testComponent/method2'] = {authorized:false};
+                  testGroup.permissions.methods['/testComponent/method2'] = {authorized: false};
 
                   testAdminClient.exchange.security.updateGroup(testGroup, function (e, result) {
 
                     if (e) return done(e);
 
                     var operation = {
-                      parameters:{
-                        'opts':{
-                          number:1
+                      parameters: {
+                        'opts': {
+                          number: 1
                         }
                       }
                     };
 
                     //this call stops working
-                    restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function(result){
+                    restClient.postJson('http://localhost:10000/rest/method/testComponent/method2?happn_token=' + token, operation).on('complete', function (result) {
 
                       expect(result.error).to.not.be(null);
                       expect(result.error.message).to.be('Access denied');
@@ -912,6 +916,88 @@ describe('e3b-rest-component-secure', function () {
       });
 
     }).catch(done);
+
+  });
+
+  it('passes params as an object $restParams and injects the $restOrigin as the rest user', function (done) {
+
+    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
+
+
+    var testGroup = {
+      name: 'RESTPARAMS',
+      permissions: {
+        methods: {
+          '/testComponent/method5': {authorized: true}
+        },
+        web: {
+          '/rest/describe': {actions: ['get'], description: 'rest describe permission'},
+          '/rest/api': {actions: ['post'], description: 'rest post permission'}
+        }
+      }
+    };
+
+    var testGroupSaved;
+    var testUserSaved;
+
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: ADMIN_PASSWORD
+    };
+
+    testAdminClient.login(credentials).then(function () {
+
+        testAdminClient.exchange.security.addGroup(testGroup, function (e, result) {
+
+          if (e) return done(e);
+
+          testGroupSaved = result;
+
+          var testUser = {
+            username: 'RESTTESTPARAMS',
+            password: 'REST_TEST'
+          };
+
+          testAdminClient.exchange.security.addUser(testUser, function (e, result) {
+
+            if (e) return done(e);
+            testUserSaved = result;
+
+            testAdminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+
+              if (e) return done(e);
+
+              login(function (e, response) {
+
+                if (e) return done(e);
+
+                var token = response.data.token;
+                var restClient = require('restler');
+
+                var operation = {
+                  parameters: {
+                    'opts': {number: 1}
+                  }
+                };
+
+                var params = '&userValue=' + testUser.username;
+                restClient.get('http://localhost:10000/rest/method/testComponent/method5?happn_token=' + token + params).on('complete', function (result) {
+
+                  expect(result.data).to.eql({userValue: testUser.username});
+
+                  done();
+                });
+
+
+              }, testUser);
+
+            });
+
+          });
+
+        })
+      })
+      .catch(done);
 
   });
 
