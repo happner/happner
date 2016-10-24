@@ -561,8 +561,6 @@ describe('e3b-rest-component-secure', function () {
 
   it('tests posting an operation to a local method', function(done){
 
-    //TODO login function gives us a token, token is used in body of rest request
-
     login(function(e, result){
 
       if (e) return done(e);
@@ -583,8 +581,6 @@ describe('e3b-rest-component-secure', function () {
   });
 
   it('tests getting an operation from a local method with a simple parameter set', function(done){
-
-    //TODO login function gives us a token, token is used in body of rest request
 
     login(function(e, result){
 
@@ -623,13 +619,42 @@ describe('e3b-rest-component-secure', function () {
         expect(result.data.product).to.be(3);
         done();
       });
+    });
+  });
+
+  it('tests logging in using GET', function(done){
+
+    var restClient = require('restler');
+
+    restClient.get('http://localhost:10000/rest/login?username=_ADMIN&password=' + ADMIN_PASSWORD).on('complete', function(result){
+
+      console.log('logged in:::', result);
+      expect(result.error).to.be(null);
+      expect(result.data.token).to.not.be(null);
+
+      restClient.get('http://localhost:10000/rest/method/testComponent/method4?number=1&another=2&happn_token=' + result.data.token).on('complete', function(result){
+
+        expect(result.data.product).to.be(3);
+        done();
+      });
 
     });
   });
 
-  it('tests posting an operation to the security component fails', function(done){
+  it('tests failed logging in using GET', function(done){
 
-    //TODO login function gives us a token, token is used in body of rest request
+    var restClient = require('restler');
+
+    restClient.get('http://localhost:10000/rest/login?username=_ADMIN&password=wrong').on('complete', function(result){
+
+      expect(result.error.message).to.be('Invalid credentials');
+      expect(result.message).to.be('Failure logging in');
+
+      done();
+    });
+  });
+
+  it('tests posting an operation to the security component fails', function(done){
 
     login(function(e, result){
 
@@ -654,8 +679,6 @@ describe('e3b-rest-component-secure', function () {
 
 
   it('tests posting an operation to a remote method fails', function(done){
-
-    //TODO login function gives us a token, token is used in body of rest request
 
     login(function(e, result){
 
