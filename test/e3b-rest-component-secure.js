@@ -41,9 +41,8 @@ SeeAbove.prototype.method4 = function ($happn, $origin, number, another, callbac
 };
 
 SeeAbove.prototype.method5 = function ($happn, $origin, $restOrigin, $restParams, callback) {
-  var expect = require('expect.js');
-  expect($origin.username).to.be('_ADMIN');
-  expect($restOrigin.username).to.be($restParams.userValue);
+  $restParams.$restOrigin = $restOrigin;
+  $restParams.$origin = $origin;
   callback(null, $restParams);
 };
 
@@ -983,7 +982,9 @@ describe('e3b-rest-component-secure', function () {
                 var params = '&userValue=' + testUser.username;
                 restClient.get('http://localhost:10000/rest/method/testComponent/method5?happn_token=' + token + params).on('complete', function (result) {
 
-                  expect(result.data).to.eql({userValue: testUser.username});
+                  expect(result.data.userValue).to.eql(testUser.username);
+                  expect(result.data.$origin.username).to.be('_ADMIN');
+                  expect(result.data.$restOrigin.username).to.be(testUser.username);
 
                   done();
                 });
