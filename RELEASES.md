@@ -407,3 +407,9 @@
 -----------------
 
 - REST now able to login over a GET
+
+1.24.0 2016-10-24
+-----------------
+
+- REST can now inject all parameters as a single object called $restParams (#228)
+- REST can inject the user that was logged in as $restOrigin (#229)

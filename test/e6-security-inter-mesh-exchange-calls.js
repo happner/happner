@@ -109,7 +109,10 @@ describe.skipWindows(filename, function () {
     //   if (mesh2) return mesh2.stop({reconnect: false}, done);
     //   done();
     // });
-    if (mesh2) return mesh2.stop({reconnect: false}, done);
+    if (mesh2) {
+      mesh2.stop({reconnect: false}, done);
+      return;
+    }
     done();
   });
 
