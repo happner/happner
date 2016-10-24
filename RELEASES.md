@@ -403,3 +403,7 @@
 
 - REST now able to GET from a remote method, passing params through the query string
 
+1.23.1 2016-10-24
+-----------------
+
+- REST now able to login over a GET
