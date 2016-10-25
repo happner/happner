@@ -52,11 +52,7 @@ security session events
 ```
 please look at [the test](https://github.com/happner/happner/blob/master/test/d4-session-changes-events.js
 
-
-
 ## security service functions
-
-
 
 #### exchange.security.addGroupPermissions(groupName, permissions)
 
@@ -82,8 +78,6 @@ $happn.exchange.security.addGroupPermissions('groupName', addPermissions)
 
 * `authorized: true` will be assumed if unspecified.
 * If the webmethod actions already had `['post', 'put']` then get will be added.
-
-
 
 #### exchange.security.removeGroupPermissions(groupName, permissions)
 
