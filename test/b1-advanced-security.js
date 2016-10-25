@@ -611,7 +611,7 @@ describe('b1 - advanced security', function (done) {
           '/meshname/component/event2': { /*authorized: true */} // assumed true
         },
         web: {
-          '/component/webmethod1': {authorized: true, actions: ['options']},
+          '/component/webmethod1': {authorized: true, actions: ['options']}, // amend into existing
           '/component/webmethod2': {authorized: true, actions: ['get']}
         }
       };
