@@ -418,3 +418,8 @@
 -----------------
 
 - Change $restOrigin to $userSession
+
+1.25.0 2016-10-25
+-----------------
+
+- Implement security functions addGroupPermissions and removeGroupPermissions
