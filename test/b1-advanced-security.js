@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 describe('b1 - advanced security', function (done) {
 
   require('benchmarket').start();
@@ -437,6 +439,64 @@ describe('b1 - advanced security', function (done) {
 
 
   //deleteUser
+
+  it('updates group permissions', function (done) {
+
+    var testGroupAdmin = {
+      name: 'permissions test',
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
+      },
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/testadvancedSecurity/security/*': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/testadvancedSecurity/security/*': {authorized: true}
+        },
+        web: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/testadvancedSecurity/security/*': {authorized: true}
+        }
+      }
+    };
+
+    addedPermissions = {
+      methods: {
+        '/testadvancedSecurity/security/test/*': {authorized: true}
+      },
+      events: {
+        '/testadvancedSecurity/security/test/*': {authorized: true}
+      },
+      web: {
+        '/testadvancedSecurity/security/test/*': {authorized: true}
+      }
+    };
+
+    // this does not take into account how methods permissions are transformed into requests/responses paths
+    expectedPermissions = _.merge(testGroupAdmin.permissions, addedPermissions);
+
+    adminClient.exchange.security.addGroup(testGroupAdmin, function (e, createdGroup) {
+      console.log(JSON.stringify(createdGroup.permissions, undefined, 2));
+
+      if (e) return done(e);
+
+      adminClient.exchange.security.updateGroupPermissions(testGroupAdmin, addedPermissions, function (e, updatedGroup) {
+        if (e) return done(e);
+
+        try {
+          expect(updatedGroup.permissions).to.eql(expectedPermissions);
+          done();
+        } catch (e) {
+          done(e);
+        }
+
+      });
+    });
+  });
 
   require('benchmarket').stop();
 
