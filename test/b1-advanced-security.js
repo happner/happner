@@ -1,7 +1,9 @@
+var Promise = require('bluebird');
+var request = Promise.promisify(require('request'));
+
 describe('b1 - advanced security', function (done) {
 
   require('benchmarket').start();
-  after(require('benchmarket').store());
 
   this.timeout(120000);
 
@@ -23,23 +25,44 @@ describe('b1 - advanced security', function (done) {
   var DELETEFILE = false;
 
   var config = {
-    name: "testadvancedSecurity",
+    name: "meshname",
     datalayer: {
       secure: true,
       adminPassword: test_id,
       filename: dbFileName
+    },
+    modules: {
+      'module': {
+        instance: {
+          method1: function ($happn, callback) {
+            $happn.emit('event1');
+            callback(null, 'reply1');
+          },
+          method2: function ($happn, callback) {
+            $happn.emit('event2');
+            callback(null, 'reply2');
+          },
+          webmethod1: function (req, res) {
+            res.end('ok1');
+          },
+          webmethod2: function (req, res) {
+            res.end('ok2');
+          }
+        }
+      }
+    },
+    components: {
+      'component': {
+        module: 'module',
+        web: {
+          routes: {
+            webmethod1: 'webmethod1',
+            webmethod2: 'webmethod2'
+          }
+        }
+      }
     }
   };
-
-  after(function (done) {
-    if (DELETEFILE)
-      fs.unlink(dbFileName, function (e) {
-        if (e) return done(e);
-        mesh.stop({reconnect: false}, done);
-      });
-    else
-      mesh.stop({reconnect: false}, done);
-  });
 
   before(function (done) {
 
@@ -60,18 +83,32 @@ describe('b1 - advanced security', function (done) {
   //NB in browser is: new MeshClient();
   //in node is: require('happner').MeshClient;
 
-  it('logs in with the admin user', function (done) {
+  before('logs in with the admin user', function (done) {
 
     // Credentials for the login method
     var credentials = {
       username: '_ADMIN', // pending
       password: test_id
-    }
+    };
 
     adminClient.login(credentials).then(function () {
       done();
     }).catch(done);
 
+  });
+
+  after('logs out', function (done) {
+    adminClient.disconnect(done);
+  });
+
+  after(function (done) {
+    if (DELETEFILE)
+      fs.unlink(dbFileName, function (e) {
+        if (e) return done(e);
+        mesh.stop({reconnect: false}, done);
+      });
+    else
+      mesh.stop({reconnect: false}, done);
   });
 
   var testGroup = {
@@ -85,11 +122,11 @@ describe('b1 - advanced security', function (done) {
     permissions: {
       methods: {
         //in a /Mesh name/component name/method name - with possible wildcards
-        '/testadvancedSecurity/security/*': {authorized: true}
+        '/meshname/security/*': {authorized: true}
       },
       events: {
         //in a /Mesh name/component name/event key - with possible wildcards
-        '/testadvancedSecurity/security/*': {authorized: true}
+        '/meshname/security/*': {authorized: true}
       }
     }
   }
@@ -357,11 +394,11 @@ describe('b1 - advanced security', function (done) {
     permissions: {
       methods: {
         //in a /Mesh name/component name/method name - with possible wildcards
-        '/testadvancedSecurity/security/*': {authorized: true}
+        '/meshname/security/*': {authorized: true}
       },
       events: {
         //in a /Mesh name/component name/event key - with possible wildcards
-        '/testadvancedSecurity/security/*': {authorized: true}
+        '/meshname/security/*': {authorized: true}
       }
     }
   };
@@ -377,67 +414,387 @@ describe('b1 - advanced security', function (done) {
     permissions: {
       methods: {
         //in a /Mesh name/component name/method name - with possible wildcards
-        '/testadvancedSecurity/security/*': {authorized: false}
+        '/meshname/security/*': {authorized: false}
       },
       events: {
         //in a /Mesh name/component name/event key - with possible wildcards
-        '/testadvancedSecurity/security/*': {authorized: false}
+        '/meshname/security/*': {authorized: false}
       }
     }
   };
 
-  it('should not allow to call methods from /testadvancedSecurity/security after groups is updated to TEST GROUP USER',
-  function(done){
-    this.timeout(2000);
-    var testUser = {
-      username : 'user1',
-      password : 'password',
-      custom_data : {
-        role : 'TEST GROUP ADMIN'
-      }
-    };
-    var all_groups = [], admin_group, user_group, user_data, new_meshClient;
-    adminClient.exchange.security.addGroup(testGroupAdmin)
-    .then(function() {
-      return adminClient.exchange.security.addGroup(testGroupUser);
-    }).then(function(){
-      return adminClient.exchange.security.listGroups('*');
-    }).then(function(groups){
-      all_groups = groups;
-      return adminClient.exchange.security.addUser(testUser);
-    }).then(function(user_data){
-      user = user_data;
-      for(var i=0;i<all_groups.length;i++){
-        if(all_groups[i].name === 'TEST GROUP ADMIN') admin_group = all_groups[i];
-        if(all_groups[i].name === 'TEST GROUP USER') user_group = all_groups[i];
-      }
-      //Linking the group to TEST GROUP ADMIN first.
-      return adminClient.exchange.security.linkGroup(admin_group,user);
-    }).then(function(){
-      //UnLinking the group from TEST GROUP ADMIN.
-      return adminClient.exchange.security.unlinkGroup(admin_group,user);
-    }).then(function(){
-      //Linking the group to TEST GROUP USER next.
-      return adminClient.exchange.security.linkGroup(user_group,user);
-    }).then(function(){
-      new_meshClient = new Mesh.MeshClient({secure: true});
-      return new_meshClient.login(testUser);
-    }).then(function(){
-      //Expected to throw an error as the TEST GROUP USER has no permission for this method.
-      new_meshClient.exchange.security.getUser(testUser.username,function(e,user){
-        expect(e.message).to.equal('unauthorized');
-        expect(user).to.be(undefined);
-        return done();
+  it('should not allow to call methods from /meshname/security after groups is updated to TEST GROUP USER',
+    function (done) {
+      this.timeout(2000);
+      var testUser = {
+        username: 'user1',
+        password: 'password',
+        custom_data: {
+          role: 'TEST GROUP ADMIN'
+        }
+      };
+      var all_groups = [], admin_group, user_group, user_data, new_meshClient;
+      adminClient.exchange.security.addGroup(testGroupAdmin)
+        .then(function () {
+          return adminClient.exchange.security.addGroup(testGroupUser);
+        }).then(function () {
+        return adminClient.exchange.security.listGroups('*');
+      }).then(function (groups) {
+        all_groups = groups;
+        return adminClient.exchange.security.addUser(testUser);
+      }).then(function (user_data) {
+        user = user_data;
+        for (var i = 0; i < all_groups.length; i++) {
+          if (all_groups[i].name === 'TEST GROUP ADMIN') admin_group = all_groups[i];
+          if (all_groups[i].name === 'TEST GROUP USER') user_group = all_groups[i];
+        }
+        //Linking the group to TEST GROUP ADMIN first.
+        return adminClient.exchange.security.linkGroup(admin_group, user);
+      }).then(function () {
+        //UnLinking the group from TEST GROUP ADMIN.
+        return adminClient.exchange.security.unlinkGroup(admin_group, user);
+      }).then(function () {
+        //Linking the group to TEST GROUP USER next.
+        return adminClient.exchange.security.linkGroup(user_group, user);
+      }).then(function () {
+        new_meshClient = new Mesh.MeshClient({secure: true});
+        return new_meshClient.login(testUser);
+      }).then(function () {
+        //Expected to throw an error as the TEST GROUP USER has no permission for this method.
+        new_meshClient.exchange.security.getUser(testUser.username, function (e, user) {
+          expect(e.message).to.equal('unauthorized');
+          expect(user).to.be(undefined);
+          return done();
+        });
+      }).catch(function (e) {
+        return done(e);
       });
-    }).catch(function(e){
-      return done(e);
-    });
 
-  });
+    });
 
 
   //deleteUser
 
+  context('update group', function () {
+
+    var user, groupName = 'group';
+
+    before('create test user', function (done) {
+
+      user = {
+        username: 'username',
+        password: 'password'
+      };
+
+      var group = {
+        name: groupName,
+        custom_data: {
+          customString: 'custom1',
+          customNumber: 0
+        },
+        permissions: {
+          methods: {
+            '/meshname/component/method1': {authorized: true}
+          },
+          events: {
+            '/meshname/component/event1': {authorized: true}
+          },
+          web: {
+            '/component/webmethod1': {
+              authorized: true,
+              actions: [
+                'get',
+                'put',
+                'post',
+                'head',
+                'delete'
+              ]
+            }
+          }
+        }
+      };
+
+      Promise.all([
+        adminClient.exchange.security.addGroup(group),
+        adminClient.exchange.security.addUser(user)
+      ])
+        .spread(adminClient.exchange.security.linkGroup)
+        .then(function (ignore) {})
+        .then(done)
+        .catch(done);
+
+    });
+
+    var client;
+
+    before('login test user and verify security', function (done) {
+
+      var _client = new Mesh.MeshClient();
+
+      _client.login(user)
+        .then(function () {
+          client = _client;
+
+          // permissions working?
+          client.event.component.on('event1', function () {
+
+            // ensure not allowed
+            client.exchange.component.method2()
+              .catch(function (error) {
+                if (error.name == 'AccessDenied') return done();
+                done(error);
+              });
+
+          });
+
+          client.exchange.component.method1().catch(done);
+
+        })
+        .catch(done);
+
+    });
+
+    var webmethod;
+
+    before('can do permitted webmethod', function (done) {
+
+      if (!client.token) return done(new Error('oh'));
+
+      webmethod = function (method, path) {
+        var j = request.jar();
+        var cookie = request.cookie('happn_token=' + client.token);
+        var url = 'http://localhost:55000' + path;
+        j.setCookie(cookie, url);
+        return request({method: method, url: url, jar: j})
+          .then(function (res) {
+            return res[1]; //body
+          })
+      };
+
+      webmethod('get', '/component/webmethod1')
+        .then(function (body) {
+          if (body !== 'ok1') {
+            return done(new Error('Failed on webmethod1: ' + body));
+          }
+          done();
+        })
+        .catch(done);
+
+    });
+
+    before('cannot do denied webmethod', function (done) {
+
+      webmethod('get', '/component/webmethod2')
+        .then(function (body) {
+          if (!body.match(/^unauthorized access/)) {
+            return done(new Error('Failed to not fail to access inaccessible'))
+          }
+          done();
+        })
+        .catch(done);
+
+    });
+
+    after('logout test user', function (done) {
+      if (!client) return done();
+      client.disconnect(done);
+    });
+
+    var addPermissions;
+
+    before('permissions to add', function () {
+      addPermissions = {
+        methods: {
+          '/meshname/component/method2': {authorized: true}
+        },
+        events: {
+          '/meshname/component/event2': { /*authorized: true */} // assumed true
+        },
+        web: {
+          '/component/webmethod1': {authorized: true, actions: ['options']}, // amend into existing
+          '/component/webmethod2': {authorized: true, actions: ['get']}
+        }
+      };
+    });
+
+
+    it('can add group permissions', function (done) {
+
+      adminClient.exchange.security.addGroupPermissions(groupName, addPermissions)
+
+        .then(function (updatedGroup) {
+          delete updatedGroup._meta;
+
+          // console.log('ADD RESULT\n%s\n', JSON.stringify(updatedGroup, null, 2));
+
+          expect(updatedGroup).to.eql({
+            name: 'group',
+            custom_data: {
+              customString: 'custom1',
+              customNumber: 0
+            },
+            permissions: {
+              methods: {
+                'requests/meshname/component/method1': {authorized: true},
+                'responses/meshname/component/method1/*': {authorized: true},
+                'requests/meshname/component/method2': {authorized: true},
+                'responses/meshname/component/method2/*': {authorized: true}
+              },
+              events: {
+                'meshname/component/event1': {authorized: true},
+                'meshname/component/event2': {authorized: true}
+              },
+              web: {
+                'component/webmethod1': {
+                  authorized: true,
+                  actions: [
+                    'get',
+                    'put',
+                    'post',
+                    'head',
+                    'delete',
+                    'options'
+                  ]
+                },
+                'component/webmethod2': {
+                  authorized: true,
+                  actions: [
+                    'get'
+                  ]
+                }
+              }
+            }
+          });
+        })
+
+        // can use new event and method permission?
+        .then(function () {
+          return new Promise(function (resolve, reject) {
+            client.event.component.on('event2', function () {
+              resolve();
+            });
+
+            client.exchange.component.method2().catch(reject);
+          });
+        })
+
+        // can use new webmethod permission
+        .then(function () {
+          return webmethod('get', '/component/webmethod2');
+        })
+
+        .then(function (body) {
+          expect(body).to.equal('ok2');
+        })
+
+
+        .then(done).catch(done);
+
+    });
+
+    it('can remove group permissions', function (done) {
+
+      adminClient.exchange.security.addGroupPermissions(groupName, addPermissions)
+
+        .then(function () {
+          var removePermissions = {
+            methods: {
+              '/meshname/component/method1': {} // remove whole permission path
+            },
+            events: {
+              'meshname/component/event1': {}
+            },
+            web: {
+              '/component/webmethod1': {
+                actions: [ // remove ONLY these actions
+                  'put',
+                  'head',
+                  'moo' // does not break it
+                ]
+              }
+            }
+          };
+
+          return adminClient.exchange.security.removeGroupPermissions(groupName, removePermissions)
+        })
+
+        .then(function (updatedGroup) {
+
+          // console.log('REMOVE RESULT\n%s\n', JSON.stringify(updatedGroup, null, 2));
+
+          delete updatedGroup._meta;
+          expect(updatedGroup).to.eql({
+            name: 'group',
+            custom_data: {
+              customString: 'custom1',
+              customNumber: 0
+            },
+            permissions: {
+              methods: {
+                'requests/meshname/component/method2': {authorized: true},
+                'responses/meshname/component/method2/*': {authorized: true}
+              },
+              events: {
+                'meshname/component/event2': {authorized: true}
+              },
+              web: {
+                'component/webmethod1': {
+                  authorized: true,
+                  actions: [
+                    'get',
+                    'post',
+                    'delete',
+                    'options' // depends on previous test (sorry)
+                  ]
+                },
+                'component/webmethod2': {
+                  authorized: true,
+                  actions: [
+                    'get'
+                  ]
+                }
+              }
+            }
+          })
+        })
+
+        // cant do method1 anymore
+        .then(function () {
+          return new Promise(function (resolve, reject) {
+            client.exchange.component.method1().catch(function (error) {
+              if (error.name != 'AccessDenied') {
+                return reject(new Error('Not AccessDenied'));
+              }
+              resolve();
+            })
+          });
+        })
+
+        // cant put
+        .then(function () {
+          return webmethod('put', '/component/webmethod1')
+        })
+
+        .then(function (body) {
+          if (!body.match(/^unauthorized/)) throw new Error('Not Unauthorized');
+        })
+
+        // can still get
+        .then(function () {
+          return webmethod('get', '/component/webmethod1')
+        })
+
+        .then(function (body) {
+          if (body !== 'ok1') throw new Error('Unauthorized');
+        })
+
+        .then(done).catch(done);
+
+    });
+
+  });
+
+  after(require('benchmarket').store());
   require('benchmarket').stop();
 
 });
