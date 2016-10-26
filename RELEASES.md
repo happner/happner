@@ -423,3 +423,8 @@
 -----------------
 
 - Implement security functions addGroupPermissions and removeGroupPermissions
+
+1.25.1 2016-10-26
+-----------------
+
+- Upgraded happn to 2.15.9
