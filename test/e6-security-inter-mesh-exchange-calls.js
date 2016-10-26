@@ -32,10 +32,13 @@ describe.skipWindows = (process.platform === 'win32') ? describe.skip : describe
 // skip for issue 223
 describe.skipWindows(filename, function () {
 
+  this.timeout(20000);
+
   require('benchmarket').start();
   after(require('benchmarket').store());
 
   before('start secureMesh', function (done) {
+
     Happner.create({
       name: 'secureMesh',
       datalayer: {
