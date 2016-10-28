@@ -173,7 +173,7 @@ describe('c7-permissions-web', function (done) {
       permissions: {
         web: {}
       }
-    }
+    };
 
     var testGroupSaved;
     var testUserSaved;
@@ -182,7 +182,7 @@ describe('c7-permissions-web', function (done) {
     var credentials = {
       username: '_ADMIN', // pending
       password: test_id
-    }
+    };
 
     adminClient.login(credentials).then(function () {
 
@@ -198,7 +198,7 @@ describe('c7-permissions-web', function (done) {
           custom_data: {
             something: 'useful'
           }
-        }
+        };
 
         adminClient.exchange.security.addUser(testUser, function (e, result) {
 
@@ -222,6 +222,90 @@ describe('c7-permissions-web', function (done) {
                 };
 
                 adminClient.exchange.security.updateGroup(testGroupSaved, function (e, updated) {
+
+                  if (e) return done(e);
+
+                  doRequest('/index.html', testUserClient.token, function (response) {
+
+                    expect(response.statusCode).to.equal(200);
+                    done();
+
+                  });
+                });
+              });
+
+            }).catch(function (e) {
+              done(e);
+            });
+
+          });
+
+        });
+      });
+    }).catch(done);
+
+  });
+
+  it('creates a test user, fails to log in, upsert a group with web permission and log in ok', function (done) {
+
+    var testGroup = {
+      name: 'TESTUSER_UPSERT' + test_id,
+
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
+      },
+
+      permissions: {
+        web: {}
+      }
+    }
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: test_id
+    };
+
+    adminClient.login(credentials).then(function () {
+
+      adminClient.exchange.security.addGroup(testGroup, function (e, result) {
+
+        if (e) return done(e);
+
+        testGroupSaved = result;
+
+        var testUser = {
+          username: 'TEST_USER_UPSERT' + test_id,
+          password: 'TEST PWD',
+          custom_data: {something: 'useful'}
+        };
+
+        adminClient.exchange.security.addUser(testUser, function (e, result) {
+
+          if (e) return done(e);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure: true, port: 15000});
+
+            testUserClient.login(testUser).then(function () {
+
+              doRequest('/index.html', testUserClient.token, function (response) {
+
+                expect(response.statusCode).to.equal(403);
+
+                testGroupSaved.permissions.web = {
+                  '/index.html': {actions: ['get', 'put', 'post'], description: 'a test web permission'}
+                };
+
+                adminClient.exchange.security.upsertGroup(testGroupSaved, function (e) {
 
                   if (e) return done(e);
 

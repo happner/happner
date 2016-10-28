@@ -428,3 +428,9 @@
 -----------------
 
 - Upgraded happn to 2.15.9
+
+1.26.0 2016-10-28
+-----------------
+
+- fixed bug with update and remove permissions
+- added ability to upsert groups

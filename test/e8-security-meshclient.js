@@ -16,7 +16,10 @@ describe.skipWindows(path.basename(__filename), function () {
   var test_id = Date.now() + '_' + require('shortid').generate();
   var dbFileName = './temp/' + test_id + '.nedb';
 
+  this.timeout(60000);
+
   before('start server', function (done) {
+
     try {
       fs.unlinkSync(dbFileName);
     } catch (e) {
