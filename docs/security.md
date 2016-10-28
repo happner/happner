@@ -97,3 +97,52 @@ var removePermissions = {
 * Pass an empty object for the permission to be deleted.
 * Only the specified webmethod actions are removed. The permission is left otherwise unchanged.
 
+upserting groups:
+-----------------
+*a security group can be upserted, if the group does not exist, it is created, if it does its properties and permissions are merged with the passed group argument by default. The permissions of the group can be overwritten by setting the overwrite option to true* 
+
+```javascript
+
+var testUpsertGroup = {
+         name: 'TEST_UPSERT_EXISTING',
+   
+         custom_data: 'TEST UPSERT EXISTING',
+   
+         permissions: {
+           methods: {
+             //in a /Mesh name/component name/method name - with possible wildcards
+             '/meshname/component/method1': {authorized: true}
+           },
+           events: {
+             //in a /Mesh name/component name/event key - with possible wildcards
+             '/meshname/component/event1': {authorized: true}
+           }
+         }
+       };
+   
+   adminClient.exchange.security.upsertGroup(testUpsertGroup, function(e, upserted){
+     //group was upserted, permissions were merged with existing group if it existed
+   });
+   
+   var testUpsertGroupOverwrite = {
+         name: 'TEST_UPSERT_EXISTING',
+   
+         custom_data: 'TEST UPSERT EXISTING',
+   
+         permissions: {
+           methods: {
+             //in a /Mesh name/component name/method name - with possible wildcards
+             '/meshname/component/method1': {authorized: true}
+           },
+           events: {
+             //in a /Mesh name/component name/event key - with possible wildcards
+             '/meshname/component/event1': {authorized: true}
+           }
+         }
+       };
+   
+   adminClient.exchange.security.upsertGroup(testUpsertGroupOverwrite, {overwritePermissions:true}, function(e, upserted){
+     //group was upserted, permissions were overwritten with existing group if it existed
+   });
+
+```

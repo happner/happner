@@ -635,10 +635,8 @@ describe('b1 - advanced security', function (done) {
             },
             permissions: {
               methods: {
-                'requests/meshname/component/method1': {authorized: true},
-                'responses/meshname/component/method1/*': {authorized: true},
-                'requests/meshname/component/method2': {authorized: true},
-                'responses/meshname/component/method2/*': {authorized: true}
+                'meshname/component/method1': {authorized: true},
+                'meshname/component/method2': {authorized: true}
               },
               events: {
                 'meshname/component/event1': {authorized: true},
@@ -731,8 +729,7 @@ describe('b1 - advanced security', function (done) {
             },
             permissions: {
               methods: {
-                'requests/meshname/component/method2': {authorized: true},
-                'responses/meshname/component/method2/*': {authorized: true}
+                'meshname/component/method2': {authorized: true}
               },
               events: {
                 'meshname/component/event2': {authorized: true}
@@ -791,6 +788,344 @@ describe('b1 - advanced security', function (done) {
         .then(done).catch(done);
 
     });
+  });
+
+  it('can upsert an existing group, merging permissions', function (done) {
+
+    var testUpsertGroup = {
+      name: 'TEST_UPSERT_EXISTING',
+
+      custom_data: 'TEST UPSERT EXISTING',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method1': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event1': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertGroup1 = {
+      name: 'TEST_UPSERT_EXISTING',
+
+      custom_data: 'TEST UPSERT EXISTING 1',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method2': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event2': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertUser = {
+      username: 'TEST_UPSERT_EXISTING',
+      password: 'TEST PWD',
+      custom_data: {
+        something: 'useful'
+      }
+    };
+
+    Promise.all([
+        adminClient.exchange.security.addGroup(testUpsertGroup),
+        adminClient.exchange.security.addUser(testUpsertUser)
+      ])
+      .spread(adminClient.exchange.security.linkGroup)
+      .then(function(addedGroup, addedUser){
+
+        var testUpsertClient = new Mesh.MeshClient({secure: true});
+
+        testUpsertClient.login(testUpsertUser).then(function () {
+
+          expect(testUpsertClient.exchange.component.method1).to.not.be(null);
+          expect(testUpsertClient.exchange.component.method2).to.not.be(null);
+
+          testUpsertClient.exchange.component.method2(function(e){
+
+            expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+            adminClient.exchange.security.upsertGroup(testUpsertGroup1, function(e, upserted){
+
+              testUpsertClient.exchange.component.method2(function(e, result){
+
+                expect(e).to.be(null);
+
+                done();
+              });
+            });
+          });
+
+        }).catch(done);
+
+      })
+      .catch(done);
+
+  });
+
+  it('can upsert an existing group, overwriting permissions', function (done) {
+
+    var testUpsertGroup = {
+
+      name: 'TEST_UPSERT_EXISTING_2',
+
+      custom_data: 'TEST UPSERT EXISTING 2',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method1': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event1': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertGroup1 = {
+
+      name: 'TEST_UPSERT_EXISTING_2',
+
+      custom_data: 'TEST UPSERT EXISTING 3',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method2': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event2': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertUser = {
+      username: 'TEST_UPSERT_EXISTING_2',
+      password: 'TEST PWD',
+      custom_data: {
+        something: 'useful'
+      }
+    };
+
+    Promise.all([
+        adminClient.exchange.security.addGroup(testUpsertGroup),
+        adminClient.exchange.security.addUser(testUpsertUser)
+      ])
+      .spread(adminClient.exchange.security.linkGroup)
+      .then(function(addedGroup, addedUser){
+
+        var testUpsertClient = new Mesh.MeshClient({secure: true});
+
+        testUpsertClient.login(testUpsertUser).then(function () {
+
+          expect(testUpsertClient.exchange.component.method1).to.not.be(null);
+          expect(testUpsertClient.exchange.component.method2).to.not.be(null);
+
+          testUpsertClient.exchange.component.method2(function(e){
+
+            expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+            adminClient.exchange.security.upsertGroup(testUpsertGroup1, {overwritePermissions:true}, function(e, upserted){
+
+              testUpsertClient.exchange.component.method2(function(e, result){
+
+                expect(e).to.be(null);
+
+                testUpsertClient.exchange.component.method1(function(e, result){
+
+                  expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+                  done();
+                });
+              });
+            });
+          });
+
+        }).catch(done);
+
+      })
+      .catch(done);
+
+  });
+
+  it('can upsert a new group, merging permissions', function (done) {
+
+    var testUpsertGroup = {
+
+      name: 'TEST_UPSERT_EXISTING_3',
+
+      custom_data: 'TEST UPSERT EXISTING 3',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method1': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event1': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertGroup1 = {
+
+      name: 'TEST_UPSERT_EXISTING_3',
+
+      custom_data: 'TEST UPSERT EXISTING 4',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method2': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event2': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertUser = {
+      username: 'TEST_UPSERT_EXISTING_3',
+      password: 'TEST PWD',
+      custom_data: {
+        something: 'useful'
+      }
+    };
+
+    Promise.all([
+        adminClient.exchange.security.upsertGroup(testUpsertGroup),
+        adminClient.exchange.security.addUser(testUpsertUser)
+      ])
+      .spread(adminClient.exchange.security.linkGroup)
+      .then(function(upsertedGroup, addedUser){
+
+        var testUpsertClient = new Mesh.MeshClient({secure: true});
+
+        testUpsertClient.login(testUpsertUser).then(function () {
+
+          expect(testUpsertClient.exchange.component.method1).to.not.be(null);
+          expect(testUpsertClient.exchange.component.method2).to.not.be(null);
+
+          testUpsertClient.exchange.component.method2(function(e){
+
+            expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+            adminClient.exchange.security.upsertGroup(testUpsertGroup1, function(e, upserted){
+
+              testUpsertClient.exchange.component.method2(function(e, result){
+
+                expect(e).to.be(null);
+
+                testUpsertClient.exchange.component.method1(function(e, result){
+
+                  expect(e).to.be(null);
+
+                  done();
+                });
+              });
+            });
+          });
+
+        }).catch(done);
+
+      })
+      .catch(done);
+
+  });
+
+  it('can upsert a new group, merging permissions', function (done) {
+
+    var testUpsertGroup = {
+
+      name: 'TEST_UPSERT_EXISTING_4',
+
+      custom_data: 'TEST UPSERT EXISTING 4',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method1': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event1': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertGroup1 = {
+
+      name: 'TEST_UPSERT_EXISTING_4',
+
+      custom_data: 'TEST UPSERT EXISTING 5',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method2': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event2': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertUser = {
+      username: 'TEST_UPSERT_EXISTING_4',
+      password: 'TEST PWD',
+      custom_data: {
+        something: 'useful'
+      }
+    };
+
+    Promise.all([
+        adminClient.exchange.security.upsertGroup(testUpsertGroup),
+        adminClient.exchange.security.addUser(testUpsertUser)
+      ])
+      .spread(adminClient.exchange.security.linkGroup)
+      .then(function(addedGroup, addedUser){
+
+        var testUpsertClient = new Mesh.MeshClient({secure: true});
+
+        testUpsertClient.login(testUpsertUser).then(function () {
+
+          expect(testUpsertClient.exchange.component.method1).to.not.be(null);
+          expect(testUpsertClient.exchange.component.method2).to.not.be(null);
+
+          testUpsertClient.exchange.component.method2(function(e){
+
+            expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+            adminClient.exchange.security.upsertGroup(testUpsertGroup1, {overwritePermissions:true}, function(e, upserted){
+
+              testUpsertClient.exchange.component.method2(function(e, result){
+
+                expect(e).to.be(null);
+
+                testUpsertClient.exchange.component.method1(function(e, result){
+
+                  expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+                  done();
+                });
+              });
+            });
+          });
+        }).catch(done);
+      })
+      .catch(done);
 
   });
 
