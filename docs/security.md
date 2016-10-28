@@ -179,7 +179,7 @@ upserting users:
  
  testUpsertUserOverwrite.groups['TEST_UPSERT_EXISTING_6_1'] = true;
  
- adminClient.exchange.security.upsertUser(testUpsertUserOverwrite, function(e, result){
+ adminClient.exchange.security.upsertUser(testUpsertUserOverwrite, {overwriteMemberships:true}, function(e, result){
   //user was added and subscribed to group TEST_UPSERT_EXISTING_6_1 and unsibscribed from all other groups
  });
 
