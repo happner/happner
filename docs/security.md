@@ -146,3 +146,41 @@ var testUpsertGroup = {
    });
 
 ```
+
+upserting users:
+-----------------
+*a user can be upserted, if the user does not exist, it is created, if it does its properties and group subscriptions are merged with the passed user argument by default. The subscriptions of the user can be overwritten by setting the overwriteSubscriptions option to true* 
+
+```javascript
+
+ var testUpsertUser = {
+    username: 'TEST_UPSERT_EXISTING_6',
+    password: 'TEST PWD',
+    custom_data: {
+      something: 'useful'
+    },
+    groups:{}
+  };
+ 
+ testUpsertUser.groups['TEST_UPSERT_EXISTING_6_1'] = true;
+ 
+ adminClient.exchange.security.upsertUser(testUpsertUser, function(e, result){
+  //user was added and subscribed to group TEST_UPSERT_EXISTING_6_1
+ });
+   
+ var testUpsertUserOverwrite = {
+    username: 'TEST_UPSERT_EXISTING_6',
+    password: 'TEST PWD',
+    custom_data: {
+      something: 'useful'
+    },
+    groups:{}
+  };
+ 
+ testUpsertUserOverwrite.groups['TEST_UPSERT_EXISTING_6_1'] = true;
+ 
+ adminClient.exchange.security.upsertUser(testUpsertUserOverwrite, function(e, result){
+  //user was added and subscribed to group TEST_UPSERT_EXISTING_6_1 and unsibscribed from all other groups
+ });
+
+```
