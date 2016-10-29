@@ -1398,6 +1398,92 @@ describe('b1 - advanced security', function (done) {
 
   });
 
+  it('fails upsert an existing user, non-existing group', function (done) {
+
+    var testUpsertGroup = {
+
+      name: 'TEST_UPSERT_EXISTING_9',
+
+      custom_data: 'TEST UPSERT EXISTING 9',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method1': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event1': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertGroup1 = {
+
+      name: 'TEST_UPSERT_EXISTING_9_1',
+
+      custom_data: 'TEST UPSERT EXISTING 9',
+
+      permissions: {
+        methods: {
+          //in a /Mesh name/component name/method name - with possible wildcards
+          '/meshname/component/method2': {authorized: true}
+        },
+        events: {
+          //in a /Mesh name/component name/event key - with possible wildcards
+          '/meshname/component/event2': {authorized: true}
+        }
+      }
+    };
+
+    var testUpsertUser = {
+      username: 'TEST_UPSERT_EXISTING_9',
+      password: 'TEST PWD',
+      custom_data: {
+        something: 'useful'
+      },
+      groups:{}
+    };
+
+    Promise.all([
+        adminClient.exchange.security.upsertGroup(testUpsertGroup),
+        adminClient.exchange.security.addUser(testUpsertUser)
+      ])
+      .spread(adminClient.exchange.security.linkGroup)
+      .then(function(addedGroup, addedUser){
+
+        var testUpsertClient = new Mesh.MeshClient({secure: true});
+
+        testUpsertClient.login(testUpsertUser).then(function () {
+
+          expect(testUpsertClient.exchange.component.method1).to.not.be(null);
+          expect(testUpsertClient.exchange.component.method2).to.not.be(null);
+
+          testUpsertClient.exchange.component.method2(function(e){
+
+            expect(e.toString()).to.be('AccessDenied: unauthorized');
+
+            adminClient.exchange.security.addGroup(testUpsertGroup1, function(e, added){
+
+              expect(!e).to.be(true);
+
+              testUpsertUser.groups['TEST_UPSERT_EXISTING_NON_EXISTING'] = true;
+
+              adminClient.exchange.security.upsertUser(testUpsertUser, function(e, result){
+
+                expect(e).to.not.be(null);
+                expect(e.toString()).to.be('Error: group with name TEST_UPSERT_EXISTING_NON_EXISTING does not exist');
+                done();
+
+              });
+            });
+          });
+        }).catch(done);
+      })
+      .catch(done);
+
+  });
+
   after(require('benchmarket').store());
   require('benchmarket').stop();
 
