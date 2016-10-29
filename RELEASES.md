@@ -434,3 +434,8 @@
 
 - fixed bug with update and remove permissions
 - added ability to upsert groups
+
+1.27.0 2016-10-28
+-----------------
+
+- added ability to upsert users
