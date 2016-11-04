@@ -1,3 +1,5 @@
+process.env.LOG_LEVEL = 'info';
+
 var Mesh = require('../../lib/mesh');
 
 var config = {

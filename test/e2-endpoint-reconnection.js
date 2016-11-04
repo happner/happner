@@ -52,7 +52,7 @@ describe.only('e2-endpoint-reconnection', function () {
 
     remote.stdout.on('data', function (data) {
 
-      // process.stdout.write(data.toString());
+      process.stdout.write(data.toString());
 
       if (data.toString().match(/READY/)) {
 
