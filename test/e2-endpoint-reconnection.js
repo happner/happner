@@ -9,7 +9,6 @@ describe.only('e2-endpoint-reconnection', function () {
 
   var libFolder = __dirname + sep + 'lib' + sep;
 
-//var REMOTE_MESH = 'e2-remote-mesh';
   var REMOTE_MESH = 'e2-remote-mesh';
 
   var PORT_REMOTE = 3030;
@@ -53,15 +52,12 @@ describe.only('e2-endpoint-reconnection', function () {
 
     remote.stdout.on('data', function (data) {
 
-      process.stdout.write(data.toString());
+      // process.stdout.write(data.toString());
 
       if (data.toString().match(/READY/)) {
 
         clearTimeout(timedOut);
-
-        // setTimeout(function () {
-          callback();
-        // }, 1000);
+        callback();
       }
     });
   };
