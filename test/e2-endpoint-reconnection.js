@@ -1,4 +1,4 @@
-describe.only('e2-endpoint-reconnection', function () {
+describe('e2-endpoint-reconnection', function () {
 
   var spawn = require('child_process').spawn
     , sep = require('path').sep
@@ -151,7 +151,7 @@ describe.only('e2-endpoint-reconnection', function () {
   var __remoteRestartTestDisconnected1 = false;
   var __remoteRestartTestDisconnected2 = false;
 
-  it("can call remote component, restart remote mesh and call component again", function (done) {
+  it.only("can call remote component, restart remote mesh and call component again", function (done) {
 
     testExchangeCalls(function (e) {                           // 1. check the remote exchange works
 
