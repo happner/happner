@@ -1,4 +1,4 @@
-describe('e2-endpoint-reconnection', function () {
+describe.only('e2-endpoint-reconnection', function () {
 
   var spawn = require('child_process').spawn
     , sep = require('path').sep
@@ -53,7 +53,7 @@ describe('e2-endpoint-reconnection', function () {
 
     remote.stdout.on('data', function (data) {
 
-      //console.log('output:::', data.toString());
+      process.stdout.write(data.toString());
 
       if (data.toString().match(/READY/)) {
 
@@ -151,7 +151,7 @@ describe('e2-endpoint-reconnection', function () {
   var __remoteRestartTestDisconnected1 = false;
   var __remoteRestartTestDisconnected2 = false;
 
-  it.only("can call remote component, restart remote mesh and call component again", function (done) {
+  it("can call remote component, restart remote mesh and call component again", function (done) {
 
     testExchangeCalls(function (e) {                           // 1. check the remote exchange works
 

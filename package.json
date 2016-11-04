@@ -9,7 +9,7 @@
     "h": "bin/h"
   },
   "scripts": {
-    "test": "mocha silence.js test --expose-gc",
+    "test": "mocha test --expose-gc",
     "test-optimize": "mocha test/test-optimize --expose-gc",
     "test-cover": "istanbul cover _mocha -- silence.js test"
   },
