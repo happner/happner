@@ -444,5 +444,4 @@
 -----------------
 
 - onward release of happn 2.16.0
-
-
+- delayed relay of happn/primus 'reconnect-successful' onto nextTick

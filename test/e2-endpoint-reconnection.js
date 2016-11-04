@@ -1,4 +1,4 @@
-describe.only('e2-endpoint-reconnection', function () {
+describe('e2-endpoint-reconnection', function () {
 
   var spawn = require('child_process').spawn
     , sep = require('path').sep
@@ -52,10 +52,9 @@ describe.only('e2-endpoint-reconnection', function () {
 
     remote.stdout.on('data', function (data) {
 
-      process.stdout.write(data.toString());
+      // process.stdout.write(data.toString());
 
       if (data.toString().match(/READY/)) {
-
         clearTimeout(timedOut);
         callback();
       }
