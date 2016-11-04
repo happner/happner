@@ -59,9 +59,9 @@ describe.only('e2-endpoint-reconnection', function () {
 
         clearTimeout(timedOut);
 
-        setTimeout(function () {
+        // setTimeout(function () {
           callback();
-        }, 1000);
+        // }, 1000);
       }
     });
   };

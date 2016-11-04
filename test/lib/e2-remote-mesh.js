@@ -45,14 +45,11 @@ var config = {
   }
 };
 
-(new Mesh()).initialize(config, function (err) {
-
-  if (err) {
+Mesh.create(config)
+  .then(function () {
+    console.log('READY');
+  })
+  .catch(function (err) {
     console.log(err);
     process.exit(err.code || 1);
-    return;
-  }
-
-  console.log('READY');
-
-});
+  });
