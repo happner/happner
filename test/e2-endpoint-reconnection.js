@@ -1,4 +1,4 @@
-describe('e2-endpoint-reconnection', function () {
+describe.only('e2-endpoint-reconnection', function () {
 
   var spawn = require('child_process').spawn
     , sep = require('path').sep
