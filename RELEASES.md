@@ -446,3 +446,4 @@
 - onward release of happn 2.16.0
 - delayed relay of happn/primus 'reconnect-successful' onto nextTick
 - fix endpoint logging with own name on remote connecting
+- fix terminal repl echo in node v4+
