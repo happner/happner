@@ -439,3 +439,8 @@
 -----------------
 
 - added ability to upsert users
+
+1.28.0 2016-11-18
+-----------------
+
+- updated happn to 2.16.1, default policies now have ttl 0
