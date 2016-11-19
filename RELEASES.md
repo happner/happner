@@ -452,3 +452,8 @@
 -----------------
 
 - updated happn to 2.16.1, default policies now have ttl 0
+
+1.28.1 2016-11-19
+-----------------
+
+- test timeouts
