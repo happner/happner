@@ -242,7 +242,6 @@ describe('b9 - mesh client security login', function () {
   // });
 
   it('a - client should register a device on the server', function (done) {
-    this.timeout(5000);
 
     var device = {
       device_info: "someInfo"

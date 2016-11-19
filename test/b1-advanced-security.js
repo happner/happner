@@ -423,7 +423,7 @@ describe('b1 - advanced security', function (done) {
 
   it('should not allow to call methods from /meshname/security after groups is updated to TEST GROUP USER',
     function (done) {
-      this.timeout(2000);
+      this.timeout(10000);
       var testUser = {
         username: 'user1',
         password: 'password',
