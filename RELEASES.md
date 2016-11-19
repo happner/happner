@@ -447,3 +447,8 @@
 - delayed relay of happn/primus 'reconnect-successful' onto nextTick
 - fix endpoint logging with own name on remote connecting
 - fix terminal repl echo in node v4+
+
+1.28.0 2016-11-18
+-----------------
+
+- updated happn to 2.16.1, default policies now have ttl 0
