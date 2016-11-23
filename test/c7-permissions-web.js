@@ -328,6 +328,88 @@ describe('c7-permissions-web', function (done) {
       });
 
     }).catch(done);
+  });
+
+  it('creates a test user, gets the token and accesses a resource successfully, then deletes the user and is unable to access the resource', function (done) {
+
+    var testGroup1 = {
+      name: 'TESTUSER_UPSERT1' + test_id,
+
+      custom_data: {
+        customString: 'custom1',
+        customNumber: 0
+      },
+
+      permissions: {
+        web: {
+          '/index.html': {actions: ['get', 'put', 'post'], description: 'a test web permission'}
+        }
+      }
+    };
+
+    var testGroupSaved;
+    var testUserSaved;
+    var testUserClient;
+
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: test_id
+    };
+
+    adminClient.login(credentials).then(function () {
+
+      adminClient.exchange.security.addGroup(testGroup1, function (e, result) {
+
+        if (e) return done(e);
+
+        testGroupSaved = result;
+
+        var testUser = {
+          username: 'TEST_USER_UPSERT1' + test_id,
+          password: 'TEST PWD',
+          custom_data: {something: 'useful'}
+        };
+
+        adminClient.exchange.security.addUser(testUser, function (e, result) {
+
+          if (e) return done(e);
+          testUserSaved = result;
+
+          adminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+            //we'll need to fetch user groups, do that later
+            if (e) return done(e);
+
+            testUserClient = new Mesh.MeshClient({secure: true, port: 15000});
+
+            testUserClient.login(testUser).then(function () {
+
+              doRequest('/index.html', testUserClient.token, function (response) {
+
+                expect(response.statusCode).to.equal(200);
+
+                adminClient.exchange.security.deleteUser(testUserSaved, function(e){
+
+                  if (e) return done(e);
+
+                  doRequest('/index.html', testUserClient.token, function (response) {
+
+                    expect(response.statusCode).to.equal(403);
+                    done();
+
+                  });
+                });
+              });
+
+            }).catch(function (e) {
+              done(e);
+            });
+
+          });
+
+        });
+      });
+
+    }).catch(done);
 
   });
 

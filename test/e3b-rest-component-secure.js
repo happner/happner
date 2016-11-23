@@ -918,6 +918,113 @@ describe('e3b-rest-component-secure', function () {
 
   });
 
+  it('creates a test user, logs in, and is able to access a method via REST, then deletes the associated user and fails to access the exchange via REST', function (done) {
+
+    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
+
+    var testGroup = {
+      name: 'REST-3',
+      permissions: {
+        methods: {
+          '/remoteMesh/remoteComponent/remoteFunction': {authorized: true},
+          '/testComponent/method3': {authorized: true}
+        },
+        web: {
+          '/rest/describe': {actions: ['get'], description: 'rest describe permission'},
+          '/rest/api': {actions: ['post'], description: 'rest post permission'}
+        }
+      }
+    };
+
+    var testGroupSaved;
+    var testUserSaved;
+
+    var credentials = {
+      username: '_ADMIN', // pending
+      password: ADMIN_PASSWORD
+    };
+
+    testAdminClient.login(credentials).then(function () {
+
+      testAdminClient.exchange.security.addGroup(testGroup, function (e, result) {
+
+        if (e) return done(e);
+
+        testGroupSaved = result;
+
+        var testRESTUser = {
+          username: 'RESTTEST3',
+          password: 'REST_TEST3'
+        };
+
+        testAdminClient.exchange.security.addUser(testRESTUser, function (e, result) {
+
+          if (e) return done(e);
+          testUserSaved = result;
+
+          testAdminClient.exchange.security.linkGroup(testGroupSaved, testUserSaved, function (e) {
+
+            if (e) return done(e);
+
+            login(function (e, response) {
+
+              if (e) return done(e);
+
+              var token = response.data.token;
+              var restClient = require('restler');
+
+              var operation = {
+                parameters: {
+                  'opts': {
+                    number: 1
+                  }
+                }
+              };
+
+              //this call should work
+              restClient.postJson('http://localhost:10000/rest/method/testComponent/method3?happn_token=' + token, operation).on('complete', function (result) {
+
+                expect(result.error).to.be(null);
+
+                var operation = {
+                  parameters: {
+                    'opts': {
+                      number: 1
+                    }
+                  }
+                };
+
+                //this call should fail now that the user has been deleted
+                restClient.postJson('http://localhost:10000/rest/method/testComponent/method3?happn_token=' + token, operation).on('complete', function (result) {
+
+                  expect(result.error).to.be(null);
+                  expect(result.data.number).to.be(2);
+
+                  testAdminClient.exchange.security.deleteUser(testUserSaved, function(e){
+
+                    if (e) return done(e);
+
+                    restClient.postJson('http://localhost:10000/rest/method/testComponent/method3?happn_token=' + token, operation).on('complete', function (result) {
+
+                      expect(result.error.message).to.be('user RESTTEST3 has been deleted or does not exist');
+                      done();
+                    });
+
+                  });
+                });
+              });
+
+            }, testRESTUser);
+
+          });
+
+        });
+      });
+
+    }).catch(done);
+
+  });
+
   it('passes params as an object $restParams and injects the $userSession as the rest user', function (done) {
 
     var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
