@@ -631,7 +631,6 @@ describe('e3b-rest-component-secure', function () {
 
     restClient.get('http://localhost:10000/rest/login?username=_ADMIN&password=' + ADMIN_PASSWORD).on('complete', function (result) {
 
-      console.log('logged in:::', result);
       expect(result.error).to.be(null);
       expect(result.data.token).to.not.be(null);
 
