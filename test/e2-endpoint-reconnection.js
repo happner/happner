@@ -101,6 +101,8 @@ describe('e2-endpoint-reconnection', function () {
 
   it("tests endpoint connection events", function (done) {
 
+    this.timeout(60000);
+
     testExchangeCalls(function (e) {                           // 1. check the remote exchange works
 
       if (e) return done(e);
