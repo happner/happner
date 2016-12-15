@@ -45,7 +45,7 @@ describe('e2-endpoint-reconnection', function () {
 
     var timedOut = setTimeout(function () {
       callback(new Error('remote mesh start timed out'));
-    }, 5000);
+    }, 30000);
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + REMOTE_MESH]);
@@ -63,6 +63,8 @@ describe('e2-endpoint-reconnection', function () {
 
   before(function (done) {
 
+    this.timeout(60000);
+
     startRemoteMesh(function (e) {
 
       if (e) return done(e);
@@ -79,7 +81,7 @@ describe('e2-endpoint-reconnection', function () {
 
   after(function (done) {
 
-    this.timeout(30000);
+    this.timeout(60000);
 
     remote.kill();
     mesh.stop({reconnect: false}, done);
@@ -150,6 +152,8 @@ describe('e2-endpoint-reconnection', function () {
 
   it("can call remote component, restart remote mesh and call component again", function (done) {
 
+    this.timeout(60000);
+
     testExchangeCalls(function (e) {                           // 1. check the remote exchange works
 
       if (e) return done(e);
@@ -207,7 +211,7 @@ describe('e2-endpoint-reconnection', function () {
 
   it("can call remote component, restart remote mesh - and reconnect before 5 seconds have passed because our max retry interval is 2 seconds", function (done) {
 
-    this.timeout(30000);
+    this.timeout(60000);
 
     testExchangeCalls(function (e) {                           // 1. check the remote exchange works
 
