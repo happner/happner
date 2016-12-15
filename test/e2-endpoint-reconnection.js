@@ -16,7 +16,7 @@ describe('e2-endpoint-reconnection', function () {
 
   var config = {
     name: 'e2-endpoint-reconnection',
-    datalayer: {
+    dataLayer: {
       port: PORT_LOCAL,
       secure: true
     },
@@ -30,7 +30,7 @@ describe('e2-endpoint-reconnection', function () {
           port: PORT_REMOTE,
           host: 'localhost',
           username: '_ADMIN',
-          password: 'guessme',
+          password: 'guessme'
         }
       }
     }
@@ -45,25 +45,29 @@ describe('e2-endpoint-reconnection', function () {
 
     var timedOut = setTimeout(function () {
       callback(new Error('remote mesh start timed out'));
-    }, 30000);
+    }, 5000);
 
     // spawn remote mesh in another process
     remote = spawn('node', [libFolder + REMOTE_MESH]);
 
     remote.stdout.on('data', function (data) {
 
-      // process.stdout.write(data.toString());
+      //console.log('output:::', data.toString());
 
       if (data.toString().match(/READY/)) {
+
         clearTimeout(timedOut);
-        callback();
+
+        setTimeout(function () {
+          callback();
+        }, 1000);
       }
     });
   };
 
-  before(function (done) {
+  var beforeDoneCalled = false;
 
-    this.timeout(60000);
+  before(function (done) {
 
     startRemoteMesh(function (e) {
 
@@ -73,7 +77,13 @@ describe('e2-endpoint-reconnection', function () {
         if (e) return done(e);
 
         mesh = instance;
-        done();
+
+        if (!beforeDoneCalled){
+
+          done();
+
+          beforeDoneCalled = true;
+        }
       });
     });
   });
@@ -84,7 +94,10 @@ describe('e2-endpoint-reconnection', function () {
     this.timeout(60000);
 
     remote.kill();
-    mesh.stop({reconnect: false}, done);
+
+    mesh.stop({reconnect: false}, function(){
+      done();
+    });
   });
 
   var testExchangeCalls = function (done) {
@@ -103,19 +116,17 @@ describe('e2-endpoint-reconnection', function () {
 
   it("tests endpoint connection events", function (done) {
 
-    this.timeout(60000);
-
     testExchangeCalls(function (e) {                           // 1. check the remote exchange works
 
       if (e) return done(e);
-      //console.log('1.1 EXCHANGE CALLS WORKED:::');
+      console.log('1.1 EXCHANGE CALLS WORKED:::');
 
       mesh.on('endpoint-reconnect-scheduled', function (evt) { // 2. attach to the endpoint disconnection
 
         if (__endpointConnectionTestDisconnected1) return;
         __endpointConnectionTestDisconnected1 = true;
 
-        //console.log('1.2 KILLED REMOTE:::');
+        console.log('1.2 KILLED REMOTE:::');
 
         expect(evt.endpointName).to.be('remoteMeshE2');
         expect(evt.endpointConfig.config.port).to.be(PORT_REMOTE);
@@ -125,7 +136,7 @@ describe('e2-endpoint-reconnection', function () {
           if (__endpointConnectionTestDisconnected2) return;
           __endpointConnectionTestDisconnected2 = true;
 
-          //console.log('1.4 RESTARTED REMOTE:::');
+          console.log('1.4 RESTARTED REMOTE:::');
 
           expect(evt.endpointName).to.be('remoteMeshE2');
           expect(evt.endpointConfig.config.port).to.be(PORT_REMOTE);
@@ -136,8 +147,9 @@ describe('e2-endpoint-reconnection', function () {
 
         startRemoteMesh(function (e) {       // 3. start the remote mesh
 
-          if (e) return done(e);
-          //console.log('1.3 STARTED REMOTE MESH:::');
+          if (e)
+            return done(e);
+          console.log('1.3 STARTED REMOTE MESH:::');
 
         });
       });
@@ -152,11 +164,10 @@ describe('e2-endpoint-reconnection', function () {
 
   it("can call remote component, restart remote mesh and call component again", function (done) {
 
-    this.timeout(60000);
-
     testExchangeCalls(function (e) {                           // 1. check the remote exchange works
 
-      if (e) return done(e);
+      if (e)
+        return done(e);
       //console.log('2.1 EXCHANGE CALLS WORKED:::');
 
       mesh.on('endpoint-reconnect-scheduled', function (evt) { // 2. attach to the endpoint disconnection
@@ -185,18 +196,23 @@ describe('e2-endpoint-reconnection', function () {
             expect(evt.endpointName).to.be('remoteMeshE2');
             expect(evt.endpointConfig.config.port).to.be(PORT_REMOTE);
 
-            //console.log('2.6 REMOTE ENDPOINT RECONNECTED:::');
-            testExchangeCalls(function (e) {
-              //console.log('2.7 EXCHANGE CALLS TESTED AFTER RESTART:::');
+            setTimeout(function(){
+              testExchangeCalls(function (e) {
+                //console.log('2.7 EXCHANGE CALLS TESTED AFTER RESTART:::');
 
-              done(e);
-            });
+                done(e);
+              });
+            }, 10000);
+
+            //console.log('2.6 REMOTE ENDPOINT RECONNECTED:::');
+
 
           });
 
           startRemoteMesh(function (e) {       // 5. start the remote mesh
 
-            if (e) return done(e);
+            if (e)
+              return done(e);
             //console.log('5. STARTED REMOTE MESH:::', e);
 
           });
@@ -211,11 +227,12 @@ describe('e2-endpoint-reconnection', function () {
 
   it("can call remote component, restart remote mesh - and reconnect before 5 seconds have passed because our max retry interval is 2 seconds", function (done) {
 
-    this.timeout(60000);
+    this.timeout(30000);
 
     testExchangeCalls(function (e) {                           // 1. check the remote exchange works
 
-      if (e) return done(e);
+      if (e)
+        return done(e);
 
       remote.kill();//kill remote
 
