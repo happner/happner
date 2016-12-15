@@ -466,6 +466,5 @@
 1.28.3 2016-12-15
 -----------------
 
-- happn 2.16.3
-
+- happn 2.16.3, fix persisted cache sync
 
