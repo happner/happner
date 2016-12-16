@@ -468,3 +468,8 @@
 
 - happn 2.16.3, fix persisted cache sync
 
+1.28.4 2016-12-16
+-----------------
+
+- fix #252, make meshClient disconnect() work for disconnected client
+
