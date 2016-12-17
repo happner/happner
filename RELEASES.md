@@ -473,3 +473,8 @@
 
 - fix #252, make meshClient disconnect() work for disconnected client
 
+1.28.5 2016-12-17
+-----------------
+
+- fix e2 test, doing retry on endpoint reconnection
+
