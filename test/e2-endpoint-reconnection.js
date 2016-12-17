@@ -200,7 +200,14 @@ describe('e2-endpoint-reconnection', function () {
               testExchangeCalls(function (e) {
                 //console.log('2.7 EXCHANGE CALLS TESTED AFTER RESTART:::');
 
-                done(e);
+                if (e){
+
+                  //retry
+                  setTimeout(function(){
+                    testExchangeCalls(done);
+                  }, 5000);
+
+                } else done();
               });
             }, 10000);
 
