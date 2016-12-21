@@ -1382,6 +1382,8 @@ describe('b1 - advanced security', function (done) {
 
           testUpsertClient.exchange.component.method2(function(e){
 
+            console.log('ERROR IS:::', e);
+
             expect(e.toString()).to.be('AccessDenied: unauthorized');
 
             testUpsertClient.exchange.component.method1(function(e, result){
