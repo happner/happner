@@ -473,3 +473,8 @@
 
 - fix #252, make meshClient disconnect() work for disconnected client
 
+
+1.28.5 2016-12-16
+-----------------
+
+- fix #257, fix REST crash when posting object without parameters to function using $restParams
