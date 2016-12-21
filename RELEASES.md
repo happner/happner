@@ -478,3 +478,7 @@
 -----------------
 
 - fix #257, fix REST crash when posting object without parameters to function using $restParams
+
+1.28.6 2016-12-21
+-----------------
+- updated e2 test, moved to longrunning
