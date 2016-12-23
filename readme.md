@@ -6,7 +6,7 @@ Happner is a cloud application framework ideal for integrating multiple micro se
 
 HAPPNER-2 RELEASED
 -------------------
-*the version that makes use of happn, the repo can be found [here](https://github.com/happner/happner-2), with a [migration plan](https://github.com/happner/happner-2/blob/master/docs/migration-plan.md)*
+*the version that makes use of happn, the repo can be found [here](https://github.com/happner/happner-2), with a [migration plan](https://github.com/happner/happner-2/blob/master/docs/migration-plan.md).*
 
 ## installation
 
