@@ -1,0 +1,5050 @@
+{
+  "/Users/simonbishop/Documents/Projects/happner/test/1-consume-module.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/1-consume-module.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/1-consume-module.js",
+      "suites": [
+        {
+          "suite": "1 - Consumes an external module",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "starts a local mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/1-consume-module.js",
+                "duration": 741,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "starts a local mesh, with a single component that wraps the happn client module and compares the response with a happn client instantiated outside of the mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/1-consume-module.js",
+                "duration": 69,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 4614
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/2-component-to-component.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/2-component-to-component.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/2-component-to-component.js",
+      "suites": [
+        {
+          "suite": "2 - Bounces a message between two components, demonstrates how the events layer works",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "starts the mesh, listens for the ping pong completed event, that module1 emits",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/2-component-to-component.js",
+                "duration": 529,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 2726
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+      "suites": [
+        {
+          "suite": "3 - Multiple component initialization",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "loads the class ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the class with parameters ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the returned from sync ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the returned from sync with params ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the async ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the async with params ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the object ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the hidden class ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the class with parameters ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the nested class ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "loads the nested class with parameters ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/3-multiple-component-initialization.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3847
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/4-mesh-to-mesh.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/4-mesh-to-mesh.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/4-mesh-to-mesh.js",
+      "suites": [
+        {
+          "suite": "4 - Mesh to Mesh",
+          "suites": [
+            {
+              "suite": "on remote mesh",
+              "suites": [],
+              "tests": [
+                {
+                  "test": {
+                    "title": "can call remote component function and subscribe to event",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/4-mesh-to-mesh.js",
+                    "duration": 12,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can receive remotely caught error",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/4-mesh-to-mesh.js",
+                    "duration": 7,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 3552
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/5-component-web.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/5-component-web.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/5-component-web.js",
+      "suites": [
+        {
+          "suite": "5 - Demonstrates the middleware functionality",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "starts the mesh, loads the middleware module - which loads the browser plugin",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/5-component-web.js",
+                "duration": 29,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests that we can do chain middleware in a module",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/5-component-web.js",
+                "duration": 13,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests that the scope is set to module",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/5-component-web.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3079
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+      "suites": [
+        {
+          "suite": "6-websocket-client.js",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "does a set on the datalayer component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+                "duration": 19,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "does a get on the datalayer component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+                "duration": 15,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "contains the mesh name and version",
+                "async": 0,
+                "sync": true,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "does a delete on the datalayer component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+                "duration": 18,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "does an on, on the datalayer component",
+                "sync": true,
+                "timedOut": false,
+                "pending": true,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+                "status": "skipped"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "runs a method on a component",
+                "async": 0,
+                "sync": true,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "deletes the right listeners when unsubscribing from data",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+                "duration": 12,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "runs attaches to an event on a component",
+                "sync": true,
+                "timedOut": false,
+                "pending": true,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/6-websocket-client.js",
+                "status": "skipped"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3883
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-data.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-data.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-data.js",
+      "suites": [
+        {
+          "suite": "7 - test persisted config, check memory and persisted data stores",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests storing data routed to mem",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-data.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests storing data routed to persist",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-data.js",
+                "duration": 2,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests storing data routed to mem, in the data component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-data.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests storing data routed to persist, in the data component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-data.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 2890
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-meshname-keypair.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-meshname-keypair.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-meshname-keypair.js",
+      "suites": [
+        {
+          "suite": "7 - start and stop a persisted mesh",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "restarts the mesh, ensures the keypair",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-meshname-keypair.js",
+                "duration": 212,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "restarts the unpersisted mesh, ensures the keypair is different",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-meshname-keypair.js",
+                "duration": 276,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "restarts the mesh, ensures the name",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-meshname-keypair.js",
+                "duration": 246,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "restarts the unpersisted mesh, ensures the name is different",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/7-persisted-meshname-keypair.js",
+                "duration": 235,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 5712
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/8-data-benchmarks.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/8-data-benchmarks.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/8-data-benchmarks.js",
+      "suites": [
+        {
+          "suite": "8 - does some benchmarks on api calls, data events and events",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "listens for the ping pong completed event, that module1 emits",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/8-data-benchmarks.js",
+                "duration": 30,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "listens for an event in module 2 that module 1 set 1000 data points",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/8-data-benchmarks.js",
+                "duration": 763,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3422
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/9-stop-mesh.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/9-stop-mesh.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/9-stop-mesh.js",
+      "suites": [
+        {
+          "suite": "9-stop-mesh",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "stops the mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/9-stop-mesh.js",
+                "duration": 459,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "stops then starts the same mesh, tests the echo method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/9-stop-mesh.js",
+                "duration": 392,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3022
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/9-web-middleware.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/9-web-middleware.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/9-web-middleware.js",
+      "suites": [
+        {
+          "suite": "9 - tests that we can add middleware before a static",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "can get index.html that middleware renames to index.htm",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/9-web-middleware.js",
+                "duration": 24,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 2838
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/a1-attach-to-multiple.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/a1-attach-to-multiple.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/a1-attach-to-multiple.js",
+      "suites": [
+        {
+          "suite": "a1 - attach to multiple meshes (meshs?)",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "can call methods on all",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a1-attach-to-multiple.js",
+                "duration": 13,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 5986
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+      "suites": [
+        {
+          "suite": "a2 - mesh awareness via $happn injection",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "leaves happn and origin out of the description when defaulting method parameters",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "leaves happn out of the description when specifying method parameters",
+                "sync": true,
+                "timedOut": false,
+                "pending": true,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "status": "skipped"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "calls multiple components on multiple modules on multiple meshes",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 13,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "injects happn into first position",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "injects happn into last position",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "injects happn into middle position",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "runs method without happn ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "injects happn into webmethods",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 20,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "injects happn into front of webmethod args",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 7,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "injects happn into middle of webmethod args",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "injects happn into middle of webmethod args",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "runs webmethod ok without $happn",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a2-scope-context-happn-injection.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 5241
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/a3-injection-response-serialization.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/a3-injection-response-serialization.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/a3-injection-response-serialization.js",
+      "suites": [
+        {
+          "suite": "a3 - Bounces a message between two components, demonstrates how the events layer works",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "starts the mesh, listens for the ping pong completed event, that module1 emits",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a3-injection-response-serialization.js",
+                "duration": 2438,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 6112
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/a5-default-component-configs.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/a5-default-component-configs.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/a5-default-component-configs.js",
+      "suites": [
+        {
+          "suite": "a5 - default component configs",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "created the module with the method schema as defaulted",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a5-default-component-configs.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "created the module with the web schema as defaulted",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a5-default-component-configs.js",
+                "duration": 20,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 2794
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/a6-component-start-and-validations.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/a6-component-start-and-validations.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/a6-component-start-and-validations.js",
+      "suites": [
+        {
+          "suite": "a6 - component start and validation -",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "has called and finished the component async start method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a6-component-start-and-validations.js",
+                "duration": 8,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "has called back with error into the mesh start callback because the component start failed",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a6-component-start-and-validations.js",
+                "duration": 176,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "validates methods",
+                "sync": true,
+                "timedOut": false,
+                "pending": true,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a6-component-start-and-validations.js",
+                "status": "skipped"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3332
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/a7-system-component.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/a7-system-component.js",
+    "success": true,
+    "results": {
+      "file": null,
+      "suites": []
+    },
+    "duration": 140
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+      "suites": [
+        {
+          "suite": "a8 - exchange supports promises",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "supports non-promises in the exchange",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports promises in the exchange",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "the promise implementation supports .catch from callback error",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "the promise implementation supports .catch from thrown error",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 2,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports non-promises on the alias",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports promises on the alias",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports fire and forget",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports calling a synchronous method and getting a promise back",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports calling a synchronous method with $happn and $origin and getting a promise back",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports calling a synchronous method fire and forget",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports exposing a promise on the exchange",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports calling a promise from a promise on the exchange",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports calling a promise from a method on the exchange",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports returning a promise from a method on the exchange",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports returning a promise from a method on the exchange with no callback",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports returning a promise from a method on the exchange that throws an error",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 0,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "supports returning a promise from a method on the exchange that callbacks an error",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "does not time out a sync function",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 2001,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "does not fire a callback twice",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a8-exchange-promises.js",
+                "duration": 502,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 7814
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/a9-api-data.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/a9-api-data.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/a9-api-data.js",
+      "suites": [
+        {
+          "suite": "a9 - passes data between component APIs, also works with events",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "stores some data on component1, we look at the output from happn",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a9-api-data.js",
+                "duration": 213,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "checks the on count on component1 must be greater than 0",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/a9-api-data.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3246
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+      "suites": [
+        {
+          "suite": "b1 - advanced security",
+          "suites": [
+            {
+              "suite": "update group",
+              "suites": [],
+              "tests": [
+                {
+                  "test": {
+                    "title": "can add group permissions",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                    "duration": 18,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can remove group permissions",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                    "duration": 27,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": [
+            {
+              "test": {
+                "title": "creates a test group, with permissions to access the security component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 18,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "creates a test user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 47,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "adds test group to the test user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 7,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "logs in with the test user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 90,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "changes the password and custom data for the test user, then logs in with the new password",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 125,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "fails to modify permissions using a non-admin user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 141,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "should fail to login with a bad user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 42,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "should list all groups",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 7,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "should list all users",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "should get a specific user, with rolled up group data",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 9,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "should be able to link another group to a user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 26,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "delete a user, fail to access the system with the deleted user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 55,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "should not allow to call methods from /meshname/security after groups is updated to TEST GROUP USER",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 149,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can upsert an existing group, merging permissions",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 152,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can upsert an existing group, overwriting permissions",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 161,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can upsert a new group, merging permissions",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 147,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can upsert a new group, merging permissions",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 157,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can upsert an existing user, and merge group memberships",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 192,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can upsert an existing user, and overwrite group memberships",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 201,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can upsert a new user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 146,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "fails upsert an existing user, non-existing group",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b1-advanced-security.js",
+                "duration": 180,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 6060
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b10-secure-mesh-to-mesh-single-process.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b10-secure-mesh-to-mesh-single-process.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b10-secure-mesh-to-mesh-single-process.js",
+      "suites": [
+        {
+          "suite": "b10-secure-mesh-to-mesh-single-process.js",
+          "suites": [
+            {
+              "suite": "on remote mesh",
+              "suites": [],
+              "tests": [
+                {
+                  "test": {
+                    "title": "can call remote component function",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b10-secure-mesh-to-mesh-single-process.js",
+                    "duration": 15,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "we know when there was an accident",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b10-secure-mesh-to-mesh-single-process.js",
+                    "duration": 9,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 3348
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b2-secure-mesh-to-mesh.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b2-secure-mesh-to-mesh.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b2-secure-mesh-to-mesh.js",
+      "suites": [
+        {
+          "suite": "b2 - secure mesh to mesh",
+          "suites": [
+            {
+              "suite": "on remote mesh",
+              "suites": [],
+              "tests": [
+                {
+                  "test": {
+                    "title": "can call remote component function",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b2-secure-mesh-to-mesh.js",
+                    "duration": 14,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "we know when there was an accident",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b2-secure-mesh-to-mesh.js",
+                    "duration": 10,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 3776
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b3-secure-mesh-to-mesh-fails.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b3-secure-mesh-to-mesh-fails.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b3-secure-mesh-to-mesh-fails.js",
+      "suites": [
+        {
+          "suite": "b3 - secure mesh to mesh fails",
+          "suites": [
+            {
+              "suite": "secure mesh to mesh fails",
+              "suites": [],
+              "tests": [
+                {
+                  "test": {
+                    "title": "cannot connect endpoint - mesh start fails",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b3-secure-mesh-to-mesh-fails.js",
+                    "duration": 1679,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 4168
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+      "suites": [
+        {
+          "suite": "b4 - component start and validation -",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "we examine the output of the mesh permissions and ensure that they reflect our module",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+                "duration": 21,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent methods, we test that this works",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+                "duration": 158,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "we add a test user that belongs to a group that has permissions to access all of the ProtectedComponent methods, we test that this works",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+                "duration": 154,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent methods, we test that this works",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+                "duration": 154,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "we add a test user that belongs to a group that has permissions to access all of the ProtectedComponent events, we test that this works",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+                "duration": 163,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "we add a test user that belongs to a group that has permissions to access none of the ProtectedComponent events, we test that this works",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+                "duration": 154,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "we add a test user that belongs to a group that has permissions to access one of the ProtectedComponent events, we test that this works",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+                "duration": 156,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "we add a test user that belongs to a group that has permissions to access a protected web route, we test that this works",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b4-permissions-translation.js",
+                "duration": 150,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 4076
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b6-secure-multiple-meshes-singleproc.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b6-secure-multiple-meshes-singleproc.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b6-secure-multiple-meshes-singleproc.js",
+      "suites": [
+        {
+          "suite": "b6 - start meshes",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "should add a user to the first mesh (serverConfig)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b6-secure-multiple-meshes-singleproc.js",
+                "duration": 39,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3356
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+      "suites": [
+        {
+          "suite": "b7 - shared data component",
+          "suites": [
+            {
+              "suite": "direct use",
+              "suites": [
+                {
+                  "suite": "shared use",
+                  "suites": [],
+                  "tests": [
+                    {
+                      "test": {
+                        "title": "can set from one component and getted from another",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                        "duration": 2,
+                        "status": "passed"
+                      },
+                      "error": null
+                    }
+                  ]
+                }
+              ],
+              "tests": [
+                {
+                  "test": {
+                    "title": "can set and get with opts",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 6,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can set and get without opts",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 2,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can subscribe with opts",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 1,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can subscribe without opts",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 1,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "should subscribe and get an initial value on the callback",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 6,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "should subscribe and get initial values on the callback",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 5,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "should subscribe and get initial values emitted immediately",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 3,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can unsubscribe",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 3,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can unsubscribe from all",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 2,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can unsubscribe from a path",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 3,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can delete",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 2,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can get paths",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 3,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can subscribe to data change with events",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/b7-shared-data-component.js",
+                    "duration": 2,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 3189
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b8-private-modules-support.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b8-private-modules-support.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b8-private-modules-support.js",
+      "suites": [
+        {
+          "suite": "b8 - private module support",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "generates the necessary element defn from component name",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b8-private-modules-support.js",
+                "duration": 7,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "renames existing @private/ module and merges in the path",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b8-private-modules-support.js",
+                "duration": 1,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 2236
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/b9-mesh-security-updateuser-re-accessresource.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/b9-mesh-security-updateuser-re-accessresource.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/b9-mesh-security-updateuser-re-accessresource.js",
+      "suites": [
+        {
+          "suite": "b9 - mesh client security login",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "a - client should register a device on the server",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/b9-mesh-security-updateuser-re-accessresource.js",
+                "duration": 483,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3649
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c1-system-component-initialization.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c1-system-component-initialization.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/c1-system-component-initialization.js",
+      "suites": [
+        {
+          "suite": "c1 - security layer should be initialized before user components are started",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "should start a user component that expects the security layer to be initialized",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c1-system-component-initialization.js",
+                "duration": 642,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 2995
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c2-mesh-events.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c2-mesh-events.js",
+    "success": true,
+    "results": {
+      "file": null,
+      "suites": []
+    },
+    "duration": 144
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c3-client-data-search.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c3-client-data-search.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/c3-client-data-search.js",
+      "suites": [
+        {
+          "suite": "c3 - client data search",
+          "suites": [
+            {
+              "suite": "direct use",
+              "suites": [
+                {
+                  "suite": "client use",
+                  "suites": [
+                    {
+                      "suite": "client data use",
+                      "suites": [],
+                      "tests": [
+                        {
+                          "test": {
+                            "title": "can get using criteria",
+                            "async": 1,
+                            "sync": false,
+                            "timedOut": false,
+                            "pending": false,
+                            "type": "test",
+                            "file": "/Users/simonbishop/Documents/Projects/happner/test/c3-client-data-search.js",
+                            "duration": 5,
+                            "status": "passed"
+                          },
+                          "error": null
+                        }
+                      ]
+                    }
+                  ],
+                  "tests": [
+                    {
+                      "test": {
+                        "title": "can get using criteria",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/c3-client-data-search.js",
+                        "duration": 10,
+                        "status": "passed"
+                      },
+                      "error": null
+                    }
+                  ]
+                }
+              ],
+              "tests": [
+                {
+                  "test": {
+                    "title": "can get using criteria",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/c3-client-data-search.js",
+                    "duration": 9,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can get using criteria, limit to fields",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/c3-client-data-search.js",
+                    "duration": 5,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can get the latest record",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/c3-client-data-search.js",
+                    "duration": 23,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 3277
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c4-client-data-search-secure.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c4-client-data-search-secure.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/c4-client-data-search-secure.js",
+      "suites": [
+        {
+          "suite": "c4 - client data search secure",
+          "suites": [
+            {
+              "suite": "direct use",
+              "suites": [
+                {
+                  "suite": "client use",
+                  "suites": [
+                    {
+                      "suite": "client data use",
+                      "suites": [],
+                      "tests": [
+                        {
+                          "test": {
+                            "title": "can get using criteria",
+                            "async": 1,
+                            "sync": false,
+                            "timedOut": false,
+                            "pending": false,
+                            "type": "test",
+                            "file": "/Users/simonbishop/Documents/Projects/happner/test/c4-client-data-search-secure.js",
+                            "duration": 7,
+                            "status": "passed"
+                          },
+                          "error": null
+                        }
+                      ]
+                    }
+                  ],
+                  "tests": [
+                    {
+                      "test": {
+                        "title": "can get using criteria",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/c4-client-data-search-secure.js",
+                        "duration": 16,
+                        "status": "passed"
+                      },
+                      "error": null
+                    }
+                  ]
+                }
+              ],
+              "tests": [
+                {
+                  "test": {
+                    "title": "can get using criteria",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/c4-client-data-search-secure.js",
+                    "duration": 11,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can get using criteria, limit to fields",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/c4-client-data-search-secure.js",
+                    "duration": 4,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can get the latest record",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/c4-client-data-search-secure.js",
+                    "duration": 28,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 3127
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c5-multiple-exchange-calls.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c5-multiple-exchange-calls.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/c5-multiple-exchange-calls.js",
+      "suites": [
+        {
+          "suite": "c5 - multiple exchange calls",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "server can call more than one method in sequence (callback)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c5-multiple-exchange-calls.js",
+                "duration": 6,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "server can call more than one method in sequence (promise)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c5-multiple-exchange-calls.js",
+                "duration": 2,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "client can call more than one method in sequence (callback)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c5-multiple-exchange-calls.js",
+                "duration": 99,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "client can call more than one method in sequence (promise)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c5-multiple-exchange-calls.js",
+                "duration": 62,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3745
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c6-https.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c6-https.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/c6-https.js",
+      "suites": [
+        {
+          "suite": "c6 - https",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "fails to connect, wrong transport on client",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c6-https.js",
+                "duration": 50,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "does a set on the datalayer component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c6-https.js",
+                "duration": 9,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "does a get on the datalayer component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c6-https.js",
+                "duration": 9,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "does a delete on the datalayer component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c6-https.js",
+                "duration": 20,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 4754
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+      "suites": [
+        {
+          "suite": "c7-permissions-web",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "fails to access a file, missing the token",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+                "duration": 26,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "logs in wth the admin user, we have a token - we can access the file",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+                "duration": 132,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "it tests the specific exclusion",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+                "duration": 9,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "it tests the wildcard exclusion",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "creates a test user, fails to log in, add group with web permission and log in ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+                "duration": 261,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "creates a test user, fails to log in, upsert a group with web permission and log in ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+                "duration": 249,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "creates a test user, gets the token and accesses a resource successfully, then deletes the user and is unable to access the resource",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c7-permissions-web.js",
+                "duration": 249,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 6229
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c8-payload-encryption-mesh-to-mesh.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c8-payload-encryption-mesh-to-mesh.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/c8-payload-encryption-mesh-to-mesh.js",
+      "suites": [
+        {
+          "suite": "c8-payload-encryption",
+          "suites": [
+            {
+              "suite": "the faraway tree, in the mist...",
+              "suites": [],
+              "tests": [
+                {
+                  "test": {
+                    "title": "we can ride moonface's slippery slip",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/c8-payload-encryption-mesh-to-mesh.js",
+                    "duration": 15,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "we know when there was an accident",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/c8-payload-encryption-mesh-to-mesh.js",
+                    "duration": 11,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 5383
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js",
+      "suites": [
+        {
+          "suite": "c9-payload-encryption-client-to-mesh",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "server can call more than one method in sequence (callback)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js",
+                "duration": 7,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "server can call more than one method in sequence (promise)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js",
+                "duration": 2,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "server can listen for an event - then recieve an event by calling a method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "client can call more than one method in sequence (callback)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js",
+                "duration": 191,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "client can call more than one method in sequence (promise)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js",
+                "duration": 142,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "client can listen for an event - then recieve an event by calling a method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/c9-payload-encryption-client-to-mesh.js",
+                "duration": 135,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3496
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d1-session-injection.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d1-session-injection.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d1-session-injection.js",
+      "suites": [
+        {
+          "suite": "d1-session-injection",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "fetches the origin info on a secure mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d1-session-injection.js",
+                "duration": 13,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "fetches the origin info on an unsecure mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d1-session-injection.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3313
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js",
+      "suites": [
+        {
+          "suite": "d2-update-own-user",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "adds a test user, modifies the users password with the admin user, logs in with the test user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js",
+                "duration": 205,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "adds a test user, logs in with the test user - modifies the users password successfully",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js",
+                "duration": 288,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "adds a test user, logs in with the test user - fails to modify the user using updateUser on another user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js",
+                "duration": 134,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "adds a test user, logs in with the test user - fails to modify the password, as old password was not included",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js",
+                "duration": 149,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "adds a test user, logs in with the test user - fails to modify the password, as old password does not match the current one",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js",
+                "duration": 173,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "adds a test user, logs in with the test user - modifies the user details without the users password changing",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d2-update-own-user.js",
+                "duration": 242,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 4131
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d3-permission-changes-events.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d3-permission-changes-events.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d3-permission-changes-events.js",
+      "suites": [
+        {
+          "suite": "d3-permission-changes",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests that all security events are being bubbled back from happn to happner security - and are consumable from an admin client",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d3-permission-changes-events.js",
+                "duration": 141,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3155
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d4-session-changes-events.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d4-session-changes-events.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d4-session-changes-events.js",
+      "suites": [
+        {
+          "suite": "d4-session-changes-events",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the connect and disconnect events, by logging on and off with the admin client",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d4-session-changes-events.js",
+                "duration": 174,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3227
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d5-connection-changes-events.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d5-connection-changes-events.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d5-connection-changes-events.js",
+      "suites": [
+        {
+          "suite": "d5-connection-changes-events",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the reconnection events",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d5-connection-changes-events.js",
+                "duration": 570,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the connection end event",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d5-connection-changes-events.js",
+                "duration": 10,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3423
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d6_shareddata_metadata.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d6_shareddata_metadata.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d6_shareddata_metadata.js",
+      "suites": [
+        {
+          "suite": "d6_shareddata_metadata",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the meta of a new set",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d6_shareddata_metadata.js",
+                "duration": 8,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the meta of an update set",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d6_shareddata_metadata.js",
+                "duration": 10,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the meta of a get",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d6_shareddata_metadata.js",
+                "duration": 8,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the meta of an on",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d6_shareddata_metadata.js",
+                "duration": 7,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3181
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d7-event-off-by-handle-and path.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d7-event-off-by-handle-and path.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d7-event-off-by-handle-and path.js",
+      "suites": [
+        {
+          "suite": "d7 - Issue #113 - Event off by handle",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "01 - should subscribe to an event then unsubscribe by path",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d7-event-off-by-handle-and path.js",
+                "duration": 510,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "02 - should subscribe to an event then unsubscribe by handle",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d7-event-off-by-handle-and path.js",
+                "duration": 505,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "02 - should subscribe to an event then unsubscribe by path",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d7-event-off-by-handle-and path.js",
+                "duration": 508,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 2560
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d8-commander.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d8-commander.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d8-commander.js",
+      "suites": [
+        {
+          "suite": "d8 commander checks",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "should parse with extra options",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d8-commander.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 145
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/d9-client-timeout.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/d9-client-timeout.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/d9-client-timeout.js",
+      "suites": [
+        {
+          "suite": "d9-client-timeout",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "runs a method on the timeout configured mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d9-client-timeout.js",
+                "duration": 11011,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "runs a method on the default configured mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/d9-client-timeout.js",
+                "duration": 10009,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 25086
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e1-client-reconnection.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e1-client-reconnection.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e1-client-reconnection.js",
+      "suites": [
+        {
+          "suite": "e1-client-reconnection",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the client reconnection",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e1-client-reconnection.js",
+                "duration": 585,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the client reconnection configuration",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e1-client-reconnection.js",
+                "duration": 4884,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 9387
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+      "suites": [
+        {
+          "suite": "e3-optional-args-on-exchange-methods.js",
+          "suites": [
+            {
+              "suite": "using callback",
+              "suites": [
+                {
+                  "suite": "using promise",
+                  "suites": [],
+                  "tests": [
+                    {
+                      "test": {
+                        "title": "supports call to configuredMethod WITHOUT optional argument",
+                        "sync": true,
+                        "timedOut": false,
+                        "pending": true,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+                        "status": "skipped"
+                      },
+                      "error": null
+                    },
+                    {
+                      "test": {
+                        "title": "supports call to configuredMethod WITH optional argument",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+                        "duration": 0,
+                        "status": "passed"
+                      },
+                      "error": null
+                    },
+                    {
+                      "test": {
+                        "title": "supports call to unconfiguredMethod WITHOUT optional argument",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+                        "duration": 0,
+                        "status": "passed"
+                      },
+                      "error": null
+                    },
+                    {
+                      "test": {
+                        "title": "supports call to unconfiguredMethod WITH optional argument",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+                        "duration": 0,
+                        "status": "passed"
+                      },
+                      "error": null
+                    }
+                  ]
+                }
+              ],
+              "tests": [
+                {
+                  "test": {
+                    "title": "supports call to configuredMethod WITHOUT optional argument",
+                    "sync": true,
+                    "timedOut": false,
+                    "pending": true,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+                    "status": "skipped"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "supports call to configuredMethod WITH optional argument",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+                    "duration": 2,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "supports call to unconfiguredMethod WITHOUT optional argument",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+                    "duration": 0,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "supports call to unconfiguredMethod WITH optional argument",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e3-optional-args-on-exchange-methods.js",
+                    "duration": 0,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": []
+        }
+      ]
+    },
+    "duration": 1103
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+      "suites": [
+        {
+          "suite": "e3a-rest-component",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the rest components __respond method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 10,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components __parseBody method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 9,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components describe method over the api",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 63,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components handleRequest method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 2,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to a local method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 23,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests getting an operation from a local method with a simple parameter set",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 4,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests getting an operation from a local method with a serialized parameter",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to a remote method fails",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to a bad method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to the security component fails",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation an unsecured mesh, with a token works",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 4,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to a local method, bad uri component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to a local method, bad uri method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3a-rest-component.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 5225
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+      "suites": [
+        {
+          "suite": "e3b-rest-component-secure",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the rest components __respond method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 9,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components __parseBody method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 6,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components login method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 2,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components login method over the wire",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 79,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components authorize method, successful",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components describe method over the api",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 43,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest components handleRequest method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an empty operation without parameters to a local method using $restParams",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 36,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to a local method",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 35,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests getting an operation from a local method with a simple parameter set",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 40,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests getting an operation from a local method with a serialized parameter",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 44,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests logging in using GET",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 38,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests failed logging in using GET",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 34,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to the security component fails",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 39,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests posting an operation to a remote method fails",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 38,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "creates a test user, fails to log in, add group with web permission and log in ok",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 200,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "creates a test user, logs in, but fails to access a method via REST",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 195,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "creates a test user, logs in, and is able to access a method via REST, then deletes the associated user and fails to access the exchange via REST",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 202,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "passes params as an object $restParams and injects the $userSession as the rest user",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e3b-rest-component-secure.js",
+                "duration": 167,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 7572
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e4-newMesh.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e4-newMesh.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e4-newMesh.js",
+      "suites": [
+        {
+          "suite": "e4-newMesh",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the client newMesh call",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e4-newMesh.js",
+                "duration": 485,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests a re-initialized mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e4-newMesh.js",
+                "duration": 340,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3234
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e4-test-utils.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e4-test-utils.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e4-test-utils.js",
+      "suites": [
+        {
+          "suite": "e3-test-utils",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests getting function parameters",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e4-test-utils.js",
+                "duration": 61,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests getting function parameters",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e4-test-utils.js",
+                "duration": 14,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests stringifying errors",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e4-test-utils.js",
+                "duration": 2,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests removing characters from a string",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e4-test-utils.js",
+                "duration": 5,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 222
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+      "suites": [
+        {
+          "suite": "e5-create-and-destroy-element.js",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "can add a component to the mesh",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+                "duration": 28,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can add a new component to the mesh (from another component using _mesh)",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+                "duration": 3,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "can remove components from the mesh including web methods",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+                "duration": 18,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "emits description change on adding component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+                "duration": 4,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "emits description change on destroying component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+                "duration": 4,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "informs mesh client on create component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+                "duration": 78,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "informs mesh client on destroy component",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+                "duration": 65,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "what happens to reference still held",
+                "sync": true,
+                "timedOut": false,
+                "pending": true,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e5-create-and-destroy-element.js",
+                "status": "skipped"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 2843
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e6-security-inter-mesh-exchange-calls.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e6-security-inter-mesh-exchange-calls.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e6-security-inter-mesh-exchange-calls.js",
+      "suites": [
+        {
+          "suite": "e6-security-inter-mesh-exchange-calls.js",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "allows access to allowed function",
+                "sync": true,
+                "timedOut": false,
+                "pending": true,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e6-security-inter-mesh-exchange-calls.js",
+                "status": "skipped"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "denies access to denied function",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e6-security-inter-mesh-exchange-calls.js",
+                "duration": 9,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "denies access to denied function with similar name to allowed function",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e6-security-inter-mesh-exchange-calls.js",
+                "duration": 4,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 5512
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+      "suites": [
+        {
+          "suite": "e7-local-exchange.js",
+          "suites": [
+            {
+              "suite": "as async with callback",
+              "suites": [
+                {
+                  "suite": "as async with promise",
+                  "suites": [],
+                  "tests": [
+                    {
+                      "test": {
+                        "title": "can call ok",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                        "duration": 1,
+                        "status": "passed"
+                      },
+                      "error": null
+                    },
+                    {
+                      "test": {
+                        "title": "can call with error",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                        "duration": 0,
+                        "status": "passed"
+                      },
+                      "error": null
+                    },
+                    {
+                      "test": {
+                        "title": "can inject $happn into position 1",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                        "duration": 0,
+                        "status": "passed"
+                      },
+                      "error": null
+                    },
+                    {
+                      "test": {
+                        "title": "can inject $happn into position 2",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                        "duration": 0,
+                        "status": "passed"
+                      },
+                      "error": null
+                    },
+                    {
+                      "test": {
+                        "title": "does inject $origin as _ADMIN",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                        "duration": 0,
+                        "status": "passed"
+                      },
+                      "error": null
+                    },
+                    {
+                      "test": {
+                        "title": "can inject $happn last",
+                        "async": 1,
+                        "sync": false,
+                        "timedOut": false,
+                        "pending": false,
+                        "type": "test",
+                        "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                        "duration": 0,
+                        "status": "passed"
+                      },
+                      "error": null
+                    }
+                  ]
+                }
+              ],
+              "tests": [
+                {
+                  "test": {
+                    "title": "can call ok",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                    "duration": 1,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can call with error",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                    "duration": 1,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can inject $happn into position 1",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                    "duration": 0,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can inject $happn into position 2",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                    "duration": 0,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "does inject $origin as _ADMIN",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                    "duration": 1,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "can inject $happn last",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                    "duration": 0,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": [
+            {
+              "test": {
+                "title": "does not add more than 1000% overhead on local exchange functions",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-local-exchange.js",
+                "duration": 24,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3242
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e7-origin-web.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e7-origin-web.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-origin-web.js",
+      "suites": [
+        {
+          "suite": "e7-origin-web",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "logs in wth the admin user, we have a token - we run a method that takes in the origin",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-origin-web.js",
+                "duration": 149,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "logs in wth the admin user, we have a token - we run a method that does not take in the origin",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-origin-web.js",
+                "duration": 108,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "logs in wth the admin user, we use a bad token",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-origin-web.js",
+                "duration": 96,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "logs in wth the admin user, we have a token - we run a method that takes in the origin again",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e7-origin-web.js",
+                "duration": 86,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 3363
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e8-security-meshclient.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e8-security-meshclient.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-security-meshclient.js",
+      "suites": [
+        {
+          "suite": "e8-security-meshclient.js",
+          "suites": [
+            {
+              "suite": "exchange",
+              "suites": [],
+              "tests": [
+                {
+                  "test": {
+                    "title": "allows access to allowed methods",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-security-meshclient.js",
+                    "duration": 10,
+                    "status": "passed"
+                  },
+                  "error": null
+                },
+                {
+                  "test": {
+                    "title": "denies access to denied methods",
+                    "async": 1,
+                    "sync": false,
+                    "timedOut": false,
+                    "pending": false,
+                    "type": "test",
+                    "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-security-meshclient.js",
+                    "duration": 3,
+                    "status": "passed"
+                  },
+                  "error": null
+                }
+              ]
+            }
+          ],
+          "tests": [
+            {
+              "test": {
+                "title": "rejects login promise on bad credentials",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-security-meshclient.js",
+                "duration": 112,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "emits login/deny on bad credentials",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-security-meshclient.js",
+                "duration": 89,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "emits login/allow on good credentials",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-security-meshclient.js",
+                "duration": 91,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 4727
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e8-session-tokens.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e8-session-tokens.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-session-tokens.js",
+      "suites": [
+        {
+          "suite": "e8-session-tokens",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the rest component with a managed profile, ttl times out",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-session-tokens.js",
+                "duration": 2418,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the rest component with a managed profile, only able to access a trusted path",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e8-session-tokens.js",
+                "duration": 689,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 6077
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js",
+      "suites": [
+        {
+          "suite": "e9_session_management",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests active sessions and session activity logging on a secure instance",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js",
+                "duration": 3750,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests session revocation on a secure instance",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js",
+                "duration": 4440,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests switching on active sessions but not session activity logging on a secure instance",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js",
+                "duration": 3354,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests switching on active sessions and session activity logging on a secure instance",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js",
+                "duration": 2468,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests switching on active sessions and session activity logging on a secure instance, then switching them off",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js",
+                "duration": 2375,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests switching on active sessions and session activity logging on a secure instance, then switching off activity logging",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/e9-session-management.js",
+                "duration": 2445,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 22210
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/f1-datalayer-transform-middleware.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/f1-datalayer-transform-middleware.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/f1-datalayer-transform-middleware.js",
+      "suites": [
+        {
+          "suite": "f1-datalayer-transform-middleware",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests spying on session activity",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/f1-datalayer-transform-middleware.js",
+                "duration": 3868,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 9037
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/f2-client-disconnection.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/f2-client-disconnection.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/f2-client-disconnection.js",
+      "suites": [
+        {
+          "suite": "f2-client-disconnection",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "tests the client disconnection with promise login",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/f2-client-disconnection.js",
+                "duration": 5138,
+                "status": "passed"
+              },
+              "error": null
+            },
+            {
+              "test": {
+                "title": "tests the client disconnection with promise",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/f2-client-disconnection.js",
+                "duration": 5103,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 14186
+  },
+  "/Users/simonbishop/Documents/Projects/happner/test/f3-client-disconnect.js": {
+    "task": "/Users/simonbishop/Documents/Projects/happner/test/f3-client-disconnect.js",
+    "success": true,
+    "results": {
+      "file": "/Users/simonbishop/Documents/Projects/happner/test/f3-client-disconnect.js",
+      "suites": [
+        {
+          "suite": "f3-client-disconnect.js",
+          "suites": [],
+          "tests": [
+            {
+              "test": {
+                "title": "can call disconnect() without connecting",
+                "async": 1,
+                "sync": false,
+                "timedOut": false,
+                "pending": false,
+                "type": "test",
+                "file": "/Users/simonbishop/Documents/Projects/happner/test/f3-client-disconnect.js",
+                "duration": 2,
+                "status": "passed"
+              },
+              "error": null
+            }
+          ]
+        }
+      ]
+    },
+    "duration": 604
+  }
+}
