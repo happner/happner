@@ -4,6 +4,10 @@
 
 Happner is a cloud application framework ideal for integrating multiple micro services into a unified offering. It enables the creation of an interconnected mesh of local and remote components. The mesh components can easily call upon each other's methods or listen to each other's events in a manner uncomplicated by remoteness.
 
+HAPPNER-2 RELEASED
+-------------------
+*the version that makes use of happn, the repo can be found [here](https://github.com/happner/happner-2), with a [migration plan](https://github.com/happner/happner-2/blob/master/docs/migration-plan.md)*
+
 ## installation
 
 `npm install happner --save`
