@@ -9,9 +9,9 @@ HAPPNER-2 RELEASED
 *this version that makes use of [happn-3](https://github.com/happner/happn-3) as part of its data layer, the repo can be found [here](https://github.com/happner/happner-2), with a [migration plan](https://github.com/happner/happner-2/blob/master/docs/migration-plan.md).*
 
 ## installation
-
-`npm install happner --save`
-
+```bash
+npm install happner --save
+```
 ## demonstration
 
 These walkthroughs use *happner* to create a rudimentary monitoring service.
