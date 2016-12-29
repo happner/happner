@@ -482,3 +482,7 @@
 1.28.6 2016-12-21
 -----------------
 - updated e2 test, moved to longrunning
+
+1.28.7 2016-12-21
+-----------------
+- fix #259, fix REST response with undefined data payload

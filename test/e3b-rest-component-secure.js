@@ -235,32 +235,29 @@ describe('e3b-rest-component-secure', function () {
     mockResponse.end = function (responseString) {
 
       try {
-
-        if (testStage == "done") return;
-
         var response = JSON.parse(responseString);
+        switch (testStage){
+          case 'success':
+            expect(response.message).to.be("test success response");
+            expect(response.message).to.be("test success response");
+            expect(response.data.test).to.be("data");
+            testStage = 'success-empty';
+            restModule.__respond(mock$Happn, 'test empty success response', undefined, undefined, mockResponse);
+            return;
+          case 'success-empty':
+            expect(response.message).to.be("test empty success response");
+            expect(response.error).to.be(null);
+            expect(response.data).to.be(null);
+            testStage = 'error';
+            restModule.__respond(mock$Happn, 'test error response', {"test": "data"}, new Error('a test error'), mockResponse);
+            return;
+          case 'error':
+            expect(response.error).to.not.be(null);
+            expect(response.error.message).to.be('a test error');
+            return done();
+        }
 
         //TODO: an unexpected GET or POST with a non-json content
-
-        if (testStage == 'success') {
-
-          expect(response.message).to.be("test success response");
-          expect(response.data.test).to.be("data");
-          testStage = 'error';
-
-          restModule.__respond(mock$Happn, 'test success response', {"test": "data"}, new Error('a test error'), mockResponse);
-
-        }
-
-        if (testStage == 'error') {
-
-          expect(response.error).to.not.be(null);
-          expect(response.error.message).to.be('a test error');
-
-          testStage = "done";
-
-          done();
-        }
 
       } catch (e) {
         done(e);
