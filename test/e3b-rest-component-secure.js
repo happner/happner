@@ -46,10 +46,6 @@ SeeAbove.prototype.method5 = function ($happn, $origin, $userSession, $restParam
   callback(null, $restParams);
 };
 
-SeeAbove.prototype.method6 = function succeedWithEmptyResponse ($happn, $origin, $userSession, $restParams, callback) {
-  callback();
-};
-
 SeeAbove.prototype.synchronousMethod = function (opts, opts2) {
   return opts + opts2;
 };
