@@ -486,3 +486,7 @@
 1.28.7 2016-12-21
 -----------------
 - fix #259, fix REST response with undefined data payload
+
+1.28.8 2016-12-30
+-----------------
+- fix #254, mesh client instances interfere with each other
