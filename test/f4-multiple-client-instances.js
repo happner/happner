@@ -1,4 +1,3 @@
-require('should');
 var path = require('path');
 var filename = path.basename(__filename);
 var expect = require('expect.js');
@@ -7,6 +6,8 @@ var test_id = Date.now() + '_' + require('shortid').generate();
 var Mesh = require('../');
 
 describe(filename, function () {
+
+  require('chai').should();
 
   this.timeout(10000);
 
