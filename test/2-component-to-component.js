@@ -2,9 +2,6 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
-
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
   var maximumPings = 1000;
@@ -110,7 +107,6 @@ describe('2 - Bounces a message between two components, demonstrates how the eve
       }
     });
   });
-  require('benchmarket').stop();
 });
 
 

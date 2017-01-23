@@ -1,7 +1,7 @@
 describe('b2 - secure mesh to mesh', function () {
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   context('on remote mesh', function () {
 
@@ -95,6 +95,6 @@ describe('b2 - secure mesh to mesh', function () {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

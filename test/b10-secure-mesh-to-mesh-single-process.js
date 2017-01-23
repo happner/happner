@@ -5,8 +5,8 @@ var Mesh = require('..');
 
 describe(path.basename(__filename), function () {
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   context('on remote mesh', function () {
 
@@ -97,6 +97,6 @@ describe(path.basename(__filename), function () {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

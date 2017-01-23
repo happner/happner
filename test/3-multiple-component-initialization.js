@@ -6,7 +6,7 @@ describe('3 - Multiple component initialization', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
+  //require('benchmarket').start();
 
   before(function (done) {
     var config = {
@@ -125,7 +125,7 @@ describe('3 - Multiple component initialization', function () {
 
   });
 
-  after(require('benchmarket').store());
+  //after(//require('benchmarket').store());
 
 
   it('loads the class ok', function (done) {
@@ -210,6 +210,6 @@ describe('3 - Multiple component initialization', function () {
     });
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

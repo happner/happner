@@ -473,7 +473,6 @@
 
 - fix #252, make meshClient disconnect() work for disconnected client
 
-
 1.28.5 2016-12-16
 -----------------
 
@@ -490,3 +489,8 @@
 1.28.8 2016-12-30
 -----------------
 - fix #254, mesh client instances interfere with each other
+
+1.29.0 2016-12-23
+-----------------
+ - security patch, the origin session id is now added to a directed publish via the new targetClients option
+ - happn version 2.17.0

@@ -4,8 +4,8 @@ describe(path.basename(__filename), function (done) {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var Mesh = require('../')
 
@@ -170,7 +170,7 @@ describe(path.basename(__filename), function (done) {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });
 

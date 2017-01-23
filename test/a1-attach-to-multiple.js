@@ -1,7 +1,7 @@
 describe('a1 - attach to multiple meshes (meshs?)', function () {
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var promise = require('when').promise;
   var parallel = require('when/parallel');
@@ -113,6 +113,6 @@ describe('a1 - attach to multiple meshes (meshs?)', function () {
   });
 
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

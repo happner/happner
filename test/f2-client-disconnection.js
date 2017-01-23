@@ -2,8 +2,8 @@ describe('f2-client-disconnection', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var expect = require('expect.js');
 
@@ -130,6 +130,6 @@ describe('f2-client-disconnection', function () {
       .catch(done);
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

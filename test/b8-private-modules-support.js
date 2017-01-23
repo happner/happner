@@ -5,8 +5,8 @@ describe('b8 - private module support', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   // beforeEach('restore stubbed functions',  function() {
   //   delete require.cache[require.resolve('../')];
@@ -96,6 +96,6 @@ describe('b8 - private module support', function () {
   });
 
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

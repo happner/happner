@@ -16,8 +16,8 @@ describe(filename, function () {
   var client1;
   var client2;
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   before(function (done) {
     startMesh(8880, function (err, mesh) {
@@ -85,7 +85,7 @@ describe(filename, function () {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });
 
