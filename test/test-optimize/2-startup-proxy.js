@@ -59,14 +59,23 @@ describe('2-startup-proxy', function (done) {
 
   before('Set up Loader with Proxy', function (done) {
 
+    var nodeParams = '--max-old-space-size=10';
     var loaderPath = path.resolve('./bin/happner-loader');
-    var confPath = path.resolve('./test/lib/d6_conf_w_proxy.json');
+    var confPath = path.resolve('./test/lib/d6_conf_w_proxy.js');
+    var newMemLimitArg = '--exec-argv-max-old-space-size';
+    var newMemLimitValue = '200';
+
+    var memoryLimitRead = false;
 
     var logs = [];
 
     // spawn remote mesh in another process
-    var remote = spawn('node', [loaderPath, '--conf', confPath]);
+    var remote = spawn('node', [nodeParams, loaderPath, '--conf', confPath, newMemLimitArg, newMemLimitValue]);
 
+    remote.stderr.on('data', function (data) {
+      remote.stderr.removeAllListeners();
+      done(data.toString());
+    });
 
     remote.stdout.on('data', function (data) {
 
@@ -76,10 +85,14 @@ describe('2-startup-proxy', function (done) {
 
       var logMessage = data.toString().toLowerCase();
 
+      if (logMessage.indexOf("__execargv: [ '--max-old-space-size=200' ]") != -1) memoryLimitRead = true;
+
       logs.push(logMessage);
+      console.log(logMessage);
 
       if (logMessage.indexOf('child process loaded') >= 0) {
 
+        expect(memoryLimitRead).to.be(true);
         var childPIDLog = logMessage.split(':::');
         var childPID = parseInt(childPIDLog[childPIDLog.length - 1]);
         childPIDs.push(childPID);

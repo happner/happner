@@ -254,6 +254,8 @@ describe(filename, function () {
 
   it('we log in with both users, then listen for responses on SecuredComponent/method1/* with user1, and then run user2\'s web method', function (done) {
 
+    this.timeout(10000);
+
     var credentials1 = {
       username: 'USER1', // pending
       password: 'TEST PWD'
@@ -277,14 +279,18 @@ describe(filename, function () {
           done(new Error('data was leaked on subscription path'));
 
         }, function(e){
+          console.log('FAILURE:::', e);
+          if (!e) return done(new Error('you were meant to fail here...'));
+        });
 
-          if (e) return done(e);
+        setTimeout(function(){
 
           user2Client.exchange.SecuredComponent.method1({value:1}, function(e, response){
             console.log('RESPONSE IS:::', e, response);
             setTimeout(done, 1000);//give user1Client a chance to fail
           });
-        });
+        }, 1500)
+
 
       }).catch(function(e){
         console.log('USER 2 login broke');

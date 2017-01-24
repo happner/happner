@@ -4,44 +4,69 @@ var LoaderProgress = require('../lib/startup/loader_progress.js')
   , args = {}
   , __happnerCommand = "./bin/happner-loader-daemon"
   , __happnerCommandArguments = []
+  , __execArgv
   , __happnerConfig = {}
   , __loaderConfig = {}
   , __conf = false
   , __logLevel = "info"
   , __verbose = false
-;
+  , __execArgvArgument = '--exec-argv-'
+  , __skipNext = false
+  ;
 
+var arguments = [];
 for (var argIndex in process.argv) {
+  arguments.push.apply(arguments, process.argv[argIndex].split('='));
+}
+
+Logger = require('happn-logger');
+Logger.configure({logLevel: __logLevel});
+
+var log = Logger.createLogger();
+
+for (var argIndex in arguments) {
+  argIndex = parseInt(argIndex);
+  if (__skipNext) {
+    __skipNext = false;
+    continue;
+  }
 
   var val = process.argv[argIndex];
 
-  if (val != "node" && val.indexOf("happner-loader") == -1) {
+  if (val.indexOf("node") == -1 && val.indexOf("happner-loader") == -1) {
 
-    if (__conf) {
-      __happnerConfig = require(val);
-      __conf = false;
-    } else {
-
-      if (val == "--conf") {
-        __conf = true;
-      }
-
-      if (val == "--loader-verbose") {
-        __verbose = true;
-      }
-
-      if (val == "--trace") {
-        __logLevel = "trace";
-      }
-
-      if (val == "--debug") {
-        __logLevel = "debug";
-      }
-
-      if (val == "--warn") {
-        __logLevel = "warn";
+    if (argIndex && process.argv[argIndex - 1] == "--conf") {
+      try {
+        __happnerConfig = require(val);
+      } catch (e) {
+        log.error('Could not load config', e);
       }
     }
+
+    if (val == "--loader-verbose") {
+      __verbose = true;
+    }
+
+    if (val == "--trace") {
+      __logLevel = "trace";
+    }
+
+    if (val == "--debug") {
+      __logLevel = "debug";
+    }
+
+    if (val == "--warn") {
+      __logLevel = "warn";
+    }
+
+    if (val.indexOf(__execArgvArgument) == 0) {
+      var argumentName = '--' + val.slice(__execArgvArgument.length);
+      __skipNext = true;
+      if (!__execArgv) __execArgv = [];
+      __execArgv.push(argumentName + '=' + process.argv[argIndex + 1]);
+      continue;
+    }
+
     __happnerCommandArguments.push(val);
   }
 }
@@ -54,77 +79,87 @@ var loaderProgress = new LoaderProgress(__loaderConfig);
 
 loaderProgress.listen(function (e) {
 
-  Logger = require('happn-logger');
-  Logger.configure({logLevel: __logLevel});
-
-  var log = Logger.createLogger();
-
   if (e) {
     log.fatal('failed to start proxy listener', e);
     return process.exit(1);
   }
 
-  log.info('forking happner: ' + __happnerCommand + __happnerCommandArguments.join(' '));
+  startChild(log);
+
+});
+
+function startChild(log) {
+  log.info('forking happner: ' + __happnerCommand + ' ' + __happnerCommandArguments.join(' '));
 
   var fork = require('child_process').fork;
 
-  var __remote = fork(__happnerCommand, __happnerCommandArguments);
+  var __remote = fork(__happnerCommand, __happnerCommandArguments, {execArgv: __execArgv});
 
   log.info('child process loaded:::', __remote.pid);
 
   __remote.on('message', function (data) {
 
-    var message = data.toString();
-    var code = message.substring(0, 8);
-    var messageData = null;
+      var message = data.toString();
+      var code = message.substring(0, 8);
+      var messageData = null;
 
-    if (message.indexOf(":::") > -1)
-      messageData = message.split(/:::(.+)?/)[1];
+      if (message.indexOf(":::") > -1)
+        messageData = message.split(/:::(.+)?/)[1];
 
-    if (__verbose)
-      log.info("message:::", {"message": message, "code": code, "data": messageData});
+      if (__verbose)
+        log.info("message:::", {"message": message, "code": code, "data": messageData});
 
-    if (code == "mesh-log") {
-      messageData = JSON.parse(messageData);
-      return loaderProgress.log(messageData);
-      //return log[messageData.level](messageData.message);
+      if (code == "mesh-log") {
+        messageData = JSON.parse(messageData);
+        return loaderProgress.log(messageData);
+      }
+
+      if (code == "strt-prg") {
+        messageData = JSON.parse(messageData);
+        return loaderProgress.progress(messageData.log, messageData.progress);
+      }
+
+      if (code == "list-err") {
+        loaderProgress.log({level: 'error', message: messageData, stack: code});
+        return log.error("listening error", messageData);
+      }
+
+      if (code == "strt-rdy") {
+
+        log.info("happner ready to start listening");
+
+        //manual test
+        // setTimeout(function(){
+        //   loaderProgress.stop();
+        //   return __remote.send("listen");
+        // }, 20000);
+
+        loaderProgress.stop();
+        return __remote.send("listen");
+      }
+
+      if (code == "strt-err") {
+        loaderProgress.log({level: 'error', message: messageData, stack: code});
+        log.error("startup error", messageData);
+        return __remote.kill();
+      }
+
+      if (code == "listenin") {
+        log.info("happner process is now listening, killing parent process in 5 seconds");
+        setTimeout(function () {//so the message makes it
+          process.exit(0);
+        }, 5000);
+      }
     }
+  );
 
-    if (code == "strt-prg") {
-      messageData = JSON.parse(messageData);
-      return loaderProgress.progress(messageData.log, messageData.progress);
-    }
-
-    if (code == "list-err") return log.error("listening error", messageData);
-
-    if (code == "strt-rdy") {
-
-      log.info("happner ready to start listening");
-
-      //manual test
-      // setTimeout(function(){
-      //   loaderProgress.stop();
-      //   return __remote.send("listen");
-      // }, 20000);
-
-      loaderProgress.stop();
-      return __remote.send("listen");
-    }
-
-    if (code == "strt-err") {
-      log.error("startup error", messageData);
-      return __remote.kill();
-    }
-
-    if (code == "listenin") {
-      log.info("happner process is now listening, killing parent process in 5 seconds");
-      setTimeout(function () {//so the message makes it
-        process.exit(0);
-      }, 5000);
-    }
-  });
-});
-
+  __remote.on('close', function (code, signal) {
+    var message = "Could not start child, code: " + code + ", signal: " + signal;
+    log.error(message);
+    loaderProgress.progress('', 0, message);
+    setTimeout(startChild, 2000, log);
+  })
+}
 
 
 
