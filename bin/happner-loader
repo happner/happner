@@ -64,7 +64,6 @@ for (var argIndex in arguments) {
       __skipNext = true;
       if (!__execArgv) __execArgv = [];
       __execArgv.push(argumentName + '=' + process.argv[argIndex + 1]);
-      console.log('__execArgv:', __execArgv);
       continue;
     }
 
