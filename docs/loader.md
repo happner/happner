@@ -1,6 +1,8 @@
 #loader
 *the loader command line creates a web server that listens on the hppner port, and displays a progress bar and message that shows how far happner is with loading*
 
+## Usage
+
 ```bash
 node bin/happner-loader --conf ../test/lib/d6_conf_redirect.json
 ```
@@ -57,7 +59,17 @@ curl "http://localhost:55003/ping"
 pong
 ```
 
-#unit tests
+## Arguments
+Any arguments passed to the process will be passed to the child script.
+
+Different node exec arguments can also be passed to the child process:
+```bash
+node bin/happner-loader --conf ../test/lib/d6_conf_redirect.json --exec-argv-max-old-space-size 20
+```
+
+This will pass --max-old-space-size as a node argument and not a script argument
+
+## unit tests
 *because the silence.js script has been added to the main tests, some of the unit tests fail, so the test has been moved to a different location - test-optimize, you can run the unit tests for optimize like so:*
 ```bash
 npm run-script test-optimize

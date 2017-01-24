@@ -490,3 +490,8 @@
 1.28.8 2016-12-30
 -----------------
 - fix #254, mesh client instances interfere with each other
+
+1.28.9 2016-12-30
+-----------------
+- fix #241, add ability to pass different memory constraints to child
+- fix #242, happner-loader will retry loading child if it fails to start
