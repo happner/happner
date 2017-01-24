@@ -1,6 +1,8 @@
-{
+console.log(process.execArgv);
+
+module.exports = {
   "port": 55009,
   "happner-loader": {
     "proxy": "http://127.0.0.1:55019"
   }
-}
+};

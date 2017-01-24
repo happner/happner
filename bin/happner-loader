@@ -4,47 +4,72 @@ var LoaderProgress = require('../lib/startup/loader_progress.js')
   , args = {}
   , __happnerCommand = "./bin/happner-loader-daemon"
   , __happnerCommandArguments = []
+  , __execArgv
   , __happnerConfig = {}
   , __loaderConfig = {}
   , __conf = false
   , __logLevel = "info"
   , __verbose = false
-;
+  , __execArgvArgument = '--exec-argv-'
+  , __skipNext = false
+  ;
 
+var arguments = [];
 for (var argIndex in process.argv) {
+  arguments.push.apply(arguments, process.argv[argIndex].split('=='));
+}
+
+console.log(arguments);
+
+for (var argIndex in arguments) {
+  argIndex = parseInt(argIndex);
+  if (__skipNext) {
+    __skipNext = false;
+    continue;
+  }
 
   var val = process.argv[argIndex];
 
-  if (val != "node" && val.indexOf("happner-loader") == -1) {
+  console.log('processing', val);
 
-    if (__conf) {
+  if (val.indexOf("node") == -1 && val.indexOf("happner-loader") == -1) {
+
+    if (argIndex && process.argv[argIndex - 1] == "--conf") {
       __happnerConfig = require(val);
-      __conf = false;
-    } else {
-
-      if (val == "--conf") {
-        __conf = true;
-      }
-
-      if (val == "--loader-verbose") {
-        __verbose = true;
-      }
-
-      if (val == "--trace") {
-        __logLevel = "trace";
-      }
-
-      if (val == "--debug") {
-        __logLevel = "debug";
-      }
-
-      if (val == "--warn") {
-        __logLevel = "warn";
-      }
     }
+
+    if (val == "--loader-verbose") {
+      __verbose = true;
+    }
+
+    if (val == "--trace") {
+      __logLevel = "trace";
+    }
+
+    if (val == "--debug") {
+      __logLevel = "debug";
+    }
+
+    if (val == "--warn") {
+      __logLevel = "warn";
+    }
+
+    if (val.indexOf(__execArgvArgument) == 0) {
+      var argumentName = '--' + val.slice(__execArgvArgument.length);
+      __skipNext = true;
+      if (!__execArgv) __execArgv = [];
+      __execArgv.push( argumentName + '=' + process.argv[argIndex + 1]);
+      console.log('__execArgv:', __execArgv);
+      continue;
+    }
+
     __happnerCommandArguments.push(val);
   }
 }
+
+setInterval(function () {
+  console.log('memory usage:', process.memoryUsage().rss)
+}, 5000);
 
 if (__happnerConfig["happner-loader"]) __loaderConfig = __happnerConfig["happner-loader"];
 
@@ -64,11 +89,11 @@ loaderProgress.listen(function (e) {
     return process.exit(1);
   }
 
-  log.info('forking happner: ' + __happnerCommand + __happnerCommandArguments.join(' '));
+  log.info('forking happner: ' + __happnerCommand + ' ' + __happnerCommandArguments.join(' '));
 
   var fork = require('child_process').fork;
 
-  var __remote = fork(__happnerCommand, __happnerCommandArguments);
+  var __remote = fork(__happnerCommand, __happnerCommandArguments, {execArgv: __execArgv});
 
   log.info('child process loaded:::', __remote.pid);
 
