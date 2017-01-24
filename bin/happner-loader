@@ -120,7 +120,7 @@ function startChild(log) {
       }
 
       if (code == "list-err") {
-        loaderProgress.log({level: 'error', message: messageData, stack:code});
+        loaderProgress.log({level: 'error', message: messageData, stack: code});
         return log.error("listening error", messageData);
       }
 
@@ -139,7 +139,7 @@ function startChild(log) {
       }
 
       if (code == "strt-err") {
-        loaderProgress.log({level: 'error', message: messageData, stack:code});
+        loaderProgress.log({level: 'error', message: messageData, stack: code});
         log.error("startup error", messageData);
         return __remote.kill();
       }
@@ -156,6 +156,7 @@ function startChild(log) {
   __remote.on('close', function (code, signal) {
     var message = "Could not start child, code: " + code + ", signal: " + signal;
     log.error(message);
+    loaderProgress.progress('', 0, message);
     setTimeout(startChild, 2000, log);
   })
 }
