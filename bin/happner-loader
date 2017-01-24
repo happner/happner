@@ -31,11 +31,11 @@ for (var argIndex in arguments) {
     continue;
   }
 
-  var val = process.argv[argIndex];
+  var val = arguments[argIndex];
 
   if (val.indexOf("node") == -1 && val.indexOf("happner-loader") == -1) {
 
-    if (argIndex && process.argv[argIndex - 1] == "--conf") {
+    if (argIndex && arguments[argIndex - 1] == "--conf") {
       try {
         __happnerConfig = require(val);
       } catch (e) {
@@ -63,7 +63,7 @@ for (var argIndex in arguments) {
       var argumentName = '--' + val.slice(__execArgvArgument.length);
       __skipNext = true;
       if (!__execArgv) __execArgv = [];
-      __execArgv.push(argumentName + '=' + process.argv[argIndex + 1]);
+      __execArgv.push(argumentName + '=' + arguments[argIndex + 1]);
       continue;
     }
 

@@ -1,4 +1,4 @@
-describe('1-startup-loader', function (done) {
+describe('3-startup-fail', function (done) {
 
   // Uses unit test 2 modules
   var should = require('chai').should();
