@@ -16,7 +16,7 @@ var LoaderProgress = require('../lib/startup/loader_progress.js')
 
 var arguments = [];
 for (var argIndex in process.argv) {
-  arguments.push.apply(arguments, process.argv[argIndex].split('=='));
+  arguments.push.apply(arguments, process.argv[argIndex].split('='));
 }
 
 Logger = require('happn-logger');
