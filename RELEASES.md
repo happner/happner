@@ -490,13 +490,18 @@
 -----------------
 - fix #254, mesh client instances interfere with each other
 
-1.28.9 2016-12-30
+1.28.9 2017-01-24
 -----------------
 - fix #241, add ability to pass different memory constraints to child
 - fix #242, happner-loader will retry loading child if it fails to start
 
-1.29.0 2016-12-23
+1.29.0 2016-01-24
 -----------------
  - a middleware is injected to ensure that any 'on' requests are checked for an illegal atempt at listening in on _responses
  - happn version 2.17.0
 
+
+1.29.1 2017-01-25
+------------------
+- fix #241, add ability to pass different memory constraints to child
+- fix #242, happner-loader will retry loading child if it fails to start
