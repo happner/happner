@@ -11,8 +11,8 @@ var request = Promise.promisify(require('request'));
 
 describe(filename, function () {
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var mesh;
 
@@ -378,6 +378,6 @@ describe(filename, function () {
       .catch(done);
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

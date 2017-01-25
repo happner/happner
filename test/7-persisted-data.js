@@ -50,8 +50,8 @@ describe('7 - test persisted config, check memory and persisted data stores', fu
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();
@@ -263,6 +263,6 @@ describe('7 - test persisted config, check memory and persisted data stores', fu
 
   })
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

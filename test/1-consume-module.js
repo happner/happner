@@ -2,9 +2,6 @@ describe('1 - Consumes an external module', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
-
   var should = require('chai').should();
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
@@ -156,27 +153,4 @@ describe('1 - Consumes an external module', function () {
       });
     });
   });
-
-  /*
-   it('should expose a data layer that is a happn client, local to the mesh', function (done) {
-
-   var _this = this;
-
-   mesh.api.data.on('/mytest/datalayer/test', {event_type:'set', count:1}, function (message) {
-   message.value.should.eql(10);
-
-   console.log('TESTS DONE');
-
-   done();
-   }, function(e){
-   if (e) return done(e);
-   mesh.api.exchange.happnClient.set('/mytest/datalayer/test', {"value":10}, {}, function(e, response){
-   if (e) done(e);
-   });
-   });
-   });
-   */
-
-  require('benchmarket').stop();
-
 });

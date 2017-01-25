@@ -34,8 +34,8 @@ describe.skipWindows(filename, function () {
 
   this.timeout(20000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   before('start secureMesh', function (done) {
 
@@ -208,6 +208,6 @@ describe.skipWindows(filename, function () {
   // });
 
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

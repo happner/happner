@@ -2,8 +2,8 @@ describe('c3 - client data search', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var should = require('chai').should();
   var Mesh = require('../');
@@ -255,7 +255,7 @@ describe('c3 - client data search', function () {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });
 

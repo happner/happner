@@ -2,8 +2,8 @@ describe('a9 - passes data between component APIs, also works with events', func
 ///events/testComponent2Component/component1/maximum-pings-reached
 ///events/testComponent2Component/component1/maximum-pings-reached
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var sep = require('path').sep;
   var libFolder = __dirname + sep + 'lib' + sep;
@@ -210,7 +210,7 @@ describe('a9 - passes data between component APIs, also works with events', func
    */
 
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });
 

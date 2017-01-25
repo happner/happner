@@ -2,8 +2,8 @@ describe('b6 - start meshes', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var should = require('chai').should();
   var path = require('path');
@@ -147,6 +147,6 @@ describe('b6 - start meshes', function () {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

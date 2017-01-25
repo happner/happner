@@ -4,8 +4,8 @@ describe(path.basename(__filename), function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var libFolder = path.join(__dirname, 'lib');
   var Happner = require('../');
@@ -274,7 +274,7 @@ describe(path.basename(__filename), function () {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 });
 
 
