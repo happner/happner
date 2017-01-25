@@ -17,8 +17,8 @@ describe('d2-update-own-user', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var expect = require('expect.js');
   var should = require('chai').should();
@@ -504,6 +504,6 @@ describe('d2-update-own-user', function () {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

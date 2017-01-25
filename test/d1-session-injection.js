@@ -17,8 +17,8 @@ describe('d1-session-injection', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var expect = require('expect.js');
   var should = require('chai').should();
@@ -171,6 +171,6 @@ describe('d1-session-injection', function () {
   });
 
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

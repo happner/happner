@@ -9,8 +9,8 @@ describe('e7-origin-web', function (done) {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var Mesh = require('../');
   var http = require('http');
@@ -194,6 +194,6 @@ describe('e7-origin-web', function (done) {
   });
 
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

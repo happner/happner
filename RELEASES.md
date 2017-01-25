@@ -473,7 +473,6 @@
 
 - fix #252, make meshClient disconnect() work for disconnected client
 
-
 1.28.5 2016-12-16
 -----------------
 
@@ -495,3 +494,9 @@
 -----------------
 - fix #241, add ability to pass different memory constraints to child
 - fix #242, happner-loader will retry loading child if it fails to start
+
+1.29.0 2016-12-23
+-----------------
+ - a middleware is injected to ensure that any 'on' requests are checked for an illegal atempt at listening in on _responses
+ - happn version 2.17.0
+

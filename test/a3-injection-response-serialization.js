@@ -14,8 +14,8 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var config = {
     name: "testInjectionResponse",
@@ -64,7 +64,7 @@ describe('a3 - Bounces a message between two components, demonstrates how the ev
     mesh.stop({reconnect: false}, done);
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });
 

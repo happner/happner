@@ -1,8 +1,8 @@
 describe('e9_session_management', function () {
 
-  require('benchmarket').start();
+  //require('benchmarket').start();
 
-  after(require('benchmarket').store());
+  //after(//require('benchmarket').store());
 
   var expect = require('expect.js');
   var Mesh = require('../');
@@ -379,6 +379,6 @@ describe('e9_session_management', function () {
     }, 11116);
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

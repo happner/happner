@@ -4,8 +4,8 @@ var Mesh = require('../');
 
 describe('9-stop-mesh', function (done) {
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   this.timeout(5000);
 
@@ -109,7 +109,7 @@ describe('9-stop-mesh', function (done) {
     });
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });
 

@@ -2,8 +2,8 @@ describe('7 - start and stop a persisted mesh', function () {
 
   this.timeout(120000);
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   var Mesh = require('../');
   var test_id = Date.now() + '_' + require('shortid').generate();
@@ -194,6 +194,6 @@ describe('7 - start and stop a persisted mesh', function () {
 
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

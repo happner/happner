@@ -55,8 +55,8 @@ var async = require('async');
 
 describe('b4 - component start and validation -', function () {
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   this.timeout(120000);
 
@@ -776,6 +776,6 @@ describe('b4 - component start and validation -', function () {
     });
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });

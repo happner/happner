@@ -3,8 +3,8 @@
  */
 describe('9 - tests that we can add middleware before a static', function (done) {
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
+  //require('benchmarket').start();
+  //after(//require('benchmarket').store());
 
   // Uses unit test 2 modules
   var should = require('chai').should();
@@ -68,6 +68,6 @@ describe('9 - tests that we can add middleware before a static', function (done)
     })
   });
 
-  require('benchmarket').stop();
+  //require('benchmarket').stop();
 
 });
