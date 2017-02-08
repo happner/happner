@@ -505,3 +505,7 @@
 ------------------
 - fix #241, add ability to pass different memory constraints to child
 - fix #242, happner-loader will retry loading child if it fails to start
+
+1.29.2 2017-02-08
+-----------------
+- fix #268 - Latest happn that stop client when login fails

@@ -299,7 +299,7 @@ describe(filename, function () {
 
   it('informs mesh client on destroy component', function (done) {
     var client = new Happner.MeshClient();
-    return mesh._createElement({
+    mesh._createElement({
         module: {
           name: 'component4',
           config: {
