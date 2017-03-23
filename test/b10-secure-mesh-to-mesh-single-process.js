@@ -20,7 +20,7 @@ describe(path.basename(__filename), function () {
       endpoints: {
         remoteMesh: {  // remote mesh node
           config: {
-            port: 51234,
+            port: 51231,
             username: '_ADMIN',
             password: 'testb2' // TODO This was necessary, did not default
           }
@@ -32,10 +32,9 @@ describe(path.basename(__filename), function () {
 
     this.timeout(120000);
 
-    before(function (done) {
+    before(function () {
 
-      Mesh
-        .create(remoteConfig)
+      return Mesh.create(remoteConfig)
         .then(function (createdMesh) {
           remoteMesh = createdMesh;
         })
@@ -45,10 +44,7 @@ describe(path.basename(__filename), function () {
         .then(function (createdMesh) {
           mesh = createdMesh;
         })
-        .then(function () {
-          done();
-        })
-        .catch(done)
+
     });
 
 

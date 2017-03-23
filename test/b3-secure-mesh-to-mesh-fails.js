@@ -24,7 +24,7 @@ describe('b3 - secure mesh to mesh fails', function () {
       endpoints: {
         remoteMesh: {  // remote mesh node
           config: {
-            port: 51234,
+            port: 51231,
             username: '_ADMIN',
             password: 'thispasswordwontwork' // TODO This was necessary, did not default
           }

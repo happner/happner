@@ -4,7 +4,7 @@ var config = {
   name: 'theFarawayTree',
   dataLayer: {
     secure: true,
-    port: 51234,
+    port: 51231,
     authTokenSecret: 'a256a2fd43bf441483c5177fc85fd9d3',
     systemSecret: 'mesh',
     adminPassword: 'testb2'
