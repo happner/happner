@@ -50,7 +50,7 @@ describe(path.basename(__filename), function () {
         var newData = testClient.data;
         expect(newData).to.not.equal(currentData);
         expect(currentData.initialized).to.equal(false);
-        // expect(currentData.pubsub).to.be(undefined);
+        expect(currentData.pubsub).to.be(undefined);
         expect(newData.initialized).to.equal(true);
       });
   });
