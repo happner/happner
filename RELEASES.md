@@ -509,3 +509,7 @@
 1.29.2 2017-02-08
 -----------------
 - fix #268 - Latest happn that stop client when login fails
+
+1.29.3 2017-02-08
+-----------------
+- fix #268 - Latest happn that stop client when login fails
