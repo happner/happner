@@ -69,10 +69,7 @@ describe(filename, function () {
     try{
       require('fs').unlinkSync(dbFileName);
 
-    }catch(e){
-      console.log('unlinked filename:::', e);
-
-    }
+    }catch(e){}
 
     global.TESTING_F5 = true; //.............
 
