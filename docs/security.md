@@ -184,3 +184,25 @@ upserting users:
  });
 
 ```
+
+account lockout:
+----------------
+*the account lockout feature is enabled by default, but can be modified as follows:*
+```javascript
+Happner.create({
+        name: 'Server',
+        datalayer: {
+          secure: true,
+          accountLockout:{
+            enabled:true,//self explanatory
+            attempts:2,//only allow 2 attempts before locking out, default is 4
+            retryInterval:3000//how long you wait before the user is allowed to login again, default is 10 * 60 * 1000 (10 minutes)
+          }
+        },
+        modules: {},
+        components: {}
+      })
+      .then(function (mesh) {
+        //mesh created with a specified account lockout policy
+      });
+```
