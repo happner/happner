@@ -502,7 +502,7 @@
 
 
 1.29.1 2017-01-25
-------------------
+-----------------
 - fix #241, add ability to pass different memory constraints to child
 - fix #242, happner-loader will retry loading child if it fails to start
 
@@ -525,3 +525,7 @@
 1.30.0 2017-03-30
 -----------------
 - account lockout
+
+1.31.0 2017-04-02
+-----------------
+- client revoke session flag on disconnect
