@@ -67,8 +67,6 @@ describe('f8-client-revoke-session', function (done) {
     finishDone();
   });
 
-  afterEach('kills the adminClient')
-
   var http = require('http');
 
   function doRequest(path, token, callback) {
@@ -104,8 +102,6 @@ describe('f8-client-revoke-session', function (done) {
 
           expect(response.statusCode).to.equal(200);
 
-          console.log('OK FIRST ONE WORKED:::');
-
           adminClient.disconnect({revokeSession:true}, function(e){
 
             if (e) return done(e);
@@ -113,8 +109,6 @@ describe('f8-client-revoke-session', function (done) {
             doRequest('/webmethodtest/method1', sessionToken, function (err, response) {
 
               expect(response.statusCode).to.equal(403);
-
-              console.log(response.body);
 
               done();
             });
@@ -147,8 +141,6 @@ describe('f8-client-revoke-session', function (done) {
 
           expect(response.statusCode).to.equal(200);
 
-          console.log('OK FIRST ONE WORKED:::');
-
           adminClient.disconnect(function(e){
 
             if (e) return done(e);
@@ -156,8 +148,6 @@ describe('f8-client-revoke-session', function (done) {
             doRequest('/webmethodtest/method1', sessionToken, function (err, response) {
 
               expect(response.statusCode).to.equal(200);
-
-              console.log(response.body);
 
               done();
             });
