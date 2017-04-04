@@ -528,4 +528,4 @@
 
 1.31.0 2017-04-02
 -----------------
-- client revoke session on disconnect
+- client revoke session flag on disconnect
