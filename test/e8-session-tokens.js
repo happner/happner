@@ -185,18 +185,25 @@ describe('e8-session-tokens', function () {
     });
   });
 
-  // after(function (done) {
-  //
-  //   this.timeout(30000);
-  //   if (mesh) mesh.stop({reconnect: false}, done);
-  //
-  // });
+
+  var testAdminClient;
+
+  afterEach(function (done) {
+    this.timeout(5000);
+    if (testAdminClient) return testAdminClient.disconnect(done);
+  });
+
+  after(function (done) {
+
+    this.timeout(30000);
+    if (mesh) mesh.stop(done);
+  });
 
   it('tests the rest component with a managed profile, ttl times out', function(done){
 
     this.timeout(8000);
 
-    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
+    testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
 
     var testGroupSaved;
     var testUserSaved;
@@ -275,29 +282,13 @@ describe('e8-session-tokens', function () {
         });
       });
     }).catch(done);
-
-
-    // var restClient = require('restler');
-    //
-    // login(function(e, result){
-    //
-    //   if (e) return done(e);
-    //
-    //   restClient.get('http://localhost:10000/rest/describe?happn_token=' + result.data.token).on('complete', function(result){
-    //
-    //     expect(result.data['/testComponent/method1']).to.not.be(null);
-    //     expect(result.data['/testComponent/method2']).to.not.be(null);
-    //
-    //     done();
-    //   });
-    // });
   });
 
   it('tests the rest component with a managed profile, only able to access a trusted path', function(done){
 
     this.timeout(8000);
 
-    var testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
+    testAdminClient = new Mesh.MeshClient({secure: true, port: 10000});
 
     var testGroupSaved;
     var testUserSaved;
