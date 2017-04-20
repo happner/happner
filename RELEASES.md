@@ -529,3 +529,7 @@
 1.31.0 2017-04-02
 -----------------
 - client revoke session flag on disconnect
+
+1.32.0 2017-04-20
+-----------------
+- login with token

@@ -70,7 +70,7 @@ if (global.TESTING_REST_COMP_STRESS_SECURE) return; // When 'requiring' the modu
 var expect = require('expect.js');
 var Mesh = require('..' + sep + '..');
 var path = require('path');
-var libFolder = path.resolve('.' + sep + 'test' + sep + 'lib') + sep;
+var libFolder = path.resolve('..' + sep + 'lib') + sep;
 var async = require('async');
 
 //var REMOTE_MESH = 'e2-remote-mesh';

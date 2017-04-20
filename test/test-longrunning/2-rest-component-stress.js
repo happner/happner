@@ -70,15 +70,12 @@ if (global.TESTING_REST_COMP_STRESS) return; // When 'requiring' the module abov
 var expect = require('expect.js');
 var Mesh = require('..' + sep + '..');
 var path = require('path');
-var libFolder = path.resolve('.' + sep + 'test' + sep + 'lib') + sep;
+var libFolder = path.resolve('..' + sep + 'lib') + sep;
 var async = require('async');
 
 var REMOTE_MESH = 'e3-remote-mesh';
 
 describe('2-rest-component-stress', function () {
-
-  require('benchmarket').start();
-  after(require('benchmarket').store());
 
   this.timeout(120000);
 
@@ -195,6 +192,7 @@ describe('2-rest-component-stress', function () {
       try{
         expect(response.request.parameters.opts.number).to.be(response.response.data.number - 1);
       }catch(e){
+        console.log('error is:::', response);
         errors.push(response);
       }
 
@@ -210,7 +208,9 @@ describe('2-rest-component-stress', function () {
   it('tests N posts to the REST component in series', function(done){
 
     var requests = generateRequests('SERIES', CONNECTIONS_COUNT);
+
     var responses = [];
+
     var restClient = require('restler');
 
     async.eachSeries(requests, function(request, requestCB){
