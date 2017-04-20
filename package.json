@@ -30,7 +30,7 @@
     "expect.js": "^0.3.1",
     "fxt": "^1.0.2",
     "gulp": "^3.9.0",
-    "happn-util-crypto": "0.2.2",
+    "happn-util-crypto": "0.2.3",
     "happner-serial-mocha": "^1.5.1",
     "happner-test-modules": "^0.0.3",
     "istanbul": "^0.4.1",
