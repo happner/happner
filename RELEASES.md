@@ -541,3 +541,10 @@
 1.32.2 2017-05-30
 -----------------
 - updated happn to version 2.20.2
+
+2.0.0 2017-06-08
+-----------------
+- update dependencies to wildcards to prevent bloating installs (#271)
+- update to happn 3.0.0
+- added ping and pong config to Endpoint and MeshClient (happn clients)
+- added allowSkippedHeartBeats and pongSkipTime to Datalayer (happn server)
