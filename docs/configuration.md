@@ -83,7 +83,7 @@ Configuration as follows  (__shown with defaults__):
     // pubsub: {
     //   primusOpts: {
     //     allowSkippedHeartBeats: 2, // When large payload is inbound to the server
-    //                                // the primus pings do not queued behind the payload
+    //                                // the primus pings are queued behind the payload
     //                                // and do not reach the server in time. This allows
     //                                // for the server to not close the socket when those
     //                                // pings do not arrive in time.
