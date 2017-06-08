@@ -541,3 +541,7 @@
 1.32.2 2017-05-30
 -----------------
 - updated happn to version 2.20.2
+
+1.32.3 2017-06-08
+-----------------
+- update dependencies to wildcards to prevent bloating installs (#271)
