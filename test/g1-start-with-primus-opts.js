@@ -6,6 +6,7 @@ describe(filename, function () {
 
   var server1;
   var server2;
+  var client;
 
   before('start server 1', function (done) {
 
@@ -62,6 +63,32 @@ describe(filename, function () {
 
   });
 
+  before('start mesh client', function (done) {
+
+    client = new Happner.MeshClient({
+      pubsub: {
+        options: {
+          ping: 500,
+          pong: 100
+        }
+      }
+    })
+
+    client.login()
+      .then(function () {
+        done();
+      })
+      .catch(done);
+
+  });
+
+  after('stop client', function (done) {
+
+    if (!client) return done();
+    client.disconnect(done);
+
+  })
+
   after('stop server 2', function (done) {
 
     if (!server2) return done();
@@ -99,6 +126,16 @@ describe(filename, function () {
     expect(endpointPrimusOpts.pong).to.equal(1000);
     done();
 
-  })
+  });
+
+  it('sets meshclient primus opts', function (done) {
+
+    var clientPrimusOpts = client.data.pubsub.options;
+
+    expect(clientPrimusOpts.ping).to.equal(500);
+    expect(clientPrimusOpts.pong).to.equal(100);
+    done();
+
+  });
 
 });

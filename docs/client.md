@@ -137,12 +137,27 @@ __EventEmitter__ - Same as node's EventEmitter. (Part of Primus).</br>
 #### Reconnection policy
 ```javascript
 
-var testClient = new Mesh.MeshClient({secure: true, port: 8004,
-                                          reconnect:{
-                                            max:2000 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
-                                          }
-                                        });
+var client = new MeshClient({
+  secure: true,
+  port: 8004,
+  reconnect: {
+    retries: Infinity,
+    max: 180000
+  }
+});
+```
 
+#### Custom ping/pong configuration
+
+```javascript
+var client = new MeshClient({
+  pubsub: {
+    options: {
+      ping: 25000,
+      pong: 10000
+    }
+  }
+});
 ```
 
 ### From a node process
@@ -154,7 +169,6 @@ var MeshClient = require('happner').MeshClient;
 var client = new MeshClient(...
 
 // same as for the browser
-
 ```
 
 ### testing the browser client
