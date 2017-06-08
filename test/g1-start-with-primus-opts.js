@@ -49,13 +49,7 @@ describe(filename, function () {
           }
         },
         datalayer: {
-          port: 55001,
-          pubsub: {
-            primusOpts: {
-              allowSkippedHeartBeats: 20,
-              pongSkipTime: 500
-            }
-          }
+          port: 55001
         }
       })
 

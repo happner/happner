@@ -205,9 +205,32 @@ endpoints can be configured with different reconnection policies
     }
 ```
 
+###### Custom ping/pong configuration
+
+```javascript
+var config = {
+  endpoints: {
+    'name': {
+      config: {
+        pubsub: {
+          options: {
+            ping: 60000, // (ms) send ping every 60 seconds
+            pong: 20000  // (ms) close socket if no pong within 20 seconds 
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+
+
+
 ### Module Config
 
-[&#9650;](#)
+[▲](#)
 
 See also: [What are Modules?](modules.md#what-are-modules)
 
