@@ -58,7 +58,6 @@
     "happn-logger": "^0.0.2",
     "happner-terminal": "^0.0.8",
     "later": "^1.2.0",
-    "lodash": "^4.17.1",
     "md5": "^2.0.0",
     "merge": "^1.2.0",
     "proc-stats": "^0.0.4",
