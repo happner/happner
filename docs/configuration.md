@@ -79,6 +79,20 @@ Configuration as follows  (__shown with defaults__):
     //     // cookieDomain: '.example.com',
     //   }
     // },
+      
+    // pubsub: {
+    //   primusOpts: {
+    //     allowSkippedHeartBeats: 2, // When large payload is inbound to the server
+    //                                // the primus pings are queued behind the payload
+    //                                // and do not reach the server in time. This allows
+    //                                // for the server to not close the socket when those
+    //                                // pings do not arrive in time.
+    //     pongSkipTime: 1000 // Primus server deduplicates outbound pongs sent within
+    //                        // this time to prevent ping/pong cycle from 
+    //                        // accumulating due to multiple pings queueing up behind 
+    //                        // payload large.
+    //   }  
+    // }
 
     // setOptions: {
     //  timeout: 5000,
@@ -96,7 +110,10 @@ Configuration as follows  (__shown with defaults__):
 `defaultRoute` - Where to store data when no match is found in the per component `data.route` masks.<br/>
 `secure` - Set true will enable security. Users in groups with permissions will need to be created. See [Security](security.md)<br/>
 `transport` - Set to configure server to use https.
-`middleware` - Configure middleware details for use when security is enabled. 
+`middleware` - Configure middleware details for use when security is enabled.
+
+`pubsub` - Configure happn pubsub options.
+
 `adminPassword` - If secure is true, this sets a password for the genesis user (_ADMIN).<br/>
 `setOptions` - Default options set by the exchange when calling functions through the datalayer.</br>
 
@@ -188,9 +205,32 @@ endpoints can be configured with different reconnection policies
     }
 ```
 
+###### Custom ping/pong configuration
+
+```javascript
+var config = {
+  endpoints: {
+    'name': {
+      config: {
+        pubsub: {
+          options: {
+            ping: 60000, // (ms) send ping every 60 seconds
+            pong: 20000  // (ms) close socket if no pong within 20 seconds 
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+
+
+
 ### Module Config
 
-[&#9650;](#)
+[▲](#)
 
 See also: [What are Modules?](modules.md#what-are-modules)
 

@@ -9,9 +9,6 @@ describe('1-startup-loader', function (done) {
   var async = require('async');
   var exec = require('child_process').exec;
 
-  require('benchmarket').start();
-  after(require('benchmarket').store());
-
   this.timeout(120000);
 
   var childPIDs = [];
@@ -96,12 +93,12 @@ describe('1-startup-loader', function (done) {
     request(options, function (error, response, body) {
       callback(body);
     });
-
   }
 
   it('starts the loader http server', function (done) {
 
     var LoaderProgress = require('../../lib/startup/loader_progress');
+
     var loaderProgress = new LoaderProgress({port: 55000});
 
     loaderProgress.listen(function (e) {
@@ -121,6 +118,8 @@ describe('1-startup-loader', function (done) {
         expect(prog_data[1].progress).to.be(20);
 
         loaderProgress.stop();
+
+        console.log('done:::');
 
         done();
 
@@ -157,8 +156,6 @@ describe('1-startup-loader', function (done) {
                 done();
 
               }, 55000);
-
-
             })
         })
     });
@@ -181,13 +178,9 @@ describe('1-startup-loader', function (done) {
               done();
 
             }, 55001);
-
           });
-
         }, 55001);
-
       });
-
   });
 
   it('starts a mesh and checks we have progress logs', function (done) {
@@ -242,6 +235,7 @@ describe('1-startup-loader', function (done) {
   });
 
   it('starts a loader process, we analyze the loader logs to ensure it is all working', function (done) {
+
     var _this = this;
 
     this.timeout(15000);
@@ -281,12 +275,10 @@ describe('1-startup-loader', function (done) {
           console.log('score 4');
           logScore++;
         }
-
       }
 
-
       return logScore;
-    }
+    };
 
     remote.stdout.on('data', function (data) {
 
@@ -319,9 +311,7 @@ describe('1-startup-loader', function (done) {
         }, 7000);
       }
     });
-
   });
-
 
   after('kills the proxy and stops the mesh if its running', function (done) {
 
@@ -336,18 +326,14 @@ describe('1-startup-loader', function (done) {
         }, done);
 
       } else done();
-    }
+    };
 
     if (meshes.length > 0)
       async.eachSeries(meshes, function (stopMesh, cb) {
         stopMesh.stop({reconnect: false}, cb);
       }, killProcs);
     else killProcs();
-
   });
-
-  require('benchmarket').stop();
-
 });
 
 

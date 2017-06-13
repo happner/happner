@@ -187,7 +187,7 @@ describe(filename, function () {
       })
 
       .then(function (result) {
-        result[1].should.equal('Cannot GET /anotherComponent/page\n');
+        result[1].should.match(/Cannot GET \/anotherComponent\/page/);
       })
 
       .then(done)
