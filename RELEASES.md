@@ -548,3 +548,8 @@
 - update to happn 3.0.0
 - added ping and pong config to Endpoint and MeshClient (happn clients)
 - added allowSkippedHeartBeats and pongSkipTime to Datalayer (happn server)
+
+2.1.0 2017-06-13
+----------------
+- updated to happn v3.1.0
+
