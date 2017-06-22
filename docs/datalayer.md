@@ -38,12 +38,12 @@ $happn._mesh.datalayer.events.on('attach', function(ev) {
 });
 ```
 
-##### Event: detatch
+##### Event: detach
 
 An attached MeshNode has disconnected.
 
 ```javascript
-$happn._mesh.datalayer.events.on('detatch', function(ev) {
+$happn._mesh.datalayer.events.on('detach', function(ev) {
   ev == {
     info: {
       mesh: {

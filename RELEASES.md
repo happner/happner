@@ -553,3 +553,7 @@
 ----------------
 - updated to happn v3.1.0
 
+2.1.1 2017-06-22
+----------------
+- issue #295 - add correctly spelled 'detach' event
+
