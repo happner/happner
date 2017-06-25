@@ -2,14 +2,16 @@ os:
   - linux
 
 before_install:
-  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
+- if [[ `node -v` == v0* ]]; then npm i -g npm@3; fi
+- if [[ `node -v` != v0* ]]; then npm i -g npm@latest; fi
 
 language: node_js
 node_js:
-  - "7"
+  - "8"
   - "6"
   - "0.10"
-#script: "npm run-script test"
-script: "npm run-script test-cover"
+script:
+  - npm update
+  - npm run-script test-cover
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 after_failure: "cat /home/travis/build/happner/happner/npm-debug.log"
