@@ -557,3 +557,7 @@
 ----------------
 - issue #295 - add correctly spelled 'detach' event
 
+2.1.2 2017-06-29
+----------------
+- issue #298 - improve loader startup progress estimates
+
