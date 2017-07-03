@@ -548,3 +548,19 @@
 - update to happn 3.0.0
 - added ping and pong config to Endpoint and MeshClient (happn clients)
 - added allowSkippedHeartBeats and pongSkipTime to Datalayer (happn server)
+
+2.1.0 (reverted to 1.33.1) 2017-06-13
+----------------
+- updated to happn v3.1.0
+
+2.1.1  (reverted to 1.33.1) 2017-06-22
+----------------
+- issue #295 - add correctly spelled 'detach' event
+
+2.1.2  (reverted to 1.33.1) 2017-06-29
+----------------
+- issue #298 - improve loader startup progress estimates
+
+1.33.1 2017-07-03
+-----------------
+- reversion to 1.33.0 was missing 2.1.2 and 2.1.1 and 2.1.0
