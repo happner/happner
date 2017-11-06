@@ -572,3 +572,7 @@
 1.33.3 2017-11-06
 -----------------
 - Don't publish test and docs directories
+
+1.33.4 2017-11-06
+-----------------
+- use request@2.81.0 for Node 0.10 compatibility

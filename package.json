@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "1.33.3",
+  "version": "1.33.4",
   "description": "distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -61,7 +61,7 @@
     "md5": "^2.0.0",
     "merge": "^1.2.0",
     "proc-stats": "^0.0.4",
-    "request": "^2.67.0",
+    "request": "2.81.0",
     "serve-static": "^1.10.0",
     "shortid": "^2.2.4",
     "uglify-js": "^2.6.1"
