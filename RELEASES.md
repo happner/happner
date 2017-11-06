@@ -568,3 +568,7 @@
 1.33.2 2017-07-04
 -----------------
 - Update happn to 2.21.0
+
+1.33.3 2017-11-06
+-----------------
+- Don't publish test and docs directories
