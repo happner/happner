@@ -577,6 +577,6 @@
 -----------------
 - use request@2.81.0 for Node 0.10 compatibility
 
-1.33.5 2017-01-11
+1.33.5 2018-01-11
 -----------------
 - fix #303 - make shared datalayer respect the noPublish set option
