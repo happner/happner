@@ -1,6 +1,6 @@
 {
   "name": "happner",
-  "version": "1.33.4",
+  "version": "1.33.5",
   "description": "distributed application engine with evented storage and mesh services",
   "main": "lib/mesh.js",
   "bin": {
@@ -50,7 +50,7 @@
     "bluebird": "^2.10.2",
     "body": "^5.1.0",
     "change-case": "^2.3.0",
-    "commander": "^2.9.0",
+    "commander": "^2.13.0",
     "diskspace": "^0.1.7",
     "fs-extra": "^0.24.0",
     "glob": "^5.0.15",
