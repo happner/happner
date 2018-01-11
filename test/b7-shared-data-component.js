@@ -111,7 +111,8 @@ describe('b7 - shared data component', function () {
       meshInstance.event.data.on('/some/path/testNoPublish', function (data, meta) {
         delete data._meta;
         data.should.eql({val: 'must be emitted'});
-        done();
+        // allow time for possible wrong event
+        setTimeout(done, 1000);
       }, function (e) {
         if (e) return done(e);
         dataComponent.set('/some/path/testNoPublish', {val: 'must not be emitted'}, {noPublish: true}, function (e) {
@@ -261,8 +262,8 @@ describe('b7 - shared data component', function () {
           .then(function () {
             return dataComponent.set('/some/path/six', {key: 1}) // <------ 2
           })
-          .then(function(){
-           return dataComponent.offAll()
+          .then(function () {
+            return dataComponent.offAll()
           })
           .then(function () {
             return dataComponent.set('/some/path/six', {key: 1}) // <------- 3
@@ -285,7 +286,7 @@ describe('b7 - shared data component', function () {
           .then(function () {
             return dataComponent.set('/some/path/seven', {key: 1}) // <------ 2
           })
-          .then(function(){
+          .then(function () {
             return dataComponent.offPath('/some/path/seven');
           })
           .then(function () {
@@ -320,10 +321,10 @@ describe('b7 - shared data component', function () {
 
     it('can get paths', function (done) {
       require('bluebird').all([
-          dataComponent.set('this/one', 1),
-          dataComponent.set('this/two', 2),
-          dataComponent.set('this/three', 3),
-        ])
+        dataComponent.set('this/one', 1),
+        dataComponent.set('this/two', 2),
+        dataComponent.set('this/three', 3),
+      ])
         .then(function () {
           return dataComponent.getPaths('this/*')
         })
