@@ -107,7 +107,7 @@ describe('b7 - shared data component', function () {
       });
     });
 
-    it('respects noPublish set option', function (done) {
+    it('respects noPublish SET option', function (done) {
       meshInstance.event.data.on('/some/path/testNoPublish', function (data, meta) {
         delete data._meta;
         data.should.eql({val: 'must be emitted'});
@@ -118,6 +118,23 @@ describe('b7 - shared data component', function () {
         dataComponent.set('/some/path/testNoPublish', {val: 'must not be emitted'}, {noPublish: true}, function (e) {
           if (e) return done(e);
           dataComponent.set('/some/path/testNoPublish', {val: 'must be emitted'}, {noPublish: false}, function (e) {
+            if (e) return done(e);
+          })
+        })
+      });
+    });
+
+    it('works with no SET option', function (done) {
+      meshInstance.event.data.on('/some/path/testNoPublish2', function (data, meta) {
+        delete data._meta;
+        data.should.eql({val: 'must be emitted'});
+        // allow time for possible wrong event
+        setTimeout(done, 1000);
+      }, function (e) {
+        if (e) return done(e);
+        dataComponent.set('/some/path/testNoPublish2', {val: 'must not be emitted'}, {noPublish: true}, function (e) {
+          if (e) return done(e);
+          dataComponent.set('/some/path/testNoPublish2', {val: 'must be emitted'}, undefined, function (e) {
             if (e) return done(e);
           })
         })

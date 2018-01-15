@@ -580,3 +580,7 @@
 1.33.5 2018-01-11
 -----------------
 - fix #303 - make shared datalayer respect the noPublish set option
+
+1.33.6 2018-01-15
+-----------------
+- fix #306 - shared data SET failed with no options object
