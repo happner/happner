@@ -4,13 +4,19 @@ os:
 branches:
   only:
     - master
+    - issue-311
 
 before_install:
 - if [[ `node -v` == v0* ]]; then npm i -g npm@3; fi
 - if [[ `node -v` != v0* ]]; then npm i -g npm@latest; fi
 
+install:
+- if [[ `node -v` == v0* ]]; then npm i; fi
+- if [[ `node -v` != v0* ]]; then npm ci; fi
+
 language: node_js
 node_js:
+  - "9"
   - "8"
   - "6"
   - "0.10"
