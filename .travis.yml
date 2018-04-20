@@ -1,6 +1,10 @@
 os:
   - linux
 
+branches:
+  only:
+    - master
+
 before_install:
 - if [[ `node -v` == v0* ]]; then npm i -g npm@3; fi
 - if [[ `node -v` != v0* ]]; then npm i -g npm@latest; fi
