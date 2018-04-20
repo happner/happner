@@ -584,3 +584,7 @@
 1.33.6 2018-01-15
 -----------------
 - fix #306 - shared data SET failed with no options object
+
+1.33.7 2018-04-20
+-----------------
+- onward release happn 2.21.3
