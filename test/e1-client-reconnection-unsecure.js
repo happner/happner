@@ -2,16 +2,13 @@ describe('e1-client-reconnection', function () {
 
   this.timeout(120000);
 
-  //require('benchmarket').start();
-  //after(//require('benchmarket').store());
-
   var expect = require('expect.js');
 
   var Mesh = require('../');
   var mesh;
 
   var adminClient = new Mesh.MeshClient({
-    secure: true, port: 8004,
+    port: 8004,
     reconnect: {
       max: 2000 //we can then wait 10 seconds and should be able to reconnect before the next 10 seconds,
     }
@@ -23,7 +20,6 @@ describe('e1-client-reconnection', function () {
     Mesh.create({
       name: 'e1-client-reconnection',
       datalayer: {
-        secure: true,
         adminPassword: test_id,
         port: 8004
       },
@@ -133,14 +129,9 @@ describe('e1-client-reconnection', function () {
         measuredDifference += (Date.now() - lastMeasurement);
         lastMeasurement = Date.now();
 
-        // console.log('lastMeasurement:::',lastMeasurement);
-        // console.log('measuredCount:::',measuredCount);
-        // console.log('measuredDifference:::',measuredDifference);
-
         if (measuredCount == 4) {
           __doneMeasuring = true;
           var measuredAverage = measuredDifference / 3;
-          //console.log('measured average:::', measuredAverage);
 
           // use try/catch to avoid process.exit (issue 222)
           try {
@@ -156,7 +147,6 @@ describe('e1-client-reconnection', function () {
         if (e) return done(e);
         __stopped = true;
       });
-
     });
   });
 });
