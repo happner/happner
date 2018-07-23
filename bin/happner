@@ -97,6 +97,7 @@ var replaceSearchPath = function (startAt) {
 commander
 
   .version(JSON.parse(require('fs').readFileSync(__dirname + '/../package.json')).version)
+  .allowUnknownOption() //fixes the unknown option error
   .option('')
   .option('--conf [file]', 'Load mesh config from file/module (js)') // ie. module.exports = {/* the config */}
   .option('', 'use: module.exports.config = {};')
