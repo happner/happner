@@ -588,3 +588,7 @@
 1.33.7 2018-04-20
 -----------------
 - onward release happn 2.21.3
+
+1.33.9 2018-07-23
+-----------------
+- fix #316 - make happner-terminal a devDependency
