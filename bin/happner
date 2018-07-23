@@ -59,9 +59,10 @@ var config = {
   components: {}
 };
 
-if (os.platform() !== 'win32') {
-  config.components.terminal = {}; // <--- first component, so that other's start methods can write in command actions
-}
+// #316 - disable terminal everywhere, not worth doing more on this version now
+// if (os.platform() !== 'win32') {
+//   config.components.terminal = {}; // <--- first component, so that other's start methods can write in command actions
+// }
 
 var loaded, configPath;
 
