@@ -592,7 +592,11 @@
 1.33.9 2018-07-23
 -----------------
 - fix #316 - make happner-terminal a devDependency
-- 
+-
 1.33.10 2018-07-23
 -----------------
 - allow unknown option in happner.js
+
+1.33.11 2018-10-14
+-----------------
+- added subscription model in messenger.js to allow for forward compatibility with happner-2
