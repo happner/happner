@@ -592,7 +592,12 @@
 1.33.9 2018-07-23
 -----------------
 - fix #316 - make happner-terminal a devDependency
-- 
+ 
 1.33.10 2018-07-23
 -----------------
 - allow unknown option in happner.js
+
+1.34.0 2019-03-06
+-----------------
+- Allow deferListen without a loader
+- Forward release of happn@2.21.4
