@@ -601,3 +601,7 @@
 -----------------
 - Allow deferListen without a loader
 - Forward release of happn@2.21.4
+
+1.34.1 2019-03-08
+-----------------
+- Callback with mesh instance when creating
